@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content" android:padding="8dp">
+
+    <TextView
+            android:text="ust"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" android:id="@+id/tvName" android:textStyle="bold"
+            android:textAlignment="viewStart"/>
+    <TextView
+            android:text="Burada bir çeşit yorumlamalar falan gözükecektir yiğenim çok ta şey yapmamak lazım..."
+            android:layout_width="match_parent"
+            android:inputType="textMultiLine"
+            android:layout_height="wrap_content" android:id="@+id/tvComment" android:textStyle="italic"/>
+    <TextView
+            android:text="10.11.1938"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" android:id="@+id/tvDate" android:textAlignment="textEnd"
+            android:textStyle="italic"/>
+</LinearLayout>

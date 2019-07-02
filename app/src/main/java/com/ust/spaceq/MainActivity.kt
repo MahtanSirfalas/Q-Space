@@ -6,20 +6,17 @@ import android.os.Build
 import android.os.Bundle
 import android.os.SystemClock
 import android.util.Log
-import com.google.android.material.snackbar.Snackbar
-import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatActivity
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
-import android.widget.FrameLayout
 import android.widget.Toast
-import androidx.annotation.RequiresApi
+import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
 
 import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.android.synthetic.main.fragment_comment.*
 import kotlinx.android.synthetic.main.fragment_one.*
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
@@ -29,7 +26,7 @@ private lateinit var auth: FirebaseAuth
 private lateinit var database: FirebaseDatabase
 private lateinit var databaseReference: DatabaseReference
 private lateinit var commsReference: DatabaseReference
-private var seviye = "Q0"
+var seviye = "Q0"
 
 
 @TargetApi(Build.VERSION_CODES.O)
@@ -37,9 +34,6 @@ class MainActivity : AppCompatActivity() {
 
     val manager = supportFragmentManager
     val TAG = "MainActivity"
-    val now = LocalDateTime.now()
-    var date = DateTimeFormatter.ofPattern("yyyy-MM-dd")
-    var time = DateTimeFormatter.ofPattern("HH:mm:ss")
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -58,7 +52,7 @@ class MainActivity : AppCompatActivity() {
 
         userReference.addListenerForSingleValueEvent(object : ValueEventListener {
             override fun onDataChange(p0: DataSnapshot) {
-                userName.text = p0.child("nickName").value as? String
+                tvName.text = p0.child("nickName").value as? String
             }
             override fun onCancelled(p0: DatabaseError) {}
         })
@@ -76,6 +70,7 @@ class MainActivity : AppCompatActivity() {
         showFragmentMenu()
         /*val tx = fragmentManager.beginTransation()
         tx.replace(android.R.id.fragment, FragmentLvl()).addToBackStack("tag").commit()*/
+
     }
 
     fun showFragmentMenu(){
@@ -124,26 +119,11 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun showFragmentComment(view: View?){
-        val transaction = manager.beginTransaction()
-        val fragment = FragmentComment()
-        transaction.replace(R.id.fragment_holder, fragment)
-        transaction.addToBackStack(null)
-        transaction.commit()
-    }
+        val intent = Intent(this@MainActivity, CommentActivity::class.java)
+        intent.putExtra("seviye", seviye)
 
-    fun buttComms(view: View?){
-        Log.d(TAG, "comment sent")
-        val user = auth.currentUser
-        val post = textCom.text.toString()
-        val nickName = userName.text.toString()
-        val lvlReference = commsReference.child(seviye)
-        var date = date.format(now)
-        var time = time.format(now)
-        val giverReference = lvlReference.child(user!!.uid+"D:"+date+"T:"+time)
-        giverReference.child("post").setValue(post)
-        giverReference.child("nickName").setValue(nickName)
-        giverReference.child("date").setValue(date)
-        giverReference.child("time").setValue(time)
+        startActivity(intent)
+
     }
 
 

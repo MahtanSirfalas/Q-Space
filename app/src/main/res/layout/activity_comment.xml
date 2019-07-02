@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".CommentActivity">
+    <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recycleComment"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            android:layout_width="0dp"
+            android:layout_height="0dp" android:background="@color/colorSpaceWhite"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toTopOf="@+id/sendCom" app:layout_constraintEnd_toEndOf="parent">
+    </androidx.recyclerview.widget.RecyclerView>
+
+    <LinearLayout
+            android:id="@+id/sendCom"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_width="match_parent" android:layout_height="wrap_content">
+        <EditText
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:inputType="textMultiLine"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/buttCom"
+                android:ems="10"
+                android:id="@+id/textCom" android:layout_weight="1"
+                android:hint="Write your comment here..." android:maxLength="360"
+                android:textColor="@color/colorSpaceWhite" android:textColorHint="@color/colorGreyLight"/>
+        <Button
+                android:text="Send"
+                app:layout_constraintTop_toTopOf="@+id/textCom"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/textCom"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" android:id="@+id/buttCom" android:layout_weight="0"
+                android:textAllCaps="false" android:onClick="buttComms"/>
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
