@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <array name="preloaded_fonts" translatable="false">
+        <item>@font/coda</item>
+        <item>@font/geostar</item>
+        <item>@font/geostar_fill</item>
+        <item>@font/gruppo</item>
+        <item>@font/press_start_2p</item>
+        <item>@font/wallpoet</item>
+    </array>
+</resources>
