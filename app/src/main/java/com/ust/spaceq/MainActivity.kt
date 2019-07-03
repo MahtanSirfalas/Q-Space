@@ -26,6 +26,8 @@ private lateinit var auth: FirebaseAuth
 private lateinit var database: FirebaseDatabase
 private lateinit var databaseReference: DatabaseReference
 private lateinit var commsReference: DatabaseReference
+private lateinit var eMail: String
+private lateinit var uid: String
 var seviye = "Q0"
 
 
@@ -44,7 +46,8 @@ class MainActivity : AppCompatActivity() {
         auth = FirebaseAuth.getInstance()
         database = FirebaseDatabase.getInstance()
         databaseReference = database.reference.child("Users")
-        val uid = intent.getStringExtra("uid")
+        uid = intent.getStringExtra("uid")
+        eMail = intent.getStringExtra("email")
         val user = auth.currentUser
         val userReference = databaseReference.child(user!!.uid)
 
@@ -89,13 +92,13 @@ class MainActivity : AppCompatActivity() {
         transaction.commit()
     }
 
-    fun showFragmentProfile(view: View?){
+    fun showProfile(view: View?){
         Log.d(TAG, "Profile pressed")
-        val transaction = manager.beginTransaction()
-        val fragment = FragmentProfile()
-        transaction.replace(R.id.fragment_holder, fragment)
-        transaction.addToBackStack(null)
-        transaction.commit()
+        val intent = Intent(this@MainActivity, ProfileActivity::class.java)
+        intent.putExtra("tvName", tvName.text.toString())
+        intent.putExtra("eMail", eMail)
+        intent.putExtra("uid", uid)
+        startActivity(intent)
     }
 
     fun showFragmentOne(view: View?){
@@ -121,6 +124,7 @@ class MainActivity : AppCompatActivity() {
     fun showFragmentComment(view: View?){
         val intent = Intent(this@MainActivity, CommentActivity::class.java)
         intent.putExtra("seviye", seviye)
+        intent.putExtra("tvName", tvName.text.toString())
 
         startActivity(intent)
 
@@ -151,7 +155,7 @@ class MainActivity : AppCompatActivity() {
         if (item.itemId == R.id.action_out){
             signOut(null)
         }else if (item.itemId == R.id.action_profile){
-            showFragmentProfile(null)
+            showProfile(null)
         }
 
         return when (item.itemId) {

@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".ProfileActivity" android:background="@color/colorPrimaryDark">
+
+    <de.hdodenhof.circleimageview.CircleImageView
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/avatar_imageView"
+            android:layout_width="120dp"
+            android:layout_height="120dp"
+            app:civ_border_width="4dp"
+            app:civ_border_color="@color/colorPurple" android:layout_marginEnd="8dp"
+            app:layout_constraintBottom_toBottomOf="@id/buttAvatar"
+            app:layout_constraintStart_toStartOf="@id/buttAvatar"
+            app:layout_constraintTop_toTopOf="@id/buttAvatar"
+            app:layout_constraintEnd_toEndOf="@+id/buttAvatar"/>
+    <Button
+            android:text="Select Avatar"
+            android:layout_width="120dp"
+            android:layout_height="120dp" android:id="@+id/buttAvatar"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toTopOf="@+id/textName"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:background="@drawable/custom_avatar" android:textColor="@color/colorSpaceWhite"
+            android:layout_marginTop="16dp" android:fontFamily="@font/press_start_2p"/>
+    <TextView
+            android:text="Username: user"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" android:id="@+id/textName"
+            android:textColor="@color/colorPrimaryDark" android:background="@color/colorSpaceWhite"
+            app:layout_constraintTop_toBottomOf="@id/buttAvatar"
+            app:layout_constraintBottom_toTopOf="@+id/textMail"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:fontFamily="@font/press_start_2p"
+            android:padding="2dp" android:layout_margin="5dp"/>
+    <TextView
+            android:text="E-mail: user@gmail.com"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" android:id="@+id/textMail"
+            android:textColor="@color/colorPrimaryDark" android:background="@color/colorSpaceWhite"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/textName"
+            app:layout_constraintBottom_toTopOf="@id/textLevel"
+            android:fontFamily="@font/press_start_2p" android:padding="2dp" android:layout_margin="5dp"/>
+    <TextView
+            android:text="Level: 0"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" android:id="@+id/textLevel"
+            android:textColor="@color/colorPrimaryDark" android:background="@color/colorSpaceWhite"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textMail"
+            app:layout_constraintBottom_toTopOf="@id/textPoints"
+            android:fontFamily="@font/press_start_2p" android:padding="2dp" android:layout_margin="5dp"/>
+    <TextView
+            android:text="Points: 0"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" android:id="@+id/textPoints"
+            android:textColor="@color/colorPrimaryDark" android:background="@color/colorSpaceWhite"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textLevel"
+            android:fontFamily="@font/press_start_2p" android:padding="2dp" android:layout_margin="5dp"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

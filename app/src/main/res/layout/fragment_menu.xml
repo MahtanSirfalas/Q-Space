@@ -34,7 +34,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="50dp" android:fontFamily="@font/press_start_2p" android:paddingStart="64dp"
                     android:textAlignment="viewStart" android:textAllCaps="false"
-                    android:onClick="showFragmentProfile"/>
+                    android:onClick="showProfile"/>
 
             <Button android:id="@+id/buttSoru"
                     android:text="- Suggest Q -"

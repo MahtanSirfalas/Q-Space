@@ -103,7 +103,7 @@ class LoginActivity : AppCompatActivity() {
     public override fun onStart() {
         super.onStart()
         //Check user sign(non null); update UI accordingly
-        val currentUser = auth.currentUser
+        var currentUser = auth.currentUser
         updateUI(currentUser)
     }
 
@@ -189,7 +189,7 @@ class LoginActivity : AppCompatActivity() {
             val intent = Intent(this, MainActivity::class.java)
             intent.putExtra("email", user.email)
             intent.putExtra("uid", user.uid)
-
+            intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK.or(Intent.FLAG_ACTIVITY_NEW_TASK)
             startActivity(intent)
         }else{
             Toast.makeText(baseContext, "Log in or Create an Account.", Toast.LENGTH_SHORT).show()

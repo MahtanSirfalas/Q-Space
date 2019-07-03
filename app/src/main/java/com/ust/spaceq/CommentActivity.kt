@@ -23,7 +23,8 @@ private lateinit var auth: FirebaseAuth
 private lateinit var database: FirebaseDatabase
 private lateinit var databaseReference: DatabaseReference
 private lateinit var commsReference: DatabaseReference
-private lateinit var seviyelvl:String
+private lateinit var seviyelvl: String
+private lateinit var tvNick: String
 
 @TargetApi(Build.VERSION_CODES.O)
 class CommentActivity : AppCompatActivity() {
@@ -43,6 +44,7 @@ class CommentActivity : AppCompatActivity() {
         databaseReference = database.reference.child("Users")
         commsReference = database.reference.child("Posts")
         seviyelvl = intent.getStringExtra("seviye")
+        tvNick = intent.getStringExtra("tvName")
 
 //        val adapter = GroupAdapter<ViewHolder>()
 //
@@ -80,13 +82,13 @@ class CommentActivity : AppCompatActivity() {
 
     fun buttComms(view: View?){
         Log.d(TAG, "comment sent")
-        val user = auth.currentUser
+        var user = auth.currentUser
         val post = textCom.text.toString()
-        val nickName = tvName.text.toString()
-        val lvlReference = commsReference.child(seviyelvl)
+        var nickName = tvNick
+        var lvlReference = commsReference.child(seviyelvl)
         var date = date.format(now)
         var time = time.format(now)
-        val giverReference = lvlReference.child(user!!.uid+"D:"+date+"T:"+time)
+        var giverReference = lvlReference.child(user!!.uid+"D:"+date+"T:"+time)
         giverReference.child("post").setValue(post)
         giverReference.child("nickName").setValue(nickName)
         giverReference.child("date").setValue(date)
