@@ -21,7 +21,8 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
-            android:layout_width="match_parent" android:layout_height="wrap_content">
+            android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp" android:layout_marginBottom="8dp">
         <EditText
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -32,7 +33,7 @@
                 android:ems="10"
                 android:id="@+id/textCom" android:layout_weight="1"
                 android:hint="Write your comment here..." android:maxLength="360"
-                android:textColor="@color/colorSpaceWhite" android:textColorHint="@color/colorGreyLight"/>
+                android:textColor="@color/colorPrimaryDark" android:textColorHint="@color/colorGreyLight"/>
         <Button
                 android:text="Send"
                 app:layout_constraintTop_toTopOf="@+id/textCom"

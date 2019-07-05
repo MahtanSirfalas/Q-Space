@@ -25,10 +25,13 @@ class LoginActivity : AppCompatActivity() {
     private lateinit var database:FirebaseDatabase
 
     private lateinit var nickName:String
+    private lateinit var defaultAvatar: String
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
+
+        defaultAvatar = "https://firebasestorage.googleapis.com/v0/b/mathslayer-2771e.appspot.com/o/Images%2FLumiAvatarStorageVersionForUsers.jpg?alt=media&token=6ff8fd0a-f948-4f7f-b4e4-a1285c273e18"
 
         database = FirebaseDatabase.getInstance()
         databaseReference = database.reference.child("Users")
@@ -131,6 +134,7 @@ class LoginActivity : AppCompatActivity() {
                 userDb.child("eMail").setValue(user.email)
                 userDb.child("points").setValue("0")
                 userDb.child("level").setValue("0")
+                userDb.child("avatar").setValue(defaultAvatar)
                 updateUI(user)
             }else{
                 //Fail -> display message below
@@ -187,8 +191,6 @@ class LoginActivity : AppCompatActivity() {
 //        hideProgressDialog()  i don't know wth is that?
         if (user != null) {
             val intent = Intent(this, MainActivity::class.java)
-            intent.putExtra("email", user.email)
-            intent.putExtra("uid", user.uid)
             intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK.or(Intent.FLAG_ACTIVITY_NEW_TASK)
             startActivity(intent)
         }else{

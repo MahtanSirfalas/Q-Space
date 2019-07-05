@@ -8,9 +8,9 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 
-class FragmentOne : Fragment() {
+class FragmentTwo : Fragment() {
 
-    val TAG = "FragmentOne"
+    val TAG = "FragmentTwo"
 
     override fun onAttach(context: Context?) {
         Log.d(TAG, "onAttach")
@@ -24,7 +24,7 @@ class FragmentOne : Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         Log.d(TAG, "onCreateView")
-        return inflater.inflate(R.layout.fragment_one, container, false)
+        return inflater.inflate(R.layout.fragment_two, container, false)
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {

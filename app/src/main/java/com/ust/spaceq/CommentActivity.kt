@@ -9,6 +9,8 @@ import android.view.View
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
+import com.squareup.picasso.Picasso
+import com.ust.spaceq.models.Post
 import com.xwray.groupie.GroupAdapter
 import com.xwray.groupie.Item
 import com.xwray.groupie.ViewHolder
@@ -23,8 +25,9 @@ private lateinit var auth: FirebaseAuth
 private lateinit var database: FirebaseDatabase
 private lateinit var databaseReference: DatabaseReference
 private lateinit var commsReference: DatabaseReference
-private lateinit var seviyelvl: String
+private lateinit var levelKey: String
 private lateinit var tvNick: String
+private lateinit var avatareach: String
 
 @TargetApi(Build.VERSION_CODES.O)
 class CommentActivity : AppCompatActivity() {
@@ -43,7 +46,7 @@ class CommentActivity : AppCompatActivity() {
         database = FirebaseDatabase.getInstance()
         databaseReference = database.reference.child("Users")
         commsReference = database.reference.child("Posts")
-        seviyelvl = intent.getStringExtra("seviye")
+        levelKey = intent.getStringExtra("levelKey")
         tvNick = intent.getStringExtra("tvName")
 
 //        val adapter = GroupAdapter<ViewHolder>()
@@ -57,15 +60,32 @@ class CommentActivity : AppCompatActivity() {
         fetchComments()
     }
 
+    fun buttComms(view: View?){
+        var user = auth.currentUser
+        val post = textCom.text.toString()
+        var nickName = tvNick
+        var lvlReference = commsReference.child(levelKey)
+        var date = date.format(now)
+        var time = time.format(now)
+        var giverReference = lvlReference.child(user!!.uid+"D:"+date+"T:"+time)
+        giverReference.child("post").setValue(post)
+        giverReference.child("nickName").setValue(nickName)
+        giverReference.child("date").setValue(date)
+        giverReference.child("time").setValue(time)
+        giverReference.child("uid").setValue(uid)
+        Log.d(TAG, "comment sent")
+        textCom.text.clear()
+    }
+
     private fun fetchComments(){
-        val ref  = database.getReference("/Posts/$seviyelvl")
+        val ref  = database.getReference("/Posts/$levelKey")
         ref.addListenerForSingleValueEvent(object: ValueEventListener {
             override fun onDataChange(p0: DataSnapshot) {
                 val adapter = GroupAdapter<ViewHolder>()
 
                 p0.children.forEach {
                     Log.d(TAG, it.toString())
-                    val post = it.getValue(Posts::class.java)
+                    val post = it.getValue(Post::class.java)
                     if (post != null){
                         adapter.add(UserItem(post))
                     }
@@ -79,35 +99,34 @@ class CommentActivity : AppCompatActivity() {
             }
         })
     }
-
-    fun buttComms(view: View?){
-        Log.d(TAG, "comment sent")
-        var user = auth.currentUser
-        val post = textCom.text.toString()
-        var nickName = tvNick
-        var lvlReference = commsReference.child(seviyelvl)
-        var date = date.format(now)
-        var time = time.format(now)
-        var giverReference = lvlReference.child(user!!.uid+"D:"+date+"T:"+time)
-        giverReference.child("post").setValue(post)
-        giverReference.child("nickName").setValue(nickName)
-        giverReference.child("date").setValue(date)
-        giverReference.child("time").setValue(time)
-    }
 }
 
-class UserItem(val Post: Posts): Item<ViewHolder>(){
+class UserItem(val post: Post): Item<ViewHolder>(){
+    val TAG = "CommentActivity"
     override fun bind(viewHolder: ViewHolder, position: Int) {
-        viewHolder.itemView.tvComment.text = Post.post
-        viewHolder.itemView.tvName.text = Post.nickName
-        viewHolder.itemView.tvDate.text = Post.date +" | "+ Post.time
+        viewHolder.itemView.tvComment.text = post.post
+        viewHolder.itemView.tvName.text = post.nickName
+        viewHolder.itemView.tvDate.text = post.date +" | "+ post.time
         //will be called in our list for each user comment later on..
+        val userId = post.uid
+        val userReference = databaseReference.child(userId)
+        Log.d(TAG, "class UserItem; userId = $userId assigned")
+
+        /*userName.text  = userReference.orderByChild("nickName").toString()*/
+        userReference.addListenerForSingleValueEvent(object : ValueEventListener {
+                override fun onDataChange(p0: DataSnapshot) {
+                    Log.d(TAG, "onDataChange")
+                    avatareach = p0.child("avatar").value as String
+                    Log.d(TAG, "onDataChange; avatareach = $avatareach")
+                    Picasso.get().load(avatareach).into(viewHolder.itemView.ivAvatar_circle)
+                    Log.d(TAG, "Picasso is successful!")
+                }
+
+                override fun onCancelled(p0: DatabaseError) {}
+        })
+
     }
     override fun getLayout(): Int {
         return R.layout.comment_recycle_adapt
     }
-}
-
-class Posts(val nickName: String, val date: String, val time: String,val post: String){
-    constructor():this("","", "", "")
 }

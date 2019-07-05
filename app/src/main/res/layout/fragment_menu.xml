@@ -21,7 +21,7 @@
                     android:layout_height="50dp"
                     android:fontFamily="@font/press_start_2p" android:textAlignment="viewStart"
                     android:includeFontPadding="false" android:paddingStart="32dp" android:textAllCaps="false"
-                    android:onClick="showFragmentLvl"/>
+                    android:onClick="showLvl"/>
 
             <Button android:id="@+id/buttProfil"
                     android:text="- My Profile -"

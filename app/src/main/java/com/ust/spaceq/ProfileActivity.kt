@@ -2,19 +2,20 @@ package com.ust.spaceq
 
 import android.app.Activity
 import android.content.Intent
-import android.graphics.drawable.BitmapDrawable
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.provider.MediaStore
 import android.util.Log
+import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.storage.FirebaseStorage
 import kotlinx.android.synthetic.main.activity_profile.*
 
 private lateinit var nick:String
-private lateinit var email:String
-private lateinit var uid: String
+private lateinit var database: FirebaseDatabase
+private lateinit var commsReference: DatabaseReference
+
 class ProfileActivity : AppCompatActivity() {
     val TAG = "ProfileActivity"
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -22,8 +23,8 @@ class ProfileActivity : AppCompatActivity() {
         setContentView(R.layout.activity_profile)
 
         nick = intent.getStringExtra("tvName")
-        email = intent.getStringExtra("eMail")
-        uid = intent.getStringExtra("uid")
+        database = FirebaseDatabase.getInstance()
+        commsReference = database.reference.child("Posts")
 
         textName.text = "Username: "+ nick
         textMail.text = "E-Mail: "+ email
@@ -49,7 +50,7 @@ class ProfileActivity : AppCompatActivity() {
 
             val bitmap = MediaStore.Images.Media.getBitmap(contentResolver, selectedPhotoUri)
 
-            avatar_imageView.setImageBitmap(bitmap)
+            ivAvatar_circle.setImageBitmap(bitmap)
 
             buttAvatar.alpha = 0f
 
@@ -72,6 +73,7 @@ class ProfileActivity : AppCompatActivity() {
                     Log.d(TAG, "Avatar location: $it")
 
                     saveImageToDatabase(it.toString())
+                    avatar = it.toString()
                 }
             }
             .addOnFailureListener{
@@ -80,6 +82,7 @@ class ProfileActivity : AppCompatActivity() {
     }
     private fun saveImageToDatabase(avatarUrl: String){
         val ref = FirebaseDatabase.getInstance().getReference("/Users/$uid/avatar")
+
 
         ref.setValue(avatarUrl)
             .addOnSuccessListener {
