@@ -15,7 +15,6 @@ import com.xwray.groupie.GroupAdapter
 import com.xwray.groupie.Item
 import com.xwray.groupie.ViewHolder
 import kotlinx.android.synthetic.main.activity_comment.*
-import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.comment_recycle_adapt.view.*
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
@@ -51,9 +50,9 @@ class CommentActivity : AppCompatActivity() {
 
 //        val adapter = GroupAdapter<ViewHolder>()
 //
-//        adapter.add(UserItem())
-//        adapter.add(UserItem())
-//        adapter.add(UserItem())
+//        adapter.add(PostItem())
+//        adapter.add(PostItem())
+//        adapter.add(PostItem())
 //
 //        recycleComment.adapter = adapter
 
@@ -87,7 +86,7 @@ class CommentActivity : AppCompatActivity() {
                     Log.d(TAG, it.toString())
                     val post = it.getValue(Post::class.java)
                     if (post != null){
-                        adapter.add(UserItem(post))
+                        adapter.add(PostItem(post))
                     }
                 }
 
@@ -101,7 +100,7 @@ class CommentActivity : AppCompatActivity() {
     }
 }
 
-class UserItem(val post: Post): Item<ViewHolder>(){
+class PostItem(val post: Post): Item<ViewHolder>(){
     val TAG = "CommentActivity"
     override fun bind(viewHolder: ViewHolder, position: Int) {
         viewHolder.itemView.tvComment.text = post.post
@@ -110,7 +109,7 @@ class UserItem(val post: Post): Item<ViewHolder>(){
         //will be called in our list for each user comment later on..
         val userId = post.uid
         val userReference = databaseReference.child(userId)
-        Log.d(TAG, "class UserItem; userId = $userId assigned")
+        Log.d(TAG, "class PostItem; userId = $userId assigned")
 
         /*userName.text  = userReference.orderByChild("nickName").toString()*/
         userReference.addListenerForSingleValueEvent(object : ValueEventListener {

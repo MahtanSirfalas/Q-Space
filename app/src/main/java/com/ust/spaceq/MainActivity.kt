@@ -5,22 +5,17 @@ import android.content.Intent
 import android.os.Build
 import android.os.Bundle
 import android.os.SystemClock
-import android.text.Editable
-import android.text.TextWatcher
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
-import android.widget.EditText
-import android.widget.Toast
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
+import com.squareup.picasso.Picasso
 
 import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.android.synthetic.main.fragment_one.*
-import kotlinx.android.synthetic.main.fragment_two.*
 
 private lateinit var firebaseAnalytics: FirebaseAnalytics
 private lateinit var auth: FirebaseAuth
@@ -62,22 +57,22 @@ class MainActivity : AppCompatActivity() {
             override fun onDataChange(p0: DataSnapshot) {
                 tvName.text = p0.child("nickName").value as? String
                 avatar = p0.child("avatar").value as String
+                Picasso.get().load(avatar).into(iv_avatar_circle)
 
             }
             override fun onCancelled(p0: DatabaseError) {}
         })
-
-        view_timer.base = SystemClock.elapsedRealtime()
-        view_timer.start()
-
-        buttDeneme.setOnClickListener {
-            view_timer.stop()
-            var zaman = view_timer.text.toString()
-            textDeneme.text = zaman
-        }
+        //sayaç burada yatmaktadır yiğen
+//        view_timer.base = SystemClock.elapsedRealtime()
+//        view_timer.start()
+//
+//        buttDeneme.setOnClickListener {
+//            view_timer.stop()
+//            var zaman = view_timer.text.toString()
+//            textDeneme.text = zaman
+//        }
         commsReference = database.reference.child("Posts")
 
-        showFragmentMenu()
         /*val tx = fragmentManager.beginTransation()
         tx.replace(android.R.id.fragment, FragmentLvl()).addToBackStack("tag").commit()*/
 
@@ -100,14 +95,6 @@ class MainActivity : AppCompatActivity() {
 //            }
 //        }
 //        tvAnswer.addTextChangedListener(answerTextWatcher)
-    }
-
-    fun showFragmentMenu(){
-        val transaction = manager.beginTransaction()
-        val fragment = FragmentMenu()
-        transaction.replace(R.id.fragment_holder, fragment)
-        transaction.addToBackStack(null)
-        transaction.commit()
     }
 
     fun showLvl(view: View?) {
@@ -173,15 +160,21 @@ class MainActivity : AppCompatActivity() {
 //
 //    }
 
+    private fun mainMenu(view: View?){
+        Log.d(TAG, "mainMenu pressed..")
+        val intent = Intent(this@MainActivity, MainActivity::class.java)
+        startActivity(intent)
+    }
+
     fun signOut(view:View?){
         auth.signOut()
         startActivity(Intent(this@MainActivity, LoginActivity::class.java))
         this@MainActivity.finish()
-        view_timer.stop()
+//        view_timer.stop()
     }
 
     override fun onBackPressed() {
-        showFragmentMenu()
+        mainMenu(null)
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -197,7 +190,7 @@ class MainActivity : AppCompatActivity() {
         when {
             item.itemId == R.id.action_out -> signOut(null)
             item.itemId == R.id.action_profile -> showProfile(null)
-            item.itemId == R.id.action_home -> showFragmentMenu()
+            item.itemId == R.id.action_home -> mainMenu(null)
             else -> {
 
             }

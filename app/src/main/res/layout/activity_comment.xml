@@ -10,7 +10,7 @@
             android:id="@+id/recycleComment"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             android:layout_width="0dp"
-            android:layout_height="0dp" android:background="@color/colorSpaceWhite"
+            android:layout_height="0dp" android:background="@color/colorPrimaryDark"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toTopOf="@+id/sendCom" app:layout_constraintEnd_toEndOf="parent">
@@ -42,7 +42,8 @@
                 app:layout_constraintStart_toEndOf="@+id/textCom"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" android:id="@+id/buttCom" android:layout_weight="0"
-                android:textAllCaps="false" android:onClick="buttComms"/>
+                android:textAllCaps="false" android:onClick="buttComms"
+                android:background="@drawable/custom_button_login" android:textColor="@color/colorSpaceWhite"/>
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

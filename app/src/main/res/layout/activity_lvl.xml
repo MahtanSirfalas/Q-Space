@@ -47,8 +47,8 @@
                         android:layout_width="match_parent" android:layout_height="fill_parent"/>
                 <androidx.appcompat.widget.AppCompatButton
                         android:text="1"
-                        android:layout_width="50dp"
-                        android:layout_height="50dp"
+                        android:layout_width="60dp"
+                        android:layout_height="60dp"
                         android:id="@+id/buttL1"
                         app:layout_constraintStart_toStartOf="parent"
                         android:layout_marginStart="16dp" android:layout_marginTop="8dp"
@@ -60,8 +60,8 @@
                         android:fontFamily="@font/press_start_2p" android:onClick="showLvl1"/>
                 <androidx.appcompat.widget.AppCompatButton
                         android:text="2"
-                        android:layout_width="50dp"
-                        android:layout_height="50dp" android:id="@+id/buttL2"
+                        android:layout_width="60dp"
+                        android:layout_height="60dp" android:id="@+id/buttL2"
                         android:layout_marginTop="8dp"
                         app:layout_constraintTop_toBottomOf="@+id/buttL1"
                         android:layout_marginBottom="8dp"
@@ -73,8 +73,8 @@
                         android:onClick="showLvl2"/>
                 <Button
                         android:text="3"
-                        android:layout_width="50dp"
-                        android:layout_height="50dp" android:id="@+id/buttL3"
+                        android:layout_width="60dp"
+                        android:layout_height="60dp" android:id="@+id/buttL3"
                         android:layout_marginTop="8dp"
                         app:layout_constraintTop_toBottomOf="@+id/buttL2"
                         android:layout_marginBottom="8dp"
@@ -86,8 +86,8 @@
                         android:fontFamily="@font/press_start_2p"/>
                 <Button
                         android:text="4"
-                        android:layout_width="50dp"
-                        android:layout_height="50dp" android:id="@+id/buttL4"
+                        android:layout_width="60dp"
+                        android:layout_height="60dp" android:id="@+id/buttL4"
                         android:layout_marginTop="8dp"
                         app:layout_constraintTop_toBottomOf="@+id/buttL3"
                         android:layout_marginBottom="8dp"
@@ -98,8 +98,8 @@
                         android:textColorHint="@color/colorSpaceWhite" android:fontFamily="@font/press_start_2p"/>
                 <Button
                         android:text="5"
-                        android:layout_width="50dp"
-                        android:layout_height="50dp" android:id="@+id/buttL5"
+                        android:layout_width="60dp"
+                        android:layout_height="60dp" android:id="@+id/buttL5"
                         android:layout_marginTop="8dp"
                         app:layout_constraintTop_toBottomOf="@+id/buttL4"
                         android:layout_marginBottom="8dp"
@@ -111,8 +111,8 @@
                         android:fontFamily="@font/press_start_2p"/>
                 <Button
                         android:text="6"
-                        android:layout_width="50dp"
-                        android:layout_height="50dp" android:id="@+id/buttL6"
+                        android:layout_width="60dp"
+                        android:layout_height="60dp" android:id="@+id/buttL6"
                         app:layout_constraintTop_toTopOf="parent"
                         app:layout_constraintStart_toEndOf="@id/buttL1"
                         app:layout_constraintBottom_toTopOf="@+id/buttL7" android:layout_marginTop="8dp"
@@ -123,8 +123,8 @@
                         android:fontFamily="@font/press_start_2p"/>
                 <Button
                         android:text="7"
-                        android:layout_width="50dp"
-                        android:layout_height="50dp" android:id="@+id/buttL7"
+                        android:layout_width="60dp"
+                        android:layout_height="60dp" android:id="@+id/buttL7"
                         android:layout_marginTop="8dp"
                         app:layout_constraintTop_toBottomOf="@+id/buttL6"
                         app:layout_constraintStart_toEndOf="@id/buttL2"
@@ -136,8 +136,8 @@
                         android:fontFamily="@font/press_start_2p"/>
                 <Button
                         android:text="8"
-                        android:layout_width="50dp"
-                        android:layout_height="50dp" android:id="@+id/buttL8"
+                        android:layout_width="60dp"
+                        android:layout_height="60dp" android:id="@+id/buttL8"
                         android:layout_marginTop="8dp"
                         app:layout_constraintTop_toBottomOf="@+id/buttL7"
                         app:layout_constraintStart_toEndOf="@id/buttL3"
@@ -149,8 +149,8 @@
                         android:fontFamily="@font/press_start_2p"/>
                 <Button
                         android:text="9"
-                        android:layout_width="50dp"
-                        android:layout_height="50dp" android:id="@+id/buttL9"
+                        android:layout_width="60dp"
+                        android:layout_height="60dp" android:id="@+id/buttL9"
                         app:layout_constraintBottom_toTopOf="@+id/buttL10"
                         app:layout_constraintTop_toBottomOf="@id/buttL8" app:layout_constraintStart_toEndOf="@id/buttL4"
                         android:layout_marginTop="8dp" android:layout_marginStart="16dp"
@@ -160,8 +160,8 @@
                         android:textColorHint="@color/colorSpaceWhite" android:fontFamily="@font/press_start_2p"/>
                 <Button
                         android:text="10"
-                        android:layout_width="50dp"
-                        android:layout_height="50dp" android:id="@+id/buttL10"
+                        android:layout_width="60dp"
+                        android:layout_height="60dp" android:id="@+id/buttL10"
                         app:layout_constraintStart_toEndOf="@+id/buttL5"
                         android:layout_marginStart="16dp" android:layout_marginTop="8dp"
                         app:layout_constraintTop_toBottomOf="@+id/buttL9"
@@ -172,8 +172,8 @@
                         android:textColorHint="@color/colorSpaceWhite" android:fontFamily="@font/press_start_2p"/>
                 <Button
                         android:text="11"
-                        android:layout_width="50dp"
-                        android:layout_height="50dp" android:id="@+id/buttL11"
+                        android:layout_width="60dp"
+                        android:layout_height="60dp" android:id="@+id/buttL11"
                         android:layout_marginTop="8dp"
                         app:layout_constraintTop_toTopOf="parent" app:layout_constraintStart_toEndOf="@+id/buttL6"
                         app:layout_constraintBottom_toTopOf="@+id/buttL12"
@@ -185,8 +185,8 @@
                         android:fontFamily="@font/press_start_2p"/>
                 <Button
                         android:text="12"
-                        android:layout_width="50dp"
-                        android:layout_height="50dp" android:id="@+id/buttL12"
+                        android:layout_width="60dp"
+                        android:layout_height="60dp" android:id="@+id/buttL12"
                         android:layout_marginTop="8dp"
                         app:layout_constraintEnd_toStartOf="@id/buttL17"
                         app:layout_constraintTop_toBottomOf="@+id/buttL11"
@@ -197,8 +197,8 @@
                         android:textColorHint="@color/colorSpaceWhite" android:fontFamily="@font/press_start_2p"/>
                 <Button
                         android:text="13"
-                        android:layout_width="50dp"
-                        android:layout_height="50dp" android:id="@+id/buttL13"
+                        android:layout_width="60dp"
+                        android:layout_height="60dp" android:id="@+id/buttL13"
                         android:layout_marginStart="16dp"
                         app:layout_constraintEnd_toStartOf="@id/buttL18"
                         app:layout_constraintStart_toEndOf="@+id/buttL8" android:layout_marginTop="8dp"
@@ -209,8 +209,8 @@
                         android:fontFamily="@font/press_start_2p"/>
                 <Button
                         android:text="14"
-                        android:layout_width="50dp"
-                        android:layout_height="50dp" android:id="@+id/buttL14"
+                        android:layout_width="60dp"
+                        android:layout_height="60dp" android:id="@+id/buttL14"
                         app:layout_constraintTop_toBottomOf="@id/buttL13"
                         app:layout_constraintEnd_toStartOf="@id/buttL19"
                         app:layout_constraintBottom_toTopOf="@id/buttL15"
@@ -221,8 +221,8 @@
                         android:textColorHint="@color/colorSpaceWhite" android:fontFamily="@font/press_start_2p"/>
                 <Button
                         android:text="15"
-                        android:layout_width="50dp"
-                        android:layout_height="50dp" android:id="@+id/buttL15"
+                        android:layout_width="60dp"
+                        android:layout_height="60dp" android:id="@+id/buttL15"
                         app:layout_constraintTop_toBottomOf="@id/buttL14"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toStartOf="@id/buttL20"
@@ -233,8 +233,8 @@
                         android:textColorHint="@color/colorSpaceWhite" android:fontFamily="@font/press_start_2p"/>
                 <Button
                         android:text="16"
-                        android:layout_width="50dp"
-                        android:layout_height="50dp" android:id="@+id/buttL16"
+                        android:layout_width="60dp"
+                        android:layout_height="60dp" android:id="@+id/buttL16"
                         app:layout_constraintEnd_toStartOf="@id/buttL21"
                         app:layout_constraintStart_toEndOf="@id/buttL11"
                         app:layout_constraintBottom_toTopOf="@id/buttL17"
@@ -245,8 +245,8 @@
                         android:textColorHint="@color/colorSpaceWhite" android:fontFamily="@font/press_start_2p"/>
                 <Button
                         android:text="17"
-                        android:layout_width="50dp"
-                        android:layout_height="50dp" android:id="@+id/buttL17"
+                        android:layout_width="60dp"
+                        android:layout_height="60dp" android:id="@+id/buttL17"
                         app:layout_constraintEnd_toStartOf="@id/buttL22"
                         app:layout_constraintTop_toBottomOf="@id/buttL16"
                         app:layout_constraintBottom_toTopOf="@id/buttL18"
@@ -257,8 +257,8 @@
                         android:textColorHint="@color/colorSpaceWhite" android:fontFamily="@font/press_start_2p"/>
                 <Button
                         android:text="18"
-                        android:layout_width="50dp"
-                        android:layout_height="50dp" android:id="@+id/buttL18"
+                        android:layout_width="60dp"
+                        android:layout_height="60dp" android:id="@+id/buttL18"
                         app:layout_constraintEnd_toStartOf="@id/buttL23"
                         app:layout_constraintTop_toBottomOf="@id/buttL17"
                         app:layout_constraintBottom_toTopOf="@id/buttL19"
@@ -269,8 +269,8 @@
                         android:textColorHint="@color/colorSpaceWhite" android:fontFamily="@font/press_start_2p"/>
                 <Button
                         android:text="19"
-                        android:layout_width="50dp"
-                        android:layout_height="50dp" android:id="@+id/buttL19"
+                        android:layout_width="60dp"
+                        android:layout_height="60dp" android:id="@+id/buttL19"
                         app:layout_constraintEnd_toStartOf="@id/buttL24"
                         app:layout_constraintTop_toBottomOf="@id/buttL18"
                         app:layout_constraintBottom_toTopOf="@id/buttL20"
@@ -281,8 +281,8 @@
                         android:textColorHint="@color/colorSpaceWhite" android:fontFamily="@font/press_start_2p"/>
                 <Button
                         android:text="20"
-                        android:layout_width="50dp"
-                        android:layout_height="50dp" android:id="@+id/buttL20"
+                        android:layout_width="60dp"
+                        android:layout_height="60dp" android:id="@+id/buttL20"
                         app:layout_constraintEnd_toStartOf="@id/buttL25"
                         app:layout_constraintTop_toBottomOf="@id/buttL19"
                         app:layout_constraintStart_toEndOf="@id/buttL15"
@@ -293,8 +293,8 @@
                         android:textColorHint="@color/colorSpaceWhite" android:fontFamily="@font/press_start_2p"/>
                 <Button
                         android:text="21"
-                        android:layout_width="50dp"
-                        android:layout_height="50dp" android:id="@+id/buttL21"
+                        android:layout_width="60dp"
+                        android:layout_height="60dp" android:id="@+id/buttL21"
                         app:layout_constraintStart_toEndOf="@id/buttL16"
                         app:layout_constraintBottom_toTopOf="@id/buttL22"
                         app:layout_constraintEnd_toStartOf="@id/buttL26"
@@ -305,8 +305,8 @@
                         android:textColorHint="@color/colorSpaceWhite" android:fontFamily="@font/press_start_2p"/>
                 <Button
                         android:text="22"
-                        android:layout_width="50dp"
-                        android:layout_height="50dp" android:id="@+id/buttL22"
+                        android:layout_width="60dp"
+                        android:layout_height="60dp" android:id="@+id/buttL22"
                         app:layout_constraintBottom_toTopOf="@id/buttL23"
                         app:layout_constraintEnd_toStartOf="@id/buttL27"
                         app:layout_constraintStart_toEndOf="@id/buttL17"
@@ -317,8 +317,8 @@
                         android:textColorHint="@color/colorSpaceWhite" android:fontFamily="@font/press_start_2p"/>
                 <Button
                         android:text="23"
-                        android:layout_width="50dp"
-                        android:layout_height="50dp" android:id="@+id/buttL23"
+                        android:layout_width="60dp"
+                        android:layout_height="60dp" android:id="@+id/buttL23"
                         app:layout_constraintStart_toEndOf="@id/buttL18"
                         app:layout_constraintEnd_toStartOf="@id/buttL28"
                         app:layout_constraintBottom_toTopOf="@id/buttL24"
@@ -329,8 +329,8 @@
                         android:textColorHint="@color/colorSpaceWhite" android:fontFamily="@font/press_start_2p"/>
                 <Button
                         android:text="24"
-                        android:layout_width="50dp"
-                        android:layout_height="50dp" android:id="@+id/buttL24"
+                        android:layout_width="60dp"
+                        android:layout_height="60dp" android:id="@+id/buttL24"
                         app:layout_constraintStart_toEndOf="@id/buttL19"
                         app:layout_constraintEnd_toStartOf="@id/buttL29"
                         app:layout_constraintBottom_toTopOf="@id/buttL25"
@@ -341,8 +341,8 @@
                         android:textColorHint="@color/colorSpaceWhite" android:fontFamily="@font/press_start_2p"/>
                 <Button
                         android:text="25"
-                        android:layout_width="50dp"
-                        android:layout_height="50dp" android:id="@+id/buttL25"
+                        android:layout_width="60dp"
+                        android:layout_height="60dp" android:id="@+id/buttL25"
                         app:layout_constraintStart_toEndOf="@id/buttL20"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toStartOf="@id/buttL30"
@@ -355,8 +355,8 @@
                         android:textColorHint="@color/colorSpaceWhite" android:fontFamily="@font/press_start_2p"/>
                 <Button
                         android:text="26"
-                        android:layout_width="50dp"
-                        android:layout_height="50dp" android:id="@+id/buttL26"
+                        android:layout_width="60dp"
+                        android:layout_height="60dp" android:id="@+id/buttL26"
                         app:layout_constraintStart_toEndOf="@id/buttL21"
                         app:layout_constraintBottom_toTopOf="@id/buttL27"
                         app:layout_constraintEnd_toStartOf="@id/buttL31"
@@ -367,8 +367,8 @@
                         android:textColorHint="@color/colorSpaceWhite" android:fontFamily="@font/press_start_2p"/>
                 <Button
                         android:text="27"
-                        android:layout_width="50dp"
-                        android:layout_height="50dp" android:id="@+id/buttL27"
+                        android:layout_width="60dp"
+                        android:layout_height="60dp" android:id="@+id/buttL27"
                         app:layout_constraintStart_toEndOf="@id/buttL22"
                         app:layout_constraintBottom_toTopOf="@id/buttL28"
                         app:layout_constraintEnd_toStartOf="@id/buttL32"
@@ -379,8 +379,8 @@
                         android:textColorHint="@color/colorSpaceWhite" android:fontFamily="@font/press_start_2p"/>
                 <Button
                         android:text="28"
-                        android:layout_width="50dp"
-                        android:layout_height="50dp" android:id="@+id/buttL28"
+                        android:layout_width="60dp"
+                        android:layout_height="60dp" android:id="@+id/buttL28"
                         app:layout_constraintStart_toEndOf="@id/buttL23"
                         app:layout_constraintBottom_toTopOf="@id/buttL29"
                         app:layout_constraintEnd_toStartOf="@id/buttL33"
@@ -391,8 +391,8 @@
                         android:textColorHint="@color/colorSpaceWhite" android:fontFamily="@font/press_start_2p"/>
                 <Button
                         android:text="29"
-                        android:layout_width="50dp"
-                        android:layout_height="50dp" android:id="@+id/buttL29"
+                        android:layout_width="60dp"
+                        android:layout_height="60dp" android:id="@+id/buttL29"
                         app:layout_constraintStart_toEndOf="@id/buttL24"
                         app:layout_constraintEnd_toStartOf="@id/buttL34"
                         app:layout_constraintBottom_toTopOf="@id/buttL30"
@@ -404,8 +404,8 @@
                         android:textColorHint="@color/colorSpaceWhite" android:fontFamily="@font/press_start_2p"/>
                 <Button
                         android:text="30"
-                        android:layout_width="50dp"
-                        android:layout_height="50dp" android:id="@+id/buttL30"
+                        android:layout_width="60dp"
+                        android:layout_height="60dp" android:id="@+id/buttL30"
                         app:layout_constraintStart_toEndOf="@id/buttL25"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toStartOf="@id/buttL35"
@@ -416,7 +416,7 @@
                         android:textColorHint="@color/colorSpaceWhite" android:fontFamily="@font/press_start_2p"/>
                 <Button
                         android:text="31"
-                        android:layout_width="50dp" android:layout_height="50dp"
+                        android:layout_width="60dp" android:layout_height="60dp"
                         android:id="@+id/buttL31"
                         app:layout_constraintEnd_toStartOf="@id/buttL36"
                         app:layout_constraintBottom_toTopOf="@id/buttL32"
@@ -428,7 +428,7 @@
                         android:textColorHint="@color/colorSpaceWhite" android:fontFamily="@font/press_start_2p"/>
                 <Button
                         android:text="32"
-                        android:layout_width="50dp" android:layout_height="50dp"
+                        android:layout_width="60dp" android:layout_height="60dp"
                         android:id="@+id/buttL32"
                         android:layout_marginTop="8dp"
                         android:layout_marginStart="16dp"
@@ -443,7 +443,7 @@
                         android:fontFamily="@font/press_start_2p"/>
                 <Button
                         android:text="33"
-                        android:layout_width="50dp" android:layout_height="50dp"
+                        android:layout_width="60dp" android:layout_height="60dp"
                         android:id="@+id/buttL33"
                         android:layout_marginTop="8dp"
                         android:layout_marginStart="16dp"
@@ -458,7 +458,7 @@
                         android:fontFamily="@font/press_start_2p"/>
                 <Button
                         android:text="34"
-                        android:layout_width="50dp" android:layout_height="50dp"
+                        android:layout_width="60dp" android:layout_height="60dp"
                         android:id="@+id/buttL34"
                         android:layout_marginTop="8dp"
                         android:layout_marginStart="16dp"
@@ -473,7 +473,7 @@
                         android:fontFamily="@font/press_start_2p"/>
                 <Button
                         android:text="35"
-                        android:layout_width="50dp" android:layout_height="50dp"
+                        android:layout_width="60dp" android:layout_height="60dp"
                         android:id="@+id/buttL35"
                         android:layout_marginTop="8dp"
                         android:layout_marginStart="16dp"
@@ -488,7 +488,7 @@
                         android:fontFamily="@font/press_start_2p"/>
                 <Button
                         android:text="36"
-                        android:layout_width="50dp" android:layout_height="50dp"
+                        android:layout_width="60dp" android:layout_height="60dp"
                         android:id="@+id/buttL36"
                         android:layout_marginTop="8dp"
                         android:layout_marginStart="16dp"
@@ -503,7 +503,7 @@
                         android:fontFamily="@font/press_start_2p"/>
                 <Button
                         android:text="37"
-                        android:layout_width="50dp" android:layout_height="50dp"
+                        android:layout_width="60dp" android:layout_height="60dp"
                         android:id="@+id/buttL37"
                         android:layout_marginTop="8dp"
                         android:layout_marginStart="16dp"
@@ -518,7 +518,7 @@
                         android:fontFamily="@font/press_start_2p"/>
                 <Button
                         android:text="38"
-                        android:layout_width="50dp" android:layout_height="50dp"
+                        android:layout_width="60dp" android:layout_height="60dp"
                         android:id="@+id/buttL38"
                         android:layout_marginTop="8dp"
                         android:layout_marginStart="16dp"
@@ -533,7 +533,7 @@
                         android:fontFamily="@font/press_start_2p"/>
                 <Button
                         android:text="39"
-                        android:layout_width="50dp" android:layout_height="50dp"
+                        android:layout_width="60dp" android:layout_height="60dp"
                         android:id="@+id/buttL39"
                         android:layout_marginTop="8dp"
                         android:layout_marginStart="16dp"
@@ -548,7 +548,7 @@
                         android:fontFamily="@font/press_start_2p"/>
                 <Button
                         android:text="40"
-                        android:layout_width="50dp" android:layout_height="50dp"
+                        android:layout_width="60dp" android:layout_height="60dp"
                         android:id="@+id/buttL40"
                         android:layout_marginTop="8dp"
                         android:layout_marginStart="16dp"
@@ -563,7 +563,7 @@
                         android:fontFamily="@font/press_start_2p"/>
                 <Button
                         android:text="41"
-                        android:layout_width="50dp" android:layout_height="50dp"
+                        android:layout_width="60dp" android:layout_height="60dp"
                         android:id="@+id/buttL41"
                         android:layout_marginTop="8dp"
                         android:layout_marginStart="16dp"
@@ -578,7 +578,7 @@
                         android:fontFamily="@font/press_start_2p"/>
                 <Button
                         android:text="42"
-                        android:layout_width="50dp" android:layout_height="50dp"
+                        android:layout_width="60dp" android:layout_height="60dp"
                         android:id="@+id/buttL42"
                         android:layout_marginTop="8dp"
                         android:layout_marginStart="16dp"
@@ -593,7 +593,7 @@
                         android:fontFamily="@font/press_start_2p"/>
                 <Button
                         android:text="43"
-                        android:layout_width="50dp" android:layout_height="50dp"
+                        android:layout_width="60dp" android:layout_height="60dp"
                         android:id="@+id/buttL43"
                         android:layout_marginTop="8dp"
                         android:layout_marginStart="16dp"
@@ -608,7 +608,7 @@
                         android:fontFamily="@font/press_start_2p"/>
                 <Button
                         android:text="44"
-                        android:layout_width="50dp" android:layout_height="50dp"
+                        android:layout_width="60dp" android:layout_height="60dp"
                         android:id="@+id/buttL44"
                         android:layout_marginTop="8dp"
                         android:layout_marginStart="16dp"
@@ -623,7 +623,7 @@
                         android:fontFamily="@font/press_start_2p"/>
                 <Button
                         android:text="45"
-                        android:layout_width="50dp" android:layout_height="50dp"
+                        android:layout_width="60dp" android:layout_height="60dp"
                         android:id="@+id/buttL45"
                         android:layout_marginTop="8dp"
                         android:layout_marginStart="16dp"
@@ -638,7 +638,7 @@
                         android:fontFamily="@font/press_start_2p"/>
                 <Button
                         android:text="46"
-                        android:layout_width="50dp" android:layout_height="50dp"
+                        android:layout_width="60dp" android:layout_height="60dp"
                         android:id="@+id/buttL46"
                         android:layout_marginTop="8dp"
                         android:layout_marginStart="16dp"
@@ -652,7 +652,7 @@
                         android:textColorHint="@color/colorSpaceWhite" android:fontFamily="@font/press_start_2p"/>
                 <Button
                         android:text="47"
-                        android:layout_width="50dp" android:layout_height="50dp"
+                        android:layout_width="60dp" android:layout_height="60dp"
                         android:id="@+id/buttL47"
                         android:layout_marginTop="8dp"
                         android:layout_marginStart="16dp"
@@ -666,7 +666,7 @@
                         android:textColorHint="@color/colorSpaceWhite" android:fontFamily="@font/press_start_2p"/>
                 <Button
                         android:text="48"
-                        android:layout_width="50dp" android:layout_height="50dp"
+                        android:layout_width="60dp" android:layout_height="60dp"
                         android:id="@+id/buttL48"
                         android:layout_marginTop="8dp"
                         android:layout_marginStart="16dp"
@@ -680,7 +680,7 @@
                         android:textColorHint="@color/colorSpaceWhite" android:fontFamily="@font/press_start_2p"/>
                 <Button
                         android:text="49"
-                        android:layout_width="50dp" android:layout_height="50dp"
+                        android:layout_width="60dp" android:layout_height="60dp"
                         android:id="@+id/buttL49"
                         android:layout_marginTop="8dp"
                         android:layout_marginStart="16dp"
@@ -694,7 +694,7 @@
                         android:textColorHint="@color/colorSpaceWhite" android:fontFamily="@font/press_start_2p"/>
                 <Button
                         android:text="50"
-                        android:layout_width="50dp" android:layout_height="50dp"
+                        android:layout_width="60dp" android:layout_height="60dp"
                         android:id="@+id/buttL50"
                         android:layout_marginTop="8dp"
                         android:layout_marginStart="16dp"

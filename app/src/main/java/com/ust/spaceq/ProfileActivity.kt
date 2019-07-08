@@ -10,6 +10,7 @@ import android.util.Log
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.storage.FirebaseStorage
+import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.activity_profile.*
 
 private lateinit var nick:String
@@ -36,6 +37,8 @@ class ProfileActivity : AppCompatActivity() {
             intent.type = "image/*"
             startActivityForResult(intent, 0)
         }
+        buttAvatar.alpha = 0f
+        Picasso.get().load(avatar).into(ivAvatar_circle)
     }
     var selectedPhotoUri: Uri? = null
 

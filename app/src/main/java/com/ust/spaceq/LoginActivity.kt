@@ -1,8 +1,10 @@
 package com.ust.spaceq
 
+import android.content.ClipData
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.provider.ContactsContract
 import android.text.Editable
 import android.text.TextUtils
 import android.text.TextWatcher
@@ -11,14 +13,17 @@ import android.view.View
 import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
+import com.google.android.material.tabs.TabLayout
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
-import com.google.firebase.database.DatabaseReference
-import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.*
+import com.ust.spaceq.models.Users
+import com.xwray.groupie.Item
+import com.xwray.groupie.ViewHolder
 import kotlinx.android.synthetic.main.activity_login.*
 
 class LoginActivity : AppCompatActivity() {
-
+    val TAG = "LoginActivity"
 
     private lateinit var auth:FirebaseAuth
     private lateinit var databaseReference: DatabaseReference
@@ -96,7 +101,6 @@ class LoginActivity : AppCompatActivity() {
             }
 
             override fun afterTextChanged(s: Editable) {
-
             }
         }
         posta.addTextChangedListener(loginTextWatcher)
@@ -112,7 +116,40 @@ class LoginActivity : AppCompatActivity() {
 
 
     fun buttLoginEvent(view:View){
-        LoginToSystem(etEmail.text.toString(), etPassword.text.toString())
+        Log.d(TAG, "Login button pressed!")
+        val username = etNick.text.toString()
+        var checkNick:Boolean = true
+
+        databaseReference.addListenerForSingleValueEvent(object : ValueEventListener{
+            override fun onCancelled(p0: DatabaseError) {
+                Log.d(TAG, "dblistenervalueevent cancelled")
+            }
+
+            override fun onDataChange(p0: DataSnapshot) {
+
+                p0.children.forEach {
+                    Log.d(TAG, it.toString())
+                    var nickName = it.child("nickName").value as String
+                    if (nickName == username){
+                        checkNick = false
+                        Log.d(TAG, "checkNick = $checkNick")
+                    }else{
+                        Log.d(TAG,"checkNick = $checkNick")
+                    }
+                }
+                if (checkNick){
+                    Log.d(TAG, "username is available")
+                    tvNickError.visibility = View.INVISIBLE
+                    LoginToSystem(etEmail.text.toString(), etPassword.text.toString())
+                }else{
+                    Log.d(TAG, "usernameError; username is already taken $checkNick")
+                    tvNickError.text = "Username is Already Taken!"
+                    tvNickError.visibility = View.VISIBLE
+                    Toast.makeText(baseContext, "Change username and try again..", Toast.LENGTH_LONG).show()
+                }
+            }
+
+        })
     }
 
     fun LoginToSystem(email:String, password:String){
