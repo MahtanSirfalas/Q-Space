@@ -1,10 +1,9 @@
 package com.ust.spaceq
 
-import android.content.ClipData
+import android.content.Context
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.provider.ContactsContract
 import android.text.Editable
 import android.text.TextUtils
 import android.text.TextWatcher
@@ -13,14 +12,11 @@ import android.view.View
 import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
-import com.google.android.material.tabs.TabLayout
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.database.*
-import com.ust.spaceq.models.Users
-import com.xwray.groupie.Item
-import com.xwray.groupie.ViewHolder
 import kotlinx.android.synthetic.main.activity_login.*
+import java.io.File
 
 class LoginActivity : AppCompatActivity() {
     val TAG = "LoginActivity"
@@ -32,11 +28,21 @@ class LoginActivity : AppCompatActivity() {
     private lateinit var nickName:String
     private lateinit var defaultAvatar: String
 
+//    private lateinit var context:Context
+//    private lateinit var file: File
+//    private lateinit var path: File
+//    private lateinit var letDirectory: File
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
 
         defaultAvatar = "https://firebasestorage.googleapis.com/v0/b/mathslayer-2771e.appspot.com/o/Images%2FLumiAvatarStorageVersionForUsers.jpg?alt=media&token=6ff8fd0a-f948-4f7f-b4e4-a1285c273e18"
+
+//        context = this.applicationContext!!
+//
+//        path = context.filesDir
+//        letDirectory = File(path, "LET")
 
         database = FirebaseDatabase.getInstance()
         databaseReference = database.reference.child("Users")
@@ -172,6 +178,15 @@ class LoginActivity : AppCompatActivity() {
                 userDb.child("points").setValue("0")
                 userDb.child("level").setValue("0")
                 userDb.child("avatar").setValue(defaultAvatar)
+
+//                letDirectory.mkdirs()
+//                file = File(letDirectory, "$nickName.txt")
+//                file.writeText("100\n" + "100\n" + "100\n" + "100\n" + "100\n" + "100\n" + "100\n" + "100\n" + "100\n" +
+//                        "100\n" + "100\n" + "100\n" + "100\n" + "100\n" + "100\n" + "100\n" + "100\n" + "100\n" + "100\n" +
+//                        "100\n" + "100\n" + "100\n" + "100\n" + "100\n" + "100\n" + "100\n" + "100\n" + "100\n" + "100\n" +
+//                        "100\n" + "100\n" + "100\n" + "100\n" + "100\n" + "100\n" + "100\n" + "100\n" + "100\n" + "100\n" +
+//                        "100\n" + "100\n" + "100\n" + "100\n" + "100\n" + "100\n" + "100\n" + "100\n" + "100\n" + "100\n" + "100\n")
+
                 updateUI(user)
             }else{
                 //Fail -> display message below
@@ -227,6 +242,7 @@ class LoginActivity : AppCompatActivity() {
     private fun updateUI(user: FirebaseUser?){
 //        hideProgressDialog()  i don't know wth is that?
         if (user != null) {
+
             val intent = Intent(this, MainActivity::class.java)
             intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK.or(Intent.FLAG_ACTIVITY_NEW_TASK)
             startActivity(intent)

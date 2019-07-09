@@ -57,7 +57,7 @@
                         app:layout_constraintEnd_toStartOf="@+id/buttL6" android:layout_marginEnd="16dp"
                         android:background="@drawable/custom_button_login" android:textColor="@color/colorSpaceWhite"
                         android:textColorHighlight="@color/colorAccent" android:textColorHint="@color/colorSpaceWhite"
-                        android:fontFamily="@font/press_start_2p" android:onClick="showLvl1"/>
+                        android:fontFamily="@font/press_start_2p" android:onClick="showStage1"/>
                 <androidx.appcompat.widget.AppCompatButton
                         android:text="2"
                         android:layout_width="60dp"
@@ -70,7 +70,7 @@
                         android:layout_marginEnd="16dp" android:background="@drawable/custom_button_login"
                         android:textColor="@color/colorSpaceWhite" android:textColorHighlight="@color/colorAccent"
                         android:textColorHint="@color/colorSpaceWhite" android:fontFamily="@font/press_start_2p"
-                        android:onClick="showLvl2"/>
+                        android:onClick="showStage2"/>
                 <Button
                         android:text="3"
                         android:layout_width="60dp"

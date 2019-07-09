@@ -34,7 +34,7 @@ class LvlActivity : AppCompatActivity() {
         setContentView(R.layout.activity_lvl)
         setSupportActionBar(toolbar)
 
-        qAnswer = mapOf("level1" to 95, "level2" to 116)
+        qAnswer = mapOf("Stage 1" to 95, "Stage 2" to 116)
 
         firebaseAnalytics = FirebaseAnalytics.getInstance(this)
         auth = FirebaseAuth.getInstance()
@@ -44,9 +44,9 @@ class LvlActivity : AppCompatActivity() {
 
     }
 
-    fun showLvl1(view: View?){
-        levelKey = "level1"
-        cevap = qAnswer["level1"] as Int
+    fun showStage1(view: View?){
+        levelKey = "Stage 1"
+        cevap = qAnswer["Stage 1"] as Int
         val intent = Intent(this@LvlActivity, OrderedActivity::class.java)
         intent.putExtra("tvName", nick)
         intent.putExtra("levelKey", levelKey)
@@ -54,9 +54,9 @@ class LvlActivity : AppCompatActivity() {
         startActivity(intent)
     }
 
-    fun showLvl2(view: View?){
-        levelKey = "level2"
-        cevap = qAnswer["level2"] as Int
+    fun showStage2(view: View?){
+        levelKey = "Stage 2"
+        cevap = qAnswer["Stage 2"] as Int
         val intent = Intent(this@LvlActivity, OrderedActivity::class.java)
         intent.putExtra("tvName", nick)
         intent.putExtra("levelKey", levelKey)

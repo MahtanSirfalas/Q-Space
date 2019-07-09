@@ -1,6 +1,7 @@
 package com.ust.spaceq
 
 import android.annotation.TargetApi
+import android.content.Context
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
@@ -16,6 +17,7 @@ import com.google.firebase.database.*
 import com.squareup.picasso.Picasso
 
 import kotlinx.android.synthetic.main.activity_main.*
+import java.io.File
 
 private lateinit var firebaseAnalytics: FirebaseAnalytics
 private lateinit var auth: FirebaseAuth
@@ -30,6 +32,7 @@ lateinit var uid: String
 lateinit var avatar: String
 
 
+
 @TargetApi(Build.VERSION_CODES.O)
 class MainActivity : AppCompatActivity() {
 
@@ -40,6 +43,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         setSupportActionBar(toolbar)
+
 
         firebaseAnalytics = FirebaseAnalytics.getInstance(this)
         auth = FirebaseAuth.getInstance()
