@@ -5,7 +5,7 @@
                                                    android:background="@color/colorSpaceWhite"
                                                    android:layout_width="match_parent"
                                                    android:layout_height="wrap_content" android:padding="8dp"
-                                                   android:layout_margin="8dp">
+                                                   android:layout_margin="8dp" android:id="@+id/itemView">
 
     <de.hdodenhof.circleimageview.CircleImageView
             xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -25,7 +25,7 @@
             app:layout_constraintBottom_toTopOf="@id/tvComment"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toStartOf="@+id/tvComment" android:fontFamily="@font/coda"
-            android:textSize="17sp"/>
+            android:textSize="17sp" android:editable="false" android:clickable="false" android:longClickable="false"/>
     <TextView
             android:text="Burada bir çeşit yorumlamalar falan gözükecektir yiğenim çok ta şey yapmamak lazım..."
             android:layout_width="0dp"
@@ -33,9 +33,9 @@
             android:layout_height="wrap_content" android:id="@+id/tvComment"
             app:layout_constraintEnd_toEndOf="parent"
             android:layout_marginEnd="4dp" app:layout_constraintTop_toBottomOf="@+id/tvName"
-            android:layout_marginBottom="8dp" app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toEndOf="@+id/ivAvatar_circle"
-            android:fontFamily="@font/coda" android:textSize="14sp" android:textStyle="italic"/>
+            android:fontFamily="@font/coda" android:textSize="14sp" android:textStyle="italic"
+            android:editable="false" android:clickable="false" android:longClickable="false"/>
     <TextView
             android:text="10.11.1938"
             android:layout_width="wrap_content"
@@ -44,5 +44,14 @@
             android:layout_marginEnd="8dp" app:layout_constraintBottom_toTopOf="@+id/tvComment"
             android:layout_marginTop="8dp" app:layout_constraintTop_toTopOf="parent"
             android:fontFamily="@font/coda" android:textSize="11sp" android:layout_marginBottom="6dp"
-    />
+            android:editable="false" android:clickable="false" android:longClickable="false"/>
+    <TextView
+            android:text="+0"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" android:id="@+id/tvUpvotes"
+            android:editable="false" android:clickable="false"
+            android:longClickable="false" android:layout_marginEnd="8dp"
+            app:layout_constraintEnd_toEndOf="parent" android:layout_marginTop="8dp"
+            app:layout_constraintTop_toBottomOf="@+id/tvComment" android:layout_marginBottom="8dp"
+            app:layout_constraintBottom_toBottomOf="parent"/>
 </androidx.constraintlayout.widget.ConstraintLayout>

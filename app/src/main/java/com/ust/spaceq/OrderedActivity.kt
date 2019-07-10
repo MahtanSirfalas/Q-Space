@@ -1,10 +1,8 @@
 package com.ust.spaceq
 
-import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
-import android.view.Gravity
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
@@ -18,7 +16,6 @@ import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 
 import kotlinx.android.synthetic.main.activity_ordered.*
-import java.io.File
 import kotlin.Exception
 
 private lateinit var firebaseAnalytics: FirebaseAnalytics
