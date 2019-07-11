@@ -2,6 +2,7 @@ package com.ust.spaceq
 
 import android.content.Context
 import android.content.Intent
+import android.graphics.drawable.AnimationDrawable
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.Editable
@@ -11,6 +12,7 @@ import android.util.Log
 import android.view.View
 import android.widget.Button
 import android.widget.EditText
+import android.widget.ScrollView
 import android.widget.Toast
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
@@ -36,6 +38,12 @@ class LoginActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
+
+        val scrollView = findViewById<ScrollView>(R.id.layoutbg)
+        val animationDrawable = scrollView.background as AnimationDrawable
+        animationDrawable.setEnterFadeDuration(4000)
+        animationDrawable.setExitFadeDuration(2000)
+        animationDrawable.start()
 
         defaultAvatar = "https://firebasestorage.googleapis.com/v0/b/mathslayer-2771e.appspot.com/o/Images%2FLumiAvatarStorageVersionForUsers.jpg?alt=media&token=6ff8fd0a-f948-4f7f-b4e4-a1285c273e18"
 
@@ -175,8 +183,8 @@ class LoginActivity : AppCompatActivity() {
                 val userDb = databaseReference.child(userId)
                 userDb.child("nickName").setValue(nickName)
                 userDb.child("eMail").setValue(user.email)
-                userDb.child("points").setValue("0")
-                userDb.child("level").setValue("0")
+                userDb.child("points").setValue(0)
+                userDb.child("level").setValue(0)
                 userDb.child("avatar").setValue(defaultAvatar)
 
 //                letDirectory.mkdirs()

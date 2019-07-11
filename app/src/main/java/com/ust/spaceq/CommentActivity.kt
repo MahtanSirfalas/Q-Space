@@ -126,7 +126,6 @@ class CommentActivity : AppCompatActivity() {
                     }
 
                 })
-
             }
         }))
     }
@@ -155,7 +154,6 @@ class CommentActivity : AppCompatActivity() {
             Toast.makeText(baseContext,"Minimum 5 letters!",Toast.LENGTH_SHORT).show()
             Log.d(TAG, "textCom = null")
         }
-
     }
 
     private fun fetchComments(){

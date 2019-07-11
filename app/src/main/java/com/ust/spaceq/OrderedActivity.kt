@@ -1,6 +1,7 @@
 package com.ust.spaceq
 
 import android.content.Intent
+import android.graphics.drawable.AnimationDrawable
 import android.os.Bundle
 import android.util.Log
 import android.view.Menu
@@ -9,11 +10,11 @@ import android.view.View
 import android.widget.ImageView
 import android.widget.PopupWindow
 import android.widget.Toast
-import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatActivity
+import androidx.constraintlayout.widget.ConstraintLayout
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.database.DatabaseReference
-import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.*
 
 import kotlinx.android.synthetic.main.activity_ordered.*
 import kotlin.Exception
@@ -28,6 +29,7 @@ private lateinit var levelKey: String
 private lateinit var qAnswer: Map<String, Int>
 private var uAnswer: Int = 1
 private var answer: Int = 1
+private lateinit var stageRef : DatabaseReference
 
 @Suppress("RECEIVER_NULLABILITY_MISMATCH_BASED_ON_JAVA_ANNOTATIONS")
 class OrderedActivity : AppCompatActivity() {
@@ -38,6 +40,12 @@ class OrderedActivity : AppCompatActivity() {
         setContentView(R.layout.activity_ordered)
         setSupportActionBar(toolbar)
 
+        val constraintLayout = findViewById<ConstraintLayout>(R.id.layoutbg)
+        val animationDrawable = constraintLayout.background as AnimationDrawable
+        animationDrawable.setEnterFadeDuration(2000)
+        animationDrawable.setExitFadeDuration(4000)
+        animationDrawable.start()
+
         qAnswer = mapOf("Stage 1" to 95, "Stage 2" to 116)
 
         firebaseAnalytics = FirebaseAnalytics.getInstance(this)
@@ -47,12 +55,39 @@ class OrderedActivity : AppCompatActivity() {
         nick = intent.getStringExtra("tvName")
         levelKey = intent.getStringExtra("levelKey")
         answer = qAnswer[levelKey] as Int
+        stageRef = database.getReference("Users/$uid/stages/$levelKey")
 
         supportActionBar?.title = levelKey
 
         levelAdapt(levelKey)
 
         Log.d(TAG, "levelKey=$levelKey, answer=$answer")
+
+        stageRef.addListenerForSingleValueEvent(object:ValueEventListener{
+            override fun onCancelled(p0: DatabaseError) {
+                Log.d(TAG, "stageRef Data couldn't read; No Internet Connection/No Response from database/Wrong datapath")
+            }
+
+            override fun onDataChange(p0: DataSnapshot) {
+                if (p0.hasChildren()){
+                    Log.d(TAG, "$levelKey; RERUNS!")
+                    var point = p0.child("point").value as Long
+                    var control = p0.child("control").value as Boolean
+                    if (control){
+                        point -= 1
+                        stageRef.child("point").setValue(point)
+                    }else{
+                        Toast.makeText(baseContext,"You passed that stage before.",
+                            Toast.LENGTH_SHORT).show()
+                    }
+                }else{
+                    stageRef.child("point").setValue(1000)
+                    stageRef.child("control").setValue(true)
+                    Log.d(TAG, "First run on $levelKey, adaptation DONE!")
+                }
+            }
+
+        })
     }
 
     fun slayButton(view: View?) {
@@ -67,36 +102,67 @@ class OrderedActivity : AppCompatActivity() {
                 Log.d(TAG, "Something's Wrong; uAnswer couldn't assign!")
                 Toast.makeText(baseContext, "Please Enter a Valid Value", Toast.LENGTH_SHORT).show()
             }
-            if (uAnswer == answer) {
-//                TODO("point adding to the database must be done")
-//                val points:String = "100"
-//                val user = auth.currentUser
-//                val userId = user!!.uid
-//                val userDb = databaseReference.child(userId)
-//                if (userDb.child("points").key.isNullOrBlank()){
-//                    userDb.child("points").setValue(points)
-//                }else{
-//                    userPoints = (userDb.child("points").key!!.toInt()+100) as String
-//                    userDb.child("points").setValue(userPoints)
-//                }
+            val window = PopupWindow(this)
+            val show = layoutInflater.inflate(R.layout.layout_popup, null)
 
-                val window = PopupWindow(this)
-                val show = layoutInflater.inflate(R.layout.layout_popup, null)
-                window.contentView = show
-                val imageShow = show.findViewById<ImageView>(R.id.iv_spaceMedal)
-                imageShow.setOnClickListener{
-                    window.dismiss()
+            stageRef.addListenerForSingleValueEvent(object:ValueEventListener{
+                override fun onCancelled(p0: DatabaseError) {
+                    Log.d(TAG, "stageRef Data couldn't read; No Internet Connection/No Response from database/Wrong datapath")
                 }
 
-                window.showAtLocation(buttAnswer1,1,0,100)
+                override fun onDataChange(p0: DataSnapshot) {
+                    var point = p0.child("point").value as Long
+                    var control = p0.child("control").value as Boolean
+                    val userRef = databaseReference.child(uid)
+                    if (control){
+                        if (uAnswer == answer) {
+                            stageRef.child("control").setValue(false)
+                            userRef.addListenerForSingleValueEvent(object:ValueEventListener{
+                                override fun onCancelled(p0s: DatabaseError) {
+                                    Log.d(TAG, "userRef Data couldn't read; No Internet Connection/No Response from database/Wrong datapath")
+                                }
 
-                Log.d(TAG, "$levelKey: Answer ($uAnswer) is equal to $answer; Accepted!")
-                Toast.makeText(baseContext, "Bravo! answer is accepted!", Toast.LENGTH_SHORT).show()
-            } else {
-                Log.d(TAG, "Something's Wrong; $uAnswer != $answer!")
-                Toast.makeText(baseContext, "Wrong answer, try again!", Toast.LENGTH_SHORT).show()
+                                override fun onDataChange(p0s: DataSnapshot) {
+                                    var points = p0s.child("points").value as Long
+                                    points += point
+                                    userRef.child("points").setValue(points)
+                                }
+                            })
 
-            }
+                            window.contentView = show
+                            val imageShow = show.findViewById<ImageView>(R.id.iv_spaceMedal)
+                            imageShow.setOnClickListener{
+                                window.dismiss()
+                            }
+                            window.showAtLocation(buttAnswer1,1,0,100)
+
+                            Log.d(TAG, "$levelKey: Answer ($uAnswer) is equal to $answer; Accepted!")
+                            Toast.makeText(baseContext, "Bravo! answer is accepted!", Toast.LENGTH_SHORT).show()
+                        } else {
+                            point -= 10
+                            stageRef.child("point").setValue(point)
+                            Log.d(TAG, "Something's Wrong; $uAnswer != $answer!")
+                            Toast.makeText(baseContext, "Wrong answer, try again!", Toast.LENGTH_SHORT).show()
+                        }
+                    }else{
+                        if(uAnswer == answer){
+                            window.contentView = show
+                            val imageShow = show.findViewById<ImageView>(R.id.iv_spaceMedal)
+                            imageShow.setOnClickListener{
+                                window.dismiss()
+                            }
+                            window.showAtLocation(buttAnswer1,1,0,100)
+                            Log.d(TAG, "$levelKey: Answer ($uAnswer) is equal to $answer; " +
+                                    "But no points added to the database")
+                            Toast.makeText(baseContext, "Bravo! Your answer is accepted!", Toast.LENGTH_SHORT).show()
+                        }else{
+                            Log.d(TAG, "Something's Wrong; $uAnswer != $answer!")
+                            Toast.makeText(baseContext, "Come on mate you answered the question before!", Toast.LENGTH_SHORT).show()
+                        }
+                    }
+                }
+            })
+
         } else {
             Log.d(TAG, "tv_answer1 is empty!")
             Toast.makeText(applicationContext, "Enter Your Answer!", Toast.LENGTH_SHORT).show()
@@ -105,14 +171,14 @@ class OrderedActivity : AppCompatActivity() {
 
     fun levelAdapt(level: String) {
         when (level) {
-            "level1" -> {
+            "Stage 1" -> {
                 say1.text = "19"
                 say2.text = "38"
                 say3.text = "57"
                 say4.text = "76"
                 Log.d(TAG, "$level adaptation is done successfully!")
             }
-            "level2" -> {
+            "Stage 2" -> {
                 say1.text = "24"
                 say2.text = "47"
                 say3.text = "70"

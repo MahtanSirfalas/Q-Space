@@ -2,13 +2,14 @@ package com.ust.spaceq
 
 import android.app.Activity
 import android.content.Intent
+import android.graphics.drawable.AnimationDrawable
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.provider.MediaStore
 import android.util.Log
-import com.google.firebase.database.DatabaseReference
-import com.google.firebase.database.FirebaseDatabase
+import androidx.constraintlayout.widget.ConstraintLayout
+import com.google.firebase.database.*
 import com.google.firebase.storage.FirebaseStorage
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.activity_profile.*
@@ -16,6 +17,7 @@ import kotlinx.android.synthetic.main.activity_profile.*
 private lateinit var nick:String
 private lateinit var database: FirebaseDatabase
 private lateinit var commsReference: DatabaseReference
+private lateinit var userRef: DatabaseReference
 
 class ProfileActivity : AppCompatActivity() {
     val TAG = "ProfileActivity"
@@ -23,9 +25,29 @@ class ProfileActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_profile)
 
+        val constraintLayout = findViewById<ConstraintLayout>(R.id.layoutbg)
+        val animationDrawable = constraintLayout.background as AnimationDrawable
+        animationDrawable.setEnterFadeDuration(2000)
+        animationDrawable.setExitFadeDuration(4000)
+        animationDrawable.start()
+
         nick = intent.getStringExtra("tvName")
         database = FirebaseDatabase.getInstance()
         commsReference = database.reference.child("Posts")
+        userRef = database.reference.child("Users/$uid")
+
+        userRef.addListenerForSingleValueEvent(object:ValueEventListener{
+            override fun onCancelled(p0: DatabaseError) {
+            }
+
+            override fun onDataChange(p0: DataSnapshot) {
+                val userLevel = p0.child("level").value
+                val userPoints = p0.child("points").value
+                textLevel.text = "Level: " + userLevel.toString()
+                textPoints.text = "Total Points: " + userPoints.toString()
+            }
+
+        })
 
         textName.text = "Username: "+ nick
         textMail.text = "E-Mail: "+ email

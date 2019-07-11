@@ -1,23 +1,22 @@
 package com.ust.spaceq
 
 import android.annotation.TargetApi
-import android.content.Context
 import android.content.Intent
+import android.graphics.drawable.AnimationDrawable
 import android.os.Build
 import android.os.Bundle
-import android.os.SystemClock
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
+import androidx.constraintlayout.widget.ConstraintLayout
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
 import com.squareup.picasso.Picasso
 
 import kotlinx.android.synthetic.main.activity_main.*
-import java.io.File
 
 private lateinit var firebaseAnalytics: FirebaseAnalytics
 private lateinit var auth: FirebaseAuth
@@ -44,6 +43,11 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
         setSupportActionBar(toolbar)
 
+        val constraintLayout = findViewById<ConstraintLayout>(R.id.layoutbg)
+        val animationDrawable = constraintLayout.background as AnimationDrawable
+        animationDrawable.setEnterFadeDuration(2000)
+        animationDrawable.setExitFadeDuration(4000)
+        animationDrawable.start()
 
         firebaseAnalytics = FirebaseAnalytics.getInstance(this)
         auth = FirebaseAuth.getInstance()
@@ -216,4 +220,5 @@ class MainActivity : AppCompatActivity() {
 //            }
 //        }
 //    }
+
 }
