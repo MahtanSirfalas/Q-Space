@@ -5,7 +5,7 @@
                                                    android:background="@color/colorSpaceWhite"
                                                    android:layout_width="match_parent"
                                                    android:layout_height="wrap_content" android:padding="8dp"
-                                                   android:layout_margin="8dp" android:id="@+id/itemView">
+                                                   android:layout_margin="8dp" android:id="@+id/ivScreen">
 
     <de.hdodenhof.circleimageview.CircleImageView
             xmlns:app="http://schemas.android.com/apk/res-auto"

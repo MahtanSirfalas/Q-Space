@@ -82,23 +82,40 @@ class CommentActivity : AppCompatActivity() {
                                 val itemRef = database.getReference("/Posts/$levelKey/$key")
                                 val upvotes = it.child("upvotes").value as MutableList<String>
                                 val found = upvotes.contains(uid)
+                                var upvoteCount = it.child("upvoteCount").value as Long
+                                var ordernum = it.child("order").value as Long
+                                val postUid = it.child("uid").value as String
 
                                 if (found){
-                                    Log.d(TAG, "$uid found in upvoters")
-                                    Toast.makeText(baseContext, "You already liked the comment",Toast.LENGTH_SHORT).show()
+                                    //Removing upvote from the specific comment
+                                    if (postUid == uid){
+                                        Log.d(TAG, "Users' post")
+                                        Toast.makeText(baseContext, "Own comment is not Votable!", Toast.LENGTH_SHORT).show()
+                                    }else{
+                                        var count = upvoteCount-1
+                                        itemRef.child("upvoteCount").setValue(count)
+                                        itemRef.child("order").setValue(ordernum+1)
+                                        upvotes.remove(uid)
+                                        itemRef.child("upvotes").setValue(upvotes)
+                                        view?.tvUpvotes?.setBackgroundColor(Color.TRANSPARENT)
+                                        fetchComments()
+                                        Log.d(TAG, "$uid found in upvoters, taken back!")
+                                        Toast.makeText(baseContext, "You Took Back Upvote",Toast.LENGTH_SHORT).show()
+                                    }
+
                                 }else{
-                                    var upvoteCount = it.child("upvoteCount").value as Long
+                                    //Upvoting the specific comment
                                     var count = upvoteCount+1
                                     itemRef.child("upvoteCount").setValue(count)
-                                    var ordernum = it.child("order").value as Long
                                     itemRef.child("order").setValue(ordernum-1)
                                     Log.d(TAG, "upvoteCount raised!; key= $key count = $count")
+                                    upvotes.add(uid)
                                     if (view != null) {
                                         val hologreen = resources.getColor(R.color.hologreen)
-                                        view.tvUpvotes.setTextColor(hologreen)
+                                        view.tvUpvotes.setBackgroundColor(hologreen)
                                     }
-                                    upvotes.add(uid)
                                     itemRef.child("upvotes").setValue(upvotes)
+                                    fetchComments()
                                     Log.d(TAG, "upvotes UPDATED, ${it.child("upvotes").value}")
                                 }
 
@@ -109,7 +126,6 @@ class CommentActivity : AppCompatActivity() {
                     }
 
                 })
-                Toast.makeText(baseContext,"Loooong Click $position",Toast.LENGTH_SHORT).show()
 
             }
         }))
@@ -168,7 +184,7 @@ class CommentActivity : AppCompatActivity() {
 }
 
 class PostItem(val post: Post): Item<ViewHolder>(){
-    val TAG = "CommentActivity"
+    val TAG = "ComentActivity:PostItem"
     override fun bind(viewHolder: ViewHolder, position: Int) {
         viewHolder.itemView.tvComment.text = post.post
         viewHolder.itemView.tvName.text = post.nickName
@@ -193,8 +209,12 @@ class PostItem(val post: Post): Item<ViewHolder>(){
         })
         val found = post.upvotes.contains(uid)
         if (found){
-            val hologreen = Color.GREEN
-            viewHolder.itemView.tvUpvotes.setBackgroundColor(hologreen)
+            if (post.uid == uid){
+                viewHolder.itemView.tvName.setBackgroundColor(Color.CYAN)
+                Log.d(TAG, "User's own comment detected!")
+            }else{
+                viewHolder.itemView.tvUpvotes.setBackgroundColor(Color.GREEN)
+            }
         }else{
             Log.d(TAG, "No Upvote")
         }
