@@ -1,16 +1,12 @@
 package com.ust.spaceq
 
-import android.annotation.SuppressLint
 import android.content.Intent
-import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
-import com.google.android.material.snackbar.Snackbar
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.AppCompatButton
+import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
@@ -50,28 +46,33 @@ class LvlActivity : AppCompatActivity() {
             }
 
             override fun onDataChange(p0: DataSnapshot) {
-                val stages = p0.child("stages").value as HashMap<*, *>
-                val stage = stages.keys
-                Log.d(TAG, "STAGES; $stages STAGE= $stage")
+                if (p0.child("stages").exists()){
+                    val stages = p0.child("stages").value as HashMap<*, *>
+                    val stage = stages.keys
+                    Log.d(TAG, "STAGES; $stages STAGE= $stage")
 
-                if (stage.contains("Stage 1")){
-                    val control = p0.child("stages/Stage 1/control").value as Boolean
-                    if (control){
-                        Log.d(TAG, "Stage 1: Pass")
-                    }else{
-                        buttL1.setBackgroundResource(R.drawable.custom_butt_lvl)
-                        Log.d(TAG, "Stage 1: Finished")
-                    }
-                }else{}
-                if (stage.contains("Stage 2")){
-                    val control = p0.child("stages/Stage 2/control").value as Boolean
-                    if (control){
-                        Log.d(TAG, "Stage 2: Pass")
-                    }else{
-                        buttL2.setBackgroundResource(R.drawable.custom_butt_lvl)
-                        Log.d(TAG, "Stage 2: Finished")
-                    }
-                }else{}
+                    if (stage.contains("Stage 1")){
+                        val control = p0.child("stages/Stage 1/control").value as Boolean
+                        if (control){
+                            Log.d(TAG, "Stage 1: Pass")
+                        }else{
+                            buttL1.setBackgroundResource(R.drawable.custom_butt_lvl)
+                            Log.d(TAG, "Stage 1: Finished")
+                        }
+                    }else{}
+                    if (stage.contains("Stage 2")){
+                        val control = p0.child("stages/Stage 2/control").value as Boolean
+                        if (control){
+                            Log.d(TAG, "Stage 2: Pass")
+                        }else{
+                            buttL2.setBackgroundResource(R.drawable.custom_butt_lvl)
+                            Log.d(TAG, "Stage 2: Finished")
+                        }
+                    }else{}
+                }else{
+                    Log.d(TAG, "stages doesn't exist yet!")
+                }
+
             }
 
         })

@@ -1,11 +1,16 @@
 package com.ust.spaceq
 
+import android.annotation.TargetApi
 import android.content.Intent
+import android.graphics.Color
 import android.graphics.drawable.AnimationDrawable
+import android.graphics.drawable.ColorDrawable
+import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
+import android.view.MotionEvent
 import android.view.View
 import android.widget.ImageView
 import android.widget.PopupWindow
@@ -104,6 +109,8 @@ class OrderedActivity : AppCompatActivity() {
             }
             val window = PopupWindow(this)
             val show = layoutInflater.inflate(R.layout.layout_popup, null)
+            window.isOutsideTouchable = true
+
 
             stageRef.addListenerForSingleValueEvent(object:ValueEventListener{
                 override fun onCancelled(p0: DatabaseError) {
@@ -128,13 +135,20 @@ class OrderedActivity : AppCompatActivity() {
                                     userRef.child("points").setValue(points)
                                 }
                             })
-
+//                            window.setTouchInterceptor(View.OnTouchListener { v, event ->
+//                                if (event.action == MotionEvent.ACTION_OUTSIDE) {
+//                                    window.dismiss()
+//                                }
+//                                false
+//                            })
+//                            window.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
                             window.contentView = show
                             val imageShow = show.findViewById<ImageView>(R.id.iv_spaceMedal)
                             imageShow.setOnClickListener{
                                 window.dismiss()
                             }
                             window.showAtLocation(buttAnswer1,1,0,100)
+
 
                             Log.d(TAG, "$levelKey: Answer ($uAnswer) is equal to $answer; Accepted!")
                             Toast.makeText(baseContext, "Bravo! answer is accepted!", Toast.LENGTH_SHORT).show()

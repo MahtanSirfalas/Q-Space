@@ -130,7 +130,7 @@
                         app:layout_constraintBottom_toTopOf="@+id/buttInfo"
                         app:layout_constraintStart_toStartOf="parent" android:layout_marginEnd="8dp"
                         app:layout_constraintEnd_toStartOf="@+id/buttProfil"
-                        app:layout_constraintTop_toBottomOf="@+id/buttProfil"/>
+                        app:layout_constraintTop_toBottomOf="@+id/buttProfil" android:onClick="showSuggestQ"/>
                 <ImageView
                         android:layout_width="96dp"
                         android:layout_height="96dp" app:srcCompat="@drawable/jupiterbutt100"

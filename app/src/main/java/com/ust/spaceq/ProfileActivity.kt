@@ -14,7 +14,6 @@ import com.google.firebase.storage.FirebaseStorage
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.activity_profile.*
 
-private lateinit var nick:String
 private lateinit var database: FirebaseDatabase
 private lateinit var commsReference: DatabaseReference
 private lateinit var userRef: DatabaseReference
@@ -31,7 +30,6 @@ class ProfileActivity : AppCompatActivity() {
         animationDrawable.setExitFadeDuration(4000)
         animationDrawable.start()
 
-        nick = intent.getStringExtra("tvName")
         database = FirebaseDatabase.getInstance()
         commsReference = database.reference.child("Posts")
         userRef = database.reference.child("Users/$uid")
@@ -49,7 +47,7 @@ class ProfileActivity : AppCompatActivity() {
 
         })
 
-        textName.text = "Username: "+ nick
+        textName.text = "Username: "+ uName
         textMail.text = "E-Mail: "+ email
 
         buttAvatar.setOnClickListener {

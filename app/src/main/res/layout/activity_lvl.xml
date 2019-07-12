@@ -55,7 +55,7 @@
                         app:layout_constraintTop_toTopOf="parent" android:layout_marginBottom="8dp"
                         app:layout_constraintBottom_toTopOf="@+id/buttL2"
                         app:layout_constraintEnd_toStartOf="@+id/buttL6" android:layout_marginEnd="16dp"
-                        android:background="@drawable/custom_button_login" android:textColor="@color/colorSpaceWhite"
+                        android:background="@drawable/custom_butt_stage" android:textColor="@color/colorSpaceWhite"
                         android:textColorHighlight="@color/colorAccent" android:textColorHint="@color/colorSpaceWhite"
                         android:fontFamily="@font/press_start_2p" android:onClick="showStage1"/>
                 <androidx.appcompat.widget.AppCompatButton
@@ -67,7 +67,7 @@
                         android:layout_marginBottom="8dp"
                         app:layout_constraintBottom_toTopOf="@+id/buttL3" app:layout_constraintStart_toStartOf="parent"
                         android:layout_marginStart="16dp" app:layout_constraintEnd_toStartOf="@+id/buttL7"
-                        android:layout_marginEnd="16dp" android:background="@drawable/custom_button_login"
+                        android:layout_marginEnd="16dp" android:background="@drawable/custom_butt_stage"
                         android:textColor="@color/colorSpaceWhite" android:textColorHighlight="@color/colorAccent"
                         android:textColorHint="@color/colorSpaceWhite" android:fontFamily="@font/press_start_2p"
                         android:onClick="showStage2"/>
@@ -81,7 +81,7 @@
                         app:layout_constraintBottom_toTopOf="@+id/buttL4"
                         app:layout_constraintEnd_toStartOf="@+id/buttL8" app:layout_constraintStart_toStartOf="parent"
                         android:layout_marginEnd="16dp" android:layout_marginStart="16dp"
-                        android:background="@drawable/custom_button_login" android:textColor="@color/colorSpaceWhite"
+                        android:background="@drawable/custom_butt_stage" android:textColor="@color/colorSpaceWhite"
                         android:textColorHighlight="@color/colorAccent" android:textColorHint="@color/colorSpaceWhite"
                         android:fontFamily="@font/press_start_2p"/>
                 <Button
@@ -93,7 +93,7 @@
                         android:layout_marginBottom="8dp"
                         app:layout_constraintBottom_toTopOf="@+id/buttL5" app:layout_constraintStart_toStartOf="parent"
                         android:layout_marginStart="16dp" app:layout_constraintEnd_toStartOf="@+id/buttL9"
-                        android:layout_marginEnd="16dp" android:background="@drawable/custom_button_login"
+                        android:layout_marginEnd="16dp" android:background="@drawable/custom_butt_stage"
                         android:textColor="@color/colorSpaceWhite" android:textColorHighlight="@color/colorAccent"
                         android:textColorHint="@color/colorSpaceWhite" android:fontFamily="@font/press_start_2p"/>
                 <Button
@@ -106,7 +106,7 @@
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintStart_toStartOf="parent" android:layout_marginStart="16dp"
                         app:layout_constraintEnd_toStartOf="@+id/buttL10" android:layout_marginEnd="16dp"
-                        android:background="@drawable/custom_button_login" android:textColor="@color/colorSpaceWhite"
+                        android:background="@drawable/custom_butt_stage" android:textColor="@color/colorSpaceWhite"
                         android:textColorHighlight="@color/colorAccent" android:textColorHint="@color/colorSpaceWhite"
                         android:fontFamily="@font/press_start_2p"/>
                 <Button
@@ -118,7 +118,7 @@
                         app:layout_constraintBottom_toTopOf="@+id/buttL7" android:layout_marginTop="8dp"
                         android:layout_marginStart="16dp" android:layout_marginBottom="8dp"
                         app:layout_constraintEnd_toStartOf="@+id/buttL11" android:layout_marginEnd="16dp"
-                        android:background="@drawable/custom_button_login" android:textColor="@color/colorSpaceWhite"
+                        android:background="@drawable/custom_butt_stage" android:textColor="@color/colorSpaceWhite"
                         android:textColorHighlight="@color/colorAccent" android:textColorHint="@color/colorSpaceWhite"
                         android:fontFamily="@font/press_start_2p"/>
                 <Button
@@ -131,7 +131,7 @@
                         android:layout_marginBottom="8dp"
                         app:layout_constraintBottom_toTopOf="@+id/buttL8" android:layout_marginStart="16dp"
                         app:layout_constraintEnd_toStartOf="@+id/buttL12" android:layout_marginEnd="16dp"
-                        android:background="@drawable/custom_button_login" android:textColor="@color/colorSpaceWhite"
+                        android:background="@drawable/custom_butt_stage" android:textColor="@color/colorSpaceWhite"
                         android:textColorHighlight="@color/colorAccent" android:textColorHint="@color/colorSpaceWhite"
                         android:fontFamily="@font/press_start_2p"/>
                 <Button
@@ -144,7 +144,7 @@
                         android:layout_marginBottom="8dp"
                         app:layout_constraintBottom_toTopOf="@+id/buttL9" android:layout_marginStart="16dp"
                         app:layout_constraintEnd_toStartOf="@+id/buttL13" android:layout_marginEnd="16dp"
-                        android:background="@drawable/custom_button_login" android:textColor="@color/colorSpaceWhite"
+                        android:background="@drawable/custom_butt_stage" android:textColor="@color/colorSpaceWhite"
                         android:textColorHighlight="@color/colorAccent" android:textColorHint="@color/colorSpaceWhite"
                         android:fontFamily="@font/press_start_2p"/>
                 <Button
@@ -155,7 +155,7 @@
                         app:layout_constraintTop_toBottomOf="@id/buttL8" app:layout_constraintStart_toEndOf="@id/buttL4"
                         android:layout_marginTop="8dp" android:layout_marginStart="16dp"
                         android:layout_marginBottom="8dp" app:layout_constraintEnd_toStartOf="@+id/buttL14"
-                        android:layout_marginEnd="16dp" android:background="@drawable/custom_button_login"
+                        android:layout_marginEnd="16dp" android:background="@drawable/custom_butt_stage"
                         android:textColor="@color/colorSpaceWhite" android:textColorHighlight="@color/colorAccent"
                         android:textColorHint="@color/colorSpaceWhite" android:fontFamily="@font/press_start_2p"/>
                 <Button
@@ -167,7 +167,7 @@
                         app:layout_constraintTop_toBottomOf="@+id/buttL9"
                         app:layout_constraintBottom_toBottomOf="parent"
                         android:layout_marginBottom="8dp" app:layout_constraintEnd_toStartOf="@+id/buttL15"
-                        android:layout_marginEnd="16dp" android:background="@drawable/custom_button_login"
+                        android:layout_marginEnd="16dp" android:background="@drawable/custom_butt_stage"
                         android:textColor="@color/colorSpaceWhite" android:textColorHighlight="@color/colorAccent"
                         android:textColorHint="@color/colorSpaceWhite" android:fontFamily="@font/press_start_2p"/>
                 <Button
@@ -180,7 +180,7 @@
                         app:layout_constraintEnd_toStartOf="@id/buttL16"
                         android:layout_marginBottom="8dp"
                         android:layout_marginStart="16dp" android:layout_marginEnd="16dp"
-                        android:background="@drawable/custom_button_login" android:textColor="@color/colorSpaceWhite"
+                        android:background="@drawable/custom_butt_stage" android:textColor="@color/colorSpaceWhite"
                         android:textColorHighlight="@color/colorAccent" android:textColorHint="@color/colorSpaceWhite"
                         android:fontFamily="@font/press_start_2p"/>
                 <Button
@@ -192,7 +192,7 @@
                         app:layout_constraintTop_toBottomOf="@+id/buttL11"
                         app:layout_constraintStart_toEndOf="@+id/buttL7" android:layout_marginStart="16dp"
                         android:layout_marginBottom="8dp" app:layout_constraintBottom_toTopOf="@+id/buttL13"
-                        android:layout_marginEnd="16dp" android:background="@drawable/custom_button_login"
+                        android:layout_marginEnd="16dp" android:background="@drawable/custom_butt_stage"
                         android:textColor="@color/colorSpaceWhite" android:textColorHighlight="@color/colorAccent"
                         android:textColorHint="@color/colorSpaceWhite" android:fontFamily="@font/press_start_2p"/>
                 <Button
@@ -204,7 +204,7 @@
                         app:layout_constraintStart_toEndOf="@+id/buttL8" android:layout_marginTop="8dp"
                         app:layout_constraintTop_toBottomOf="@+id/buttL12" android:layout_marginBottom="8dp"
                         app:layout_constraintBottom_toTopOf="@+id/buttL14" android:layout_marginEnd="16dp"
-                        android:background="@drawable/custom_button_login" android:textColor="@color/colorSpaceWhite"
+                        android:background="@drawable/custom_butt_stage" android:textColor="@color/colorSpaceWhite"
                         android:textColorHighlight="@color/colorAccent" android:textColorHint="@color/colorSpaceWhite"
                         android:fontFamily="@font/press_start_2p"/>
                 <Button
@@ -216,7 +216,7 @@
                         app:layout_constraintBottom_toTopOf="@id/buttL15"
                         app:layout_constraintStart_toEndOf="@id/buttL9" android:layout_marginTop="8dp"
                         android:layout_marginStart="16dp" android:layout_marginBottom="8dp"
-                        android:layout_marginEnd="16dp" android:background="@drawable/custom_button_login"
+                        android:layout_marginEnd="16dp" android:background="@drawable/custom_butt_stage"
                         android:textColor="@color/colorSpaceWhite" android:textColorHighlight="@color/colorAccent"
                         android:textColorHint="@color/colorSpaceWhite" android:fontFamily="@font/press_start_2p"/>
                 <Button
@@ -228,7 +228,7 @@
                         app:layout_constraintEnd_toStartOf="@id/buttL20"
                         app:layout_constraintStart_toEndOf="@id/buttL10" android:layout_marginTop="8dp"
                         android:layout_marginStart="16dp" android:layout_marginBottom="8dp"
-                        android:layout_marginEnd="16dp" android:background="@drawable/custom_button_login"
+                        android:layout_marginEnd="16dp" android:background="@drawable/custom_butt_stage"
                         android:textColor="@color/colorSpaceWhite" android:textColorHighlight="@color/colorAccent"
                         android:textColorHint="@color/colorSpaceWhite" android:fontFamily="@font/press_start_2p"/>
                 <Button
@@ -240,7 +240,7 @@
                         app:layout_constraintBottom_toTopOf="@id/buttL17"
                         app:layout_constraintTop_toTopOf="parent" android:layout_marginTop="8dp"
                         android:layout_marginStart="16dp" android:layout_marginEnd="16dp"
-                        android:layout_marginBottom="8dp" android:background="@drawable/custom_button_login"
+                        android:layout_marginBottom="8dp" android:background="@drawable/custom_butt_stage"
                         android:textColor="@color/colorSpaceWhite" android:textColorHighlight="@color/colorAccent"
                         android:textColorHint="@color/colorSpaceWhite" android:fontFamily="@font/press_start_2p"/>
                 <Button
@@ -252,7 +252,7 @@
                         app:layout_constraintBottom_toTopOf="@id/buttL18"
                         app:layout_constraintStart_toEndOf="@id/buttL12" android:layout_marginTop="8dp"
                         android:layout_marginEnd="16dp" android:layout_marginBottom="8dp"
-                        android:layout_marginStart="16dp" android:background="@drawable/custom_button_login"
+                        android:layout_marginStart="16dp" android:background="@drawable/custom_butt_stage"
                         android:textColor="@color/colorSpaceWhite" android:textColorHighlight="@color/colorAccent"
                         android:textColorHint="@color/colorSpaceWhite" android:fontFamily="@font/press_start_2p"/>
                 <Button
@@ -264,7 +264,7 @@
                         app:layout_constraintBottom_toTopOf="@id/buttL19"
                         app:layout_constraintStart_toEndOf="@id/buttL13" android:layout_marginTop="8dp"
                         android:layout_marginEnd="16dp" android:layout_marginStart="16dp"
-                        android:layout_marginBottom="8dp" android:background="@drawable/custom_button_login"
+                        android:layout_marginBottom="8dp" android:background="@drawable/custom_butt_stage"
                         android:textColor="@color/colorSpaceWhite" android:textColorHighlight="@color/colorAccent"
                         android:textColorHint="@color/colorSpaceWhite" android:fontFamily="@font/press_start_2p"/>
                 <Button
@@ -276,7 +276,7 @@
                         app:layout_constraintBottom_toTopOf="@id/buttL20"
                         app:layout_constraintStart_toEndOf="@id/buttL14" android:layout_marginTop="8dp"
                         android:layout_marginEnd="16dp" android:layout_marginStart="16dp"
-                        android:layout_marginBottom="8dp" android:background="@drawable/custom_button_login"
+                        android:layout_marginBottom="8dp" android:background="@drawable/custom_butt_stage"
                         android:textColor="@color/colorSpaceWhite" android:textColorHighlight="@color/colorAccent"
                         android:textColorHint="@color/colorSpaceWhite" android:fontFamily="@font/press_start_2p"/>
                 <Button
@@ -288,7 +288,7 @@
                         app:layout_constraintStart_toEndOf="@id/buttL15"
                         app:layout_constraintBottom_toBottomOf="parent" android:layout_marginTop="8dp"
                         android:layout_marginStart="16dp" android:layout_marginBottom="8dp"
-                        android:layout_marginEnd="16dp" android:background="@drawable/custom_button_login"
+                        android:layout_marginEnd="16dp" android:background="@drawable/custom_butt_stage"
                         android:textColor="@color/colorSpaceWhite" android:textColorHighlight="@color/colorAccent"
                         android:textColorHint="@color/colorSpaceWhite" android:fontFamily="@font/press_start_2p"/>
                 <Button
@@ -300,7 +300,7 @@
                         app:layout_constraintEnd_toStartOf="@id/buttL26"
                         app:layout_constraintTop_toTopOf="parent" android:layout_marginTop="8dp"
                         android:layout_marginStart="16dp" android:layout_marginEnd="16dp"
-                        android:layout_marginBottom="8dp" android:background="@drawable/custom_button_login"
+                        android:layout_marginBottom="8dp" android:background="@drawable/custom_butt_stage"
                         android:textColor="@color/colorSpaceWhite" android:textColorHighlight="@color/colorAccent"
                         android:textColorHint="@color/colorSpaceWhite" android:fontFamily="@font/press_start_2p"/>
                 <Button
@@ -312,7 +312,7 @@
                         app:layout_constraintStart_toEndOf="@id/buttL17"
                         app:layout_constraintTop_toBottomOf="@id/buttL21" android:layout_marginTop="8dp"
                         android:layout_marginStart="16dp" android:layout_marginEnd="16dp"
-                        android:layout_marginBottom="8dp" android:background="@drawable/custom_button_login"
+                        android:layout_marginBottom="8dp" android:background="@drawable/custom_butt_stage"
                         android:textColor="@color/colorSpaceWhite" android:textColorHighlight="@color/colorAccent"
                         android:textColorHint="@color/colorSpaceWhite" android:fontFamily="@font/press_start_2p"/>
                 <Button
@@ -324,7 +324,7 @@
                         app:layout_constraintBottom_toTopOf="@id/buttL24"
                         app:layout_constraintTop_toBottomOf="@id/buttL22" android:layout_marginTop="8dp"
                         android:layout_marginStart="16dp" android:layout_marginEnd="16dp"
-                        android:layout_marginBottom="8dp" android:background="@drawable/custom_button_login"
+                        android:layout_marginBottom="8dp" android:background="@drawable/custom_butt_stage"
                         android:textColor="@color/colorSpaceWhite" android:textColorHighlight="@color/colorAccent"
                         android:textColorHint="@color/colorSpaceWhite" android:fontFamily="@font/press_start_2p"/>
                 <Button
@@ -336,7 +336,7 @@
                         app:layout_constraintBottom_toTopOf="@id/buttL25"
                         app:layout_constraintTop_toBottomOf="@id/buttL23" android:layout_marginTop="8dp"
                         android:layout_marginStart="16dp" android:layout_marginEnd="16dp"
-                        android:layout_marginBottom="8dp" android:background="@drawable/custom_button_login"
+                        android:layout_marginBottom="8dp" android:background="@drawable/custom_butt_stage"
                         android:textColor="@color/colorSpaceWhite" android:textColorHighlight="@color/colorAccent"
                         android:textColorHint="@color/colorSpaceWhite" android:fontFamily="@font/press_start_2p"/>
                 <Button
@@ -350,7 +350,7 @@
                         android:layout_marginTop="8dp"
                         android:layout_marginStart="16dp"
                         android:layout_marginBottom="8dp"
-                        android:layout_marginEnd="16dp" android:background="@drawable/custom_button_login"
+                        android:layout_marginEnd="16dp" android:background="@drawable/custom_butt_stage"
                         android:textColor="@color/colorSpaceWhite" android:textColorHighlight="@color/colorAccent"
                         android:textColorHint="@color/colorSpaceWhite" android:fontFamily="@font/press_start_2p"/>
                 <Button
@@ -362,7 +362,7 @@
                         app:layout_constraintEnd_toStartOf="@id/buttL31"
                         app:layout_constraintTop_toTopOf="parent" android:layout_marginTop="8dp"
                         android:layout_marginStart="16dp" android:layout_marginBottom="8dp"
-                        android:layout_marginEnd="16dp" android:background="@drawable/custom_button_login"
+                        android:layout_marginEnd="16dp" android:background="@drawable/custom_butt_stage"
                         android:textColor="@color/colorSpaceWhite" android:textColorHighlight="@color/colorAccent"
                         android:textColorHint="@color/colorSpaceWhite" android:fontFamily="@font/press_start_2p"/>
                 <Button
@@ -374,7 +374,7 @@
                         app:layout_constraintEnd_toStartOf="@id/buttL32"
                         app:layout_constraintTop_toBottomOf="@id/buttL26" android:layout_marginTop="8dp"
                         android:layout_marginStart="16dp" android:layout_marginBottom="8dp"
-                        android:layout_marginEnd="16dp" android:background="@drawable/custom_button_login"
+                        android:layout_marginEnd="16dp" android:background="@drawable/custom_butt_stage"
                         android:textColor="@color/colorSpaceWhite" android:textColorHighlight="@color/colorAccent"
                         android:textColorHint="@color/colorSpaceWhite" android:fontFamily="@font/press_start_2p"/>
                 <Button
@@ -386,7 +386,7 @@
                         app:layout_constraintEnd_toStartOf="@id/buttL33"
                         app:layout_constraintTop_toBottomOf="@id/buttL27" android:layout_marginTop="8dp"
                         android:layout_marginStart="16dp" android:layout_marginBottom="8dp"
-                        android:layout_marginEnd="16dp" android:background="@drawable/custom_button_login"
+                        android:layout_marginEnd="16dp" android:background="@drawable/custom_butt_stage"
                         android:textColor="@color/colorSpaceWhite" android:textColorHighlight="@color/colorAccent"
                         android:textColorHint="@color/colorSpaceWhite" android:fontFamily="@font/press_start_2p"/>
                 <Button
@@ -399,7 +399,7 @@
                         app:layout_constraintTop_toBottomOf="@id/buttL28" android:layout_marginTop="8dp"
                         android:layout_marginStart="16dp"
                         android:layout_marginBottom="8dp"
-                        android:layout_marginEnd="16dp" android:background="@drawable/custom_button_login"
+                        android:layout_marginEnd="16dp" android:background="@drawable/custom_butt_stage"
                         android:textColor="@color/colorSpaceWhite" android:textColorHighlight="@color/colorAccent"
                         android:textColorHint="@color/colorSpaceWhite" android:fontFamily="@font/press_start_2p"/>
                 <Button
@@ -411,7 +411,7 @@
                         app:layout_constraintEnd_toStartOf="@id/buttL35"
                         app:layout_constraintTop_toBottomOf="@id/buttL29" android:layout_marginTop="8dp"
                         android:layout_marginStart="16dp" android:layout_marginBottom="8dp"
-                        android:layout_marginEnd="16dp" android:background="@drawable/custom_button_login"
+                        android:layout_marginEnd="16dp" android:background="@drawable/custom_butt_stage"
                         android:textColor="@color/colorSpaceWhite" android:textColorHighlight="@color/colorAccent"
                         android:textColorHint="@color/colorSpaceWhite" android:fontFamily="@font/press_start_2p"/>
                 <Button
@@ -423,7 +423,7 @@
                         app:layout_constraintStart_toEndOf="@id/buttL26"
                         app:layout_constraintTop_toTopOf="parent" android:layout_marginTop="8dp"
                         android:layout_marginStart="16dp" android:layout_marginEnd="16dp"
-                        android:layout_marginBottom="8dp" android:background="@drawable/custom_button_login"
+                        android:layout_marginBottom="8dp" android:background="@drawable/custom_butt_stage"
                         android:textColor="@color/colorSpaceWhite" android:textColorHighlight="@color/colorAccent"
                         android:textColorHint="@color/colorSpaceWhite" android:fontFamily="@font/press_start_2p"/>
                 <Button
@@ -438,7 +438,7 @@
                         app:layout_constraintBottom_toTopOf="@id/buttL33"
                         app:layout_constraintStart_toEndOf="@id/buttL27"
                         app:layout_constraintTop_toBottomOf="@id/buttL31"
-                        android:background="@drawable/custom_button_login" android:textColor="@color/colorSpaceWhite"
+                        android:background="@drawable/custom_butt_stage" android:textColor="@color/colorSpaceWhite"
                         android:textColorHighlight="@color/colorAccent" android:textColorHint="@color/colorSpaceWhite"
                         android:fontFamily="@font/press_start_2p"/>
                 <Button
@@ -453,7 +453,7 @@
                         app:layout_constraintBottom_toTopOf="@id/buttL34"
                         app:layout_constraintStart_toEndOf="@id/buttL28"
                         app:layout_constraintTop_toBottomOf="@id/buttL32"
-                        android:background="@drawable/custom_button_login" android:textColor="@color/colorSpaceWhite"
+                        android:background="@drawable/custom_butt_stage" android:textColor="@color/colorSpaceWhite"
                         android:textColorHighlight="@color/colorAccent" android:textColorHint="@color/colorSpaceWhite"
                         android:fontFamily="@font/press_start_2p"/>
                 <Button
@@ -468,7 +468,7 @@
                         app:layout_constraintBottom_toTopOf="@id/buttL35"
                         app:layout_constraintStart_toEndOf="@id/buttL29"
                         app:layout_constraintTop_toBottomOf="@id/buttL33"
-                        android:background="@drawable/custom_button_login" android:textColor="@color/colorSpaceWhite"
+                        android:background="@drawable/custom_butt_stage" android:textColor="@color/colorSpaceWhite"
                         android:textColorHighlight="@color/colorAccent" android:textColorHint="@color/colorSpaceWhite"
                         android:fontFamily="@font/press_start_2p"/>
                 <Button
@@ -483,7 +483,7 @@
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintStart_toEndOf="@id/buttL30"
                         app:layout_constraintTop_toBottomOf="@id/buttL34"
-                        android:background="@drawable/custom_button_login" android:textColor="@color/colorSpaceWhite"
+                        android:background="@drawable/custom_butt_stage" android:textColor="@color/colorSpaceWhite"
                         android:textColorHighlight="@color/colorAccent" android:textColorHint="@color/colorSpaceWhite"
                         android:fontFamily="@font/press_start_2p"/>
                 <Button
@@ -498,7 +498,7 @@
                         app:layout_constraintStart_toEndOf="@id/buttL31"
                         app:layout_constraintBottom_toTopOf="@id/buttL37"
                         app:layout_constraintEnd_toStartOf="@id/buttL41"
-                        android:background="@drawable/custom_button_login" android:textColor="@color/colorSpaceWhite"
+                        android:background="@drawable/custom_butt_stage" android:textColor="@color/colorSpaceWhite"
                         android:textColorHighlight="@color/colorAccent" android:textColorHint="@color/colorSpaceWhite"
                         android:fontFamily="@font/press_start_2p"/>
                 <Button
@@ -513,7 +513,7 @@
                         app:layout_constraintStart_toEndOf="@id/buttL32"
                         app:layout_constraintBottom_toTopOf="@id/buttL38"
                         app:layout_constraintEnd_toStartOf="@id/buttL42"
-                        android:background="@drawable/custom_button_login" android:textColor="@color/colorSpaceWhite"
+                        android:background="@drawable/custom_butt_stage" android:textColor="@color/colorSpaceWhite"
                         android:textColorHighlight="@color/colorAccent" android:textColorHint="@color/colorSpaceWhite"
                         android:fontFamily="@font/press_start_2p"/>
                 <Button
@@ -528,7 +528,7 @@
                         app:layout_constraintStart_toEndOf="@id/buttL33"
                         app:layout_constraintBottom_toTopOf="@id/buttL39"
                         app:layout_constraintEnd_toStartOf="@id/buttL43"
-                        android:background="@drawable/custom_button_login" android:textColor="@color/colorSpaceWhite"
+                        android:background="@drawable/custom_butt_stage" android:textColor="@color/colorSpaceWhite"
                         android:textColorHighlight="@color/colorAccent" android:textColorHint="@color/colorSpaceWhite"
                         android:fontFamily="@font/press_start_2p"/>
                 <Button
@@ -543,7 +543,7 @@
                         app:layout_constraintStart_toEndOf="@id/buttL34"
                         app:layout_constraintBottom_toTopOf="@id/buttL40"
                         app:layout_constraintEnd_toStartOf="@id/buttL44"
-                        android:background="@drawable/custom_button_login" android:textColor="@color/colorSpaceWhite"
+                        android:background="@drawable/custom_butt_stage" android:textColor="@color/colorSpaceWhite"
                         android:textColorHighlight="@color/colorAccent" android:textColorHint="@color/colorSpaceWhite"
                         android:fontFamily="@font/press_start_2p"/>
                 <Button
@@ -558,7 +558,7 @@
                         app:layout_constraintStart_toEndOf="@id/buttL35"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toStartOf="@id/buttL45"
-                        android:background="@drawable/custom_button_login" android:textColor="@color/colorSpaceWhite"
+                        android:background="@drawable/custom_butt_stage" android:textColor="@color/colorSpaceWhite"
                         android:textColorHighlight="@color/colorAccent" android:textColorHint="@color/colorSpaceWhite"
                         android:fontFamily="@font/press_start_2p"/>
                 <Button
@@ -573,7 +573,7 @@
                         app:layout_constraintStart_toEndOf="@id/buttL36"
                         app:layout_constraintBottom_toTopOf="@id/buttL42"
                         app:layout_constraintEnd_toStartOf="@id/buttL46"
-                        android:background="@drawable/custom_button_login" android:textColor="@color/colorSpaceWhite"
+                        android:background="@drawable/custom_butt_stage" android:textColor="@color/colorSpaceWhite"
                         android:textColorHighlight="@color/colorAccent" android:textColorHint="@color/colorSpaceWhite"
                         android:fontFamily="@font/press_start_2p"/>
                 <Button
@@ -588,7 +588,7 @@
                         app:layout_constraintStart_toEndOf="@id/buttL37"
                         app:layout_constraintBottom_toTopOf="@id/buttL43"
                         app:layout_constraintEnd_toStartOf="@id/buttL47"
-                        android:background="@drawable/custom_button_login" android:textColor="@color/colorSpaceWhite"
+                        android:background="@drawable/custom_butt_stage" android:textColor="@color/colorSpaceWhite"
                         android:textColorHighlight="@color/colorAccent" android:textColorHint="@color/colorSpaceWhite"
                         android:fontFamily="@font/press_start_2p"/>
                 <Button
@@ -603,7 +603,7 @@
                         app:layout_constraintStart_toEndOf="@id/buttL38"
                         app:layout_constraintBottom_toTopOf="@id/buttL44"
                         app:layout_constraintEnd_toStartOf="@id/buttL48"
-                        android:background="@drawable/custom_button_login" android:textColor="@color/colorSpaceWhite"
+                        android:background="@drawable/custom_butt_stage" android:textColor="@color/colorSpaceWhite"
                         android:textColorHighlight="@color/colorAccent" android:textColorHint="@color/colorSpaceWhite"
                         android:fontFamily="@font/press_start_2p"/>
                 <Button
@@ -618,7 +618,7 @@
                         app:layout_constraintStart_toEndOf="@id/buttL39"
                         app:layout_constraintBottom_toTopOf="@id/buttL45"
                         app:layout_constraintEnd_toStartOf="@id/buttL49"
-                        android:background="@drawable/custom_button_login" android:textColor="@color/colorSpaceWhite"
+                        android:background="@drawable/custom_butt_stage" android:textColor="@color/colorSpaceWhite"
                         android:textColorHighlight="@color/colorAccent" android:textColorHint="@color/colorSpaceWhite"
                         android:fontFamily="@font/press_start_2p"/>
                 <Button
@@ -633,7 +633,7 @@
                         app:layout_constraintStart_toEndOf="@id/buttL40"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toStartOf="@id/buttL50"
-                        android:background="@drawable/custom_button_login" android:textColor="@color/colorSpaceWhite"
+                        android:background="@drawable/custom_butt_stage" android:textColor="@color/colorSpaceWhite"
                         android:textColorHighlight="@color/colorAccent" android:textColorHint="@color/colorSpaceWhite"
                         android:fontFamily="@font/press_start_2p"/>
                 <Button
@@ -647,7 +647,7 @@
                         app:layout_constraintTop_toTopOf="parent"
                         app:layout_constraintStart_toEndOf="@id/buttL41"
                         app:layout_constraintBottom_toTopOf="@id/buttL47"
-                        app:layout_constraintEnd_toEndOf="parent" android:background="@drawable/custom_button_login"
+                        app:layout_constraintEnd_toEndOf="parent" android:background="@drawable/custom_butt_stage"
                         android:textColor="@color/colorSpaceWhite" android:textColorHighlight="@color/colorAccent"
                         android:textColorHint="@color/colorSpaceWhite" android:fontFamily="@font/press_start_2p"/>
                 <Button
@@ -661,7 +661,7 @@
                         app:layout_constraintTop_toBottomOf="@id/buttL46"
                         app:layout_constraintStart_toEndOf="@id/buttL42"
                         app:layout_constraintBottom_toTopOf="@id/buttL48"
-                        app:layout_constraintEnd_toEndOf="parent" android:background="@drawable/custom_button_login"
+                        app:layout_constraintEnd_toEndOf="parent" android:background="@drawable/custom_butt_stage"
                         android:textColor="@color/colorSpaceWhite" android:textColorHighlight="@color/colorAccent"
                         android:textColorHint="@color/colorSpaceWhite" android:fontFamily="@font/press_start_2p"/>
                 <Button
@@ -675,7 +675,7 @@
                         app:layout_constraintTop_toBottomOf="@id/buttL47"
                         app:layout_constraintStart_toEndOf="@id/buttL43"
                         app:layout_constraintBottom_toTopOf="@id/buttL49"
-                        app:layout_constraintEnd_toEndOf="parent" android:background="@drawable/custom_button_login"
+                        app:layout_constraintEnd_toEndOf="parent" android:background="@drawable/custom_butt_stage"
                         android:textColor="@color/colorSpaceWhite" android:textColorHighlight="@color/colorAccent"
                         android:textColorHint="@color/colorSpaceWhite" android:fontFamily="@font/press_start_2p"/>
                 <Button
@@ -689,7 +689,7 @@
                         app:layout_constraintTop_toBottomOf="@id/buttL48"
                         app:layout_constraintStart_toEndOf="@id/buttL44"
                         app:layout_constraintBottom_toTopOf="@id/buttL50"
-                        app:layout_constraintEnd_toEndOf="parent" android:background="@drawable/custom_button_login"
+                        app:layout_constraintEnd_toEndOf="parent" android:background="@drawable/custom_butt_stage"
                         android:textColor="@color/colorSpaceWhite" android:textColorHighlight="@color/colorAccent"
                         android:textColorHint="@color/colorSpaceWhite" android:fontFamily="@font/press_start_2p"/>
                 <Button
@@ -703,7 +703,7 @@
                         app:layout_constraintTop_toBottomOf="@id/buttL49"
                         app:layout_constraintStart_toEndOf="@id/buttL45"
                         app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent" android:background="@drawable/custom_button_login"
+                        app:layout_constraintEnd_toEndOf="parent" android:background="@drawable/custom_butt_stage"
                         android:textColor="@color/colorSpaceWhite" android:textColorHighlight="@color/colorAccent"
                         android:textColorHint="@color/colorSpaceWhite" android:fontFamily="@font/press_start_2p"/>
             </androidx.constraintlayout.widget.ConstraintLayout>

@@ -29,6 +29,7 @@ private var cevap:Int = 1
 lateinit var email: String
 lateinit var uid: String
 lateinit var avatar: String
+lateinit var uName: String
 
 
 
@@ -63,10 +64,11 @@ class MainActivity : AppCompatActivity() {
 
         userReference.addListenerForSingleValueEvent(object : ValueEventListener {
             override fun onDataChange(p0: DataSnapshot) {
-                tvName.text = p0.child("nickName").value as? String
                 avatar = p0.child("avatar").value as String
                 Picasso.get().load(avatar).into(iv_avatar_circle)
-
+                uName = p0.child("nickName").value as String
+                tvName.text = uName
+                Log.d(TAG, "onCreate: avatar and uName assigned")
             }
             override fun onCancelled(p0: DatabaseError) {}
         })
@@ -114,7 +116,12 @@ class MainActivity : AppCompatActivity() {
     fun showProfile(view: View?){
         Log.d(TAG, "Profile pressed")
         val intent = Intent(this@MainActivity, ProfileActivity::class.java)
-        intent.putExtra("tvName", tvName.text.toString())
+        startActivity(intent)
+    }
+
+    fun showSuggestQ(view: View?){
+        Log.d(TAG, "Suggest-Q pressed")
+        val intent = Intent(this@MainActivity,SuggestActivity::class.java)
         startActivity(intent)
     }
 

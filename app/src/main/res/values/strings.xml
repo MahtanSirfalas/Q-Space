@@ -6,5 +6,6 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="title_activity_lvl">LvlActivity</string>
     <string name="title_activity_ordered">OrderedActivity</string>
+    <string name="title_activity_suggest">SuggestActivity</string>
 
 </resources>
