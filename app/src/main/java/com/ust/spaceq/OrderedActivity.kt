@@ -12,6 +12,7 @@ import android.view.Menu
 import android.view.MenuItem
 import android.view.MotionEvent
 import android.view.View
+import android.view.animation.AnimationUtils
 import android.widget.ImageView
 import android.widget.PopupWindow
 import android.widget.Toast
@@ -93,6 +94,20 @@ class OrderedActivity : AppCompatActivity() {
             }
 
         })
+        animation()
+    }
+
+    private fun animation(){
+        val animsay = AnimationUtils.loadAnimation(this, R.anim.abc_slide_in_top)
+        val animtv = AnimationUtils.loadAnimation(this, R.anim.abc_slide_in_bottom)
+        val atf = AnimationUtils.loadAnimation(this, R.anim.atf)
+        say1.startAnimation(animsay)
+        say2.startAnimation(animsay)
+        say3.startAnimation(animsay)
+        say4.startAnimation(animsay)
+        textQ.startAnimation(atf)
+        tv_answer1.startAnimation(animtv)
+        buttAnswer1.startAnimation(animtv)
     }
 
     fun slayButton(view: View?) {

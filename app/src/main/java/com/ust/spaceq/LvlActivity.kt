@@ -6,7 +6,9 @@ import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
+import android.view.animation.AnimationUtils
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.isVisible
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
@@ -49,8 +51,8 @@ class LvlActivity : AppCompatActivity() {
                 if (p0.child("stages").exists()){
                     val stages = p0.child("stages").value as HashMap<*, *>
                     val stage = stages.keys
+                    animations()
                     Log.d(TAG, "STAGES; $stages STAGE= $stage")
-
                     if (stage.contains("Stage 1")){
                         val control = p0.child("stages/Stage 1/control").value as Boolean
                         if (control){
@@ -70,14 +72,96 @@ class LvlActivity : AppCompatActivity() {
                         }
                     }else{}
                 }else{
+                    animations()
                     Log.d(TAG, "stages doesn't exist yet!")
                 }
 
             }
 
         })
+    }
+
+    private fun animations(){
+        val ltr = AnimationUtils.loadAnimation(this, R.anim.ltr)
+        val ltr1 = AnimationUtils.loadAnimation(this, R.anim.ltr1)
+        val ltr2 = AnimationUtils.loadAnimation(this, R.anim.ltr2)
+        val ltr3 = AnimationUtils.loadAnimation(this, R.anim.ltr3)
+        val ltr4 = AnimationUtils.loadAnimation(this, R.anim.ltr4)
+        val ltr5 = AnimationUtils.loadAnimation(this, R.anim.ltr5)
+        val ltr6 = AnimationUtils.loadAnimation(this, R.anim.ltr6)
+        buttL1.visibility = View.VISIBLE
+        buttL2.visibility = View.VISIBLE
+        buttL3.visibility = View.VISIBLE
+        buttL4.visibility = View.VISIBLE
+        buttL5.visibility = View.VISIBLE
+        buttL6.visibility = View.VISIBLE
+        buttL7.visibility = View.VISIBLE
+        buttL8.visibility = View.VISIBLE
+        buttL9.visibility = View.VISIBLE
+        buttL10.visibility = View.VISIBLE
+        buttL11.visibility = View.VISIBLE
+        buttL12.visibility = View.VISIBLE
+        buttL13.visibility = View.VISIBLE
+        buttL14.visibility = View.VISIBLE
+        buttL15.visibility = View.VISIBLE
+        buttL16.visibility = View.VISIBLE
+        buttL17.visibility = View.VISIBLE
+        buttL18.visibility = View.VISIBLE
+        buttL19.visibility = View.VISIBLE
+        buttL20.visibility = View.VISIBLE
+        buttL21.visibility = View.VISIBLE
+        buttL22.visibility = View.VISIBLE
+        buttL23.visibility = View.VISIBLE
+        buttL24.visibility = View.VISIBLE
+        buttL25.visibility = View.VISIBLE
+        buttL26.visibility = View.VISIBLE
+        buttL27.visibility = View.VISIBLE
+        buttL28.visibility = View.VISIBLE
+        buttL29.visibility = View.VISIBLE
+        buttL30.visibility = View.VISIBLE
+        buttL31.visibility = View.VISIBLE
+        buttL32.visibility = View.VISIBLE
+        buttL33.visibility = View.VISIBLE
+        buttL34.visibility = View.VISIBLE
+        buttL35.visibility = View.VISIBLE
+        buttL1.startAnimation(ltr)
+        buttL2.startAnimation(ltr)
+        buttL3.startAnimation(ltr)
+        buttL4.startAnimation(ltr)
+        buttL5.startAnimation(ltr)
+        buttL6.startAnimation(ltr1)
+        buttL7.startAnimation(ltr1)
+        buttL8.startAnimation(ltr1)
+        buttL9.startAnimation(ltr1)
+        buttL10.startAnimation(ltr1)
+        buttL11.startAnimation(ltr2)
+        buttL12.startAnimation(ltr2)
+        buttL13.startAnimation(ltr2)
+        buttL14.startAnimation(ltr2)
+        buttL15.startAnimation(ltr2)
+        buttL16.startAnimation(ltr3)
+        buttL17.startAnimation(ltr3)
+        buttL18.startAnimation(ltr3)
+        buttL19.startAnimation(ltr3)
+        buttL20.startAnimation(ltr3)
+        buttL21.startAnimation(ltr4)
+        buttL22.startAnimation(ltr4)
+        buttL23.startAnimation(ltr4)
+        buttL24.startAnimation(ltr4)
+        buttL25.startAnimation(ltr4)
+        buttL26.startAnimation(ltr5)
+        buttL27.startAnimation(ltr5)
+        buttL28.startAnimation(ltr5)
+        buttL29.startAnimation(ltr5)
+        buttL30.startAnimation(ltr5)
+        buttL31.startAnimation(ltr6)
+        buttL32.startAnimation(ltr6)
+        buttL33.startAnimation(ltr6)
+        buttL34.startAnimation(ltr6)
+        buttL35.startAnimation(ltr6)
 
     }
+
 
     fun showStage1(view: View?){
         levelKey = "Stage 1"

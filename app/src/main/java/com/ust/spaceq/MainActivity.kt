@@ -10,6 +10,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
+import android.view.animation.AnimationUtils
 import androidx.constraintlayout.widget.ConstraintLayout
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.auth.FirebaseAuth
@@ -50,6 +51,8 @@ class MainActivity : AppCompatActivity() {
         animationDrawable.setExitFadeDuration(4000)
         animationDrawable.start()
 
+        animation()
+
         firebaseAnalytics = FirebaseAnalytics.getInstance(this)
         auth = FirebaseAuth.getInstance()
         database = FirebaseDatabase.getInstance()
@@ -69,6 +72,7 @@ class MainActivity : AppCompatActivity() {
                 uName = p0.child("nickName").value as String
                 tvName.text = uName
                 Log.d(TAG, "onCreate: avatar and uName assigned")
+                animationTop()
             }
             override fun onCancelled(p0: DatabaseError) {}
         })
@@ -105,6 +109,30 @@ class MainActivity : AppCompatActivity() {
 //            }
 //        }
 //        tvAnswer.addTextChangedListener(answerTextWatcher)
+    }
+    private fun animationTop(){
+        val rtl = AnimationUtils.loadAnimation(this, R.anim.rtl)
+        val rtl1 = AnimationUtils.loadAnimation(this, R.anim.rtl1)
+        val atf = AnimationUtils.loadAnimation(this, R.anim.atf)
+        buttLogout.visibility = View.VISIBLE
+        iv_avatar_circle.visibility = View.VISIBLE
+        tvName.visibility = View.VISIBLE
+        buttLogout.startAnimation(rtl)
+        iv_avatar_circle.startAnimation(atf)
+        tvName.startAnimation(rtl1)
+    }
+
+    private fun animation(){
+        val stf = AnimationUtils.loadAnimation(this, R.anim.stf)
+        val atf = AnimationUtils.loadAnimation(this, R.anim.atf)
+        ivPlay.startAnimation(stf)
+        ivProfile.startAnimation(stf)
+        ivSuggestQ.startAnimation(stf)
+        ivInfo.startAnimation(stf)
+        buttOyna.startAnimation(atf)
+        buttProfil.startAnimation(atf)
+        buttSoru.startAnimation(atf)
+        buttInfo.startAnimation(atf)
     }
 
     fun showLvl(view: View?) {
