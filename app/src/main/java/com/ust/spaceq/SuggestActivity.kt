@@ -9,6 +9,7 @@ import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
+import android.view.animation.AnimationUtils
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout
 import com.google.firebase.auth.FirebaseAuth
@@ -46,6 +47,7 @@ class SuggestActivity : AppCompatActivity() {
 
         showSuggest(null)
 
+        animations()
 
         buttSend.setOnClickListener {
             suggestRef.child("question").setValue(etSuggest.text.toString())
@@ -82,6 +84,17 @@ class SuggestActivity : AppCompatActivity() {
         })
     }
 
+    private fun animations(){
+        val animtop = AnimationUtils.loadAnimation(this, R.anim.abc_slide_in_top)
+        val animbottom = AnimationUtils.loadAnimation(this, R.anim.abc_slide_in_bottom)
+        val atf1 = AnimationUtils.loadAnimation(this, R.anim.atf1)
+        tvSuggest.startAnimation(animtop)
+        etSuggest.startAnimation(atf1)
+        tvZaman.startAnimation(atf1)
+        buttSend.startAnimation(animbottom)
+        ibRemove.startAnimation(animbottom)
+    }
+
     private fun mainMenu(view: View?){
         Log.d(TAG, "mainMenu pressed..")
         val intent = Intent(this@SuggestActivity, MainActivity::class.java)
@@ -99,6 +112,10 @@ class SuggestActivity : AppCompatActivity() {
         auth.signOut()
         startActivity(Intent(this@SuggestActivity, LoginActivity::class.java))
         this@SuggestActivity.finish()
+    }
+
+    override fun onBackPressed() {
+        mainMenu(null)
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {

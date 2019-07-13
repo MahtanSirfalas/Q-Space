@@ -89,6 +89,9 @@ class LvlActivity : AppCompatActivity() {
         val ltr4 = AnimationUtils.loadAnimation(this, R.anim.ltr4)
         val ltr5 = AnimationUtils.loadAnimation(this, R.anim.ltr5)
         val ltr6 = AnimationUtils.loadAnimation(this, R.anim.ltr6)
+        val atf = AnimationUtils.loadAnimation(this, R.anim.abc_fade_in)
+        ivBack.visibility = View.VISIBLE
+        ivBack.startAnimation(atf)
         buttL1.visibility = View.VISIBLE
         buttL2.visibility = View.VISIBLE
         buttL3.visibility = View.VISIBLE
@@ -201,6 +204,9 @@ class LvlActivity : AppCompatActivity() {
         auth.signOut()
         startActivity(Intent(this@LvlActivity, LoginActivity::class.java))
         this@LvlActivity.finish()
+    }
+    override fun onBackPressed() {
+        mainMenu(null)
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {

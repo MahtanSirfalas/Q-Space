@@ -10,14 +10,19 @@ import androidx.appcompat.app.AppCompatActivity
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
+import android.view.animation.Animation
 import android.view.animation.AnimationUtils
 import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.core.view.isInvisible
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
 import com.squareup.picasso.Picasso
 
 import kotlinx.android.synthetic.main.activity_main.*
+import java.util.*
+import kotlin.concurrent.schedule
+import kotlin.concurrent.thread
 
 private lateinit var firebaseAnalytics: FirebaseAnalytics
 private lateinit var auth: FirebaseAuth
@@ -137,20 +142,71 @@ class MainActivity : AppCompatActivity() {
 
     fun showLvl(view: View?) {
         val intent = Intent(this@MainActivity, LvlActivity::class.java)
-        intent.putExtra("tvName", tvName.text.toString())
-        startActivity(intent)
+        val gfo = AnimationUtils.loadAnimation(this, R.anim.gfo)
+        val fo = AnimationUtils.loadAnimation(this, R.anim.abc_fade_out)
+        ivPlay.startAnimation(gfo)
+        buttOyna.startAnimation(fo)
+        fo.setAnimationListener(object : Animation.AnimationListener{
+            override fun onAnimationRepeat(p0: Animation?) {}
+            override fun onAnimationStart(p0: Animation?) {}
+            override fun onAnimationEnd(p0: Animation?) {buttOyna.visibility = View.INVISIBLE}
+        })
+        gfo.setAnimationListener(object : Animation.AnimationListener {
+            override fun onAnimationStart(arg0: Animation) {
+                intent.putExtra("tvName", tvName.text.toString())
+            }
+            override fun onAnimationRepeat(arg0: Animation) {}
+            override fun onAnimationEnd(arg0: Animation) {
+                startActivity(intent)
+                ivPlay.visibility = View.INVISIBLE
+            }
+        })
     }
 
     fun showProfile(view: View?){
         Log.d(TAG, "Profile pressed")
         val intent = Intent(this@MainActivity, ProfileActivity::class.java)
-        startActivity(intent)
+        val gfo = AnimationUtils.loadAnimation(this, R.anim.gfo)
+        val fo = AnimationUtils.loadAnimation(this, R.anim.abc_fade_out)
+        ivProfile.startAnimation(gfo)
+        buttProfil.startAnimation(fo)
+        fo.setAnimationListener(object : Animation.AnimationListener{
+            override fun onAnimationRepeat(p0: Animation?) {}
+            override fun onAnimationStart(p0: Animation?) {}
+            override fun onAnimationEnd(p0: Animation?) {buttProfil.visibility = View.INVISIBLE}
+        })
+        gfo.setAnimationListener(object : Animation.AnimationListener {
+            override fun onAnimationStart(arg0: Animation) {
+                intent.putExtra("tvName", tvName.text.toString())
+            }
+            override fun onAnimationRepeat(arg0: Animation) {}
+            override fun onAnimationEnd(arg0: Animation) {
+                startActivity(intent)
+                ivProfile.visibility = View.INVISIBLE
+            }
+        })
     }
 
     fun showSuggestQ(view: View?){
         Log.d(TAG, "Suggest-Q pressed")
         val intent = Intent(this@MainActivity,SuggestActivity::class.java)
-        startActivity(intent)
+        val gfo = AnimationUtils.loadAnimation(this, R.anim.gfo)
+        val fo = AnimationUtils.loadAnimation(this, R.anim.abc_fade_out)
+        ivSuggestQ.startAnimation(gfo)
+        buttSoru.startAnimation(fo)
+        fo.setAnimationListener(object : Animation.AnimationListener{
+            override fun onAnimationRepeat(p0: Animation?) {}
+            override fun onAnimationStart(p0: Animation?) {}
+            override fun onAnimationEnd(p0: Animation?) {buttSoru.visibility = View.INVISIBLE}
+        })
+        gfo.setAnimationListener(object : Animation.AnimationListener {
+            override fun onAnimationStart(arg0: Animation) {}
+            override fun onAnimationRepeat(arg0: Animation) {}
+            override fun onAnimationEnd(arg0: Animation) {
+                startActivity(intent)
+                ivSuggestQ.visibility = View.INVISIBLE
+            }
+        })
     }
 
 //    fun slayButton(view: View?){

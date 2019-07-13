@@ -8,6 +8,8 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.provider.MediaStore
 import android.util.Log
+import android.view.View
+import android.view.animation.AnimationUtils
 import androidx.constraintlayout.widget.ConstraintLayout
 import com.google.firebase.database.*
 import com.google.firebase.storage.FirebaseStorage
@@ -43,6 +45,7 @@ class ProfileActivity : AppCompatActivity() {
                 val userPoints = p0.child("points").value
                 textLevel.text = "Level: " + userLevel.toString()
                 textPoints.text = "Total Points: " + userPoints.toString()
+                animations()
             }
 
         })
@@ -114,5 +117,26 @@ class ProfileActivity : AppCompatActivity() {
             .addOnFailureListener {
                 Log.d(TAG, "Failed to set value to database!")
             }
+    }
+
+    private fun animations(){
+        val fadein = AnimationUtils.loadAnimation(this, R.anim.abc_fade_in)
+        textName.visibility = View.VISIBLE
+        textMail.visibility = View.VISIBLE
+        textLevel.visibility = View.VISIBLE
+        textPoints.visibility = View.VISIBLE
+        buttAvatar.visibility = View.VISIBLE
+        ivAvatar_circle.visibility = View.VISIBLE
+        textName.startAnimation(fadein)
+        textMail.startAnimation(fadein)
+        textLevel.startAnimation(fadein)
+        textPoints.startAnimation(fadein)
+        buttAvatar.startAnimation(fadein)
+        ivAvatar_circle.startAnimation(fadein)
+    }
+    override fun onBackPressed() {
+        Log.d(TAG, "mainMenu pressed..")
+        val intent = Intent(this@ProfileActivity, MainActivity::class.java)
+        startActivity(intent)
     }
 }

@@ -17,7 +17,7 @@
             app:layout_constraintBottom_toBottomOf="@id/buttAvatar"
             app:layout_constraintStart_toStartOf="@id/buttAvatar"
             app:layout_constraintTop_toTopOf="@id/buttAvatar"
-            app:layout_constraintEnd_toEndOf="@+id/buttAvatar"/>
+            app:layout_constraintEnd_toEndOf="@+id/buttAvatar" android:visibility="invisible"/>
     <Button
             android:text="Select Avatar"
             android:layout_width="120dp"
@@ -27,7 +27,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             android:background="@drawable/custom_avatar" android:textColor="@color/colorSpaceWhite"
-            android:layout_marginTop="16dp" android:fontFamily="@font/press_start_2p"/>
+            android:layout_marginTop="16dp" android:fontFamily="@font/press_start_2p" android:visibility="visible"/>
     <TextView
             android:text="Username: user"
             android:layout_width="wrap_content"
@@ -38,7 +38,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             android:fontFamily="@font/press_start_2p"
-            android:padding="2dp" android:layout_margin="5dp"/>
+            android:padding="2dp" android:layout_margin="5dp" android:visibility="invisible"/>
     <TextView
             android:text="E-mail: user@gmail.com"
             android:layout_width="wrap_content"
@@ -48,7 +48,8 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@id/textName"
             app:layout_constraintBottom_toTopOf="@id/textLevel"
-            android:fontFamily="@font/press_start_2p" android:padding="2dp" android:layout_margin="5dp"/>
+            android:fontFamily="@font/press_start_2p" android:padding="2dp" android:layout_margin="5dp"
+            android:visibility="invisible"/>
     <TextView
             android:text="Level: 0"
             android:layout_width="wrap_content"
@@ -58,7 +59,8 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textMail"
             app:layout_constraintBottom_toTopOf="@id/textPoints"
-            android:fontFamily="@font/press_start_2p" android:padding="2dp" android:layout_margin="5dp"/>
+            android:fontFamily="@font/press_start_2p" android:padding="2dp" android:layout_margin="5dp"
+            android:visibility="invisible"/>
     <TextView
             android:text="Points: 0"
             android:layout_width="wrap_content"
@@ -67,6 +69,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textLevel"
-            android:fontFamily="@font/press_start_2p" android:padding="2dp" android:layout_margin="5dp"/>
+            android:fontFamily="@font/press_start_2p" android:padding="2dp" android:layout_margin="5dp"
+            android:visibility="invisible"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
