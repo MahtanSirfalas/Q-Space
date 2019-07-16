@@ -139,6 +139,55 @@
                     app:layout_constraintBottom_toBottomOf="parent" android:layout_marginEnd="8dp"
                     app:layout_constraintEnd_toEndOf="parent" android:background="@color/colorPrimaryDark"
                     android:textColor="@color/colorSpaceWhite" android:onClick="showComments"/>
+            <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" app:srcCompat="@drawable/ic_meteor"
+                    android:id="@+id/iv_meteor" android:tint="#7A6E4B"
+                    android:visibility="gone"
+                    tools:ignore="VectorDrawableCompat"
+                    app:layout_constraintEnd_toEndOf="@+id/textQ"
+                    app:layout_constraintStart_toStartOf="@+id/textQ" app:layout_constraintTop_toBottomOf="@+id/textQ"
+                    android:layout_marginEnd="48dp"/>
+            <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" app:srcCompat="@drawable/ic_starkayar"
+                    android:id="@+id/iv_starKayar" android:tint="#FFEB3B"
+                    tools:ignore="VectorDrawableCompat"
+                    android:visibility="gone"
+                    android:rotation="60"
+                    android:layout_marginTop="8dp"
+                    app:layout_constraintTop_toTopOf="parent" android:layout_marginBottom="8dp"
+                    app:layout_constraintBottom_toTopOf="@+id/tv_answer1" android:layout_marginEnd="8dp"
+                    app:layout_constraintEnd_toEndOf="parent" android:layout_marginStart="8dp"
+                    app:layout_constraintStart_toStartOf="parent"/>
+            <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" app:srcCompat="@drawable/ic_starkayar"
+                    android:id="@+id/iv_starKayar1" android:tint="#CDDC39" android:rotation="-135"
+                    tools:ignore="VectorDrawableCompat"
+                    android:visibility="gone"
+                    android:layout_marginTop="8dp"
+                    app:layout_constraintTop_toTopOf="parent" android:layout_marginEnd="8dp"
+                    app:layout_constraintEnd_toEndOf="parent" android:layout_marginStart="8dp"
+                    app:layout_constraintStart_toStartOf="parent" android:layout_marginBottom="8dp"
+                    app:layout_constraintBottom_toTopOf="@+id/tv_answer1"/>
+            <ImageView
+                    android:layout_width="88dp"
+                    android:layout_height="96dp" app:srcCompat="@drawable/ic_yellowstar"
+                    android:id="@+id/iv_yellowStar"
+                    tools:ignore="VectorDrawableCompat"
+                    android:layout_marginTop="8dp" app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    android:layout_marginEnd="8dp" app:layout_constraintStart_toStartOf="parent"
+                    android:layout_marginStart="8dp" android:visibility="gone" android:layout_marginBottom="8dp"
+                    app:layout_constraintBottom_toTopOf="@+id/tv_answer1"/>
+
+            <Chronometer
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@android:color/transparent"
+                    tools:targetApi="24" app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" android:id="@+id/chrono"/>
         </androidx.constraintlayout.widget.ConstraintLayout>
     </LinearLayout>
 

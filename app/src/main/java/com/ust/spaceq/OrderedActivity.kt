@@ -1,17 +1,15 @@
 package com.ust.spaceq
 
-import android.annotation.TargetApi
 import android.content.Intent
-import android.graphics.Color
 import android.graphics.drawable.AnimationDrawable
-import android.graphics.drawable.ColorDrawable
-import android.os.Build
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
-import android.view.MotionEvent
 import android.view.View
+import android.view.animation.Animation
 import android.view.animation.AnimationUtils
 import android.widget.ImageView
 import android.widget.PopupWindow
@@ -40,11 +38,15 @@ private lateinit var stageRef : DatabaseReference
 @Suppress("RECEIVER_NULLABILITY_MISMATCH_BASED_ON_JAVA_ANNOTATIONS")
 class OrderedActivity : AppCompatActivity() {
     val TAG = "OrderedActivity"
+    lateinit var mainHandler:Handler
+    lateinit var updatePointTask: Runnable
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_ordered)
         setSupportActionBar(toolbar)
+
+        mainHandler = Handler(Looper.getMainLooper())
 
         val constraintLayout = findViewById<ConstraintLayout>(R.id.layoutbg)
         val animationDrawable = constraintLayout.background as AnimationDrawable
@@ -80,8 +82,19 @@ class OrderedActivity : AppCompatActivity() {
                     var point = p0.child("point").value as Long
                     var control = p0.child("control").value as Boolean
                     if (control){
-                        point -= 1
+                        point -= 2
                         stageRef.child("point").setValue(point)
+
+                        updatePointTask = object : Runnable {
+                            override fun run() {
+                                point -= 2
+                                Log.d(TAG, "point UPDATED: $point")
+                                stageRef.child("point").setValue(point)
+                                mainHandler.postDelayed(this, 10000)
+                            }
+                        }
+                        mainHandler.post(updatePointTask)
+
                     }else{
                         Toast.makeText(baseContext,"You passed that stage before.",
                             Toast.LENGTH_SHORT).show()
@@ -95,6 +108,8 @@ class OrderedActivity : AppCompatActivity() {
 
         })
         animation()
+//        chrono.base = SystemClock.elapsedRealtime()
+//        chrono.start()
     }
 
     private fun animation(){
@@ -110,6 +125,70 @@ class OrderedActivity : AppCompatActivity() {
         buttAnswer1.startAnimation(animtv)
     }
 
+    private fun meteorAnimation(){
+        val window = PopupWindow(this)
+        val show = layoutInflater.inflate(R.layout.layout_popup, null)
+        window.isOutsideTouchable = true
+        val meteor = AnimationUtils.loadAnimation(baseContext, R.anim.meteor)
+        val gfo = AnimationUtils.loadAnimation(baseContext, R.anim.gfo)
+        val atf1 = AnimationUtils.loadAnimation(baseContext, R.anim.atf1)
+        iv_meteor.visibility = View.VISIBLE
+        iv_meteor.startAnimation(meteor)
+        meteor.setAnimationListener(object : Animation.AnimationListener {
+            override fun onAnimationStart(p0: Animation?) {}
+            override fun onAnimationRepeat(p0: Animation?) {}
+            override fun onAnimationEnd(p0: Animation?) {
+                iv_meteor.startAnimation(gfo)
+                gfo.setAnimationListener(object : Animation.AnimationListener {
+                    override fun onAnimationStart(p0: Animation?) {}
+                    override fun onAnimationRepeat(p0: Animation?) {}
+                    override fun onAnimationEnd(p0: Animation?) {
+                        val imageShow = show.findViewById<ImageView>(R.id.iv_spaceMedal)
+                        window.contentView = show
+                        window.showAtLocation(buttAnswer1,1,0,100)
+                        show.startAnimation(atf1)
+                        imageShow.setOnClickListener{
+                            window.dismiss()
+                        }
+                    }
+                })
+
+            }
+        })
+    }
+
+    private fun starAnimation(){
+        val starkayar = AnimationUtils.loadAnimation(baseContext, R.anim.starkayar)
+        val starkayar1 = AnimationUtils.loadAnimation(baseContext, R.anim.starkayar1)
+        val fadein = AnimationUtils.loadAnimation(baseContext, R.anim.abc_fade_in)
+        val gfo = AnimationUtils.loadAnimation(baseContext, R.anim.gfo)
+        val yellowstar = AnimationUtils.loadAnimation(baseContext, R.anim.yellowstar)
+        val yellowstar1 = AnimationUtils.loadAnimation(baseContext, R.anim.yellowstar1)
+        iv_starKayar.visibility = View.VISIBLE
+        iv_starKayar1.visibility = View.VISIBLE
+        iv_starKayar.startAnimation(starkayar)
+        iv_starKayar1.startAnimation(starkayar1)
+        starkayar.setAnimationListener(object : Animation.AnimationListener {
+            override fun onAnimationStart(p0: Animation?) {}
+            override fun onAnimationRepeat(p0: Animation?) {}
+            override fun onAnimationEnd(p0: Animation?) {
+                iv_starKayar.startAnimation(gfo)
+                iv_starKayar1.startAnimation(gfo)
+                iv_yellowStar.visibility = View.VISIBLE
+                iv_yellowStar.startAnimation(fadein)
+                fadein.setAnimationListener(object : Animation.AnimationListener{
+                    override fun onAnimationStart(p0: Animation?) {}
+                    override fun onAnimationRepeat(p0: Animation?) {}
+                    override fun onAnimationEnd(p0: Animation?) {
+                        iv_meteor.visibility = View.GONE
+                        iv_yellowStar.startAnimation(yellowstar)
+                        iv_yellowStar.startAnimation(yellowstar1)
+                    }
+                })
+            }
+        })
+    }
+
     fun slayButton(view: View?) {
         Log.d(TAG, "slayButton pressed")
         val kontrol = tv_answer1.text.toString()
@@ -122,9 +201,6 @@ class OrderedActivity : AppCompatActivity() {
                 Log.d(TAG, "Something's Wrong; uAnswer couldn't assign!")
                 Toast.makeText(baseContext, "Please Enter a Valid Value", Toast.LENGTH_SHORT).show()
             }
-            val window = PopupWindow(this)
-            val show = layoutInflater.inflate(R.layout.layout_popup, null)
-            window.isOutsideTouchable = true
 
 
             stageRef.addListenerForSingleValueEvent(object:ValueEventListener{
@@ -138,6 +214,7 @@ class OrderedActivity : AppCompatActivity() {
                     val userRef = databaseReference.child(uid)
                     if (control){
                         if (uAnswer == answer) {
+                            mainHandler.removeCallbacks(updatePointTask)
                             stageRef.child("control").setValue(false)
                             userRef.addListenerForSingleValueEvent(object:ValueEventListener{
                                 override fun onCancelled(p0s: DatabaseError) {
@@ -150,20 +227,9 @@ class OrderedActivity : AppCompatActivity() {
                                     userRef.child("points").setValue(points)
                                 }
                             })
-//                            window.setTouchInterceptor(View.OnTouchListener { v, event ->
-//                                if (event.action == MotionEvent.ACTION_OUTSIDE) {
-//                                    window.dismiss()
-//                                }
-//                                false
-//                            })
-//                            window.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
-                            window.contentView = show
-                            val imageShow = show.findViewById<ImageView>(R.id.iv_spaceMedal)
-                            imageShow.setOnClickListener{
-                                window.dismiss()
-                            }
-                            window.showAtLocation(buttAnswer1,1,0,100)
 
+                            meteorAnimation()
+                            starAnimation()
 
                             Log.d(TAG, "$levelKey: Answer ($uAnswer) is equal to $answer; Accepted!")
                             Toast.makeText(baseContext, "Bravo! answer is accepted!", Toast.LENGTH_SHORT).show()
@@ -175,12 +241,11 @@ class OrderedActivity : AppCompatActivity() {
                         }
                     }else{
                         if(uAnswer == answer){
-                            window.contentView = show
-                            val imageShow = show.findViewById<ImageView>(R.id.iv_spaceMedal)
-                            imageShow.setOnClickListener{
-                                window.dismiss()
-                            }
-                            window.showAtLocation(buttAnswer1,1,0,100)
+                            meteorAnimation()
+                            starAnimation()
+                            val atf1 = AnimationUtils.loadAnimation(baseContext, R.anim.atf1)
+                            val gfo = AnimationUtils.loadAnimation(baseContext, R.anim.gfo)
+
                             Log.d(TAG, "$levelKey: Answer ($uAnswer) is equal to $answer; " +
                                     "But no points added to the database")
                             Toast.makeText(baseContext, "Bravo! Your answer is accepted!", Toast.LENGTH_SHORT).show()
@@ -221,6 +286,7 @@ class OrderedActivity : AppCompatActivity() {
     }
 
     fun showComments(view: View?) {
+        mainHandler.removeCallbacks(updatePointTask)
         Log.d(TAG, "Comments button pressed")
         val intent = Intent(this@OrderedActivity, CommentActivity::class.java)
         intent.putExtra("tvName", nick)
@@ -230,6 +296,7 @@ class OrderedActivity : AppCompatActivity() {
     }
 
     private fun mainMenu(view: View?) {
+        mainHandler.removeCallbacks(updatePointTask)
         Log.d(TAG, "mainMenu pressed..")
         val intent = Intent(this@OrderedActivity, MainActivity::class.java)
 //        intent.putExtra("email", email)
@@ -237,6 +304,7 @@ class OrderedActivity : AppCompatActivity() {
     }
 
     fun showProfile(view: View?) {
+        mainHandler.removeCallbacks(updatePointTask)
         Log.d(TAG, "Profile pressed..")
         val intent = Intent(this@OrderedActivity, ProfileActivity::class.java)
         intent.putExtra("tvName", nick)
@@ -246,9 +314,17 @@ class OrderedActivity : AppCompatActivity() {
     }
 
     fun signOut(view: View?) {
+        mainHandler.removeCallbacks(updatePointTask)
         Log.d(TAG, "signOut pressed..")
         auth.signOut()
         startActivity(Intent(this@OrderedActivity, LoginActivity::class.java))
+        this@OrderedActivity.finish()
+    }
+    override fun onBackPressed() {
+        mainHandler.removeCallbacks(updatePointTask)
+        val intent = Intent(this@OrderedActivity, LvlActivity::class.java)
+        intent.putExtra("tvName", nick)
+        startActivity(intent)
         this@OrderedActivity.finish()
     }
 
