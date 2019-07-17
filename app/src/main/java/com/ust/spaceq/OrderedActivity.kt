@@ -11,6 +11,7 @@ import android.view.MenuItem
 import android.view.View
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
+import android.widget.Button
 import android.widget.ImageView
 import android.widget.PopupWindow
 import android.widget.Toast
@@ -98,6 +99,7 @@ class OrderedActivity : AppCompatActivity() {
                             }
                             mainHandler.post(updatePointTask)
                         }else{
+                            buttGiveup.visibility = View.INVISIBLE
                             commentAnimation()
                             Toast.makeText(baseContext,"You passed that stage before.",
                                 Toast.LENGTH_SHORT).show()
@@ -211,7 +213,6 @@ class OrderedActivity : AppCompatActivity() {
                 uAnswer = tv_answer1.text.toString().toInt()
                 Log.d(TAG, "uAnswer is assigned as $uAnswer")
             } catch (ex: Exception) {
-                ex.message
                 Log.d(TAG, "Something's Wrong; uAnswer couldn't assign!")
                 Toast.makeText(baseContext, "Please Enter a Valid Value", Toast.LENGTH_SHORT).show()
             }
@@ -229,6 +230,7 @@ class OrderedActivity : AppCompatActivity() {
                         if (uAnswer == answer) {
                             mainHandler.removeCallbacks(updatePointTask)
                             stageRef.child("control").setValue(false)
+                            buttGiveup.visibility = View.INVISIBLE
                             userRef.addListenerForSingleValueEvent(object:ValueEventListener{
                                 override fun onCancelled(p0s: DatabaseError) {
                                     Log.d(TAG, "userRef Data couldn't read; No Internet Connection/No Response from database/Wrong datapath")
@@ -273,6 +275,34 @@ class OrderedActivity : AppCompatActivity() {
         }
     }
 
+    fun giveUp(view:View){
+        val window = PopupWindow(this)
+        val show = layoutInflater.inflate(R.layout.layout_popup_giveup, null)
+        window.isOutsideTouchable = true
+        val atf1 = AnimationUtils.loadAnimation(baseContext, R.anim.atf1)
+        window.contentView = show
+        window.showAtLocation(buttGiveup,1,0,100)
+        show.startAnimation(atf1)
+        val buttYes = show.findViewById<Button>(R.id.buttYes)
+        val buttNo = show.findViewById<Button>(R.id.buttNo)
+        buttYes.setOnClickListener {
+            stageRef.child("point").setValue(0)
+            stageRef.child("control").setValue(false)
+            if (isRunning){
+                mainHandler.removeCallbacks(updatePointTask)
+            }else{
+                Log.d(TAG, "isRunning false")
+            }
+            commentAnimation()
+            window.dismiss()
+            buttGiveup.visibility = View.INVISIBLE
+            Toast.makeText(this, "Result;You can see the comments of the question now -->",Toast.LENGTH_LONG).show()
+        }
+        buttNo.setOnClickListener {
+            window.dismiss()
+        }
+    }
+
     private fun levelAdapt(level: String) {
         when (level) {
             "Stage 1" -> {
@@ -304,7 +334,6 @@ class OrderedActivity : AppCompatActivity() {
         Log.d(TAG, "Comments button pressed")
         val intent = Intent(this@OrderedActivity, CommentActivity::class.java)
         intent.putExtra("tvName", nick)
-//        intent.putExtra("email", email)
         intent.putExtra("levelKey", levelKey)
         startActivity(intent)
     }
@@ -330,8 +359,6 @@ class OrderedActivity : AppCompatActivity() {
         Log.d(TAG, "Profile pressed..")
         val intent = Intent(this@OrderedActivity, ProfileActivity::class.java)
         intent.putExtra("tvName", nick)
-//        intent.putExtra("email", email)
-//        intent.putExtra("uid", uid)
         startActivity(intent)
     }
 

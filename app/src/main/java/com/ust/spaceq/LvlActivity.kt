@@ -186,6 +186,14 @@ class LvlActivity : AppCompatActivity() {
         startActivity(intent)
     }
 
+    fun showStage3(view: View?){
+        levelKey = "Stage 3"
+        val intent = Intent(this@LvlActivity, RandomActivity::class.java)
+        intent.putExtra("tvName", nick)
+        intent.putExtra("levelKey", levelKey)
+        startActivity(intent)
+    }
+
     private fun mainMenu(view: View?){
         Log.d(TAG, "mainMenu pressed..")
         val intent = Intent(this@LvlActivity, MainActivity::class.java)

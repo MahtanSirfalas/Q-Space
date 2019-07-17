@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".RandomActivity">
+
+    <com.google.android.material.appbar.AppBarLayout
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:theme="@style/AppTheme.AppBarOverlay">
+
+        <androidx.appcompat.widget.Toolbar
+                android:id="@+id/toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                android:background="?attr/colorPrimary"
+                app:popupTheme="@style/AppTheme.PopupOverlay"/>
+
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/gradient2"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior"
+            tools:showIn="@layout/activity_ordered"
+            tools:context=".OrderedActivity"
+            android:gravity="center" android:orientation="vertical">
+        <androidx.constraintlayout.widget.ConstraintLayout android:layout_width="match_parent"
+                                                           android:layout_height="match_parent"
+                                                           android:background="@drawable/bg_gradient"
+                                                           android:id="@+id/layoutbg"
+                                                           android:focusableInTouchMode="true" android:focusable="true">
+
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" android:id="@+id/tvRandom"
+                    android:inputType="number"
+                    android:textColor="@color/colorSpaceWhite"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    android:layout_marginEnd="8dp" app:layout_constraintStart_toStartOf="parent"
+                    android:layout_marginStart="8dp"
+                    android:textSize="36dp"
+                    android:fontFamily="@font/press_start_2p" android:text="13" android:visibility="invisible"
+                    android:layout_marginTop="8dp" app:layout_constraintTop_toBottomOf="@+id/tvLabel"
+                    android:layout_marginBottom="8dp" app:layout_constraintBottom_toTopOf="@+id/etAnswer"/>
+            <TextView
+                    android:text="Number 1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/tvLabel"
+                    android:textColor="@color/colorSpaceWhite" android:fontFamily="@font/press_start_2p"
+                    android:layout_marginStart="8dp" app:layout_constraintStart_toStartOf="parent"
+                    android:layout_marginEnd="8dp" app:layout_constraintEnd_toEndOf="parent"
+                    android:layout_marginTop="8dp" app:layout_constraintTop_toTopOf="parent"
+                    android:layout_marginBottom="8dp" app:layout_constraintBottom_toTopOf="@+id/tvRandom"/>
+            <EditText
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:inputType="number"
+                    android:backgroundTint="@color/colorSpaceWhite"
+                    android:ems="10"
+                    android:id="@+id/etAnswer" app:layout_constraintEnd_toEndOf="parent"
+                    android:layout_marginEnd="8dp" app:layout_constraintStart_toStartOf="parent"
+                    android:layout_marginStart="8dp" android:layout_marginTop="8dp"
+                    app:layout_constraintTop_toBottomOf="@+id/tvRandom"
+                    android:textCursorDrawable="@color/colorGreyLight" android:layout_marginBottom="8dp"
+                    app:layout_constraintBottom_toTopOf="@+id/buttAnswer" android:textColor="@color/colorSpaceWhite"
+                    android:visibility="gone"/>
+            <Button
+                    android:text="Button"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/buttAnswer" app:layout_constraintStart_toStartOf="parent"
+                    android:layout_marginStart="8dp" app:layout_constraintEnd_toEndOf="parent"
+                    android:layout_marginEnd="8dp" android:layout_marginTop="8dp"
+                    app:layout_constraintTop_toBottomOf="@+id/etAnswer"
+                    android:background="@drawable/custom_butt_stage"
+                    android:textColor="@color/colorSpaceWhite" app:layout_constraintBottom_toTopOf="@+id/buttGiveup"
+                    android:layout_marginBottom="8dp" android:visibility="gone"/>
+            <Button
+                    android:text="Button"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" android:id="@+id/buttGiveup"
+                    android:layout_marginEnd="8dp" app:layout_constraintTop_toBottomOf="@+id/buttAnswer"
+                    app:layout_constraintEnd_toEndOf="parent" app:layout_constraintStart_toStartOf="parent"
+                    android:layout_marginStart="8dp" android:layout_marginBottom="8dp"
+                    app:layout_constraintBottom_toBottomOf="parent" android:visibility="invisible"/>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </LinearLayout>
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>
