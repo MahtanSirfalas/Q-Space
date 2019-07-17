@@ -6,7 +6,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="4dp" android:id="@+id/ivScreen" android:padding="4dp"
-        android:background="@color/colorSpaceWhite">
+        android:background="@drawable/custom_comment">
 
     <de.hdodenhof.circleimageview.CircleImageView
             xmlns:app="http://schemas.android.com/apk/res-auto"

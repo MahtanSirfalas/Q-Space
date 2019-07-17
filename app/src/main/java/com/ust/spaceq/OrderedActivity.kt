@@ -40,6 +40,7 @@ class OrderedActivity : AppCompatActivity() {
     val TAG = "OrderedActivity"
     lateinit var mainHandler:Handler
     lateinit var updatePointTask: Runnable
+    var isRunning = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -71,43 +72,47 @@ class OrderedActivity : AppCompatActivity() {
 
         Log.d(TAG, "levelKey=$levelKey, answer=$answer")
 
-        stageRef.addListenerForSingleValueEvent(object:ValueEventListener{
-            override fun onCancelled(p0: DatabaseError) {
-                Log.d(TAG, "stageRef Data couldn't read; No Internet Connection/No Response from database/Wrong datapath")
-            }
-
-            override fun onDataChange(p0: DataSnapshot) {
-                if (p0.hasChildren()){
-                    Log.d(TAG, "$levelKey; RERUNS!")
-                    var point = p0.child("point").value as Long
-                    var control = p0.child("control").value as Boolean
-                    if (control){
-                        point -= 2
-                        stageRef.child("point").setValue(point)
-
-                        updatePointTask = object : Runnable {
-                            override fun run() {
-                                point -= 2
-                                Log.d(TAG, "point UPDATED: $point")
-                                stageRef.child("point").setValue(point)
-                                mainHandler.postDelayed(this, 10000)
-                            }
-                        }
-                        mainHandler.post(updatePointTask)
-
-                    }else{
-                        Toast.makeText(baseContext,"You passed that stage before.",
-                            Toast.LENGTH_SHORT).show()
-                    }
-                }else{
-                    stageRef.child("point").setValue(1000)
-                    stageRef.child("control").setValue(true)
-                    Log.d(TAG, "First run on $levelKey, adaptation DONE!")
+        fun startcheck() {
+            stageRef.addListenerForSingleValueEvent(object:ValueEventListener{
+                override fun onCancelled(p0: DatabaseError) {
+                    Log.d(TAG, "stageRef Data couldn't read; No Internet Connection/No Response " +
+                            "from database/Wrong datapath")
                 }
-            }
+                override fun onDataChange(p0: DataSnapshot) {
+                    if (p0.hasChildren()){
+                        Log.d(TAG, "$levelKey; RERUNS!")
+                        var point = p0.child("point").value as Long
+                        var control = p0.child("control").value as Boolean
+                        if (control){
+                            point -= 2
+                            stageRef.child("point").setValue(point)
 
-        })
+                            updatePointTask = object : Runnable {
+                                override fun run() {
+                                    isRunning = true
+                                    point -= 2
+                                    Log.d(TAG, "point UPDATED: $point")
+                                    stageRef.child("point").setValue(point)
+                                    mainHandler.postDelayed(this, 10000)
+                                }
+                            }
+                            mainHandler.post(updatePointTask)
+                        }else{
+                            commentAnimation()
+                            Toast.makeText(baseContext,"You passed that stage before.",
+                                Toast.LENGTH_SHORT).show()
+                        }
+                    }else{
+                        stageRef.child("point").setValue(1004)
+                        stageRef.child("control").setValue(true)
+                        Log.d(TAG, "First run on $levelKey, adaptation DONE!")
+                        startcheck()
+                    }
+                }
+            })
+        }
         animation()
+        startcheck()
 //        chrono.base = SystemClock.elapsedRealtime()
 //        chrono.start()
     }
@@ -125,13 +130,10 @@ class OrderedActivity : AppCompatActivity() {
         buttAnswer1.startAnimation(animtv)
     }
 
-    private fun meteorAnimation(){
-        val window = PopupWindow(this)
-        val show = layoutInflater.inflate(R.layout.layout_popup, null)
-        window.isOutsideTouchable = true
+    /*private fun meteorAnimation(){
+
         val meteor = AnimationUtils.loadAnimation(baseContext, R.anim.meteor)
         val gfo = AnimationUtils.loadAnimation(baseContext, R.anim.gfo)
-        val atf1 = AnimationUtils.loadAnimation(baseContext, R.anim.atf1)
         iv_meteor.visibility = View.VISIBLE
         iv_meteor.startAnimation(meteor)
         meteor.setAnimationListener(object : Animation.AnimationListener {
@@ -142,22 +144,19 @@ class OrderedActivity : AppCompatActivity() {
                 gfo.setAnimationListener(object : Animation.AnimationListener {
                     override fun onAnimationStart(p0: Animation?) {}
                     override fun onAnimationRepeat(p0: Animation?) {}
-                    override fun onAnimationEnd(p0: Animation?) {
-                        val imageShow = show.findViewById<ImageView>(R.id.iv_spaceMedal)
-                        window.contentView = show
-                        window.showAtLocation(buttAnswer1,1,0,100)
-                        show.startAnimation(atf1)
-                        imageShow.setOnClickListener{
-                            window.dismiss()
-                        }
-                    }
+                    override fun onAnimationEnd(p0: Animation?) {}
                 })
-
             }
         })
-    }
+    }*/
 
     private fun starAnimation(){
+//
+        val window = PopupWindow(this)
+        val show = layoutInflater.inflate(R.layout.layout_popup, null)
+        window.isOutsideTouchable = true
+        val atf1 = AnimationUtils.loadAnimation(baseContext, R.anim.atf1)
+//
         val starkayar = AnimationUtils.loadAnimation(baseContext, R.anim.starkayar)
         val starkayar1 = AnimationUtils.loadAnimation(baseContext, R.anim.starkayar1)
         val fadein = AnimationUtils.loadAnimation(baseContext, R.anim.abc_fade_in)
@@ -176,17 +175,32 @@ class OrderedActivity : AppCompatActivity() {
                 iv_starKayar1.startAnimation(gfo)
                 iv_yellowStar.visibility = View.VISIBLE
                 iv_yellowStar.startAnimation(fadein)
+//                Pop up window
+                val imageShow = show.findViewById<ImageView>(R.id.iv_spaceMedal)
+                window.contentView = show
+                window.showAtLocation(buttAnswer1,1,0,100)
+                show.startAnimation(atf1)
+                imageShow.setOnClickListener{
+                    window.dismiss()
+                }
                 fadein.setAnimationListener(object : Animation.AnimationListener{
                     override fun onAnimationStart(p0: Animation?) {}
                     override fun onAnimationRepeat(p0: Animation?) {}
                     override fun onAnimationEnd(p0: Animation?) {
-                        iv_meteor.visibility = View.GONE
+//                        iv_meteor.visibility = View.GONE
                         iv_yellowStar.startAnimation(yellowstar)
                         iv_yellowStar.startAnimation(yellowstar1)
+
                     }
                 })
             }
         })
+    }
+
+    private fun commentAnimation(){
+        val commAnim = AnimationUtils.loadAnimation(this, R.anim.commentbub)
+        ibComment.visibility = View.VISIBLE
+        ibComment.startAnimation(commAnim)
     }
 
     fun slayButton(view: View?) {
@@ -202,7 +216,6 @@ class OrderedActivity : AppCompatActivity() {
                 Toast.makeText(baseContext, "Please Enter a Valid Value", Toast.LENGTH_SHORT).show()
             }
 
-
             stageRef.addListenerForSingleValueEvent(object:ValueEventListener{
                 override fun onCancelled(p0: DatabaseError) {
                     Log.d(TAG, "stageRef Data couldn't read; No Internet Connection/No Response from database/Wrong datapath")
@@ -210,7 +223,7 @@ class OrderedActivity : AppCompatActivity() {
 
                 override fun onDataChange(p0: DataSnapshot) {
                     var point = p0.child("point").value as Long
-                    var control = p0.child("control").value as Boolean
+                    val control = p0.child("control").value as Boolean
                     val userRef = databaseReference.child(uid)
                     if (control){
                         if (uAnswer == answer) {
@@ -227,9 +240,8 @@ class OrderedActivity : AppCompatActivity() {
                                     userRef.child("points").setValue(points)
                                 }
                             })
-
-                            meteorAnimation()
                             starAnimation()
+                            commentAnimation()
 
                             Log.d(TAG, "$levelKey: Answer ($uAnswer) is equal to $answer; Accepted!")
                             Toast.makeText(baseContext, "Bravo! answer is accepted!", Toast.LENGTH_SHORT).show()
@@ -241,7 +253,6 @@ class OrderedActivity : AppCompatActivity() {
                         }
                     }else{
                         if(uAnswer == answer){
-                            meteorAnimation()
                             starAnimation()
                             val atf1 = AnimationUtils.loadAnimation(baseContext, R.anim.atf1)
                             val gfo = AnimationUtils.loadAnimation(baseContext, R.anim.gfo)
@@ -256,14 +267,13 @@ class OrderedActivity : AppCompatActivity() {
                     }
                 }
             })
-
-        } else {
+        }else {
             Log.d(TAG, "tv_answer1 is empty!")
             Toast.makeText(applicationContext, "Enter Your Answer!", Toast.LENGTH_SHORT).show()
         }
     }
 
-    fun levelAdapt(level: String) {
+    private fun levelAdapt(level: String) {
         when (level) {
             "Stage 1" -> {
                 say1.text = "19"
@@ -286,7 +296,11 @@ class OrderedActivity : AppCompatActivity() {
     }
 
     fun showComments(view: View?) {
-        mainHandler.removeCallbacks(updatePointTask)
+        if (isRunning){
+            mainHandler.removeCallbacks(updatePointTask)
+        }else{
+            Log.d(TAG, "isRunning false")
+        }
         Log.d(TAG, "Comments button pressed")
         val intent = Intent(this@OrderedActivity, CommentActivity::class.java)
         intent.putExtra("tvName", nick)
@@ -296,7 +310,11 @@ class OrderedActivity : AppCompatActivity() {
     }
 
     private fun mainMenu(view: View?) {
-        mainHandler.removeCallbacks(updatePointTask)
+        if (isRunning){
+            mainHandler.removeCallbacks(updatePointTask)
+        }else{
+            Log.d(TAG, "isRunning false")
+        }
         Log.d(TAG, "mainMenu pressed..")
         val intent = Intent(this@OrderedActivity, MainActivity::class.java)
 //        intent.putExtra("email", email)
@@ -304,7 +322,11 @@ class OrderedActivity : AppCompatActivity() {
     }
 
     fun showProfile(view: View?) {
-        mainHandler.removeCallbacks(updatePointTask)
+        if (isRunning){
+            mainHandler.removeCallbacks(updatePointTask)
+        }else{
+            Log.d(TAG, "isRunning false")
+        }
         Log.d(TAG, "Profile pressed..")
         val intent = Intent(this@OrderedActivity, ProfileActivity::class.java)
         intent.putExtra("tvName", nick)
@@ -314,14 +336,23 @@ class OrderedActivity : AppCompatActivity() {
     }
 
     fun signOut(view: View?) {
-        mainHandler.removeCallbacks(updatePointTask)
+        if (isRunning){
+            mainHandler.removeCallbacks(updatePointTask)
+        }else{
+            Log.d(TAG, "isRunning false")
+        }
         Log.d(TAG, "signOut pressed..")
         auth.signOut()
         startActivity(Intent(this@OrderedActivity, LoginActivity::class.java))
         this@OrderedActivity.finish()
     }
+
     override fun onBackPressed() {
-        mainHandler.removeCallbacks(updatePointTask)
+        if (isRunning){
+            mainHandler.removeCallbacks(updatePointTask)
+        }else{
+            Log.d(TAG, "isRunning false")
+        }
         val intent = Intent(this@OrderedActivity, LvlActivity::class.java)
         intent.putExtra("tvName", nick)
         startActivity(intent)
