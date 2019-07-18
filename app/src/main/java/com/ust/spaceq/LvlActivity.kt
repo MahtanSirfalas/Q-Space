@@ -8,7 +8,6 @@ import android.view.MenuItem
 import android.view.View
 import android.view.animation.AnimationUtils
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.isVisible
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
@@ -19,7 +18,6 @@ private lateinit var firebaseAnalytics: FirebaseAnalytics
 private lateinit var auth: FirebaseAuth
 private lateinit var database: FirebaseDatabase
 private lateinit var databaseReference: DatabaseReference
-private lateinit var commsReference: DatabaseReference
 private lateinit var qAnswer: Map<String,Int>
 private lateinit var nick:String
 private lateinit var levelKey: String
@@ -35,6 +33,8 @@ class LvlActivity : AppCompatActivity() {
         setSupportActionBar(toolbar)
 
         qAnswer = mapOf("Stage 1" to 95, "Stage 2" to 116)
+
+        supportActionBar?.title = "Stages"
 
         firebaseAnalytics = FirebaseAnalytics.getInstance(this)
         auth = FirebaseAuth.getInstance()
@@ -55,20 +55,47 @@ class LvlActivity : AppCompatActivity() {
                     Log.d(TAG, "STAGES; $stages STAGE= $stage")
                     if (stage.contains("Stage 1")){
                         val control = p0.child("stages/Stage 1/control").value as Boolean
+                        val point = p0.child("stages/Stage 1/point").value as Long
                         if (control){
                             Log.d(TAG, "Stage 1: Pass")
                         }else{
-                            buttL1.setBackgroundResource(R.drawable.custom_butt_lvl)
-                            Log.d(TAG, "Stage 1: Finished")
+                            if (point.toInt() == 0){
+                                buttL1.setBackgroundResource(R.drawable.custom_butt_lvl)
+                                Log.d(TAG, "Stage 1: Given Up")
+                            }else{
+                                buttL1.setBackgroundResource(R.drawable.custom_butt_stagewon)
+                                Log.d(TAG, "Stage 1: Finished")
+                            }
                         }
                     }else{}
                     if (stage.contains("Stage 2")){
                         val control = p0.child("stages/Stage 2/control").value as Boolean
+                        val point = p0.child("stages/Stage 2/point").value as Long
                         if (control){
                             Log.d(TAG, "Stage 2: Pass")
                         }else{
-                            buttL2.setBackgroundResource(R.drawable.custom_butt_lvl)
-                            Log.d(TAG, "Stage 2: Finished")
+                            if (point.toInt() == 0) {
+                                buttL2.setBackgroundResource(R.drawable.custom_butt_lvl)
+                                Log.d(TAG, "Stage 2: Given Up")
+                            }else{
+                                buttL2.setBackgroundResource(R.drawable.custom_butt_stagewon)
+                                Log.d(TAG, "Stage 2: Finished")
+                            }
+                        }
+                    }else{}
+                    if (stage.contains("Stage 3")){
+                        val control = p0.child("stages/Stage 3/control").value as Boolean
+                        val point = p0.child("stages/Stage 3/point").value as Long
+                        if (control){
+                            Log.d(TAG, "Stage 3: Pass")
+                        }else{
+                            if (point.toInt() == 0){
+                                buttL3.setBackgroundResource(R.drawable.custom_butt_lvl)
+                                Log.d(TAG, "Stage 3: Given Up")
+                            }else{
+                                buttL3.setBackgroundResource(R.drawable.custom_butt_stagewon)
+                                Log.d(TAG, "Stage 3: Finished")
+                            }
                         }
                     }else{}
                 }else{

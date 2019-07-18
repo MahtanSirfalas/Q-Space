@@ -12,4 +12,7 @@
     <color name="hologreen">#669900</color>
     <color name="warningred">#990000</color>
     <color name="warningdarkred">#660000</color>
+    <color name="yellow">#EFC211</color>
+    <color name="yellowDark">#F29B14</color>
+
 </resources>

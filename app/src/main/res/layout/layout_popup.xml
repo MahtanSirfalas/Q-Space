@@ -4,7 +4,7 @@
                                                    xmlns:tools="http://schemas.android.com/tools"
                                                    android:layout_width="wrap_content"
                                                    android:layout_height="wrap_content"
-                                                   android:background="@drawable/custom_edittext"
+                                                   android:background="@drawable/custom_comment"
                                                    android:padding="16dp">
 
     <ImageView
@@ -13,7 +13,10 @@
             app:layout_constraintEnd_toEndOf="parent" android:layout_marginEnd="8dp"
             app:layout_constraintStart_toStartOf="parent" android:layout_marginStart="8dp"
             android:layout_marginTop="8dp" app:layout_constraintTop_toTopOf="parent" android:layout_marginBottom="8dp"
-            app:layout_constraintBottom_toTopOf="@+id/textView" tools:ignore="VectorDrawableCompat"/>
+            app:layout_constraintBottom_toTopOf="@+id/textView" tools:ignore="VectorDrawableCompat"
+            android:tint="@color/colorPurple" app:tintMode="multiply"
+            android:backgroundTint="@android:color/transparent"
+            android:background="@android:color/transparent"/>
     <TextView
             android:text="Congratulations!!!"
             android:layout_width="wrap_content"

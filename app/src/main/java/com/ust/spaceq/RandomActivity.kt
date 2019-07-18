@@ -11,15 +11,19 @@ import android.view.MenuItem
 import android.view.View
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
+import android.widget.Button
+import android.widget.ImageView
+import android.widget.PopupWindow
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.database.DatabaseReference
-import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.*
 
 import kotlinx.android.synthetic.main.activity_random.*
-import java.util.function.BinaryOperator
+import kotlinx.android.synthetic.main.activity_random.ibComment
+import kotlinx.android.synthetic.main.activity_random.toolbar
 
 private lateinit var firebaseAnalytics: FirebaseAnalytics
 private lateinit var auth: FirebaseAuth
@@ -35,6 +39,7 @@ class RandomActivity : AppCompatActivity() {
     val TAG = "RandomActivity"
     lateinit var randomNumberTask: Runnable
     lateinit var mainHandler: Handler
+    lateinit var updatePointTask: Runnable
     var isRunning = false
     var num1 = 0
     var num2 = 0
@@ -71,8 +76,112 @@ class RandomActivity : AppCompatActivity() {
                 mainHandler.postDelayed(this, 10)
             }
         }
+        fun startcheck() {
+            stageRef.addListenerForSingleValueEvent(object: ValueEventListener {
+                override fun onCancelled(p0: DatabaseError) {
+                    Log.d(TAG, "stageRef Data couldn't read; No Internet Connection/No Response " +
+                            "from database/Wrong datapath")
+                    Toast.makeText(baseContext, "WARNING: Be Sure that you have an active internet connection!", Toast.LENGTH_LONG).show()
+                }
+                override fun onDataChange(p0: DataSnapshot) {
+                    if (p0.hasChildren()){
+                        Log.d(TAG, "$levelKey; RERUNS!")
+                        var point = p0.child("point").value as Long
+                        var control = p0.child("control").value as Boolean
+                        if (control){
+                            point -= 4
+                            stageRef.child("point").setValue(point)
+
+                            updatePointTask = object : Runnable {
+                                override fun run() {
+                                    isRunning = true
+                                    point -= 2
+                                    Log.d(TAG, "point UPDATED: $point")
+                                    stageRef.child("point").setValue(point)
+                                    mainHandler.postDelayed(this, 15000)
+                                }
+                            }
+                            mainHandler.post(updatePointTask)
+                        }else{
+                            commentAnimation()
+                            Toast.makeText(baseContext,"You passed that stage before.",
+                                Toast.LENGTH_SHORT).show()
+                        }
+                    }else{
+                        stageRef.child("point").setValue(1006)
+                        stageRef.child("control").setValue(true)
+                        Log.d(TAG, "First run on $levelKey, adaptation DONE!")
+                        startcheck()
+                    }
+                }
+            })
+        }
+
+        buttAnswer.setOnClickListener {
+            Log.d(TAG, "Slay button pressed")
+            val kontrol = etAnswer.text.toString()
+            if (kontrol.trim().isNotEmpty()){
+                try {
+                    uAnswer = etAnswer.text.toString().toInt()
+                    Log.d(TAG, "uAnswer is assigned as $uAnswer")
+                }catch (ex:Exception){
+                    Log.d(TAG, "Something's Wrong; uAnswer couldn't assign!")
+                    Toast.makeText(baseContext, "Please Enter a Valid Value", Toast.LENGTH_SHORT).show()
+                }
+                stageRef.addListenerForSingleValueEvent(object : ValueEventListener{
+                    override fun onCancelled(p0: DatabaseError) {
+                        Log.d(TAG, "stageRef Data couldn't read; No Internet Connection/No Response from database/Wrong datapath")
+                        Toast.makeText(baseContext, "WARNING: Be Sure that you have an active internet connection!", Toast.LENGTH_LONG).show()
+                    }
+                    override fun onDataChange(p0: DataSnapshot) {
+                        var point = p0.child("point").value as Long
+                        val control = p0.child("control").value as Boolean
+                        val userRef = databaseReference.child(uid)
+                        if (control){
+                            if (answer == uAnswer){
+                                mainHandler.removeCallbacks(updatePointTask)
+                                stageRef.child("control").setValue(false)
+                                userRef.addListenerForSingleValueEvent(object : ValueEventListener {
+                                    override fun onCancelled(p0s: DatabaseError) {
+                                        Log.d(TAG, "userRef Data couldn't read; No Internet Connection/No Response from database/Wrong datapath")
+                                    }
+                                    override fun onDataChange(p0s: DataSnapshot) {
+                                        var points = p0s.child("points").value as Long
+                                        points += point
+                                        userRef.child("points").setValue(points)
+                                    }
+                                })
+                                starAnimation()
+
+                                Log.d(TAG, "$levelKey: Answer ($uAnswer) is equal to $answer; Accepted!")
+                                Toast.makeText(baseContext, "Bravo! answer is accepted!", Toast.LENGTH_SHORT).show()
+                            }else{
+                                point -= 10
+                                stageRef.child("point").setValue(point)
+                                Log.d(TAG, "Something's Wrong; $uAnswer != $answer! point is updated:$point")
+                                Toast.makeText(baseContext, "Wrong answer, try again!", Toast.LENGTH_SHORT).show()
+                            }
+                        }else{
+                            if (answer == uAnswer){
+                                starAnimation()
+                                Log.d(TAG, "$levelKey: Answer ($uAnswer) is equal to $answer; " +
+                                        "But no points added to the database")
+                                Toast.makeText(baseContext, "Bravo! Your answer is accepted!", Toast.LENGTH_SHORT).show()
+                            }else{
+                                Log.d(TAG, "Something's Wrong; $uAnswer != $answer!")
+                                Toast.makeText(baseContext, "Come on mate you passed this stage before!", Toast.LENGTH_SHORT).show()
+                            }
+                        }
+                    }
+                })
+            }else{
+                Log.d(TAG, "tv_answer1 is empty!")
+                Toast.makeText(applicationContext, "Enter Your Answer!", Toast.LENGTH_SHORT).show()
+            }
+        }
 
         startQuestion()
+        startcheck()
 
     }
 
@@ -167,10 +276,9 @@ class RandomActivity : AppCompatActivity() {
                                                         val slidein = AnimationUtils.loadAnimation(baseContext, R.anim.abc_slide_in_bottom)
                                                         etAnswer.visibility = View.VISIBLE
                                                         buttAnswer.visibility = View.VISIBLE
-                                                        buttGiveup.visibility = View.VISIBLE
                                                         etAnswer.startAnimation(fadein)
-                                                        buttAnswer.startAnimation(fadein)
-                                                        buttGiveup.startAnimation(slidein)
+                                                        buttAnswer.startAnimation(slidein)
+                                                        commentAnimation()
                                                     }
                                                 })
                                             }
@@ -184,10 +292,64 @@ class RandomActivity : AppCompatActivity() {
             }
         })
     }
+    private fun commentAnimation(){
+        val commAnim = AnimationUtils.loadAnimation(this, R.anim.commentbub)
+        ibComment.visibility = View.VISIBLE
+        ibComment.startAnimation(commAnim)
+    }
+
+    private fun starAnimation(){
+//
+        val window = PopupWindow(this)
+        val show = layoutInflater.inflate(R.layout.layout_popup, null)
+        window.isOutsideTouchable = true
+        val atf1 = AnimationUtils.loadAnimation(baseContext, R.anim.atf1)
+//
+        val starkayar = AnimationUtils.loadAnimation(baseContext, R.anim.starkayar)
+        val starkayar1 = AnimationUtils.loadAnimation(baseContext, R.anim.starkayar1)
+        val fadein = AnimationUtils.loadAnimation(baseContext, R.anim.abc_fade_in)
+        val gfo = AnimationUtils.loadAnimation(baseContext, R.anim.gfo)
+        val yellowstar = AnimationUtils.loadAnimation(baseContext, R.anim.yellowstar)
+        val yellowstar1 = AnimationUtils.loadAnimation(baseContext, R.anim.yellowstar1)
+        iv_starKayar.visibility = View.VISIBLE
+        iv_starKayar1.visibility = View.VISIBLE
+        iv_starKayar.startAnimation(starkayar)
+        iv_starKayar1.startAnimation(starkayar1)
+        starkayar.setAnimationListener(object : Animation.AnimationListener {
+            override fun onAnimationStart(p0: Animation?) {}
+            override fun onAnimationRepeat(p0: Animation?) {}
+            override fun onAnimationEnd(p0: Animation?) {
+                iv_starKayar.startAnimation(gfo)
+                iv_starKayar1.startAnimation(gfo)
+                iv_yellowStar.visibility = View.VISIBLE
+                iv_yellowStar.startAnimation(fadein)
+//                Pop up window
+                val imageShow = show.findViewById<ImageView>(R.id.iv_spaceMedal)
+                window.contentView = show
+                window.showAtLocation(buttAnswer,1,0,100)
+                show.startAnimation(atf1)
+                imageShow.setOnClickListener{
+                    window.dismiss()
+                }
+                fadein.setAnimationListener(object : Animation.AnimationListener{
+                    override fun onAnimationStart(p0: Animation?) {}
+                    override fun onAnimationRepeat(p0: Animation?) {}
+                    override fun onAnimationEnd(p0: Animation?) {
+//                        iv_meteor.visibility = View.GONE
+                        iv_yellowStar.startAnimation(yellowstar)
+                        iv_yellowStar.startAnimation(yellowstar1)
+                        iv_starKayar.visibility = View.GONE
+                        iv_starKayar1.visibility = View.GONE
+
+                    }
+                })
+            }
+        })
+    }
 
     fun showComments(view: View?) {
         if (isRunning){
-            mainHandler.removeCallbacks(randomNumberTask)
+            mainHandler.removeCallbacks(updatePointTask)
         }else{
             Log.d(TAG, "isRunning false")
         }
@@ -195,12 +357,49 @@ class RandomActivity : AppCompatActivity() {
         val intent = Intent(this@RandomActivity, CommentActivity::class.java)
         intent.putExtra("tvName", nick)
         intent.putExtra("levelKey", levelKey)
-        startActivity(intent)
+
+        val window = PopupWindow(this)
+        val show = layoutInflater.inflate(R.layout.layout_popup_giveup, null)
+        window.isOutsideTouchable = true
+        val atf1 = AnimationUtils.loadAnimation(baseContext, R.anim.atf1)
+
+        stageRef.addListenerForSingleValueEvent(object : ValueEventListener {
+            override fun onCancelled(p0: DatabaseError) {}
+            override fun onDataChange(p0: DataSnapshot) {
+                val control = p0.child("control").value as Boolean
+                if (control){
+                    window.contentView = show
+                    window.showAtLocation(buttAnswer,1,0,100)
+                    show.startAnimation(atf1)
+                    val buttYes = show.findViewById<Button>(R.id.buttYes)
+                    val buttNo = show.findViewById<Button>(R.id.buttNo)
+                    buttYes.setOnClickListener {
+                        stageRef.child("point").setValue(0)
+                        stageRef.child("control").setValue(false)
+                        if (isRunning){
+                            mainHandler.removeCallbacks(updatePointTask)
+                        }else{
+                            Log.d(TAG, "isRunning false")
+                        }
+                        window.dismiss()
+                        startActivity(intent)
+
+                    }
+                    buttNo.setOnClickListener {
+                        window.dismiss()
+                    }
+                }else{
+                    Log.d(TAG, "Comments button pressed")
+
+                    startActivity(intent)
+                }
+            }
+        })
     }
 
     private fun mainMenu(view: View?) {
         if (isRunning){
-            mainHandler.removeCallbacks(randomNumberTask)
+            mainHandler.removeCallbacks(updatePointTask)
         }else{
             Log.d(TAG, "isRunning false")
         }
@@ -212,7 +411,7 @@ class RandomActivity : AppCompatActivity() {
 
     fun showProfile(view: View?) {
         if (isRunning){
-            mainHandler.removeCallbacks(randomNumberTask)
+            mainHandler.removeCallbacks(updatePointTask)
         }else{
             Log.d(TAG, "isRunning false")
         }
@@ -224,7 +423,7 @@ class RandomActivity : AppCompatActivity() {
 
     fun signOut(view: View?) {
         if (isRunning){
-            mainHandler.removeCallbacks(randomNumberTask)
+            mainHandler.removeCallbacks(updatePointTask)
         }else{
             Log.d(TAG, "isRunning false")
         }
@@ -236,7 +435,7 @@ class RandomActivity : AppCompatActivity() {
 
     override fun onBackPressed() {
         if (isRunning){
-            mainHandler.removeCallbacks(randomNumberTask)
+            mainHandler.removeCallbacks(updatePointTask)
         }else{
             Log.d(TAG, "isRunning false")
         }

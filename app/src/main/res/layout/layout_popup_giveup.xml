@@ -7,7 +7,7 @@
                                                    android:background="@drawable/custom_comment">
 
     <TextView
-            android:text="You will sacrifice the points you will gain from this question, Are you sure?"
+            android:text="Reading comments will sacrifice the points you will gain from this question, Are you sure?"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:id="@+id/tv_uSure" android:gravity="center" app:layout_constraintEnd_toEndOf="parent"

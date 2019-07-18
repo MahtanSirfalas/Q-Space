@@ -22,13 +22,13 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
 
 import kotlinx.android.synthetic.main.activity_ordered.*
+import kotlinx.android.synthetic.main.activity_ordered.toolbar
 import kotlin.Exception
 
 private lateinit var firebaseAnalytics: FirebaseAnalytics
 private lateinit var auth: FirebaseAuth
 private lateinit var database: FirebaseDatabase
 private lateinit var databaseReference: DatabaseReference
-private lateinit var commsReference: DatabaseReference
 private lateinit var nick: String
 private lateinit var levelKey: String
 private lateinit var qAnswer: Map<String, Int>
@@ -78,6 +78,7 @@ class OrderedActivity : AppCompatActivity() {
                 override fun onCancelled(p0: DatabaseError) {
                     Log.d(TAG, "stageRef Data couldn't read; No Internet Connection/No Response " +
                             "from database/Wrong datapath")
+                    Toast.makeText(baseContext, "WARNING: Be Sure that you have an active internet connection!", Toast.LENGTH_LONG).show()
                 }
                 override fun onDataChange(p0: DataSnapshot) {
                     if (p0.hasChildren()){
@@ -99,8 +100,6 @@ class OrderedActivity : AppCompatActivity() {
                             }
                             mainHandler.post(updatePointTask)
                         }else{
-                            buttGiveup.visibility = View.INVISIBLE
-                            commentAnimation()
                             Toast.makeText(baseContext,"You passed that stage before.",
                                 Toast.LENGTH_SHORT).show()
                         }
@@ -115,6 +114,7 @@ class OrderedActivity : AppCompatActivity() {
         }
         animation()
         startcheck()
+        commentAnimation()
 //        chrono.base = SystemClock.elapsedRealtime()
 //        chrono.start()
     }
@@ -192,6 +192,8 @@ class OrderedActivity : AppCompatActivity() {
 //                        iv_meteor.visibility = View.GONE
                         iv_yellowStar.startAnimation(yellowstar)
                         iv_yellowStar.startAnimation(yellowstar1)
+                        iv_starKayar.visibility = View.GONE
+                        iv_starKayar1.visibility = View.GONE
 
                     }
                 })
@@ -230,7 +232,6 @@ class OrderedActivity : AppCompatActivity() {
                         if (uAnswer == answer) {
                             mainHandler.removeCallbacks(updatePointTask)
                             stageRef.child("control").setValue(false)
-                            buttGiveup.visibility = View.INVISIBLE
                             userRef.addListenerForSingleValueEvent(object:ValueEventListener{
                                 override fun onCancelled(p0s: DatabaseError) {
                                     Log.d(TAG, "userRef Data couldn't read; No Internet Connection/No Response from database/Wrong datapath")
@@ -243,7 +244,6 @@ class OrderedActivity : AppCompatActivity() {
                                 }
                             })
                             starAnimation()
-                            commentAnimation()
 
                             Log.d(TAG, "$levelKey: Answer ($uAnswer) is equal to $answer; Accepted!")
                             Toast.makeText(baseContext, "Bravo! answer is accepted!", Toast.LENGTH_SHORT).show()
@@ -256,8 +256,6 @@ class OrderedActivity : AppCompatActivity() {
                     }else{
                         if(uAnswer == answer){
                             starAnimation()
-                            val atf1 = AnimationUtils.loadAnimation(baseContext, R.anim.atf1)
-                            val gfo = AnimationUtils.loadAnimation(baseContext, R.anim.gfo)
 
                             Log.d(TAG, "$levelKey: Answer ($uAnswer) is equal to $answer; " +
                                     "But no points added to the database")
@@ -272,34 +270,6 @@ class OrderedActivity : AppCompatActivity() {
         }else {
             Log.d(TAG, "tv_answer1 is empty!")
             Toast.makeText(applicationContext, "Enter Your Answer!", Toast.LENGTH_SHORT).show()
-        }
-    }
-
-    fun giveUp(view:View){
-        val window = PopupWindow(this)
-        val show = layoutInflater.inflate(R.layout.layout_popup_giveup, null)
-        window.isOutsideTouchable = true
-        val atf1 = AnimationUtils.loadAnimation(baseContext, R.anim.atf1)
-        window.contentView = show
-        window.showAtLocation(buttGiveup,1,0,100)
-        show.startAnimation(atf1)
-        val buttYes = show.findViewById<Button>(R.id.buttYes)
-        val buttNo = show.findViewById<Button>(R.id.buttNo)
-        buttYes.setOnClickListener {
-            stageRef.child("point").setValue(0)
-            stageRef.child("control").setValue(false)
-            if (isRunning){
-                mainHandler.removeCallbacks(updatePointTask)
-            }else{
-                Log.d(TAG, "isRunning false")
-            }
-            commentAnimation()
-            window.dismiss()
-            buttGiveup.visibility = View.INVISIBLE
-            Toast.makeText(this, "Result;You can see the comments of the question now -->",Toast.LENGTH_LONG).show()
-        }
-        buttNo.setOnClickListener {
-            window.dismiss()
         }
     }
 
@@ -331,11 +301,47 @@ class OrderedActivity : AppCompatActivity() {
         }else{
             Log.d(TAG, "isRunning false")
         }
-        Log.d(TAG, "Comments button pressed")
         val intent = Intent(this@OrderedActivity, CommentActivity::class.java)
         intent.putExtra("tvName", nick)
         intent.putExtra("levelKey", levelKey)
-        startActivity(intent)
+
+        val window = PopupWindow(this)
+        val show = layoutInflater.inflate(R.layout.layout_popup_giveup, null)
+        window.isOutsideTouchable = true
+        val atf1 = AnimationUtils.loadAnimation(baseContext, R.anim.atf1)
+
+        stageRef.addListenerForSingleValueEvent(object : ValueEventListener {
+            override fun onCancelled(p0: DatabaseError) {}
+            override fun onDataChange(p0: DataSnapshot) {
+                val control = p0.child("control").value as Boolean
+                if (control){
+                    window.contentView = show
+                    window.showAtLocation(buttAnswer1,1,0,100)
+                    show.startAnimation(atf1)
+                    val buttYes = show.findViewById<Button>(R.id.buttYes)
+                    val buttNo = show.findViewById<Button>(R.id.buttNo)
+                    buttYes.setOnClickListener {
+                        stageRef.child("point").setValue(0)
+                        stageRef.child("control").setValue(false)
+                        if (isRunning){
+                            mainHandler.removeCallbacks(updatePointTask)
+                        }else{
+                            Log.d(TAG, "isRunning false")
+                        }
+                        window.dismiss()
+                        startActivity(intent)
+
+                    }
+                    buttNo.setOnClickListener {
+                        window.dismiss()
+                    }
+                }else{
+                    Log.d(TAG, "Comments button pressed")
+
+                    startActivity(intent)
+                }
+            }
+        })
     }
 
     private fun mainMenu(view: View?) {

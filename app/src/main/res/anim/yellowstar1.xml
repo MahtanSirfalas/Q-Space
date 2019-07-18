@@ -2,9 +2,9 @@
 <set xmlns:android="http://schemas.android.com/apk/res/android"
      android:startOffset="100">
 
-    <scale android:fromXScale="88dp"
+    <scale android:fromXScale="96dp"
            android:fromYScale="96dp"
-           android:toXScale="68dp"
+           android:toXScale="80dp"
            android:toYScale="80dp"
            android:duration="1600"
            android:repeatMode="reverse"
