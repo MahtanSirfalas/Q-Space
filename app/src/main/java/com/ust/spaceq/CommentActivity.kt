@@ -9,6 +9,9 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import android.view.animation.AnimationUtils
+import android.widget.Button
+import android.widget.PopupWindow
 import android.widget.Toast
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.auth.FirebaseAuth
@@ -22,6 +25,7 @@ import com.xwray.groupie.ViewHolder
 import kotlinx.android.synthetic.main.activity_comment.*
 import kotlinx.android.synthetic.main.comment_recycle_adapt.*
 import kotlinx.android.synthetic.main.comment_recycle_adapt.view.*
+import kotlinx.android.synthetic.main.layout_popup_giveup.*
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 import java.util.*
@@ -56,7 +60,10 @@ class CommentActivity : AppCompatActivity() {
 
         fetchComments()
 
-
+        val window = PopupWindow(this)
+        val show = layoutInflater.inflate(R.layout.layout_popup_delete, null)
+        window.isOutsideTouchable = true
+        val fadein = AnimationUtils.loadAnimation(this, R.anim.abc_fade_in)
         recycleComment.addOnItemTouchListener(RecyclerItemClickListenr(this, recycleComment, object : RecyclerItemClickListenr.OnItemClickListener {
 
             override fun onItemClick(view: View, position: Int) {
@@ -68,6 +75,7 @@ class CommentActivity : AppCompatActivity() {
                 val comm = view?.tvComment?.text.toString()
                 Log.d(TAG, "onItemLongClick; Upvote pressed!!!")
                 val ref  = database.getReference("/Posts/$levelKey")
+
                 ref.addListenerForSingleValueEvent(object : ValueEventListener{
                     override fun onCancelled(p0: DatabaseError) {
                         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
@@ -89,8 +97,22 @@ class CommentActivity : AppCompatActivity() {
                                 if (found){
                                     //Removing upvote from the specific comment
                                     if (postUid == uid){
+                                        window.contentView = show
+                                        window.showAtLocation(view, 1,0, 100)
+                                        show.startAnimation(fadein)
+                                        val yes = show.findViewById<Button>(R.id.buttYes)
+                                        val no = show.findViewById<Button>(R.id.buttNo)
+                                        val thepost = it
+                                        yes.setOnClickListener {
+                                            thepost.ref.removeValue()
+                                            window.dismiss()
+                                            fetchComments()
+                                        }
+                                        no.setOnClickListener {
+                                            window.dismiss()
+                                        }
                                         Log.d(TAG, "Users' post")
-                                        Toast.makeText(baseContext, "Own comment is not Votable!", Toast.LENGTH_SHORT).show()
+                                        Toast.makeText(baseContext, "Own comment is not votable but removable", Toast.LENGTH_SHORT).show()
                                     }else{
                                         var count = upvoteCount-1
                                         itemRef.child("upvoteCount").setValue(count)
@@ -100,7 +122,7 @@ class CommentActivity : AppCompatActivity() {
                                         view?.tvUpvotes?.setBackgroundColor(Color.TRANSPARENT)
                                         fetchComments()
                                         Log.d(TAG, "$uid found in upvoters, taken back!")
-                                        Toast.makeText(baseContext, "You Took Back Upvote",Toast.LENGTH_SHORT).show()
+                                        Toast.makeText(baseContext, "You Took Back the Upvote",Toast.LENGTH_SHORT).show()
                                     }
 
                                 }else{
@@ -175,7 +197,8 @@ class CommentActivity : AppCompatActivity() {
             }
 
             override fun onCancelled(p0: DatabaseError) {
-
+                Log.d(TAG, "WARNING: Comment Fetching FAILED!")
+                Toast.makeText(baseContext, "WARNING: Be Sure that you have an active internet connection!", Toast.LENGTH_LONG).show()
             }
         })
     }

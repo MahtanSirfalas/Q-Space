@@ -5,7 +5,7 @@
         xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".CommentActivity">
+        tools:context=".CommentActivity" android:background="@color/colorPrimaryDark">
     <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recycleComment"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
@@ -21,8 +21,9 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
-            android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginStart="8dp"
-            android:layout_marginEnd="8dp" android:layout_marginBottom="8dp" android:gravity="center|center_vertical">
+            android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginStart="4dp"
+            android:layout_marginEnd="4dp" android:layout_marginBottom="2dp" android:gravity="center|center_vertical"
+            android:background="@drawable/custom_ucomment">
         <EditText
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -34,18 +35,14 @@
                 android:id="@+id/textCom" android:layout_weight="1"
                 android:hint="Write your comment here..." android:maxLength="360"
                 android:textColor="@color/colorPrimaryDark" android:textColorHint="@color/colorGreyLight"
-                android:layout_marginTop="4dp"/>
-        <Button
-                android:text="Send"
-                app:layout_constraintTop_toTopOf="@+id/textCom"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/textCom"
+                android:layout_marginTop="4dp" android:layout_marginBottom="4dp" android:layout_marginStart="2dp"/>
+        <ImageButton
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content" android:id="@+id/buttCom" android:layout_weight="0"
-                android:textAllCaps="false" android:onClick="buttComms"
-                android:background="@drawable/custom_button_login" android:textColor="@color/colorSpaceWhite"
-                android:layout_marginTop="4dp"/>
+                android:layout_height="wrap_content" app:srcCompat="@drawable/ic_sendicon" android:id="@+id/buttCom"
+                android:onClick="buttComms"
+                android:background="@drawable/custom_button_login" android:minWidth="64dp"
+                android:layout_marginTop="4dp" android:layout_marginBottom="4dp" android:layout_marginEnd="2dp"
+                android:minHeight="42dp"/>
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

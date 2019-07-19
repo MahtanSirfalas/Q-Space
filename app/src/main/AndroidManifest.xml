@@ -14,7 +14,7 @@
             android:supportsRtl="true"
             android:theme="@style/AppTheme">
         <activity
-                android:name=".RandomActivity"
+                android:name=".stages.RandomActivity"
                 android:label="@string/title_activity_random"
                 android:theme="@style/AppTheme.NoActionBar">
         </activity>
@@ -24,7 +24,7 @@
                 android:theme="@style/AppTheme.NoActionBar">
         </activity>
         <activity
-                android:name=".OrderedActivity"
+                android:name=".stages.OrderedActivity"
                 android:label="@string/title_activity_ordered"
                 android:theme="@style/AppTheme.NoActionBar">
         </activity>

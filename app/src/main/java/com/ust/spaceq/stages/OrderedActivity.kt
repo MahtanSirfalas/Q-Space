@@ -1,4 +1,4 @@
-package com.ust.spaceq
+package com.ust.spaceq.stages
 
 import android.content.Intent
 import android.graphics.drawable.AnimationDrawable
@@ -20,6 +20,8 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
+import com.ust.spaceq.*
+import com.ust.spaceq.R
 
 import kotlinx.android.synthetic.main.activity_ordered.*
 import kotlinx.android.synthetic.main.activity_ordered.toolbar
@@ -342,6 +344,14 @@ class OrderedActivity : AppCompatActivity() {
                 }
             }
         })
+    }
+
+    fun showNext(view: View?){
+        when (levelKey){
+            "Stage 1" -> {
+
+            }
+        }
     }
 
     private fun mainMenu(view: View?) {

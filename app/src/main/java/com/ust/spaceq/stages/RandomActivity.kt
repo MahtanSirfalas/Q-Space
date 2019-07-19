@@ -1,4 +1,4 @@
-package com.ust.spaceq
+package com.ust.spaceq.stages
 
 import android.content.Intent
 import android.graphics.drawable.AnimationDrawable
@@ -15,11 +15,13 @@ import android.widget.Button
 import android.widget.ImageView
 import android.widget.PopupWindow
 import android.widget.Toast
-import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
+import com.ust.spaceq.*
+import com.ust.spaceq.R
 
 import kotlinx.android.synthetic.main.activity_random.*
 import kotlinx.android.synthetic.main.activity_random.ibComment
@@ -253,27 +255,15 @@ class RandomActivity : AppCompatActivity() {
                                                     override fun onAnimationRepeat(p0: Animation?) {}
                                                     override fun onAnimationEnd(p0: Animation?) {
                                                         tvRandom.visibility = View.INVISIBLE
-                                                        val operator1 = operator.shuffled()[0]
-                                                        val operator2 = operator.shuffled()[1]
 
-                                                        when (operator1){
-                                                            "+"-> if (operator2 == "+"){
-                                                                answer = num1 + num2 + num3
-                                                                tvLabel.text ="Number1 + Number2 + Number3"
-                                                            }else{
-                                                                answer = num1 + num2 - num3
-                                                                tvLabel.text ="Number1 + Number2 - Number3"
-                                                            }
-                                                            "-"-> if (operator2 == "+"){
-                                                                answer = num1 - num2 + num3
-                                                                tvLabel.text ="Number1 - Number2 + Number3"
-                                                            }else{
-                                                                answer = num1 - num2 - num3
-                                                                tvLabel.text ="Number1 - Number2 - Number3"
-                                                            }
-                                                        }
-                                                        val fadein = AnimationUtils.loadAnimation(baseContext, R.anim.abc_fade_in)
-                                                        val slidein = AnimationUtils.loadAnimation(baseContext, R.anim.abc_slide_in_bottom)
+                                                        levelAdapt(levelKey)
+
+                                                        val fadein = AnimationUtils.loadAnimation(baseContext,
+                                                            R.anim.abc_fade_in
+                                                        )
+                                                        val slidein = AnimationUtils.loadAnimation(baseContext,
+                                                            R.anim.abc_slide_in_bottom
+                                                        )
                                                         etAnswer.visibility = View.VISIBLE
                                                         buttAnswer.visibility = View.VISIBLE
                                                         etAnswer.startAnimation(fadein)
@@ -292,6 +282,7 @@ class RandomActivity : AppCompatActivity() {
             }
         })
     }
+
     private fun commentAnimation(){
         val commAnim = AnimationUtils.loadAnimation(this, R.anim.commentbub)
         ibComment.visibility = View.VISIBLE
@@ -345,6 +336,32 @@ class RandomActivity : AppCompatActivity() {
                 })
             }
         })
+    }
+
+    private fun levelAdapt(level:String){
+        when (level){
+            "Stage 3" -> {
+                val operator1 = operator.shuffled()[0]
+                val operator2 = operator.shuffled()[1]
+
+                when (operator1){
+                    "+"-> if (operator2 == "+"){
+                        answer = num1 + num2 + num3
+                        tvLabel.text ="Number1 + Number2 + Number3"
+                    }else{
+                        answer = num1 + num2 - num3
+                        tvLabel.text ="Number1 + Number2 - Number3"
+                    }
+                    "-"-> if (operator2 == "+"){
+                        answer = num1 - num2 + num3
+                        tvLabel.text ="Number1 - Number2 + Number3"
+                    }else{
+                        answer = num1 - num2 - num3
+                        tvLabel.text ="Number1 - Number2 - Number3"
+                    }
+                }
+            }
+        }
     }
 
     fun showComments(view: View?) {
