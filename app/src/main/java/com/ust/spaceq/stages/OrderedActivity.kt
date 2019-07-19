@@ -1,7 +1,7 @@
 package com.ust.spaceq.stages
 
-import android.annotation.SuppressLint
 import android.content.Intent
+import android.graphics.Color
 import android.graphics.drawable.AnimationDrawable
 import android.os.Bundle
 import android.os.Handler
@@ -276,7 +276,6 @@ class OrderedActivity : AppCompatActivity() {
         }
     }
 
-    @SuppressLint("ResourceAsColor")
     private fun levelAdapt(level: String) {
         val fadein = AnimationUtils.loadAnimation(this, R.anim.abc_fade_in)
         when (level) {
@@ -303,8 +302,10 @@ class OrderedActivity : AppCompatActivity() {
                 Log.d(TAG, "$level adaptation is done successfully!")
             }
             "Stage 4" -> {
+                val slidein = AnimationUtils.loadAnimation(baseContext, R.anim.abc_slide_in_top)
                 groupUcgen.visibility = View.VISIBLE
-                uc4_say2.setTextColor(R.color.colorSpaceWhite)
+                groupUcgen.startAnimation(slidein)
+                uc4_say2.setTextColor(Color.WHITE)
                 ib_back.visibility = View.VISIBLE
                 ib_next.visibility = View.VISIBLE
                 ib_back.startAnimation(fadein)
@@ -366,6 +367,11 @@ class OrderedActivity : AppCompatActivity() {
     }
 
     fun showNext(view: View?){
+        if (isRunning){
+            mainHandler.removeCallbacks(updatePointTask)
+        }else{
+            Log.d(TAG, "isRunning false")
+        }
         when (levelKey){
             "Stage 1" -> {
                 levelKey = "Stage 2"
@@ -386,6 +392,11 @@ class OrderedActivity : AppCompatActivity() {
     }
 
     fun showBack(view:View?){
+        if (isRunning){
+            mainHandler.removeCallbacks(updatePointTask)
+        }else{
+            Log.d(TAG, "isRunning false")
+        }
         when(levelKey){
             "Stage 2" -> {
                 levelKey = "Stage 1"
