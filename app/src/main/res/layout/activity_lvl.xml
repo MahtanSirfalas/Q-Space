@@ -99,7 +99,7 @@
                         android:layout_marginEnd="16dp" android:background="@drawable/custom_butt_stage"
                         android:textColor="@color/colorSpaceWhite" android:textColorHighlight="@color/colorAccent"
                         android:textColorHint="@color/colorSpaceWhite" android:fontFamily="@font/press_start_2p"
-                        android:visibility="invisible"/>
+                        android:visibility="invisible" android:onClick="showStage4"/>
                 <Button
                         android:text="5"
                         android:layout_width="60dp"

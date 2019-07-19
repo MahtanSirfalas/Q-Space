@@ -1,5 +1,6 @@
 package com.ust.spaceq.stages
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.graphics.drawable.AnimationDrawable
 import android.os.Bundle
@@ -58,7 +59,7 @@ class OrderedActivity : AppCompatActivity() {
         animationDrawable.setExitFadeDuration(4000)
         animationDrawable.start()
 
-        qAnswer = mapOf("Stage 1" to 95, "Stage 2" to 116)
+        qAnswer = mapOf("Stage 1" to 95, "Stage 2" to 116, "Stage 4" to 12)
 
         firebaseAnalytics = FirebaseAnalytics.getInstance(this)
         auth = FirebaseAuth.getInstance()
@@ -275,21 +276,39 @@ class OrderedActivity : AppCompatActivity() {
         }
     }
 
+    @SuppressLint("ResourceAsColor")
     private fun levelAdapt(level: String) {
+        val fadein = AnimationUtils.loadAnimation(this, R.anim.abc_fade_in)
         when (level) {
             "Stage 1" -> {
+                groupOrder.visibility = View.VISIBLE
                 say1.text = "19"
                 say2.text = "38"
                 say3.text = "57"
                 say4.text = "76"
+                ib_next.visibility = View.VISIBLE
+                ib_next.startAnimation(fadein)
                 Log.d(TAG, "$level adaptation is done successfully!")
             }
             "Stage 2" -> {
+                groupOrder.visibility = View.VISIBLE
                 say1.text = "24"
                 say2.text = "47"
                 say3.text = "70"
                 say4.text = "93"
+                ib_back.visibility = View.VISIBLE
+                ib_next.visibility = View.VISIBLE
+                ib_back.startAnimation(fadein)
+                ib_next.startAnimation(fadein)
                 Log.d(TAG, "$level adaptation is done successfully!")
+            }
+            "Stage 4" -> {
+                groupUcgen.visibility = View.VISIBLE
+                uc4_say2.setTextColor(R.color.colorSpaceWhite)
+                ib_back.visibility = View.VISIBLE
+                ib_next.visibility = View.VISIBLE
+                ib_back.startAnimation(fadein)
+                ib_next.startAnimation(fadein)
             }
             else -> {
                 Log.d(TAG, "Something's Wrong; levelAdapt is failed!")
@@ -349,8 +368,40 @@ class OrderedActivity : AppCompatActivity() {
     fun showNext(view: View?){
         when (levelKey){
             "Stage 1" -> {
-
+                levelKey = "Stage 2"
+                val intent = Intent(this@OrderedActivity, OrderedActivity::class.java)
+                intent.putExtra("levelKey", levelKey)
+                intent.putExtra("tvName", nick)
+                startActivity(intent)
             }
+            "Stage 2" -> {
+                levelKey = "Stage 3"
+                val intent = Intent(this@OrderedActivity, RandomActivity::class.java)
+                intent.putExtra("levelKey", levelKey)
+                intent.putExtra("tvName", nick)
+                startActivity(intent)
+            }
+            else -> {}
+        }
+    }
+
+    fun showBack(view:View?){
+        when(levelKey){
+            "Stage 2" -> {
+                levelKey = "Stage 1"
+                val intent = Intent(this@OrderedActivity, OrderedActivity::class.java)
+                intent.putExtra("levelKey", levelKey)
+                intent.putExtra("tvName", nick)
+                startActivity(intent)
+            }
+            "Stage 4" -> {
+                levelKey = "Stage 3"
+                val intent = Intent(this@OrderedActivity, RandomActivity::class.java)
+                intent.putExtra("levelKey", levelKey)
+                intent.putExtra("tvName", nick)
+                startActivity(intent)
+            }
+            else -> {}
         }
     }
 

@@ -7,6 +7,7 @@ import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import android.view.animation.AnimationUtils
+import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.auth.FirebaseAuth
@@ -23,6 +24,7 @@ private lateinit var databaseReference: DatabaseReference
 private lateinit var qAnswer: Map<String,Int>
 private lateinit var nick:String
 private lateinit var levelKey: String
+private lateinit var stageList: Map<String,Button>
 private var cevap: Int = 1
 
 
@@ -35,6 +37,8 @@ class LvlActivity : AppCompatActivity() {
         setSupportActionBar(toolbar)
 
         qAnswer = mapOf("Stage 1" to 95, "Stage 2" to 116)
+        stageList = mapOf("Stage 1" to buttL1, "Stage 2" to buttL2, "Stage 3" to buttL3, "Stage 4" to buttL4)
+
 
         supportActionBar?.title = "Stages"
 
@@ -55,51 +59,25 @@ class LvlActivity : AppCompatActivity() {
                     val stage = stages.keys
                     animations()
                     Log.d(TAG, "STAGES; $stages STAGE= $stage")
-                    if (stage.contains("Stage 1")){
-                        val control = p0.child("stages/Stage 1/control").value as Boolean
-                        val point = p0.child("stages/Stage 1/point").value as Long
-                        if (control){
-                            Log.d(TAG, "Stage 1: Pass")
-                        }else{
-                            if (point.toInt() == 0){
-                                buttL1.setBackgroundResource(R.drawable.custom_butt_lvl)
-                                Log.d(TAG, "Stage 1: Given Up")
+                    for (item in stageList.keys){
+                        if (stage.contains(item)){
+                            val control = p0.child("stages/$item/control").value as Boolean
+                            val point = p0.child("stages/$item/point").value as Long
+                            val buton = stageList[item]
+                            if (control){
+                                Log.d(TAG, "$item: Pass")
                             }else{
-                                buttL1.setBackgroundResource(R.drawable.custom_butt_stagewon)
-                                Log.d(TAG, "Stage 1: Finished")
+                                if (point.toInt() == 0){
+                                    buton?.setBackgroundResource(R.drawable.custom_butt_lvl)
+                                    Log.d(TAG, "$item: Given Up")
+                                }else{
+                                    buton?.setBackgroundResource(R.drawable.custom_butt_stagewon)
+                                    Log.d(TAG, "$item: Finished")
+                                }
                             }
-                        }
-                    }else{}
-                    if (stage.contains("Stage 2")){
-                        val control = p0.child("stages/Stage 2/control").value as Boolean
-                        val point = p0.child("stages/Stage 2/point").value as Long
-                        if (control){
-                            Log.d(TAG, "Stage 2: Pass")
-                        }else{
-                            if (point.toInt() == 0) {
-                                buttL2.setBackgroundResource(R.drawable.custom_butt_lvl)
-                                Log.d(TAG, "Stage 2: Given Up")
-                            }else{
-                                buttL2.setBackgroundResource(R.drawable.custom_butt_stagewon)
-                                Log.d(TAG, "Stage 2: Finished")
-                            }
-                        }
-                    }else{}
-                    if (stage.contains("Stage 3")){
-                        val control = p0.child("stages/Stage 3/control").value as Boolean
-                        val point = p0.child("stages/Stage 3/point").value as Long
-                        if (control){
-                            Log.d(TAG, "Stage 3: Pass")
-                        }else{
-                            if (point.toInt() == 0){
-                                buttL3.setBackgroundResource(R.drawable.custom_butt_lvl)
-                                Log.d(TAG, "Stage 3: Given Up")
-                            }else{
-                                buttL3.setBackgroundResource(R.drawable.custom_butt_stagewon)
-                                Log.d(TAG, "Stage 3: Finished")
-                            }
-                        }
-                    }else{}
+                            Log.d(TAG, "stageList: $item applied")
+                        }else{}
+                    }
                 }else{
                     animations()
                     Log.d(TAG, "stages doesn't exist yet!")
@@ -218,6 +196,14 @@ class LvlActivity : AppCompatActivity() {
     fun showStage3(view: View?){
         levelKey = "Stage 3"
         val intent = Intent(this@LvlActivity, RandomActivity::class.java)
+        intent.putExtra("tvName", nick)
+        intent.putExtra("levelKey", levelKey)
+        startActivity(intent)
+    }
+
+    fun showStage4(view: View?){
+        levelKey = "Stage 4"
+        val intent = Intent(this@LvlActivity, OrderedActivity::class.java)
         intent.putExtra("tvName", nick)
         intent.putExtra("levelKey", levelKey)
         startActivity(intent)

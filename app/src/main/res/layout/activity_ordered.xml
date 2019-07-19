@@ -35,7 +35,6 @@
                                                            android:background="@drawable/bg_gradient"
                                                            android:id="@+id/layoutbg"
                                                            android:focusableInTouchMode="true" android:focusable="true">
-
             <TextView
                     android:id="@+id/say1"
                     android:text="24"
@@ -49,7 +48,8 @@
                     app:layout_constraintStart_toStartOf="parent"
                     android:layout_marginTop="8dp" android:layout_marginStart="8dp"
                     app:layout_constraintEnd_toStartOf="@+id/say2" android:layout_marginEnd="8dp"
-                    android:layout_marginBottom="8dp" app:layout_constraintBottom_toTopOf="@+id/textQ"/>
+                    android:layout_marginBottom="8dp" app:layout_constraintBottom_toTopOf="@+id/textQ"
+                    android:visibility="invisible"/>
             <TextView
                     android:id="@+id/say2"
                     android:text="47"
@@ -63,7 +63,7 @@
                     app:layout_constraintBottom_toTopOf="@+id/textQ"
                     app:layout_constraintTop_toTopOf="parent" app:layout_constraintStart_toEndOf="@+id/say1"
                     android:layout_marginStart="8dp" app:layout_constraintEnd_toStartOf="@+id/say3"
-                    android:layout_marginEnd="8dp" android:layout_marginBottom="8dp"/>
+                    android:layout_marginEnd="8dp" android:layout_marginBottom="8dp" android:visibility="invisible"/>
             <TextView
                     android:id="@+id/say3"
                     android:text="70"
@@ -77,7 +77,7 @@
                     app:layout_constraintBottom_toTopOf="@id/textQ"
                     app:layout_constraintTop_toTopOf="parent" app:layout_constraintStart_toEndOf="@+id/say2"
                     android:layout_marginStart="8dp" app:layout_constraintEnd_toStartOf="@+id/say4"
-                    android:layout_marginEnd="8dp" android:layout_marginBottom="8dp"/>
+                    android:layout_marginEnd="8dp" android:layout_marginBottom="8dp" android:visibility="invisible"/>
             <TextView
                     android:id="@+id/say4"
                     android:text="93"
@@ -91,7 +91,8 @@
                     app:layout_constraintBottom_toTopOf="@id/textQ"
                     app:layout_constraintTop_toTopOf="parent" app:layout_constraintStart_toEndOf="@+id/say3"
                     android:layout_marginStart="8dp" android:layout_marginEnd="8dp"
-                    app:layout_constraintEnd_toEndOf="parent" android:layout_marginBottom="8dp"/>
+                    app:layout_constraintEnd_toEndOf="parent" android:layout_marginBottom="8dp"
+                    android:visibility="invisible"/>
             <TextView
                     android:text="What's the next number?"
                     android:layout_width="wrap_content"
@@ -101,23 +102,169 @@
                     app:layout_constraintTop_toBottomOf="@+id/say2"
                     app:layout_constraintBottom_toTopOf="@+id/tv_answer1"
                     android:layout_marginStart="8dp" app:layout_constraintStart_toStartOf="parent"
-                    android:fontFamily="@font/press_start_2p"/>
+                    android:fontFamily="@font/press_start_2p" android:visibility="invisible"/>
+            <TextView
+                    android:text="3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" android:id="@+id/uc1_say1"
+                    android:textColor="@color/colorPurple" android:fontFamily="@font/press_start_2p"
+                    android:textSize="24sp"
+                    android:layout_marginTop="16dp" app:layout_constraintTop_toTopOf="parent"
+                    android:layout_marginEnd="8dp" app:layout_constraintEnd_toStartOf="@+id/guideline3"
+                    android:layout_marginStart="8dp" app:layout_constraintStart_toStartOf="parent"
+                    android:visibility="gone"/>
+            <TextView
+                    android:text="6"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" android:id="@+id/uc1_say2"
+                    android:textColor="@color/colorPurple" android:fontFamily="@font/press_start_2p"
+                    app:layout_constraintCircle="@id/uc1_say1"
+                    app:layout_constraintCircleAngle="135"
+                    app:layout_constraintCircleRadius="48dp"
+                    android:textSize="24sp"
+                    android:layout_marginEnd="8dp"
+                    app:layout_constraintEnd_toStartOf="@+id/guideline3" android:layout_marginTop="8dp"
+                    app:layout_constraintTop_toBottomOf="@+id/uc1_say1"
+                    android:visibility="gone"/>
+            <TextView
+                    android:text="9"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" android:id="@+id/uc1_say3"
+                    android:textColor="@color/colorPurple" android:fontFamily="@font/press_start_2p"
+                    app:layout_constraintCircle="@id/uc1_say1"
+                    app:layout_constraintCircleAngle="225"
+                    app:layout_constraintCircleRadius="48dp"
+                    android:textSize="24sp"
+                    android:layout_marginStart="8dp"
+                    app:layout_constraintStart_toStartOf="parent" android:layout_marginTop="8dp"
+                    app:layout_constraintTop_toBottomOf="@+id/uc1_say1"
+                    android:visibility="gone"/>
+            <TextView
+                    android:text="4"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" android:id="@+id/uc2_say1"
+                    android:textColor="@color/colorPurple" android:fontFamily="@font/press_start_2p"
+                    android:textSize="24sp"
+                    android:layout_marginTop="16dp"
+                    app:layout_constraintTop_toTopOf="parent"
+                    android:layout_marginStart="8dp" app:layout_constraintStart_toStartOf="@+id/guideline3"
+                    android:layout_marginEnd="8dp" app:layout_constraintEnd_toEndOf="parent" android:visibility="gone"/>
+            <TextView
+                    android:text="8"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" android:id="@+id/uc2_say2"
+                    android:textColor="@color/colorPurple" android:fontFamily="@font/press_start_2p"
+                    app:layout_constraintCircle="@id/uc2_say1"
+                    app:layout_constraintCircleAngle="135"
+                    app:layout_constraintCircleRadius="48dp"
+                    android:textSize="24sp"
+                    android:layout_marginTop="8dp"
+                    app:layout_constraintTop_toBottomOf="@+id/uc2_say1"
+                    android:layout_marginEnd="8dp" app:layout_constraintEnd_toEndOf="parent"
+                    android:visibility="gone"/>
+            <TextView
+                    android:text="12"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" android:id="@+id/uc2_say3"
+                    android:textColor="@color/colorPurple" android:fontFamily="@font/press_start_2p"
+                    app:layout_constraintCircle="@id/uc2_say1"
+                    app:layout_constraintCircleAngle="225"
+                    app:layout_constraintCircleRadius="48dp"
+                    android:textSize="24sp"
+                    android:layout_marginTop="8dp"
+                    app:layout_constraintTop_toBottomOf="@+id/uc2_say1"
+                    android:layout_marginStart="8dp" app:layout_constraintStart_toStartOf="@+id/guideline3"
+                    android:visibility="gone"/>
+            <TextView
+                    android:text="5"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" android:id="@+id/uc3_say1"
+                    android:textColor="@color/colorPurple" android:fontFamily="@font/press_start_2p"
+                    android:textSize="24sp"
+                    android:layout_marginEnd="8dp"
+                    app:layout_constraintEnd_toStartOf="@+id/guideline3" android:layout_marginStart="8dp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    android:layout_marginTop="8dp" app:layout_constraintTop_toBottomOf="@+id/uc1_say2"
+                    android:layout_marginBottom="8dp" app:layout_constraintBottom_toTopOf="@+id/tv_answer1"
+                    android:visibility="gone"/>
+            <TextView
+                    android:text="10"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" android:id="@+id/uc3_say2"
+                    android:textColor="@color/colorPurple" android:fontFamily="@font/press_start_2p"
+                    app:layout_constraintCircle="@id/uc3_say1"
+                    app:layout_constraintCircleAngle="135"
+                    app:layout_constraintCircleRadius="48dp"
+                    android:textSize="24sp"
+                    android:layout_marginTop="8dp"
+                    app:layout_constraintTop_toBottomOf="@+id/uc3_say1"
+                    android:layout_marginEnd="8dp" app:layout_constraintEnd_toStartOf="@+id/guideline3"
+                    android:visibility="gone"/>
+            <TextView
+                    android:text="15"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" android:id="@+id/uc3_say3"
+                    android:textColor="@color/colorPurple" android:fontFamily="@font/press_start_2p"
+                    app:layout_constraintCircle="@id/uc3_say1"
+                    app:layout_constraintCircleAngle="225"
+                    app:layout_constraintCircleRadius="48dp"
+                    android:textSize="24sp"
+                    android:layout_marginTop="8dp"
+                    app:layout_constraintTop_toBottomOf="@+id/uc3_say1" android:layout_marginStart="8dp"
+                    app:layout_constraintStart_toStartOf="parent" android:visibility="gone"/>
+            <TextView
+                    android:text="6"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" android:id="@+id/uc4_say1"
+                    android:textColor="@color/colorPurple" android:fontFamily="@font/press_start_2p"
+                    android:textSize="24sp"
+                    android:layout_marginEnd="8dp"
+                    app:layout_constraintEnd_toEndOf="parent" android:layout_marginStart="8dp"
+                    app:layout_constraintStart_toStartOf="@+id/guideline3"
+                    android:layout_marginTop="8dp" app:layout_constraintTop_toBottomOf="@+id/uc2_say3"
+                    android:layout_marginBottom="8dp" app:layout_constraintBottom_toTopOf="@+id/tv_answer1"
+                    android:visibility="gone"/>
+            <TextView
+                    android:text=".?"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" android:id="@+id/uc4_say2"
+                    android:textColor="@color/colorPurple" android:fontFamily="@font/press_start_2p"
+                    app:layout_constraintCircle="@id/uc4_say1"
+                    app:layout_constraintCircleAngle="135"
+                    app:layout_constraintCircleRadius="48dp"
+                    android:textSize="24sp"
+                    android:layout_marginTop="8dp"
+                    app:layout_constraintTop_toBottomOf="@+id/uc4_say1" android:layout_marginEnd="8dp"
+                    app:layout_constraintEnd_toEndOf="parent" android:visibility="gone"/>
+            <TextView
+                    android:text="18"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" android:id="@+id/uc4_say3"
+                    android:textColor="@color/colorPurple" android:fontFamily="@font/press_start_2p"
+                    app:layout_constraintCircle="@id/uc4_say1"
+                    app:layout_constraintCircleAngle="225"
+                    app:layout_constraintCircleRadius="48dp"
+                    android:textSize="24sp"
+                    android:layout_marginTop="8dp"
+                    app:layout_constraintTop_toBottomOf="@+id/uc4_say1" android:layout_marginStart="8dp"
+                    app:layout_constraintStart_toStartOf="@+id/guideline3" android:visibility="gone"/>
             <ImageButton
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" app:srcCompat="@drawable/ic_nextstage"
                     android:id="@+id/ib_next" android:background="@android:color/transparent"
-                    android:tint="@color/colorSpaceWhite" android:layout_marginEnd="8dp"
+                    android:tint="@color/colorSpaceWhite" android:layout_marginEnd="2dp"
                     app:layout_constraintEnd_toEndOf="parent" app:layout_constraintTop_toBottomOf="@+id/textQ"
-                    android:layout_marginBottom="8dp" app:layout_constraintBottom_toTopOf="@+id/buttAnswer1"
-                    android:layout_marginTop="8dp"/>
+                    android:layout_marginBottom="4dp" app:layout_constraintBottom_toTopOf="@+id/buttAnswer1"
+                    android:layout_marginTop="4dp" android:onClick="showNext" android:visibility="invisible"/>
             <ImageButton
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" app:srcCompat="@drawable/ic_backstage"
                     android:id="@+id/ib_back" android:background="@android:color/transparent"
-                    android:layout_marginTop="8dp"
-                    app:layout_constraintTop_toBottomOf="@+id/textQ" android:layout_marginBottom="8dp"
+                    android:layout_marginTop="4dp"
+                    app:layout_constraintTop_toBottomOf="@+id/textQ" android:layout_marginBottom="4dp"
                     app:layout_constraintBottom_toTopOf="@+id/buttAnswer1" android:tint="@color/colorSpaceWhite"
-                    app:layout_constraintStart_toStartOf="parent" android:layout_marginStart="4dp"/>
+                    app:layout_constraintStart_toStartOf="parent" android:layout_marginStart="2dp"
+                    android:onClick="showBack" android:visibility="invisible"/>
             <EditText
                     android:layout_width="80dp"
                     android:layout_height="80dp"
@@ -187,8 +334,20 @@
                     app:layout_constraintEnd_toEndOf="parent" android:onClick="showComments"
                     android:visibility="invisible" android:layout_marginTop="16dp"
                     app:layout_constraintTop_toBottomOf="@+id/buttAnswer1"/>
+            <androidx.constraintlayout.widget.Group android:layout_width="wrap_content"
+                                                    android:layout_height="wrap_content"
+                                                    app:constraint_referenced_ids="say1,say2,say3,say4,textQ"
+                                                    android:id="@+id/groupOrder" android:visibility="invisible"/>
+            <androidx.constraintlayout.widget.Guideline android:layout_width="wrap_content"
+                                                        android:layout_height="wrap_content"
+                                                        android:id="@+id/guideline3"
+                                                        android:orientation="vertical"
+                                                        app:layout_constraintGuide_percent="0.5"/>
+            <androidx.constraintlayout.widget.Group android:layout_width="wrap_content"
+                                                    android:layout_height="wrap_content"
+                                                    app:constraint_referenced_ids="uc1_say1,uc1_say2,uc1_say3,uc2_say1,uc2_say2,uc2_say3,uc3_say1,uc3_say2,uc3_say3,uc4_say1,uc4_say2,uc4_say3"
+                                                    android:id="@+id/groupUcgen" android:visibility="gone"/>
         </androidx.constraintlayout.widget.ConstraintLayout>
     </LinearLayout>
-
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

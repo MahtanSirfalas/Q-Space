@@ -339,8 +339,14 @@ class RandomActivity : AppCompatActivity() {
     }
 
     private fun levelAdapt(level:String){
+        val fadein = AnimationUtils.loadAnimation(this, R.anim.abc_fade_in)
         when (level){
             "Stage 3" -> {
+                ib_back.visibility = View.VISIBLE
+                ib_next.visibility = View.VISIBLE
+                ib_back.startAnimation(fadein)
+                ib_next.startAnimation(fadein)
+
                 val operator1 = operator.shuffled()[0]
                 val operator2 = operator.shuffled()[1]
 
@@ -412,6 +418,32 @@ class RandomActivity : AppCompatActivity() {
                 }
             }
         })
+    }
+
+    fun showNext(view:View?){
+        when(levelKey){
+            "Stage 3" -> {
+                levelKey = "Stage 4"
+                val intent = Intent(this@RandomActivity, OrderedActivity::class.java)
+                intent.putExtra("levelKey", levelKey)
+                intent.putExtra("tvName", nick)
+                startActivity(intent)
+            }
+            else -> {}
+        }
+    }
+
+    fun showBack(view:View?){
+        when(levelKey){
+            "Stage 3" -> {
+                levelKey = "Stage 2"
+                val intent = Intent(this@RandomActivity, OrderedActivity::class.java)
+                intent.putExtra("levelKey", levelKey)
+                intent.putExtra("tvName", nick)
+                startActivity(intent)
+            }
+            else -> {}
+        }
     }
 
     private fun mainMenu(view: View?) {
