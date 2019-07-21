@@ -12,32 +12,26 @@ import android.view.MenuItem
 import android.view.View
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
+import android.widget.PopupWindow
+import android.widget.Toast
 import androidx.constraintlayout.widget.ConstraintLayout
-import androidx.core.view.isInvisible
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
 import com.squareup.picasso.Picasso
 
 import kotlinx.android.synthetic.main.activity_main.*
-import java.util.*
-import kotlin.concurrent.schedule
-import kotlin.concurrent.thread
 
 private lateinit var firebaseAnalytics: FirebaseAnalytics
 private lateinit var auth: FirebaseAuth
 private lateinit var database: FirebaseDatabase
 private lateinit var databaseReference: DatabaseReference
 private lateinit var commsReference: DatabaseReference
-private lateinit var uAnswer: Any
-private var cevap:Int = 1
 
 lateinit var email: String
 lateinit var uid: String
 lateinit var avatar: String
 lateinit var uName: String
-
-
 
 @TargetApi(Build.VERSION_CODES.O)
 class MainActivity : AppCompatActivity() {
@@ -71,14 +65,17 @@ class MainActivity : AppCompatActivity() {
 
         userReference.addListenerForSingleValueEvent(object : ValueEventListener {
             override fun onDataChange(p0: DataSnapshot) {
+                uName = p0.child("nickName").value as String
                 avatar = p0.child("avatar").value as String
                 Picasso.get().load(avatar).into(iv_avatar_circle)
-                uName = p0.child("nickName").value as String
                 tvName.text = uName
                 Log.d(TAG, "onCreate: avatar and uName assigned")
                 animationTop()
             }
-            override fun onCancelled(p0: DatabaseError) {}
+            override fun onCancelled(p0: DatabaseError) {
+                Log.d(TAG, "Something's Wrong: User information get FAILED")
+                Toast.makeText(baseContext, "Warning: Check if you have an active internet connection!",Toast.LENGTH_LONG).show()
+            }
         })
         //sayaç burada yatmaktadır yiğen
 //        view_timer.base = SystemClock.elapsedRealtime()
@@ -90,22 +87,27 @@ class MainActivity : AppCompatActivity() {
 //            textDeneme.text = zaman
 //        }
         commsReference = database.reference.child("Posts")
-
     }
+
     private fun animationTop(){
-        val rtl = AnimationUtils.loadAnimation(this, R.anim.rtl)
-        val rtl1 = AnimationUtils.loadAnimation(this, R.anim.rtl1)
+        val window = PopupWindow(this)
+        val show = layoutInflater.inflate(R.layout.layout_popup_internet, null)
+        window.isOutsideTouchable = true
+        val fadein = AnimationUtils.loadAnimation(this, R.anim.abc_fade_in)
         val atf = AnimationUtils.loadAnimation(this, R.anim.atf)
-        buttLogout.visibility = View.VISIBLE
-        buttLogout.startAnimation(rtl)
-        rtl.setAnimationListener(object : Animation.AnimationListener {
+        val rtl = AnimationUtils.loadAnimation(this, R.anim.rtl)
+        iv_avatar_circle.visibility = View.VISIBLE
+        iv_avatar_circle.startAnimation(atf)
+
+        atf.setAnimationListener(object : Animation.AnimationListener {
             override fun onAnimationStart(p0: Animation?) {}
             override fun onAnimationRepeat(p0: Animation?) {}
             override fun onAnimationEnd(p0: Animation?) {
-                iv_avatar_circle.visibility = View.VISIBLE
+                window.contentView = show
+                window.showAtLocation(layoutbg,1,0,0)
+                show.startAnimation(fadein)
                 tvName.visibility = View.VISIBLE
-                iv_avatar_circle.startAnimation(atf)
-                tvName.startAnimation(rtl1)
+                tvName.startAnimation(rtl)
             }
         })
     }
@@ -149,16 +151,17 @@ class MainActivity : AppCompatActivity() {
     fun showProfile(view: View?){
         Log.d(TAG, "Profile pressed")
         val intent = Intent(this@MainActivity, ProfileActivity::class.java)
-        val gfo = AnimationUtils.loadAnimation(this, R.anim.gfo)
+        val gfo2 = AnimationUtils.loadAnimation(this, R.anim.gfo2)
         val fo = AnimationUtils.loadAnimation(this, R.anim.abc_fade_out)
-        ivProfile.startAnimation(gfo)
+        val profil = AnimationUtils.loadAnimation(this, R.anim.profil)
+        ivProfile.startAnimation(gfo2)
         buttProfil.startAnimation(fo)
         fo.setAnimationListener(object : Animation.AnimationListener{
             override fun onAnimationRepeat(p0: Animation?) {}
             override fun onAnimationStart(p0: Animation?) {}
             override fun onAnimationEnd(p0: Animation?) {buttProfil.visibility = View.INVISIBLE}
         })
-        gfo.setAnimationListener(object : Animation.AnimationListener {
+        gfo2.setAnimationListener(object : Animation.AnimationListener {
             override fun onAnimationStart(arg0: Animation) {
                 intent.putExtra("tvName", tvName.text.toString())
             }

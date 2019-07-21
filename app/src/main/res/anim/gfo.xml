@@ -4,8 +4,8 @@
 
     <scale android:fromXScale="96dp"
            android:fromYScale="96dp"
-           android:toXScale="150dp"
-           android:toYScale="150dp"/>
+           android:toXScale="200dp"
+           android:toYScale="200dp"/>
 
     <alpha android:toAlpha="0"
             android:fromAlpha="1"/>

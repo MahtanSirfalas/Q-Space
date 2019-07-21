@@ -9,7 +9,9 @@ import android.os.Bundle
 import android.provider.MediaStore
 import android.util.Log
 import android.view.View
+import android.view.animation.Animation
 import android.view.animation.AnimationUtils
+import android.widget.Toast
 import androidx.constraintlayout.widget.ConstraintLayout
 import com.google.firebase.database.*
 import com.google.firebase.storage.FirebaseStorage
@@ -38,19 +40,23 @@ class ProfileActivity : AppCompatActivity() {
 
         userRef.addListenerForSingleValueEvent(object:ValueEventListener{
             override fun onCancelled(p0: DatabaseError) {
+                Log.d(TAG, "Something's Wrong: User information get FAILED")
+                Toast.makeText(baseContext, "Warning: Check if you have an active internet connection!", Toast.LENGTH_LONG).show()
             }
 
             override fun onDataChange(p0: DataSnapshot) {
                 val userLevel = p0.child("level").value
                 val userPoints = p0.child("points").value
+                uName = p0.child("nickName").value as String
+                avatar = p0.child("avatar").value as String
                 textLevel.text = "Level: " + userLevel.toString()
                 textPoints.text = "Total Points: " + userPoints.toString()
+                textName.text = "Username: "+ uName
+                Picasso.get().load(avatar).into(ivAvatar_circle)
                 animations()
+                Log.d(TAG, "user informations parsed")
             }
-
         })
-
-        textName.text = "Username: "+ uName
         textMail.text = "E-Mail: "+ email
 
         buttAvatar.setOnClickListener {
@@ -60,8 +66,6 @@ class ProfileActivity : AppCompatActivity() {
             intent.type = "image/*"
             startActivityForResult(intent, 0)
         }
-        buttAvatar.alpha = 0f
-        Picasso.get().load(avatar).into(ivAvatar_circle)
     }
     var selectedPhotoUri: Uri? = null
 
@@ -120,19 +124,27 @@ class ProfileActivity : AppCompatActivity() {
     }
 
     private fun animations(){
+        val stf1 = AnimationUtils.loadAnimation(this, R.anim.stf1)
         val fadein = AnimationUtils.loadAnimation(this, R.anim.abc_fade_in)
-        textName.visibility = View.VISIBLE
-        textMail.visibility = View.VISIBLE
-        textLevel.visibility = View.VISIBLE
-        textPoints.visibility = View.VISIBLE
-        buttAvatar.visibility = View.VISIBLE
-        ivAvatar_circle.visibility = View.VISIBLE
-        textName.startAnimation(fadein)
-        textMail.startAnimation(fadein)
-        textLevel.startAnimation(fadein)
-        textPoints.startAnimation(fadein)
-        buttAvatar.startAnimation(fadein)
-        ivAvatar_circle.startAnimation(fadein)
+        profile_card.startAnimation(stf1)
+        stf1.setAnimationListener(object : Animation.AnimationListener{
+            override fun onAnimationStart(p0: Animation?) {profile_card.visibility = View.VISIBLE}
+            override fun onAnimationRepeat(p0: Animation?) {}
+            override fun onAnimationEnd(p0: Animation?) {
+                textName.visibility = View.VISIBLE
+                textMail.visibility = View.VISIBLE
+                textLevel.visibility = View.VISIBLE
+                textPoints.visibility = View.VISIBLE
+                buttAvatar.visibility = View.VISIBLE
+                ivAvatar_circle.visibility = View.VISIBLE
+                textName.startAnimation(fadein)
+                textMail.startAnimation(fadein)
+                textLevel.startAnimation(fadein)
+                textPoints.startAnimation(fadein)
+                buttAvatar.startAnimation(fadein)
+                ivAvatar_circle.startAnimation(fadein)
+            }
+        })
     }
     override fun onBackPressed() {
         Log.d(TAG, "mainMenu pressed..")

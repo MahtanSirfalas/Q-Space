@@ -47,11 +47,12 @@
                         android:background="@drawable/butt_login_enable"
                         android:textColorHighlight="@color/colorPink" android:textColorHint="@color/colorSpaceWhite"
                         android:textColor="@color/colorSpaceWhite"
+                        android:gravity="start|center_vertical"
+                        android:visibility="invisible"
+                        android:paddingStart="8dp" android:paddingEnd="30dp"
                         app:layout_constraintBottom_toBottomOf="@+id/iv_avatar_circle"
-                        app:layout_constraintTop_toTopOf="@+id/iv_avatar_circle"
-                        android:paddingStart="8dp" android:gravity="start|center_vertical"
-                        android:paddingEnd="16dp" android:layout_marginEnd="18dp"
-                        app:layout_constraintEnd_toStartOf="@+id/buttLogout" android:visibility="invisible"/>
+                        app:layout_constraintTop_toTopOf="@+id/iv_avatar_circle" android:layout_marginEnd="26dp"
+                        app:layout_constraintEnd_toEndOf="@+id/iv_avatar_circle"/>
                 <de.hdodenhof.circleimageview.CircleImageView
                         android:layout_width="50dp" android:layout_height="50dp"
                         android:id="@+id/iv_avatar_circle"
@@ -59,36 +60,24 @@
                         app:civ_border_color="@color/colorPurple"
                         android:translationZ="90dp"
                         app:layout_constraintTop_toTopOf="parent" android:layout_marginTop="16dp"
-                        android:layout_marginEnd="68dp" app:layout_constraintEnd_toEndOf="@+id/buttLogout"
-                        android:visibility="invisible"/>
-                <Button
-                        android:text="Log Out"
-                        android:layout_width="wrap_content"
-                        android:layout_height="30dp" android:id="@+id/buttLogout"
-                        android:onClick="signOut"
-                        android:background="@drawable/butt_login_enable"
-                        android:textColor="@color/colorSpaceWhite" android:textColorHighlight="@color/colorPurple"
-                        android:textColorHint="@color/colorSpaceWhite"
-                        android:textAllCaps="false"
-                        app:layout_constraintTop_toTopOf="@+id/iv_avatar_circle"
-                        app:layout_constraintBottom_toBottomOf="@+id/iv_avatar_circle"
-                        app:layout_constraintEnd_toEndOf="parent" android:textAlignment="viewEnd"
-                        android:layout_marginEnd="8dp" android:paddingEnd="8dp" android:fontFamily="@font/coda"
-                        android:visibility="invisible"/>
+                        android:visibility="invisible" android:layout_marginEnd="32dp"
+                        app:layout_constraintEnd_toEndOf="parent"/>
 
                 <Button android:id="@+id/buttOyna"
                         android:text="Play"
                         android:textColor="@color/colorSpaceWhite"
                         android:background="@android:color/transparent"
-                        android:layout_width="120dp"
-                        android:layout_height="96dp"
-                        android:fontFamily="@font/press_start_2p"
+                        android:layout_width="96dp"
+                        android:layout_height="108dp"
+                        android:fontFamily="@font/coda"
                         android:includeFontPadding="false" android:textAllCaps="false"
-                        android:onClick="showLvl" android:gravity="right|top"
+                        android:onClick="showLvl" android:gravity="center_horizontal|top"
                         app:layout_constraintBottom_toTopOf="@id/buttProfil"
                         app:layout_constraintStart_toStartOf="parent" android:layout_marginEnd="96dp"
                         app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/buttLogout" android:layout_marginStart="8dp"/>
+                        android:layout_marginStart="8dp"
+                        android:textSize="18sp" android:layout_marginTop="8dp"
+                        app:layout_constraintTop_toBottomOf="@+id/iv_avatar_circle"/>
                 <ImageView
                         android:layout_width="96dp"
                         android:layout_height="96dp" app:srcCompat="@drawable/playbutton100"
@@ -96,66 +85,67 @@
                         app:layout_constraintTop_toTopOf="@+id/buttOyna"
                         app:layout_constraintEnd_toEndOf="@+id/buttOyna"
                         app:layout_constraintBottom_toBottomOf="@+id/buttOyna"
-                        app:layout_constraintStart_toStartOf="@+id/buttOyna" android:layout_marginEnd="24dp"/>
+                        app:layout_constraintStart_toStartOf="@+id/buttOyna" android:layout_marginTop="12dp"/>
 
                 <Button android:id="@+id/buttProfil"
                         android:text="Profile"
                         android:textColor="@color/colorSpaceWhite"
                         android:background="@android:color/transparent"
-                        android:layout_width="120dp"
-                        android:layout_height="100dp" android:fontFamily="@font/press_start_2p"
+                        android:layout_width="96dp"
+                        android:layout_height="108dp" android:fontFamily="@font/coda"
                         android:textAllCaps="false"
-                        android:onClick="showProfile" android:gravity="top|left"
+                        android:onClick="showProfile" android:gravity="center_horizontal|top"
                         android:layout_marginEnd="16dp"
                         app:layout_constraintBottom_toTopOf="@id/buttSoru"
                         app:layout_constraintEnd_toEndOf="parent" app:layout_constraintStart_toEndOf="@+id/buttOyna"
                         android:layout_marginStart="8dp"
-                        app:layout_constraintTop_toBottomOf="@+id/buttOyna"/>
+                        app:layout_constraintTop_toBottomOf="@+id/buttOyna" android:textSize="18sp"/>
                 <ImageView
                         android:layout_width="96dp"
                         android:layout_height="96dp" app:srcCompat="@drawable/profilebutton100"
                         android:id="@+id/ivProfile"
-                        android:layout_marginTop="8dp"
+                        android:layout_marginTop="12dp"
                         app:layout_constraintTop_toTopOf="@+id/buttProfil"
                         app:layout_constraintEnd_toEndOf="@+id/buttProfil"
                         app:layout_constraintBottom_toBottomOf="@+id/buttProfil"
-                        app:layout_constraintStart_toStartOf="@+id/buttProfil" android:layout_marginStart="24dp"/>
+                        app:layout_constraintStart_toStartOf="@+id/buttProfil"/>
 
                 <Button android:id="@+id/buttSoru"
                         android:text="Suggest_Q "
                         android:textColor="@color/colorSpaceWhite"
                         android:background="@android:color/transparent"
-                        android:layout_width="120dp"
-                        android:layout_height="104dp" android:fontFamily="@font/press_start_2p"
-                        android:textAllCaps="false" android:gravity="top|left"
+                        android:layout_width="96dp"
+                        android:layout_height="108dp" android:fontFamily="@font/coda"
+                        android:textAllCaps="false" android:gravity="center_horizontal|top"
                         android:layout_marginStart="8dp"
                         app:layout_constraintBottom_toTopOf="@+id/buttInfo"
                         app:layout_constraintStart_toStartOf="parent" android:layout_marginEnd="8dp"
                         app:layout_constraintEnd_toStartOf="@+id/buttProfil"
-                        app:layout_constraintTop_toBottomOf="@+id/buttProfil" android:onClick="showSuggestQ"/>
+                        app:layout_constraintTop_toBottomOf="@+id/buttProfil" android:onClick="showSuggestQ"
+                        android:textSize="18sp"/>
                 <ImageView
                         android:layout_width="96dp"
                         android:layout_height="96dp" app:srcCompat="@drawable/jupiterbutt100"
                         android:id="@+id/ivSuggestQ"
                         app:layout_constraintEnd_toEndOf="@+id/buttSoru"
-                        android:layout_marginEnd="8dp"
                         app:layout_constraintBottom_toBottomOf="@+id/buttSoru"
                         app:layout_constraintTop_toTopOf="@+id/buttSoru"
-                        app:layout_constraintStart_toStartOf="@+id/buttSoru" android:layout_marginStart="24dp"
-                        android:layout_marginTop="8dp"/>
+                        app:layout_constraintStart_toStartOf="@+id/buttSoru"
+                        android:layout_marginTop="12dp"/>
                 <Button android:id="@+id/buttInfo"
                         android:text="Info"
                         android:textColor="@color/colorSpaceWhite"
                         android:background="@android:color/transparent"
-                        android:layout_width="120dp"
-                        android:layout_height="96dp" android:fontFamily="@font/press_start_2p"
+                        android:layout_width="96dp"
+                        android:layout_height="108dp" android:fontFamily="@font/coda"
                         android:textAllCaps="false"
-                        android:gravity="bottom|right"
+                        android:gravity="center_horizontal|top"
                         android:layout_marginEnd="8dp"
                         app:layout_constraintEnd_toEndOf="parent" android:layout_marginBottom="16dp"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/ivSuggestQ"
-                        app:layout_constraintStart_toEndOf="@+id/buttSoru" android:layout_marginStart="8dp"/>
+                        app:layout_constraintStart_toEndOf="@+id/buttSoru" android:layout_marginStart="8dp"
+                        android:textSize="18sp"/>
                 <ImageView
                         android:layout_width="96dp"
                         android:layout_height="96dp" app:srcCompat="@drawable/marsbutton100"
@@ -163,7 +153,7 @@
                         app:layout_constraintEnd_toEndOf="@+id/buttInfo"
                         app:layout_constraintBottom_toBottomOf="@+id/buttInfo"
                         app:layout_constraintStart_toStartOf="@+id/buttInfo"
-                        app:layout_constraintTop_toTopOf="@+id/buttInfo" android:layout_marginEnd="24dp"/>
+                        app:layout_constraintTop_toTopOf="@+id/buttInfo" android:layout_marginTop="16dp"/>
                 <!--<Chronometer-->
                 <!--android:id="@+id/view_timer"-->
                 <!--android:layout_width="wrap_content" android:layout_height="wrap_content"-->

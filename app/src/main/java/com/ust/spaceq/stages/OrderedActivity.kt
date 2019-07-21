@@ -115,14 +115,13 @@ class OrderedActivity : AppCompatActivity() {
                 }
             })
         }
-        animation()
         startcheck()
         commentAnimation()
 //        chrono.base = SystemClock.elapsedRealtime()
 //        chrono.start()
     }
 
-    private fun animation(){
+    private fun animationOrder(){
         val animsay = AnimationUtils.loadAnimation(this, R.anim.abc_slide_in_top)
         val animtv = AnimationUtils.loadAnimation(this, R.anim.abc_slide_in_bottom)
         val atf = AnimationUtils.loadAnimation(this, R.anim.atf)
@@ -276,11 +275,32 @@ class OrderedActivity : AppCompatActivity() {
         }
     }
 
+    private fun animationUcgen(){
+        val fadein = AnimationUtils.loadAnimation(this, R.anim.abc_fade_in)
+        val animtv = AnimationUtils.loadAnimation(this, R.anim.abc_slide_in_bottom)
+        groupUcgen.visibility = View.VISIBLE
+        uc1_say1.startAnimation(fadein)
+        uc1_say2.startAnimation(fadein)
+        uc1_say3.startAnimation(fadein)
+        uc2_say1.startAnimation(fadein)
+        uc2_say2.startAnimation(fadein)
+        uc2_say3.startAnimation(fadein)
+        uc3_say1.startAnimation(fadein)
+        uc3_say2.startAnimation(fadein)
+        uc3_say3.startAnimation(fadein)
+        uc4_say1.startAnimation(fadein)
+        uc4_say2.startAnimation(fadein)
+        uc4_say3.startAnimation(fadein)
+        tv_answer1.startAnimation(animtv)
+        buttAnswer1.startAnimation(animtv)
+    }
+
     private fun levelAdapt(level: String) {
         val fadein = AnimationUtils.loadAnimation(this, R.anim.abc_fade_in)
         when (level) {
             "Stage 1" -> {
                 groupOrder.visibility = View.VISIBLE
+                animationOrder()
                 say1.text = "19"
                 say2.text = "38"
                 say3.text = "57"
@@ -291,6 +311,7 @@ class OrderedActivity : AppCompatActivity() {
             }
             "Stage 2" -> {
                 groupOrder.visibility = View.VISIBLE
+                animationOrder()
                 say1.text = "24"
                 say2.text = "47"
                 say3.text = "70"
@@ -302,14 +323,13 @@ class OrderedActivity : AppCompatActivity() {
                 Log.d(TAG, "$level adaptation is done successfully!")
             }
             "Stage 4" -> {
-                val slidein = AnimationUtils.loadAnimation(baseContext, R.anim.abc_slide_in_top)
-                groupUcgen.visibility = View.VISIBLE
-                groupUcgen.startAnimation(slidein)
-                uc4_say2.setTextColor(Color.WHITE)
                 ib_back.visibility = View.VISIBLE
                 ib_next.visibility = View.VISIBLE
                 ib_back.startAnimation(fadein)
                 ib_next.startAnimation(fadein)
+                uc4_say2.setTextColor(Color.WHITE)
+                animationUcgen()
+                Log.d(TAG, "$level adaptation is done successfully!")
             }
             else -> {
                 Log.d(TAG, "Something's Wrong; levelAdapt is failed!")

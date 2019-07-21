@@ -229,12 +229,15 @@ class PostItem(val post: Post): Item<ViewHolder>(){
                 override fun onCancelled(p0: DatabaseError) {}
         })
         val found = post.upvotes.contains(uid)
+        val spaceWhite = Color.parseColor("#FBFAF6")
         if (found){
             if (post.uid == uid){
-                viewHolder.itemView.tvName.setBackgroundColor(Color.CYAN)
+                viewHolder.itemView.tvName.setBackgroundColor(Color.parseColor("#F29B14"))
+                viewHolder.itemView.tvName.setTextColor(spaceWhite)
                 Log.d(TAG, "User's own comment detected!")
             }else{
-                viewHolder.itemView.tvUpvotes.setBackgroundColor(Color.GREEN)
+                viewHolder.itemView.tvUpvotes.setBackgroundColor(Color.parseColor("#669900"))
+                viewHolder.itemView.tvUpvotes.setTextColor(spaceWhite)
             }
         }else{
             Log.d(TAG, "No Upvote")
