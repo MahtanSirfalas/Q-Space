@@ -1,8 +1,6 @@
 package com.ust.spaceq
 
 import android.annotation.TargetApi
-import android.content.res.ColorStateList
-import android.content.res.Resources
 import android.graphics.Color
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
@@ -23,12 +21,9 @@ import com.xwray.groupie.GroupAdapter
 import com.xwray.groupie.Item
 import com.xwray.groupie.ViewHolder
 import kotlinx.android.synthetic.main.activity_comment.*
-import kotlinx.android.synthetic.main.comment_recycle_adapt.*
 import kotlinx.android.synthetic.main.comment_recycle_adapt.view.*
-import kotlinx.android.synthetic.main.layout_popup_giveup.*
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
-import java.util.*
 
 private lateinit var firebaseAnalytics: FirebaseAnalytics
 private lateinit var auth: FirebaseAuth
@@ -224,8 +219,9 @@ class PostItem(val post: Post): Item<ViewHolder>(){
                     Log.d(TAG, "onDataChange; avatareach = $avatareach")
                     Picasso.get().load(avatareach).into(viewHolder.itemView.ivAvatar_circle)
                     Log.d(TAG, "Picasso is successful!")
+                    viewHolder.itemView.tvTag.text = "'${p0.child("level").value as String}'"
+                    viewHolder.itemView.tvTag.setTextColor(Color.parseColor("#F29B14"))
                 }
-
                 override fun onCancelled(p0: DatabaseError) {}
         })
         val found = post.upvotes.contains(uid)

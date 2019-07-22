@@ -27,11 +27,14 @@ private lateinit var auth: FirebaseAuth
 private lateinit var database: FirebaseDatabase
 private lateinit var databaseReference: DatabaseReference
 private lateinit var commsReference: DatabaseReference
+var firstRunControl = true
 
 lateinit var email: String
 lateinit var uid: String
 lateinit var avatar: String
 lateinit var uName: String
+var points: Long = 0
+lateinit var level: String
 
 @TargetApi(Build.VERSION_CODES.O)
 class MainActivity : AppCompatActivity() {
@@ -67,10 +70,12 @@ class MainActivity : AppCompatActivity() {
             override fun onDataChange(p0: DataSnapshot) {
                 uName = p0.child("nickName").value as String
                 avatar = p0.child("avatar").value as String
+                points = p0.child("points").value as Long
                 Picasso.get().load(avatar).into(iv_avatar_circle)
                 tvName.text = uName
                 Log.d(TAG, "onCreate: avatar and uName assigned")
                 animationTop()
+                levelTagClarification()
             }
             override fun onCancelled(p0: DatabaseError) {
                 Log.d(TAG, "Something's Wrong: User information get FAILED")
@@ -89,6 +94,26 @@ class MainActivity : AppCompatActivity() {
         commsReference = database.reference.child("Posts")
     }
 
+    public fun levelTagClarification(){
+        val userReference = databaseReference.child(uid)
+        when (points) {
+            in 1..1999 -> {userReference.child("level").setValue("Epimetheus")}
+            in 2000..3999 -> {userReference.child("level").setValue("Atlas")}
+            in 4000..5999 -> {userReference.child("level").setValue("Hyperion")}
+            in 6000..8499 -> {userReference.child("level").setValue("Charon")}
+            in 8500..10999 -> {userReference.child("level").setValue("Mimas")}
+            in 11000..13999 -> {userReference.child("level").setValue("Triton")}
+            in 14000..18999 -> {userReference.child("level").setValue("Callisto")}
+            in 17000..20499 -> {userReference.child("level").setValue("Ganymede")}
+            in 20500..23999 -> {userReference.child("level").setValue("Europa")}
+            in 24000..27999 -> {userReference.child("level").setValue("Titan")}
+            in 28000..32499 -> {userReference.child("level").setValue("Moon")}
+            in 32500..37499 -> {userReference.child("level").setValue("Enceladus")}
+            in 37500..59999 -> {userReference.child("level").setValue("Mars")}
+            else -> {}
+        }
+    }
+
     private fun animationTop(){
         val window = PopupWindow(this)
         val show = layoutInflater.inflate(R.layout.layout_popup_internet, null)
@@ -103,9 +128,12 @@ class MainActivity : AppCompatActivity() {
             override fun onAnimationStart(p0: Animation?) {}
             override fun onAnimationRepeat(p0: Animation?) {}
             override fun onAnimationEnd(p0: Animation?) {
-                window.contentView = show
-                window.showAtLocation(layoutbg,1,0,0)
-                show.startAnimation(fadein)
+                if (firstRunControl == true){
+                    window.contentView = show
+                    window.showAtLocation(layoutbg,1,0,0)
+                    show.startAnimation(fadein)
+                    firstRunControl = false
+                }else{Log.d(TAG, "Not first run!")}
                 tvName.visibility = View.VISIBLE
                 tvName.startAnimation(rtl)
             }

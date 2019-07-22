@@ -59,7 +59,7 @@ class OrderedActivity : AppCompatActivity() {
         animationDrawable.setExitFadeDuration(4000)
         animationDrawable.start()
 
-        qAnswer = mapOf("Stage 1" to 95, "Stage 2" to 116, "Stage 4" to 12)
+        qAnswer = mapOf("Stage 1" to 95, "Stage 2" to 12, "Stage 4" to 116)
 
         firebaseAnalytics = FirebaseAnalytics.getInstance(this)
         auth = FirebaseAuth.getInstance()
@@ -240,9 +240,33 @@ class OrderedActivity : AppCompatActivity() {
                                 }
 
                                 override fun onDataChange(p0s: DataSnapshot) {
+                                    var levelP = p0s.child("level").value as String
                                     var points = p0s.child("points").value as Long
                                     points += point
                                     userRef.child("points").setValue(points)
+                                    MainActivity().levelTagClarification()
+                                    level = p0s.child("level").value as String
+                                    if (levelP != level){
+                                        when(level){
+                                            "Epimetheus" -> {
+                                                TODO("Tag changes affects work!!")}
+                                            "Atlas" -> {}
+                                            "Hyperion" -> {}
+                                            "Charon" -> {}
+                                            "Mimas" -> {}
+                                            "Triton" -> {}
+                                            "Callisto" -> {}
+                                            "Ganymede" -> {}
+                                            "Europa" -> {}
+                                            "Titan" -> {}
+                                            "Moon" -> {}
+                                            "Enceladus" -> {}
+                                            "Mars" -> {}
+                                            else -> {
+                                                Log.d(TAG, "Level didn't change!")
+                                            }
+                                        }
+                                    }
                                 }
                             })
                             starAnimation()
@@ -310,6 +334,16 @@ class OrderedActivity : AppCompatActivity() {
                 Log.d(TAG, "$level adaptation is done successfully!")
             }
             "Stage 2" -> {
+                ib_back.visibility = View.VISIBLE
+                ib_next.visibility = View.VISIBLE
+                ib_back.startAnimation(fadein)
+                ib_next.startAnimation(fadein)
+                uc4_say2.setTextColor(Color.WHITE)
+                animationUcgen()
+                Log.d(TAG, "$level adaptation is done successfully!")
+
+            }
+            "Stage 4" -> {
                 groupOrder.visibility = View.VISIBLE
                 animationOrder()
                 say1.text = "24"
@@ -320,15 +354,6 @@ class OrderedActivity : AppCompatActivity() {
                 ib_next.visibility = View.VISIBLE
                 ib_back.startAnimation(fadein)
                 ib_next.startAnimation(fadein)
-                Log.d(TAG, "$level adaptation is done successfully!")
-            }
-            "Stage 4" -> {
-                ib_back.visibility = View.VISIBLE
-                ib_next.visibility = View.VISIBLE
-                ib_back.startAnimation(fadein)
-                ib_next.startAnimation(fadein)
-                uc4_say2.setTextColor(Color.WHITE)
-                animationUcgen()
                 Log.d(TAG, "$level adaptation is done successfully!")
             }
             else -> {

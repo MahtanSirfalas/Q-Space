@@ -2,6 +2,7 @@ package com.ust.spaceq
 
 import android.app.Activity
 import android.content.Intent
+import android.graphics.BitmapFactory
 import android.graphics.drawable.AnimationDrawable
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
@@ -11,12 +12,14 @@ import android.util.Log
 import android.view.View
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
+import android.widget.Button
 import android.widget.Toast
 import androidx.constraintlayout.widget.ConstraintLayout
 import com.google.firebase.database.*
 import com.google.firebase.storage.FirebaseStorage
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.activity_profile.*
+import java.lang.NullPointerException
 
 private lateinit var database: FirebaseDatabase
 private lateinit var commsReference: DatabaseReference
@@ -65,6 +68,10 @@ class ProfileActivity : AppCompatActivity() {
             val intent = Intent(Intent.ACTION_PICK)
             intent.type = "image/*"
             startActivityForResult(intent, 0)
+        }
+        val buttShare = findViewById<Button>(R.id.buttShare)
+        buttShare.setOnClickListener {
+            share()
         }
     }
     var selectedPhotoUri: Uri? = null
@@ -146,6 +153,26 @@ class ProfileActivity : AppCompatActivity() {
             }
         })
     }
+
+    fun share(){
+        try {
+            var imageUri = Uri.parse(
+                MediaStore.Images.Media.insertImage(this.contentResolver,
+                    BitmapFactory.decodeResource(resources, R.drawable.marsbutton100), null, null
+                )
+            )
+
+            val sharingIntent = Intent(Intent.ACTION_SEND)
+            sharingIntent.type = "image/*"
+            sharingIntent.putExtra(Intent.EXTRA_STREAM, imageUri)
+            sharingIntent.putExtra(Intent.EXTRA_SUBJECT, "Konulu")
+            sharingIntent.putExtra(Intent.EXTRA_TEXT, "Bir varmış bir yokmuş")
+            sharingIntent.putExtra(Intent.EXTRA_TITLE,  "Q Space")
+            startActivity(Intent.createChooser(sharingIntent, "Share with..."))
+        }catch (e:NullPointerException){}
+
+    }
+
     override fun onBackPressed() {
         Log.d(TAG, "mainMenu pressed..")
         val intent = Intent(this@ProfileActivity, MainActivity::class.java)

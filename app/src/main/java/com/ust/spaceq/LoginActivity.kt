@@ -184,7 +184,7 @@ class LoginActivity : AppCompatActivity() {
                 userDb.child("nickName").setValue(nickName)
                 userDb.child("eMail").setValue(user.email)
                 userDb.child("points").setValue(0)
-                userDb.child("level").setValue(0)
+                userDb.child("level").setValue("Dactyl")
                 userDb.child("avatar").setValue(defaultAvatar)
 
 //                letDirectory.mkdirs()
