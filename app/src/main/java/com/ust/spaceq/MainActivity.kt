@@ -39,6 +39,7 @@ lateinit var avatar: String
 lateinit var uName: String
 var points: Long = 0
 lateinit var level: String
+var verifiedCheck = false
 
 @TargetApi(Build.VERSION_CODES.O)
 class MainActivity : AppCompatActivity() {
@@ -66,6 +67,7 @@ class MainActivity : AppCompatActivity() {
         val user = auth.currentUser
         uid = user!!.uid
         email = user.email.toString()
+        user.reload()
         val userReference = databaseReference.child(uid)
 
         /*userName.text  = userReference.orderByChild("nickName").toString()*/
@@ -83,7 +85,7 @@ class MainActivity : AppCompatActivity() {
             }
             override fun onCancelled(p0: DatabaseError) {
                 Log.d(TAG, "Something's Wrong: User information get FAILED")
-                Toast.makeText(baseContext, "Warning: Check if you have an active internet connection!",Toast.LENGTH_LONG).show()
+                Toast.makeText(baseContext, R.string.listener_cancelled,Toast.LENGTH_LONG).show()
             }
         })
         //sayaç burada yatmaktadır yiğen
@@ -101,6 +103,15 @@ class MainActivity : AppCompatActivity() {
             .build()
         googleSignInClient = GoogleSignIn.getClient(this, gso)
         commsReference = database.reference.child("Posts")
+        //Verified or Not Warning!
+        verifiedCheck = user.isEmailVerified
+        if (verifiedCheck){
+            Log.d(TAG, "verifiedCheck = ${user.isEmailVerified}")
+            groupWarn.visibility = View.GONE
+        }else{
+            Log.d(TAG, "verifiedCheck = ${user.isEmailVerified}")
+            groupWarn.visibility = View.VISIBLE
+        }
     }
 
     public fun levelTagClarification(){

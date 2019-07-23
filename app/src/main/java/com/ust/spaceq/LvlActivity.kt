@@ -37,10 +37,9 @@ class LvlActivity : AppCompatActivity() {
         setSupportActionBar(toolbar)
 
         qAnswer = mapOf("Stage 1" to 95, "Stage 2" to 116)
-        stageList = mapOf("Stage 1" to buttL1, "Stage 2" to buttL2, "Stage 3" to buttL3, "Stage 4" to buttL4)
+        stageList = mapOf("Stage 1" to buttL1, "Stage 2" to buttL2, "Stage 3" to buttL3, "Stage 4" to buttL4,
+            "Stage 5" to buttL5)
 
-
-        supportActionBar?.title = "Stages"
 
         firebaseAnalytics = FirebaseAnalytics.getInstance(this)
         auth = FirebaseAuth.getInstance()
@@ -172,7 +171,6 @@ class LvlActivity : AppCompatActivity() {
 
     }
 
-
     fun showStage1(view: View?){
         levelKey = "Stage 1"
         cevap = qAnswer["Stage 1"] as Int
@@ -203,6 +201,14 @@ class LvlActivity : AppCompatActivity() {
 
     fun showStage4(view: View?){
         levelKey = "Stage 4"
+        val intent = Intent(this@LvlActivity, OrderedActivity::class.java)
+        intent.putExtra("tvName", nick)
+        intent.putExtra("levelKey", levelKey)
+        startActivity(intent)
+    }
+
+    fun showStage5(view: View?){
+        levelKey = "Stage 5"
         val intent = Intent(this@LvlActivity, OrderedActivity::class.java)
         intent.putExtra("tvName", nick)
         intent.putExtra("levelKey", levelKey)

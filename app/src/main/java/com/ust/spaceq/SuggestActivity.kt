@@ -60,7 +60,7 @@ class SuggestActivity : AppCompatActivity() {
             suggestRef.child("when").removeValue()
             suggestRef.child("nickName").removeValue()
             etSuggest.text.clear()
-            tvZaman.text = "date | time"
+            tvZaman.text = R.string.date_time.toString()
             showSuggest(null)
         }
 

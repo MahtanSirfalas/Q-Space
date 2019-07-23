@@ -44,23 +44,22 @@ class ProfileActivity : AppCompatActivity() {
         userRef.addListenerForSingleValueEvent(object:ValueEventListener{
             override fun onCancelled(p0: DatabaseError) {
                 Log.d(TAG, "Something's Wrong: User information get FAILED")
-                Toast.makeText(baseContext, "Warning: Check if you have an active internet connection!", Toast.LENGTH_LONG).show()
+                Toast.makeText(baseContext, R.string.listener_cancelled, Toast.LENGTH_LONG).show()
             }
-
             override fun onDataChange(p0: DataSnapshot) {
                 val userLevel = p0.child("level").value
                 val userPoints = p0.child("points").value
                 uName = p0.child("nickName").value as String
                 avatar = p0.child("avatar").value as String
-                textLevel.text = "Level: " + userLevel.toString()
-                textPoints.text = "Total Points: " + userPoints.toString()
-                textName.text = "Username: "+ uName
+                textLevel.text = R.string.level.toString() + userLevel.toString()
+                textPoints.text = R.string.total_points.toString() + userPoints.toString()
+                textName.text = R.string.username.toString() + uName
                 Picasso.get().load(avatar).into(ivAvatar_circle)
                 animations()
                 Log.d(TAG, "user informations parsed")
             }
         })
-        textMail.text = "E-Mail: "+ email
+        textMail.text = R.string.email.toString() + email
 
         buttAvatar.setOnClickListener {
             Log.d(TAG, "avatar selector clicked")

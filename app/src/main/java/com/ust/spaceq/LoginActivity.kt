@@ -9,7 +9,6 @@ import android.text.TextUtils
 import android.text.TextWatcher
 import android.util.Log
 import android.view.View
-import android.widget.Button
 import android.widget.EditText
 import android.widget.ScrollView
 import android.widget.Toast
@@ -24,6 +23,7 @@ import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.GoogleAuthProvider
 import com.google.firebase.database.*
 import kotlinx.android.synthetic.main.activity_login.*
+import android.widget.Button as Button
 
 class LoginActivity : AppCompatActivity() {
     val TAG = "LoginActivity"
@@ -175,12 +175,11 @@ class LoginActivity : AppCompatActivity() {
                     LoginToSystem(etEmail.text.toString(), etPassword.text.toString())
                 }else{
                     Log.d(TAG, "usernameError; username is already taken $checkNick")
-                    tvNickError.text = "Username is Already Taken!"
+                    tvNickError.text = R.string.nick_error.toString()
                     tvNickError.visibility = View.VISIBLE
-                    Toast.makeText(baseContext, "Change username and try again..", Toast.LENGTH_LONG).show()
+                    Toast.makeText(baseContext, R.string.nick_error_toast, Toast.LENGTH_LONG).show()
                 }
             }
-
         })
     }
 
@@ -208,16 +207,14 @@ class LoginActivity : AppCompatActivity() {
 //                letDirectory.mkdirs()
 //                file = File(letDirectory, "$nickName.txt")
 //                file.writeText("100\n" + "100\n" + "100\n" + "100\n" + "100\n" + "100\n" + "100\n" + "100\n" + "100\n" +
-//                        "100\n" + "100\n" + "100\n" + "100\n" + "100\n" + "100\n" + "100\n" + "100\n" + "100\n" + "100\n" +
-//                        "100\n" + "100\n" + "100\n" + "100\n" + "100\n" + "100\n" + "100\n" + "100\n" + "100\n" + "100\n" +
-//                        "100\n" + "100\n" + "100\n" + "100\n" + "100\n" + "100\n" + "100\n" + "100\n" + "100\n" + "100\n" +
 //                        "100\n" + "100\n" + "100\n" + "100\n" + "100\n" + "100\n" + "100\n" + "100\n" + "100\n" + "100\n" + "100\n")
 
                 updateUI(user)
+                sendEmailVerification()
             }else{
                 //Fail -> display message below
                 Log.w(TAG, "createUserWithEmail:failure", task.exception)
-                Toast.makeText(baseContext, "Authentication failed.", Toast.LENGTH_SHORT).show()
+                Toast.makeText(baseContext, R.string.auth_fail, Toast.LENGTH_SHORT).show()
                 updateUI(null)
             }
         }
@@ -237,7 +234,7 @@ class LoginActivity : AppCompatActivity() {
                 updateUI(user)
             }else{
                 Log.w(TAG, "signInWithEmail:failure!",task.exception)
-                Toast.makeText(baseContext,"Authentication failed.", Toast.LENGTH_SHORT).show()
+                Toast.makeText(baseContext,R.string.auth_fail, Toast.LENGTH_SHORT).show()
                 updateUI(null)
             }
         }
@@ -331,12 +328,37 @@ class LoginActivity : AppCompatActivity() {
                 } else {
                     // If sign in fails, display a message to the user.
                     Log.w(TAG, "signInWithCredential:failure", task.exception)
-                    Snackbar.make(layoutbg, "Authentication Failed.", Snackbar.LENGTH_SHORT).show()
+                    Snackbar.make(layoutbg, R.string.auth_fail, Snackbar.LENGTH_SHORT).show()
                     updateUI(null)
                 }
-
                 // ...
             }
     }
+    //Google End
+    private fun sendEmailVerification() {
+        // Disable button
+//        verifyEmailButton.isEnabled = false
 
+        // [START send_email_verification]
+        val user = auth.currentUser
+        user?.sendEmailVerification()
+            ?.addOnCompleteListener(this) { task ->
+                // [START_EXCLUDE]
+                // Re-enable button
+//                verifyEmailButton.isEnabled = true
+
+                if (task.isSuccessful) {
+                    Toast.makeText(baseContext,
+                        "Verification email sent to ${user.email} ",
+                        Toast.LENGTH_SHORT).show()
+                } else {
+                    Log.e(TAG, "sendEmailVerification", task.exception)
+                    Toast.makeText(baseContext,
+                        R.string.failed_verify_email,
+                        Toast.LENGTH_SHORT).show()
+                }
+                // [END_EXCLUDE]
+            }
+        // [END send_email_verification]
+    }
 }

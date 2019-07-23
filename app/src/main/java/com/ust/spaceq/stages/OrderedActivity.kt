@@ -59,7 +59,7 @@ class OrderedActivity : AppCompatActivity() {
         animationDrawable.setExitFadeDuration(4000)
         animationDrawable.start()
 
-        qAnswer = mapOf("Stage 1" to 95, "Stage 2" to 12, "Stage 4" to 116)
+        qAnswer = mapOf("Stage 1" to 95, "Stage 2" to 12, "Stage 4" to 116, "Stage 5" to 119)
 
         firebaseAnalytics = FirebaseAnalytics.getInstance(this)
         auth = FirebaseAuth.getInstance()
@@ -356,9 +356,86 @@ class OrderedActivity : AppCompatActivity() {
                 ib_next.startAnimation(fadein)
                 Log.d(TAG, "$level adaptation is done successfully!")
             }
+            "Stage 5" -> {
+                groupOrder.visibility = View.VISIBLE
+                animationOrder()
+                say1.text = "80"
+                say2.text = "88"
+                say3.text = "104"
+                say4.text = "109"
+                ib_back.visibility = View.VISIBLE
+                ib_next.visibility = View.VISIBLE
+                ib_back.startAnimation(fadein)
+                ib_next.startAnimation(fadein)
+                Log.d(TAG, "$level adaptation is done successfully!")
+            }
             else -> {
                 Log.d(TAG, "Something's Wrong; levelAdapt is failed!")
             }
+        }
+    }
+
+    fun showNext(view: View?){
+        if (isRunning){
+            mainHandler.removeCallbacks(updatePointTask)
+        }else{
+            Log.d(TAG, "isRunning false")
+        }
+        when (levelKey){
+            "Stage 1" -> {
+                levelKey = "Stage 2"
+                val intent = Intent(this@OrderedActivity, OrderedActivity::class.java)
+                intent.putExtra("levelKey", levelKey)
+                intent.putExtra("tvName", nick)
+                startActivity(intent)
+            }
+            "Stage 2" -> {
+                levelKey = "Stage 3"
+                val intent = Intent(this@OrderedActivity, RandomActivity::class.java)
+                intent.putExtra("levelKey", levelKey)
+                intent.putExtra("tvName", nick)
+                startActivity(intent)
+            }
+            "Stage 4" -> {
+                levelKey = "Stage 5"
+                val intent = Intent(this@OrderedActivity, OrderedActivity::class.java)
+                intent.putExtra("levelKey", levelKey)
+                intent.putExtra("tvName", nick)
+                startActivity(intent)
+            }
+            else -> {}
+        }
+    }
+
+    fun showBack(view:View?){
+        if (isRunning){
+            mainHandler.removeCallbacks(updatePointTask)
+        }else{
+            Log.d(TAG, "isRunning false")
+        }
+        when(levelKey){
+            "Stage 2" -> {
+                levelKey = "Stage 1"
+                val intent = Intent(this@OrderedActivity, OrderedActivity::class.java)
+                intent.putExtra("levelKey", levelKey)
+                intent.putExtra("tvName", nick)
+                startActivity(intent)
+            }
+            "Stage 4" -> {
+                levelKey = "Stage 3"
+                val intent = Intent(this@OrderedActivity, RandomActivity::class.java)
+                intent.putExtra("levelKey", levelKey)
+                intent.putExtra("tvName", nick)
+                startActivity(intent)
+            }
+            "Stage 5" -> {
+                levelKey = "Stage 4"
+                val intent = Intent(this@OrderedActivity, OrderedActivity::class.java)
+                intent.putExtra("levelKey", levelKey)
+                intent.putExtra("tvName", nick)
+                startActivity(intent)
+            }
+            else -> {}
         }
     }
 
@@ -409,56 +486,6 @@ class OrderedActivity : AppCompatActivity() {
                 }
             }
         })
-    }
-
-    fun showNext(view: View?){
-        if (isRunning){
-            mainHandler.removeCallbacks(updatePointTask)
-        }else{
-            Log.d(TAG, "isRunning false")
-        }
-        when (levelKey){
-            "Stage 1" -> {
-                levelKey = "Stage 2"
-                val intent = Intent(this@OrderedActivity, OrderedActivity::class.java)
-                intent.putExtra("levelKey", levelKey)
-                intent.putExtra("tvName", nick)
-                startActivity(intent)
-            }
-            "Stage 2" -> {
-                levelKey = "Stage 3"
-                val intent = Intent(this@OrderedActivity, RandomActivity::class.java)
-                intent.putExtra("levelKey", levelKey)
-                intent.putExtra("tvName", nick)
-                startActivity(intent)
-            }
-            else -> {}
-        }
-    }
-
-    fun showBack(view:View?){
-        if (isRunning){
-            mainHandler.removeCallbacks(updatePointTask)
-        }else{
-            Log.d(TAG, "isRunning false")
-        }
-        when(levelKey){
-            "Stage 2" -> {
-                levelKey = "Stage 1"
-                val intent = Intent(this@OrderedActivity, OrderedActivity::class.java)
-                intent.putExtra("levelKey", levelKey)
-                intent.putExtra("tvName", nick)
-                startActivity(intent)
-            }
-            "Stage 4" -> {
-                levelKey = "Stage 3"
-                val intent = Intent(this@OrderedActivity, RandomActivity::class.java)
-                intent.putExtra("levelKey", levelKey)
-                intent.putExtra("tvName", nick)
-                startActivity(intent)
-            }
-            else -> {}
-        }
     }
 
     private fun mainMenu(view: View?) {

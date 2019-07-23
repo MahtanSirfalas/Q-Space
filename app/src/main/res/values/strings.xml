@@ -1,13 +1,42 @@
 <resources>
     <string name="app_name">Q Space</string>
-    <string name="action_settings">Settings</string>
+    <string name="action_out">Sign Out</string>
 
     <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="title_activity_lvl">LvlActivity</string>
+    <string name="title_activity_lvl">Stages</string>
     <string name="title_activity_ordered">OrderedActivity</string>
-    <string name="title_activity_suggest">SuggestActivity</string>
+    <string name="title_activity_suggest">Suggest Q</string>
     <string name="title_activity_random">RandomActivity</string>
+    <!-- Login Activity -->
     <string name="loading">Loading</string>
+    <string name="sign_in_google">Sign in with Google account</string>
+    <string name="enter_nickname">Enter a username</string>
+    <string name="enter_email">Enter your e-mail</string>
+    <string name="enter_password">Enter your password</string>
+    <string name="log_in">Log In</string>
+    <string name="already_account">Already Have an Account?</string>
+    <string name="need_account">Need an Account?</string>
+    <string name="nick_error">Username is Already Taken!</string>
+    <string name="nick_error_toast">Change username and try again..</string>
+    <string name="auth_fail">Authentication failed, check internet connection.</string>
+    <string name="failed_verify_email">Failed to send verification email</string>
+    <!-- Main Activity -->
+    <string name="tv_warn">Verify your e-mail address..!</string>
+    <string name="play">Play</string>
+    <string name="profile">Profile</string>
+    <string name="suggest_q">Suggest_Q</string>
+    <string name="info">Info</string>
+    <string name="listener_cancelled">Warning: Check if you have an active internet connection!</string>
+    <!-- Profile Activity -->
+    <string name="level">Level: </string>
+    <string name="total_points">Total Points: </string>
+    <string name="username">Username: </string>
+    <string name="email">E-Mail: </string>
+    <!-- Suggest Activity -->
+    <string name="suggest_intro">You can suggest a question to us. We will review it in time. Until that; the
+        suggestion is editable and removable
+    </string>
+    <string name="date_time">date | time</string>
+    <string name="send">Send</string>
 
 </resources>
