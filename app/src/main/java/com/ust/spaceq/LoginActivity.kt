@@ -1,6 +1,5 @@
 package com.ust.spaceq
 
-import android.content.Context
 import android.content.Intent
 import android.graphics.drawable.AnimationDrawable
 import androidx.appcompat.app.AppCompatActivity
@@ -14,11 +13,17 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.ScrollView
 import android.widget.Toast
+import com.google.android.gms.auth.api.signin.GoogleSignIn
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount
+import com.google.android.gms.auth.api.signin.GoogleSignInClient
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions
+import com.google.android.gms.common.api.ApiException
+import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
+import com.google.firebase.auth.GoogleAuthProvider
 import com.google.firebase.database.*
 import kotlinx.android.synthetic.main.activity_login.*
-import java.io.File
 
 class LoginActivity : AppCompatActivity() {
     val TAG = "LoginActivity"
@@ -29,6 +34,8 @@ class LoginActivity : AppCompatActivity() {
 
     private lateinit var nickName:String
     private lateinit var defaultAvatar: String
+
+    private lateinit var googleSignInClient: GoogleSignInClient
 
 //    private lateinit var context:Context
 //    private lateinit var file: File
@@ -120,6 +127,18 @@ class LoginActivity : AppCompatActivity() {
         posta.addTextChangedListener(loginTextWatcher)
         sifre.addTextChangedListener(loginTextWatcher)
         nick.addTextChangedListener(loginTextWatcher)
+        //Start of config_signin
+        //Configure Google Sign-In
+        val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+            .requestIdToken(getString(R.string.default_web_client_id))
+            .requestEmail()
+            .build()
+        //End of config_signin
+        googleSignInClient = GoogleSignIn.getClient(this, gso)
+        buttGoogle.setOnClickListener {
+            signIn()
+        }
+
     }
     public override fun onStart() {
         super.onStart()
@@ -127,7 +146,6 @@ class LoginActivity : AppCompatActivity() {
         var currentUser = auth.currentUser
         updateUI(currentUser)
     }
-
 
     fun buttLoginEvent(view:View){
         Log.d(TAG, "Login button pressed!")
@@ -247,7 +265,7 @@ class LoginActivity : AppCompatActivity() {
         return valid
     }
 
-    private fun updateUI(user: FirebaseUser?){
+    fun updateUI(user: FirebaseUser?){
 //        hideProgressDialog()  i don't know wth is that?
         if (user != null) {
 
@@ -261,5 +279,64 @@ class LoginActivity : AppCompatActivity() {
 
     companion object{
         private const val TAG = "EmailPassword"
+
+        private const val RC_SIGN_IN = 9001
     }
+
+    //GOOGLE
+    private fun signIn() {
+        val signInIntent = googleSignInClient.signInIntent
+        startActivityForResult(signInIntent, RC_SIGN_IN)
+    }
+
+    public override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+
+        // Result returned from launching the Intent from GoogleSignInApi.getSignInIntent(...);
+        if (requestCode == RC_SIGN_IN) {
+            val task = GoogleSignIn.getSignedInAccountFromIntent(data)
+            try {
+                // Google Sign In was successful, authenticate with Firebase
+                val account = task.getResult(ApiException::class.java)
+                firebaseAuthWithGoogle(account!!)
+            } catch (e: ApiException) {
+                // Google Sign In failed, update UI appropriately
+                Log.w(TAG, "Google sign in failed", e)
+                // ...
+            }
+        }
+    }
+    private fun firebaseAuthWithGoogle(acct: GoogleSignInAccount) {
+        Log.d(TAG, "firebaseAuthWithGoogle:" + acct.id!!)
+
+        val credential = GoogleAuthProvider.getCredential(acct.idToken, null)
+        auth.signInWithCredential(credential)
+            .addOnCompleteListener(this) { task ->
+                if (task.isSuccessful) {
+                    // Sign in success, update UI with the signed-in user's information
+                    Log.d(TAG, "signInWithCredential:success")
+                    val user = auth.currentUser
+
+                    val userId = user!!.uid
+                    val userDb = databaseReference.child(userId)
+                    userDb.child("nickName").setValue(acct.displayName)
+                    Log.d(TAG, "nickname = ${acct.displayName}")
+                    userDb.child("eMail").setValue(user.email)
+                    Log.d(TAG, "email = ${user.email}")
+                    userDb.child("points").setValue(0)
+                    userDb.child("level").setValue("Dactyl")
+                    userDb.child("avatar").setValue(acct.photoUrl.toString())
+                    Log.d(TAG, "avatar url = ${acct.photoUrl}")
+                    updateUI(user)
+                } else {
+                    // If sign in fails, display a message to the user.
+                    Log.w(TAG, "signInWithCredential:failure", task.exception)
+                    Snackbar.make(layoutbg, "Authentication Failed.", Snackbar.LENGTH_SHORT).show()
+                    updateUI(null)
+                }
+
+                // ...
+            }
+    }
+
 }

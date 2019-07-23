@@ -20,7 +20,7 @@
                 android:id="@+id/etNick"
                 android:hint="Enter a nickname"
                 android:textAlignment="center"
-                android:layout_marginTop="32dp"
+                android:layout_marginTop="96dp"
                 android:maxLength="24"
                 app:layout_constraintTop_toTopOf="parent" android:layout_marginEnd="8dp"
                 app:layout_constraintEnd_toEndOf="parent" android:layout_marginStart="8dp"
@@ -35,11 +35,12 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" android:id="@+id/tvNickError"
                 android:textColor="@android:color/holo_red_dark"
-                android:fontFamily="@font/gruppo" android:textStyle="bold" android:visibility="invisible"
+                android:fontFamily="@font/coda" android:textStyle="bold" android:visibility="invisible"
                 app:layout_constraintEnd_toEndOf="@+id/buttYok" android:layout_marginStart="8dp"
-                app:layout_constraintStart_toStartOf="@+id/buttYok" android:layout_marginTop="8dp"
-                app:layout_constraintTop_toBottomOf="@+id/buttYok" android:layout_marginBottom="8dp"
-                app:layout_constraintBottom_toBottomOf="parent" android:textSize="14sp"/>
+                app:layout_constraintStart_toStartOf="@+id/buttYok"
+                android:layout_marginBottom="8dp"
+                app:layout_constraintBottom_toBottomOf="parent" android:textSize="14sp" android:layout_marginTop="66dp"
+                app:layout_constraintTop_toBottomOf="@+id/buttGoogle"/>
         <EditText
                 android:layout_width="0dp"
                 android:layout_height="50dp"
@@ -77,8 +78,8 @@
                 app:layout_constraintTop_toBottomOf="@+id/etPassword"
                 app:layout_constraintBottom_toTopOf="@+id/buttVar" android:background="@drawable/custom_button_login"
                 android:textColor="@color/colorSpaceWhite" android:textColorHighlight="@color/colorPurple"
-                android:textColorHint="@color/colorSpaceWhite" android:fontFamily="@font/press_start_2p"
-                android:textSize="10sp" android:textStyle="bold"/>
+                android:textColorHint="@color/colorSpaceWhite" android:fontFamily="@font/coda"
+                android:textSize="18sp" android:textStyle="bold"/>
 
         <Button
                 android:text="@string/common_signin_button_text"
@@ -90,8 +91,8 @@
                 app:layout_constraintEnd_toEndOf="@+id/buttLogin"
                 app:layout_constraintTop_toTopOf="@+id/buttLogin"
                 app:layout_constraintBottom_toBottomOf="@+id/buttLogin"
-                app:layout_constraintStart_toStartOf="@+id/buttLogin" android:fontFamily="@font/press_start_2p"
-                android:textSize="10sp" android:textStyle="bold"/>
+                app:layout_constraintStart_toStartOf="@+id/buttLogin" android:fontFamily="@font/coda"
+                android:textSize="18sp" android:textStyle="bold"/>
         <Button
                 android:text="Already Have an Account?"
                 android:layout_width="wrap_content"
@@ -102,7 +103,7 @@
                 android:layout_marginTop="16dp"
                 app:layout_constraintTop_toBottomOf="@+id/buttLogin" android:textColor="@color/colorSpaceWhite"
                 android:textColorHighlight="@color/colorAccent" android:textColorHint="@color/colorSpaceWhite"
-                android:fontFamily="@font/press_start_2p" android:textSize="10sp"/>
+                android:fontFamily="@font/coda" android:textSize="18sp"/>
         <Button
                 android:text="Need an Account?"
                 android:layout_width="0dp"
@@ -111,7 +112,19 @@
                 app:layout_constraintTop_toTopOf="@+id/buttVar" app:layout_constraintBottom_toBottomOf="@+id/buttVar"
                 android:textAllCaps="false" android:background="#005E1515" android:textColor="@color/colorSpaceWhite"
                 android:textColorHighlight="@color/colorAccent" android:textColorHint="@color/colorSpaceWhite"
-                android:fontFamily="@font/press_start_2p" android:textSize="10sp"/>
+                android:fontFamily="@font/coda" android:textSize="18sp"/>
+        <Button
+                android:text="Sign in with Google"
+                android:drawableEnd="@drawable/ic_googleicon"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content" android:id="@+id/buttGoogle"
+                android:background="@drawable/custom_button_login" app:layout_constraintEnd_toEndOf="parent"
+                android:layout_marginEnd="8dp" app:layout_constraintStart_toStartOf="parent"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp" app:layout_constraintTop_toBottomOf="@+id/buttYok"
+                android:layout_marginBottom="8dp" app:layout_constraintBottom_toTopOf="@+id/tvNickError"
+                android:textAlignment="center" android:textColor="@color/colorSpaceWhite" android:textAllCaps="false"
+                android:fontFamily="@font/coda" android:textSize="18sp"/>
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 

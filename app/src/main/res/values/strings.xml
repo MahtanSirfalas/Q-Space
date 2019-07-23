@@ -8,5 +8,6 @@
     <string name="title_activity_ordered">OrderedActivity</string>
     <string name="title_activity_suggest">SuggestActivity</string>
     <string name="title_activity_random">RandomActivity</string>
+    <string name="loading">Loading</string>
 
 </resources>

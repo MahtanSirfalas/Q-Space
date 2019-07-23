@@ -15,6 +15,9 @@ import android.view.animation.AnimationUtils
 import android.widget.PopupWindow
 import android.widget.Toast
 import androidx.constraintlayout.widget.ConstraintLayout
+import com.google.android.gms.auth.api.signin.GoogleSignIn
+import com.google.android.gms.auth.api.signin.GoogleSignInClient
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
@@ -26,6 +29,7 @@ private lateinit var firebaseAnalytics: FirebaseAnalytics
 private lateinit var auth: FirebaseAuth
 private lateinit var database: FirebaseDatabase
 private lateinit var databaseReference: DatabaseReference
+private lateinit var googleSignInClient: GoogleSignInClient
 private lateinit var commsReference: DatabaseReference
 var firstRunControl = true
 
@@ -91,6 +95,11 @@ class MainActivity : AppCompatActivity() {
 //            var zaman = view_timer.text.toString()
 //            textDeneme.text = zaman
 //        }
+        val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+            .requestIdToken(getString(R.string.default_web_client_id))
+            .requestEmail()
+            .build()
+        googleSignInClient = GoogleSignIn.getClient(this, gso)
         commsReference = database.reference.child("Posts")
     }
 
@@ -109,7 +118,8 @@ class MainActivity : AppCompatActivity() {
             in 24000..27999 -> {userReference.child("level").setValue("Titan")}
             in 28000..32499 -> {userReference.child("level").setValue("Moon")}
             in 32500..37499 -> {userReference.child("level").setValue("Enceladus")}
-            in 37500..59999 -> {userReference.child("level").setValue("Mars")}
+            in 37500..42999 -> {userReference.child("level").setValue("Pluto")}
+            in 43000..59999 -> {userReference.child("level").setValue("Pluto")}
             else -> {}
         }
     }
@@ -234,6 +244,9 @@ class MainActivity : AppCompatActivity() {
         startActivity(Intent(this@MainActivity, LoginActivity::class.java))
         this@MainActivity.finish()
 //        view_timer.stop()
+        googleSignInClient.revokeAccess().addOnCompleteListener(this) {
+            LoginActivity().updateUI(null)
+        }
     }
 
     override fun onBackPressed() {

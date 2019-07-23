@@ -161,7 +161,6 @@ class ProfileActivity : AppCompatActivity() {
                     BitmapFactory.decodeResource(resources, R.drawable.marsbutton100), null, null
                 )
             )
-
             val sharingIntent = Intent(Intent.ACTION_SEND)
             sharingIntent.type = "image/*"
             sharingIntent.putExtra(Intent.EXTRA_STREAM, imageUri)
