@@ -136,11 +136,11 @@ class OrderedActivity : AppCompatActivity() {
 
     /*private fun meteorAnimation(){
 
-        val meteor = AnimationUtils.loadAnimation(baseContext, R.anim.meteor)
+        val ufo = AnimationUtils.loadAnimation(baseContext, R.anim.ufo)
         val gfo = AnimationUtils.loadAnimation(baseContext, R.anim.gfo)
         iv_meteor.visibility = View.VISIBLE
-        iv_meteor.startAnimation(meteor)
-        meteor.setAnimationListener(object : Animation.AnimationListener {
+        iv_meteor.startAnimation(ufo)
+        ufo.setAnimationListener(object : Animation.AnimationListener {
             override fun onAnimationStart(p0: Animation?) {}
             override fun onAnimationRepeat(p0: Animation?) {}
             override fun onAnimationEnd(p0: Animation?) {

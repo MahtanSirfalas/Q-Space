@@ -33,7 +33,7 @@
                 app:layout_constraintEnd_toStartOf="@+id/buttCom"
                 android:ems="10"
                 android:id="@+id/textCom" android:layout_weight="1"
-                android:hint="Write your comment here..." android:maxLength="360"
+                android:hint="@string/write_comment" android:maxLength="360"
                 android:textColor="@color/colorPrimaryDark" android:textColorHint="@color/colorGreyLight"
                 android:layout_marginTop="4dp" android:layout_marginBottom="4dp" android:layout_marginStart="2dp"/>
         <ImageButton

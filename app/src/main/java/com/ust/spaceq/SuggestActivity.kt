@@ -60,11 +60,9 @@ class SuggestActivity : AppCompatActivity() {
             suggestRef.child("when").removeValue()
             suggestRef.child("nickName").removeValue()
             etSuggest.text.clear()
-            tvZaman.text = R.string.date_time.toString()
+            tvZaman.text = getString(R.string.date_time)
             showSuggest(null)
         }
-
-
     }
 
     private fun showSuggest(view: View?){
@@ -115,7 +113,7 @@ class SuggestActivity : AppCompatActivity() {
     }
 
     override fun onBackPressed() {
-        mainMenu(null)
+        this.finish()
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {

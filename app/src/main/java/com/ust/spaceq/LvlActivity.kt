@@ -235,6 +235,7 @@ class LvlActivity : AppCompatActivity() {
         this@LvlActivity.finish()
     }
     override fun onBackPressed() {
+        this.finish()
         mainMenu(null)
     }
 

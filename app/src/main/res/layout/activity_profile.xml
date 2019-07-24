@@ -6,6 +6,29 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:context=".ProfileActivity" android:background="@drawable/bg_gradient" android:id="@+id/layoutbg">
+    <LinearLayout
+            android:orientation="horizontal"
+            android:id="@+id/selectorButts"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/profile_card"
+            app:layout_constraintStart_toStartOf="@id/profile_card"
+            app:layout_constraintEnd_toEndOf="@id/profile_card"
+            tools:layout_editor_absoluteY="297dp" tools:layout_editor_absoluteX="227dp">
+        <Button
+                android:text="@string/profile"
+                android:layout_width="wrap_content"
+                android:layout_height="30dp" android:id="@+id/buttProfile"
+                android:background="@drawable/custom_butt_profile_tabs"
+                android:textColor="@color/colorSpaceWhite" android:textAllCaps="false" android:fontFamily="@font/coda"/>
+        <Button
+                android:text="Stats"
+                android:layout_width="wrap_content"
+                android:layout_height="30dp" android:id="@+id/buttStats"
+                android:background="@drawable/custom_butt_profile_tabs"
+                android:textColor="@color/colorSpaceWhite" android:textAllCaps="false" android:fontFamily="@font/coda"/>
+    </LinearLayout>
     <Button
             android:text="share"
             android:layout_width="wrap_content"
@@ -20,7 +43,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" app:layout_constraintEnd_toEndOf="parent"
             android:layout_marginEnd="8dp" app:layout_constraintStart_toStartOf="parent"
-            android:layout_marginStart="8dp" app:layout_constraintTop_toTopOf="parent" android:padding="8dp"
+            android:layout_marginStart="8dp" app:layout_constraintTop_toBottomOf="@id/selectorButts" android:padding="8dp"
             android:layout_marginTop="8dp" android:id="@+id/profile_card" android:visibility="invisible">
 
         <TextView
@@ -93,6 +116,43 @@
                 app:layout_constraintBottom_toTopOf="@+id/textName"/>
     </androidx.constraintlayout.widget.ConstraintLayout>
 
+    <ScrollView
+            android:fillViewport="true"
+            android:layout_width="0dp"
+            android:layout_height="0dp" app:layout_constraintEnd_toEndOf="@+id/profile_card"
+            app:layout_constraintStart_toStartOf="@+id/profile_card"
+            app:layout_constraintTop_toTopOf="@+id/profile_card"
+            app:layout_constraintBottom_toBottomOf="@+id/profile_card" android:id="@+id/stats_card"
+            android:visibility="invisible">
+        <LinearLayout android:layout_width="match_parent" android:layout_height="match_parent"
+                      android:orientation="vertical"
+                      android:gravity="center">
+            <TextView
+                    android:text="-EARNED UPVOTES-"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" android:id="@+id/tvEarnedHead"
+                    android:textColor="@color/colorSpace" android:textStyle="bold" android:textAlignment="center"
+                    android:background="@drawable/custom_ucomment" android:paddingLeft="4dp"
+                    android:paddingRight="4dp"/>
+            <TextView
+                    android:text="TextView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" android:id="@+id/tvEarnedUpvote"
+                    android:textColor="@color/colorSpaceWhite" android:textAlignment="center"/>
+            <TextView
+                    android:text="-STAGE STATS-"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" android:id="@+id/tvStageHead"
+                    android:textColor="@color/colorSpace" android:fontFamily="@font/coda"
+                    android:textAlignment="center" android:textStyle="bold"
+                    android:background="@drawable/custom_ucomment" android:paddingLeft="4dp"
+                    android:paddingRight="4dp" android:layout_marginTop="8dp"/>
+            <ListView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent" android:id="@+id/lvStages"
+                    android:layout_marginTop="2dp" android:layout_marginBottom="8dp"/>
+        </LinearLayout>
+    </ScrollView>
     <ImageView
             android:layout_width="fill_parent"
             android:scaleType="centerCrop"

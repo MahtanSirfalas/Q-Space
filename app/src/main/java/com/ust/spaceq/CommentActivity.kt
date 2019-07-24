@@ -63,7 +63,7 @@ class CommentActivity : AppCompatActivity() {
 
             override fun onItemClick(view: View, position: Int) {
 
-                Toast.makeText(baseContext,"Touch Longer to Upvote",Toast.LENGTH_SHORT).show()
+                Toast.makeText(baseContext,getString(R.string.touch_longer),Toast.LENGTH_SHORT).show()
             }
 
             override fun onItemLongClick(view: View?, position: Int) {
@@ -88,9 +88,11 @@ class CommentActivity : AppCompatActivity() {
                                 var upvoteCount = it.child("upvoteCount").value as Long
                                 var ordernum = it.child("order").value as Long
                                 val postUid = it.child("uid").value as String
+                                val upvotedId = it.child("uid").value as String
+                                val votedRef = database.getReference("Users/$upvotedId")
 
                                 if (found){
-                                    //Removing upvote from the specific comment
+                                    //Removing Comment
                                     if (postUid == uid){
                                         window.contentView = show
                                         window.showAtLocation(view, 1,0, 100)
@@ -107,8 +109,9 @@ class CommentActivity : AppCompatActivity() {
                                             window.dismiss()
                                         }
                                         Log.d(TAG, "Users' post")
-                                        Toast.makeText(baseContext, "Own comment is not votable but removable", Toast.LENGTH_SHORT).show()
+                                        Toast.makeText(baseContext, getString(R.string.own_comment), Toast.LENGTH_SHORT).show()
                                     }else{
+                                        //Removing upvote from the specific comment
                                         var count = upvoteCount-1
                                         itemRef.child("upvoteCount").setValue(count)
                                         itemRef.child("order").setValue(ordernum+1)
@@ -117,7 +120,18 @@ class CommentActivity : AppCompatActivity() {
                                         view?.tvUpvotes?.setBackgroundColor(Color.TRANSPARENT)
                                         fetchComments()
                                         Log.d(TAG, "$uid found in upvoters, taken back!")
-                                        Toast.makeText(baseContext, "You Took Back the Upvote",Toast.LENGTH_SHORT).show()
+                                        Toast.makeText(baseContext, getString(R.string.upvote_back),Toast.LENGTH_SHORT).show()
+                                        //Mirroring upvote to the other side
+                                        votedRef.addListenerForSingleValueEvent(object:ValueEventListener{
+                                            override fun onCancelled(p0: DatabaseError) {}
+                                            override fun onDataChange(p0: DataSnapshot) {
+                                                if(p0.child("upCount").exists()){
+                                                    var uvCount = p0.child("upCount").value as Long
+                                                    Log.d(TAG, "$upvotedId UpVote points= $uvCount")
+                                                    votedRef.child("upCount").setValue(uvCount-1)
+                                                }else{}
+                                            }
+                                        })
                                     }
 
                                 }else{
@@ -134,6 +148,19 @@ class CommentActivity : AppCompatActivity() {
                                     itemRef.child("upvotes").setValue(upvotes)
                                     fetchComments()
                                     Log.d(TAG, "upvotes UPDATED, ${it.child("upvotes").value}")
+                                    //Mirroring upvote to the other side
+                                    votedRef.addListenerForSingleValueEvent(object:ValueEventListener{
+                                        override fun onCancelled(p0: DatabaseError) {}
+                                        override fun onDataChange(p0: DataSnapshot) {
+                                            if(p0.child("upCount").exists()){
+                                                var uvCount = p0.child("upCount").value as Long
+                                                Log.d(TAG, "$upvotedId UpVote points= $uvCount")
+                                                votedRef.child("upCount").setValue(uvCount+1)
+                                            }else{
+                                                votedRef.child("upCount").setValue(1)
+                                            }
+                                        }
+                                    })
                                 }
 
                             }else{
@@ -168,7 +195,7 @@ class CommentActivity : AppCompatActivity() {
             textCom.text.clear()
             fetchComments()
         }else{
-            Toast.makeText(baseContext,"Minimum 5 letters!",Toast.LENGTH_SHORT).show()
+            Toast.makeText(baseContext,getString(R.string.minimum_letters),Toast.LENGTH_SHORT).show()
             Log.d(TAG, "textCom = null")
         }
     }
@@ -193,7 +220,7 @@ class CommentActivity : AppCompatActivity() {
 
             override fun onCancelled(p0: DatabaseError) {
                 Log.d(TAG, "WARNING: Comment Fetching FAILED!")
-                Toast.makeText(baseContext, "WARNING: Be Sure that you have an active internet connection!", Toast.LENGTH_LONG).show()
+                Toast.makeText(baseContext, getString(R.string.listener_cancelled), Toast.LENGTH_LONG).show()
             }
         })
     }

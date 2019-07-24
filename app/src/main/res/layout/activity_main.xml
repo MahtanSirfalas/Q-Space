@@ -176,6 +176,14 @@
                                                         android:layout_height="wrap_content" android:id="@+id/groupWarn"
                                                         app:constraint_referenced_ids="tvWarn,ivWarn"
                                                         android:visibility="invisible"/>
+                <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" app:srcCompat="@drawable/ic_ufo"
+                        android:id="@+id/ivUfo"
+                        android:layout_marginBottom="8dp"
+                        app:layout_constraintBottom_toBottomOf="@+id/ivInfo"
+                        app:layout_constraintEnd_toEndOf="@+id/ivInfo" android:layout_marginEnd="8dp"
+                        android:visibility="invisible"/>
                 <!--<Chronometer-->
                 <!--android:id="@+id/view_timer"-->
                 <!--android:layout_width="wrap_content" android:layout_height="wrap_content"-->

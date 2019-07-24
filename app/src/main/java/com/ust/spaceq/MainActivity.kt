@@ -85,7 +85,7 @@ class MainActivity : AppCompatActivity() {
             }
             override fun onCancelled(p0: DatabaseError) {
                 Log.d(TAG, "Something's Wrong: User information get FAILED")
-                Toast.makeText(baseContext, R.string.listener_cancelled,Toast.LENGTH_LONG).show()
+                Toast.makeText(baseContext, getString(R.string.listener_cancelled),Toast.LENGTH_LONG).show()
             }
         })
         //sayaç burada yatmaktadır yiğen
@@ -114,7 +114,7 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    public fun levelTagClarification(){
+    fun levelTagClarification(){
         val userReference = databaseReference.child(uid)
         when (points) {
             in 1..1999 -> {userReference.child("level").setValue("Epimetheus")}
@@ -157,6 +157,7 @@ class MainActivity : AppCompatActivity() {
                 }else{Log.d(TAG, "Not first run!")}
                 tvName.visibility = View.VISIBLE
                 tvName.startAnimation(rtl)
+                ufoAnimation()
             }
         })
     }
@@ -164,6 +165,14 @@ class MainActivity : AppCompatActivity() {
     private fun animation(){
         val stf = AnimationUtils.loadAnimation(this, R.anim.stf)
         val atf = AnimationUtils.loadAnimation(this, R.anim.atf)
+        ivPlay.visibility = View.VISIBLE
+        buttOyna.visibility = View.VISIBLE
+        ivProfile.visibility = View.VISIBLE
+        buttProfil.visibility = View.VISIBLE
+        ivSuggestQ.visibility = View.VISIBLE
+        buttSoru.visibility = View.VISIBLE
+        ivInfo.visibility = View.VISIBLE
+        buttInfo.visibility = View.VISIBLE
         ivPlay.startAnimation(stf)
         ivProfile.startAnimation(stf)
         ivSuggestQ.startAnimation(stf)
@@ -172,6 +181,12 @@ class MainActivity : AppCompatActivity() {
         buttProfil.startAnimation(atf)
         buttSoru.startAnimation(atf)
         buttInfo.startAnimation(atf)
+    }
+
+    private fun ufoAnimation(){
+        val ufo = AnimationUtils.loadAnimation(this, R.anim.ufo)
+        ivUfo.visibility = View.VISIBLE
+        ivUfo.startAnimation(ufo)
     }
 
     fun showLvl(view: View?) {
@@ -218,6 +233,7 @@ class MainActivity : AppCompatActivity() {
             override fun onAnimationEnd(arg0: Animation) {
                 startActivity(intent)
                 ivProfile.visibility = View.INVISIBLE
+                animation()
             }
         })
     }
@@ -240,6 +256,7 @@ class MainActivity : AppCompatActivity() {
             override fun onAnimationEnd(arg0: Animation) {
                 startActivity(intent)
                 ivSuggestQ.visibility = View.INVISIBLE
+                animation()
             }
         })
     }

@@ -10,8 +10,9 @@ class Users(
     val level: String,
     val nickName: String,
     val points: Long,
+    val upCount: Long,
     val stages: String
 ) :
     Parcelable {
-    constructor(): this("","","","",0, "")
+    constructor(): this("","","","",0,0, "")
 }

@@ -38,5 +38,11 @@
     </string>
     <string name="date_time">date | time</string>
     <string name="send">Send</string>
+    <!-- Comment Activity -->
+    <string name="touch_longer">Touch Longer to Upvote</string>
+    <string name="own_comment">Own comment is not votable but removable</string>
+    <string name="upvote_back">You Took Back the Upvote</string>
+    <string name="minimum_letters">Minimum 5 letters!</string>
+    <string name="write_comment">Write your comment here…</string>
 
 </resources>

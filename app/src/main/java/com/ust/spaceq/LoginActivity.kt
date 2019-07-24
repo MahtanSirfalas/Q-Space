@@ -270,7 +270,7 @@ class LoginActivity : AppCompatActivity() {
             intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK.or(Intent.FLAG_ACTIVITY_NEW_TASK)
             startActivity(intent)
         }else{
-            Toast.makeText(baseContext, "Log in or Create an Account.", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, "Log in or Create an Account.", Toast.LENGTH_SHORT).show()
         }
     }
 
