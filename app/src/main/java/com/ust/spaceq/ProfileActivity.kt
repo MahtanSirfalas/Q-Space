@@ -1,5 +1,6 @@
 package com.ust.spaceq
 
+import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
@@ -54,6 +55,7 @@ class ProfileActivity : AppCompatActivity() {
                 Log.d(TAG, "Something's Wrong: User information get FAILED")
                 Toast.makeText(baseContext, getString(R.string.listener_cancelled), Toast.LENGTH_LONG).show()
             }
+            @SuppressLint("SetTextI18n")//strings without "" suppress.
             override fun onDataChange(p0: DataSnapshot) {
                 val userLevel = p0.child("level").value
                 val userPoints = p0.child("points").value
@@ -98,20 +100,24 @@ class ProfileActivity : AppCompatActivity() {
                     val upCount = p0.child("upCount").value as Long
                     when (upCount){
                         in 1..9 ->{
-                            tvEarnedUpvote.text = "You are joining community, go on like that; you gained " + upCount.toString()+ " Upvotes"
+                            tvEarnedUpvote.text =getString(R.string.tv_earned_upvote) + upCount.toString() +
+                                    getString(R.string.tv_earned_upvote1)
                         }
                         in 10..49 ->{
-                            tvEarnedUpvote.text = "It seems like some of the users remember you; you gained " + upCount.toString()+ " Upvotes"
+                            tvEarnedUpvote.text =getString(R.string.tv_earned_upvote) + upCount.toString() +
+                                    getString(R.string.tv_earned_upvote2)
                         }
                         in 50..99 ->{
-                            tvEarnedUpvote.text = "With a quick glance We can tell that you are getting popular in the community; You gained " + upCount.toString()+ " Upvotes"
+                            tvEarnedUpvote.text = getString(R.string.tv_earned_upvote) + upCount.toString() +
+                                    getString(R.string.tv_earned_upvote3)
                         }
                         in 100..10000->{
-                            tvEarnedUpvote.text = "You are one of the most popular community members, every player knows you; you gained  "+upCount.toString()+ " Upvotes"
+                            tvEarnedUpvote.text = getString(R.string.tv_earned_upvote) + upCount.toString() +
+                                    getString(R.string.tv_earned_upvote4)
                         }
                     }
                 }else{
-                    tvEarnedUpvote.text = "You didn't gain any Upvotes for your comments until now. Keep up the good work!"
+                    tvEarnedUpvote.text = getString(R.string.tv_earned_upvote5)
                 }
             }
         })
@@ -128,7 +134,6 @@ class ProfileActivity : AppCompatActivity() {
         buttShare.setOnClickListener {
             share()
         }
-
         val fadein = AnimationUtils.loadAnimation(this, R.anim.abc_fade_in)
         buttStats.setOnClickListener {
             showStats()
@@ -192,7 +197,6 @@ class ProfileActivity : AppCompatActivity() {
     private fun saveImageToDatabase(avatarUrl: String){
         val ref = FirebaseDatabase.getInstance().getReference("/Users/$uid/avatar")
 
-
         ref.setValue(avatarUrl)
             .addOnSuccessListener {
                 Log.d(TAG, "Avatar added to user database.")
@@ -205,12 +209,12 @@ class ProfileActivity : AppCompatActivity() {
     private fun animations(){
         val fadein = AnimationUtils.loadAnimation(this, R.anim.abc_fade_in)
         profile_card.visibility = View.VISIBLE
-        textName.visibility = View.VISIBLE
+        /*textName.visibility = View.VISIBLE
         textMail.visibility = View.VISIBLE
         textLevel.visibility = View.VISIBLE
         textPoints.visibility = View.VISIBLE
         buttAvatar.visibility = View.VISIBLE
-        ivAvatar_circle.visibility = View.VISIBLE
+        ivAvatar_circle.visibility = View.VISIBLE*/
         profile_card.startAnimation(fadein)
     }
 
@@ -261,7 +265,7 @@ class ProfileActivity : AppCompatActivity() {
 
             val stageStatText = rowStage.findViewById<TextView>(R.id.text2)
             stageStatText.text = list2.get(p0)
-            if (list2.get(p0) != "unfinished" && list2.get(p0) != "unseen"){
+            if (list2[p0] != "unfinished" && list2[p0] != "unseen"){
                 stageStatText.setTextColor(Color.parseColor("#669900"))
             }else{}
 

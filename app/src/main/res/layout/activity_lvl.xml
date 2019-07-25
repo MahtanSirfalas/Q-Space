@@ -118,6 +118,7 @@
                         android:text="6"
                         android:layout_width="60dp"
                         android:layout_height="60dp" android:id="@+id/buttL6"
+                        android:onClick="showStage6"
                         app:layout_constraintTop_toTopOf="parent"
                         app:layout_constraintStart_toEndOf="@id/buttL1"
                         app:layout_constraintBottom_toTopOf="@+id/buttL7" android:layout_marginTop="8dp"

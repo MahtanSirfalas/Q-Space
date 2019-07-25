@@ -59,7 +59,7 @@ class OrderedActivity : AppCompatActivity() {
         animationDrawable.setExitFadeDuration(4000)
         animationDrawable.start()
 
-        qAnswer = mapOf("Stage 1" to 95, "Stage 2" to 12, "Stage 4" to 116, "Stage 5" to 119)
+        qAnswer = mapOf("Stage 1" to 95, "Stage 2" to 12, "Stage 4" to 116, "Stage 5" to 119, "Stage 6" to 8)
 
         firebaseAnalytics = FirebaseAnalytics.getInstance(this)
         auth = FirebaseAuth.getInstance()
@@ -369,6 +369,16 @@ class OrderedActivity : AppCompatActivity() {
                 ib_next.startAnimation(fadein)
                 Log.d(TAG, "$level adaptation is done successfully!")
             }
+            "Stage 6" -> {
+                groupShapeVisibility()
+                g4_iv1.visibility = View.INVISIBLE
+                ib_back.visibility = View.VISIBLE
+                ib_next.visibility = View.VISIBLE
+                ib_back.startAnimation(fadein)
+                ib_next.startAnimation(fadein)
+                Log.d(TAG, "$level adaptation is done successfully!")
+
+            }
             else -> {
                 Log.d(TAG, "Something's Wrong; levelAdapt is failed!")
             }
@@ -381,6 +391,7 @@ class OrderedActivity : AppCompatActivity() {
         }else{
             Log.d(TAG, "isRunning false")
         }
+        ib_next.setColorFilter(resources.getColor(R.color.colorPurple))
         when (levelKey){
             "Stage 1" -> {
                 levelKey = "Stage 2"
@@ -403,6 +414,13 @@ class OrderedActivity : AppCompatActivity() {
                 intent.putExtra("tvName", nick)
                 startActivity(intent)
             }
+            "Stage 5" -> {
+                levelKey = "Stage 6"
+                val intent = Intent(this@OrderedActivity, OrderedActivity::class.java)
+                intent.putExtra("levelKey", levelKey)
+                intent.putExtra("tvName", nick)
+                startActivity(intent)
+            }
             else -> {}
         }
     }
@@ -413,6 +431,7 @@ class OrderedActivity : AppCompatActivity() {
         }else{
             Log.d(TAG, "isRunning false")
         }
+        ib_back.setColorFilter(resources.getColor(R.color.colorPurple))
         when(levelKey){
             "Stage 2" -> {
                 levelKey = "Stage 1"
@@ -430,6 +449,13 @@ class OrderedActivity : AppCompatActivity() {
             }
             "Stage 5" -> {
                 levelKey = "Stage 4"
+                val intent = Intent(this@OrderedActivity, OrderedActivity::class.java)
+                intent.putExtra("levelKey", levelKey)
+                intent.putExtra("tvName", nick)
+                startActivity(intent)
+            }
+            "Stage 6" -> {
+                levelKey = "Stage 5"
                 val intent = Intent(this@OrderedActivity, OrderedActivity::class.java)
                 intent.putExtra("levelKey", levelKey)
                 intent.putExtra("tvName", nick)
@@ -486,6 +512,59 @@ class OrderedActivity : AppCompatActivity() {
                 }
             }
         })
+    }
+
+    private fun groupShapeVisibility(){
+        val fadein = AnimationUtils.loadAnimation(this, R.anim.abc_fade_in)
+        val animtv = AnimationUtils.loadAnimation(this, R.anim.abc_slide_in_bottom)
+        g1_iv1.visibility = View.VISIBLE
+        g1_tv1.visibility = View.VISIBLE
+        g1_iv2.visibility = View.VISIBLE
+        g1_tv2.visibility = View.VISIBLE
+        g1_tv_result.visibility = View.VISIBLE
+        g2_iv1.visibility = View.VISIBLE
+        g2_tv1.visibility = View.VISIBLE
+        g2_iv2.visibility = View.VISIBLE
+        g2_tv2.visibility = View.VISIBLE
+        g2_tv_result.visibility = View.VISIBLE
+        g3_iv1.visibility = View.VISIBLE
+        g3_tv1.visibility = View.VISIBLE
+        g3_iv2.visibility = View.VISIBLE
+        g3_tv2.visibility = View.VISIBLE
+        g3_tv_result.visibility = View.VISIBLE
+        g4_tv1.visibility = View.VISIBLE
+        g4_iv2.visibility = View.VISIBLE
+        g4_tv2.visibility = View.VISIBLE
+        g4_tv_result.visibility = View.VISIBLE
+        gQ_iv1.visibility = View.VISIBLE
+        gQ_tv1.visibility = View.VISIBLE
+        g4_iv1.visibility = View.VISIBLE
+        g4_ivtv1.visibility = View.VISIBLE
+        g1_iv1.startAnimation(fadein)
+        g1_tv1.startAnimation(fadein)
+        g1_iv2.startAnimation(fadein)
+        g1_tv2.startAnimation(fadein)
+        g1_tv_result.startAnimation(fadein)
+        g2_iv1.startAnimation(fadein)
+        g2_tv1.startAnimation(fadein)
+        g2_iv2.startAnimation(fadein)
+        g2_tv2.startAnimation(fadein)
+        g2_tv_result.startAnimation(fadein)
+        g3_iv1.startAnimation(fadein)
+        g3_tv1.startAnimation(fadein)
+        g3_iv2.startAnimation(fadein)
+        g3_tv2.startAnimation(fadein)
+        g3_tv_result.startAnimation(fadein)
+        g4_tv1.startAnimation(fadein)
+        g4_iv2.startAnimation(fadein)
+        g4_tv2.startAnimation(fadein)
+        g4_tv_result.startAnimation(fadein)
+        gQ_iv1.startAnimation(fadein)
+        gQ_tv1.startAnimation(fadein)
+        g4_iv1.startAnimation(fadein)
+        g4_ivtv1.startAnimation(fadein)
+        tv_answer1.startAnimation(animtv)
+        buttAnswer1.startAnimation(animtv)
     }
 
     private fun mainMenu(view: View?) {

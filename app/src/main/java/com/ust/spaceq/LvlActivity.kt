@@ -38,7 +38,7 @@ class LvlActivity : AppCompatActivity() {
 
         qAnswer = mapOf("Stage 1" to 95, "Stage 2" to 116)
         stageList = mapOf("Stage 1" to buttL1, "Stage 2" to buttL2, "Stage 3" to buttL3, "Stage 4" to buttL4,
-            "Stage 5" to buttL5)
+            "Stage 5" to buttL5, "Stage 6" to buttL6)
 
 
         firebaseAnalytics = FirebaseAnalytics.getInstance(this)
@@ -209,6 +209,14 @@ class LvlActivity : AppCompatActivity() {
 
     fun showStage5(view: View?){
         levelKey = "Stage 5"
+        val intent = Intent(this@LvlActivity, OrderedActivity::class.java)
+        intent.putExtra("tvName", nick)
+        intent.putExtra("levelKey", levelKey)
+        startActivity(intent)
+    }
+
+    fun showStage6(view: View?){
+        levelKey = "Stage 6"
         val intent = Intent(this@LvlActivity, OrderedActivity::class.java)
         intent.putExtra("tvName", nick)
         intent.putExtra("levelKey", levelKey)

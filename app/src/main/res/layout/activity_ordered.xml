@@ -356,6 +356,201 @@
                                                         android:layout_height="wrap_content"
                                                         app:constraint_referenced_ids="uc1_say1,uc1_say2,uc1_say3,uc2_say1,uc2_say2,uc2_say3,uc3_say1,uc3_say2,uc3_say3,uc4_say1,uc4_say2,uc4_say3"
                                                         android:id="@+id/groupUcgen" android:visibility="gone"/>
+                <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" app:srcCompat="@drawable/ic_ucbos"
+                        android:id="@+id/g1_iv1" android:tint="@color/colorSpaceWhite"
+                        app:layout_constraintStart_toStartOf="@+id/say1"
+                        app:layout_constraintEnd_toEndOf="@+id/say1" android:layout_marginTop="8dp"
+                        app:layout_constraintTop_toTopOf="parent" android:layout_marginBottom="8dp"
+                        app:layout_constraintBottom_toBottomOf="@+id/say1" android:visibility="invisible"/>
+                <TextView
+                        android:text="+"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" android:id="@+id/g1_tv1"
+                        android:textColor="@color/colorSpaceWhite" android:textSize="24sp"
+                        app:layout_constraintTop_toTopOf="@+id/g1_iv1"
+                        app:layout_constraintBottom_toBottomOf="@+id/g1_iv1"
+                        app:layout_constraintStart_toEndOf="@+id/g1_iv1" android:layout_marginStart="8dp"
+                        android:visibility="invisible"/>
+                <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" app:srcCompat="@drawable/ic_dortbos"
+                        android:id="@+id/g1_iv2" android:tint="@color/colorSpaceWhite"
+                        app:layout_constraintTop_toTopOf="@+id/g1_tv1"
+                        app:layout_constraintBottom_toBottomOf="@+id/g1_tv1"
+                        app:layout_constraintStart_toEndOf="@+id/g1_tv1" android:layout_marginStart="8dp"
+                        android:visibility="invisible"/>
+                <TextView
+                        android:text="="
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" android:id="@+id/g1_tv2"
+                        android:textColor="@color/colorSpaceWhite" android:textSize="24sp"
+                        app:layout_constraintTop_toTopOf="@+id/g1_iv2"
+                        app:layout_constraintBottom_toBottomOf="@+id/g1_iv2"
+                        app:layout_constraintStart_toEndOf="@+id/g1_iv2" android:layout_marginStart="8dp"
+                        android:visibility="invisible"/>
+                <TextView
+                        android:text="75"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" android:id="@+id/g1_tv_result"
+                        android:textColor="@color/colorSpaceWhite" android:textSize="24sp"
+                        app:layout_constraintTop_toTopOf="@+id/g1_tv2"
+                        app:layout_constraintBottom_toBottomOf="@+id/g1_tv2"
+                        app:layout_constraintStart_toEndOf="@+id/g1_tv2" android:layout_marginStart="8dp"
+                        android:visibility="invisible"/>
+                <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" app:srcCompat="@drawable/ic_ucbos"
+                        android:id="@+id/g2_iv1" android:tint="@color/colorSpaceWhite"
+                        app:layout_constraintStart_toStartOf="@+id/say3"
+                        app:layout_constraintEnd_toEndOf="@+id/say3" android:layout_marginTop="8dp"
+                        app:layout_constraintTop_toTopOf="parent" android:layout_marginBottom="8dp"
+                        app:layout_constraintBottom_toBottomOf="@+id/say3" android:visibility="invisible"/>
+                <TextView
+                        android:text="+"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" android:id="@+id/g2_tv1"
+                        android:textColor="@color/colorSpaceWhite" android:textSize="24sp"
+                        app:layout_constraintTop_toTopOf="@+id/g2_iv1"
+                        app:layout_constraintBottom_toBottomOf="@+id/g2_iv1"
+                        app:layout_constraintStart_toEndOf="@+id/g2_iv1" android:layout_marginStart="8dp"
+                        android:visibility="invisible"/>
+                <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" app:srcCompat="@drawable/ic_cemberbos"
+                        android:id="@+id/g2_iv2" android:tint="@color/colorSpaceWhite"
+                        app:layout_constraintTop_toTopOf="@+id/g2_tv1"
+                        app:layout_constraintBottom_toBottomOf="@+id/g2_tv1"
+                        app:layout_constraintStart_toEndOf="@+id/g2_tv1" android:layout_marginStart="8dp"
+                        android:visibility="invisible"/>
+                <TextView
+                        android:text="="
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" android:id="@+id/g2_tv2"
+                        android:textColor="@color/colorSpaceWhite" android:textSize="24sp"
+                        app:layout_constraintStart_toEndOf="@+id/g2_iv2"
+                        android:layout_marginStart="8dp" app:layout_constraintTop_toTopOf="@+id/g2_iv2"
+                        app:layout_constraintBottom_toBottomOf="@+id/g2_iv2" android:visibility="invisible"/>
+                <TextView
+                        android:text="78"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" android:id="@+id/g2_tv_result"
+                        android:textColor="@color/colorSpaceWhite" android:textSize="24sp"
+                        app:layout_constraintBottom_toBottomOf="@+id/g2_tv2"
+                        app:layout_constraintTop_toTopOf="@+id/g2_tv2" app:layout_constraintStart_toEndOf="@+id/g2_tv2"
+                        android:layout_marginStart="8dp" android:visibility="invisible"/>
+                <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" app:srcCompat="@drawable/ic_cemberbos"
+                        android:id="@+id/g3_iv1" android:tint="@color/colorSpaceWhite"
+                        app:layout_constraintEnd_toEndOf="@+id/say1"
+                        app:layout_constraintStart_toStartOf="@+id/say1" android:layout_marginTop="8dp"
+                        app:layout_constraintTop_toBottomOf="@+id/say1" android:visibility="invisible"/>
+                <TextView
+                        android:text="+"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" android:id="@+id/g3_tv1"
+                        android:textColor="@color/colorSpaceWhite" android:textSize="24sp"
+                        app:layout_constraintTop_toTopOf="@+id/g3_iv1"
+                        app:layout_constraintBottom_toBottomOf="@+id/g3_iv1"
+                        app:layout_constraintStart_toEndOf="@+id/g3_iv1" android:layout_marginStart="8dp"
+                        android:visibility="invisible"/>
+                <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" app:srcCompat="@drawable/ic_dortbos"
+                        android:id="@+id/g3_iv2" android:tint="@color/colorSpaceWhite"
+                        app:layout_constraintTop_toTopOf="@+id/g3_tv1"
+                        app:layout_constraintBottom_toBottomOf="@+id/g3_tv1"
+                        app:layout_constraintStart_toEndOf="@+id/g3_tv1" android:layout_marginStart="8dp"
+                        android:visibility="invisible"/>
+                <TextView
+                        android:text="="
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" android:id="@+id/g3_tv2"
+                        android:textColor="@color/colorSpaceWhite" android:textSize="24sp"
+                        app:layout_constraintTop_toTopOf="@+id/g3_iv2"
+                        app:layout_constraintBottom_toBottomOf="@+id/g3_iv2"
+                        app:layout_constraintStart_toEndOf="@+id/g3_iv2" android:layout_marginStart="8dp"
+                        android:visibility="invisible"/>
+                <TextView
+                        android:text="85"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" android:id="@+id/g3_tv_result"
+                        android:textColor="@color/colorSpaceWhite" android:textSize="24sp"
+                        app:layout_constraintTop_toTopOf="@+id/g3_tv2"
+                        app:layout_constraintBottom_toBottomOf="@+id/g3_tv2"
+                        app:layout_constraintStart_toEndOf="@+id/g3_tv2" android:layout_marginStart="8dp"
+                        android:visibility="invisible"/>
+                <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" app:srcCompat="@drawable/ic_cemberbos"
+                        android:id="@+id/g4_iv1" android:tint="@color/colorSpaceWhite"
+                        app:layout_constraintEnd_toEndOf="@+id/say3"
+                        app:layout_constraintStart_toStartOf="@+id/say3" android:layout_marginTop="8dp"
+                        app:layout_constraintTop_toBottomOf="@+id/say3" android:visibility="invisible"/>
+                <TextView
+                        android:text="4"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" android:id="@+id/g4_ivtv1"
+                        android:textColor="@color/colorSpaceWhite" android:textSize="24sp"
+                        app:layout_constraintEnd_toEndOf="@+id/g4_iv1"
+                        app:layout_constraintStart_toStartOf="@+id/g4_iv1"
+                        app:layout_constraintTop_toTopOf="@+id/g4_iv1"
+                        app:layout_constraintBottom_toBottomOf="@+id/g4_iv1" android:fontFamily="sans-serif"
+                        android:visibility="invisible"/>
+                <TextView
+                        android:text="+"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" android:id="@+id/g4_tv1"
+                        android:textColor="@color/colorSpaceWhite" android:textSize="24sp"
+                        app:layout_constraintTop_toTopOf="@+id/g4_iv1"
+                        app:layout_constraintBottom_toBottomOf="@+id/g4_iv1"
+                        app:layout_constraintStart_toEndOf="@+id/g4_iv1" android:layout_marginStart="8dp"
+                        android:visibility="invisible"/>
+                <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" app:srcCompat="@drawable/ic_ucbos"
+                        android:id="@+id/g4_iv2" android:tint="@color/colorSpaceWhite"
+                        app:layout_constraintTop_toTopOf="@+id/g4_tv1"
+                        app:layout_constraintBottom_toBottomOf="@+id/g4_tv1"
+                        app:layout_constraintStart_toEndOf="@+id/g4_tv1" android:layout_marginStart="8dp"
+                        android:visibility="invisible"/>
+                <TextView
+                        android:text="="
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" android:id="@+id/g4_tv2"
+                        android:textColor="@color/colorSpaceWhite" android:textSize="24sp"
+                        app:layout_constraintTop_toTopOf="@+id/g4_iv2"
+                        app:layout_constraintBottom_toBottomOf="@+id/g4_iv2"
+                        app:layout_constraintStart_toEndOf="@+id/g4_iv2" android:layout_marginStart="8dp"
+                        android:visibility="invisible"/>
+                <TextView
+                        android:text="47"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" android:id="@+id/g4_tv_result"
+                        android:textColor="@color/colorSpaceWhite" android:textSize="24sp"
+                        app:layout_constraintTop_toTopOf="@+id/g4_tv2"
+                        app:layout_constraintBottom_toBottomOf="@+id/g4_tv2"
+                        app:layout_constraintStart_toEndOf="@+id/g4_tv2" android:layout_marginStart="8dp"
+                        android:visibility="invisible"/>
+                <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" app:srcCompat="@drawable/ic_cemberbos"
+                        android:id="@+id/gQ_iv1" android:tint="@color/colorSpaceWhite"
+                        app:layout_constraintTop_toTopOf="@+id/textQ"
+                        app:layout_constraintBottom_toTopOf="@+id/tv_answer1"
+                        app:layout_constraintStart_toStartOf="@+id/tv_answer1"
+                        app:layout_constraintEnd_toStartOf="@+id/guideline3" android:visibility="invisible"/>
+                <TextView
+                        android:text="= ?"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" android:id="@+id/gQ_tv1"
+                        android:textColor="@color/colorSpaceWhite" android:textSize="24sp"
+                        app:layout_constraintStart_toEndOf="@+id/gQ_iv1"
+                        android:layout_marginStart="8dp"
+                        app:layout_constraintBottom_toBottomOf="@+id/gQ_iv1"
+                        app:layout_constraintTop_toTopOf="@+id/gQ_iv1" android:visibility="invisible"/>
             </androidx.constraintlayout.widget.ConstraintLayout>
         </ScrollView>
     </LinearLayout>

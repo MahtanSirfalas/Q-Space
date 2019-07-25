@@ -29,7 +29,6 @@ private lateinit var firebaseAnalytics: FirebaseAnalytics
 private lateinit var auth: FirebaseAuth
 private lateinit var database: FirebaseDatabase
 private lateinit var databaseReference: DatabaseReference
-private lateinit var googleSignInClient: GoogleSignInClient
 private lateinit var commsReference: DatabaseReference
 var firstRunControl = true
 
@@ -43,7 +42,7 @@ var verifiedCheck = false
 
 @TargetApi(Build.VERSION_CODES.O)
 class MainActivity : AppCompatActivity() {
-
+    private lateinit var googleSignInClient: GoogleSignInClient
     val TAG = "MainActivity"
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -130,7 +129,7 @@ class MainActivity : AppCompatActivity() {
             in 28000..32499 -> {userReference.child("level").setValue("Moon")}
             in 32500..37499 -> {userReference.child("level").setValue("Enceladus")}
             in 37500..42999 -> {userReference.child("level").setValue("Pluto")}
-            in 43000..59999 -> {userReference.child("level").setValue("Pluto")}
+            in 43000..59999 -> {userReference.child("level").setValue("Mars")}
             else -> {}
         }
     }
@@ -273,7 +272,9 @@ class MainActivity : AppCompatActivity() {
         this@MainActivity.finish()
 //        view_timer.stop()
         googleSignInClient.revokeAccess().addOnCompleteListener(this) {
-            LoginActivity().updateUI(null)
+            if (googleSignInClient.revokeAccess().isSuccessful){
+                LoginActivity().updateUI(auth.currentUser)
+            }else{}
         }
     }
 

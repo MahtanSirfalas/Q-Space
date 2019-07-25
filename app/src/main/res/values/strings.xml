@@ -1,8 +1,7 @@
 <resources>
     <string name="app_name">Q Space</string>
     <string name="action_out">Sign Out</string>
-
-    <!-- TODO: Remove or change this placeholder text -->
+    <!-- General -->
     <string name="title_activity_lvl">Stages</string>
     <string name="title_activity_ordered">OrderedActivity</string>
     <string name="title_activity_suggest">Suggest Q</string>
@@ -32,6 +31,16 @@
     <string name="total_points">Total Points: </string>
     <string name="username">Username: </string>
     <string name="email">E-Mail: </string>
+    <string name="tv_earned_upvote">Upvotes gained = </string>
+    <string name="tv_earned_upvote1">
+        You are joining the community, go on like that.</string>
+    <string name="tv_earned_upvote2">
+        It seems like some of the users remember you.</string>
+    <string name="tv_earned_upvote3">
+        With a quick glance We can tell that you are getting popular in the community</string>
+    <string name="tv_earned_upvote4">
+        You are one of the most popular community members, every player knows you</string>
+    <string name="tv_earned_upvote5">You didn\'t gain any Upvotes for your comments until now. Keep up the good work!</string>
     <!-- Suggest Activity -->
     <string name="suggest_intro">You can suggest a question to us. We will review it in time. Until that; the
         suggestion is editable and removable
@@ -45,4 +54,5 @@
     <string name="minimum_letters">Minimum 5 letters!</string>
     <string name="write_comment">Write your comment here…</string>
 
+    <string name="pw">get the obvious stuff out of the way</string>
 </resources>

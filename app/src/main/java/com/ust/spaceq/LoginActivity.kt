@@ -175,9 +175,9 @@ class LoginActivity : AppCompatActivity() {
                     LoginToSystem(etEmail.text.toString(), etPassword.text.toString())
                 }else{
                     Log.d(TAG, "usernameError; username is already taken $checkNick")
-                    tvNickError.text = R.string.nick_error.toString()
+                    tvNickError.text = getString(R.string.nick_error)
                     tvNickError.visibility = View.VISIBLE
-                    Toast.makeText(baseContext, R.string.nick_error_toast, Toast.LENGTH_LONG).show()
+                    Toast.makeText(baseContext, getString(R.string.nick_error_toast), Toast.LENGTH_LONG).show()
                 }
             }
         })
@@ -214,7 +214,7 @@ class LoginActivity : AppCompatActivity() {
             }else{
                 //Fail -> display message below
                 Log.w(TAG, "createUserWithEmail:failure", task.exception)
-                Toast.makeText(baseContext, R.string.auth_fail, Toast.LENGTH_SHORT).show()
+                Toast.makeText(baseContext, getString(R.string.auth_fail), Toast.LENGTH_SHORT).show()
                 updateUI(null)
             }
         }
@@ -316,15 +316,24 @@ class LoginActivity : AppCompatActivity() {
 
                     val userId = user!!.uid
                     val userDb = databaseReference.child(userId)
-                    userDb.child("nickName").setValue(acct.displayName)
-                    Log.d(TAG, "nickname = ${acct.displayName}")
-                    userDb.child("eMail").setValue(user.email)
-                    Log.d(TAG, "email = ${user.email}")
-                    userDb.child("points").setValue(0)
-                    userDb.child("level").setValue("Dactyl")
-                    userDb.child("avatar").setValue(acct.photoUrl.toString())
-                    Log.d(TAG, "avatar url = ${acct.photoUrl}")
-                    updateUI(user)
+                    userDb.addListenerForSingleValueEvent(object : ValueEventListener {
+                        override fun onCancelled(p0: DatabaseError) {}
+                        override fun onDataChange(p0: DataSnapshot) {
+                            if (p0.hasChildren()){
+                                updateUI(user)
+                            }else{
+                                userDb.child("nickName").setValue(acct.displayName)
+                                Log.d(TAG, "nickname = ${acct.displayName}")
+                                userDb.child("eMail").setValue(user.email)
+                                Log.d(TAG, "email = ${user.email}")
+                                userDb.child("points").setValue(0)
+                                userDb.child("level").setValue("Dactyl")
+                                userDb.child("avatar").setValue(acct.photoUrl.toString())
+                                Log.d(TAG, "avatar url = ${acct.photoUrl}")
+                                updateUI(user)
+                            }
+                        }
+                    })
                 } else {
                     // If sign in fails, display a message to the user.
                     Log.w(TAG, "signInWithCredential:failure", task.exception)
