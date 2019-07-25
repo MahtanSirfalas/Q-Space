@@ -63,14 +63,10 @@ class SuggestActivity : AppCompatActivity() {
                 if(keyWord==getString(R.string.pw)){
                     val fadein  = AnimationUtils.loadAnimation(this,R.anim.abc_fade_in)
                     Log.d(TAG, "SEND pressed; pw accepted")
-                    val window = PopupWindow(this)
-                    val show = layoutInflater.inflate(R.layout.layout_popup_suggests, null)
-                    window.isOutsideTouchable = true
+                    suggests_tab.visibility = View.VISIBLE
+                    suggests_tab.startAnimation(fadein)
                     fetchSuggests()
-                    window.contentView = show
-                    window.showAtLocation(it, 1,0,100)
-//                    show.startAnimation(fadein)
-
+                    etSuggest.text.clear()
 
                 }else{
                     suggestRef.child("question").setValue(etSuggest.text.toString())
@@ -91,6 +87,7 @@ class SuggestActivity : AppCompatActivity() {
             etSuggest.text.clear()
             tvZaman.text = getString(R.string.date_time)
             showSuggest(null)
+            suggests_tab.visibility = View.GONE
         }
     }
 
@@ -171,7 +168,7 @@ class SuggestActivity : AppCompatActivity() {
     }
 
     private fun fetchSuggests(){
-        val ref = database.getReference("/Suggests")
+        val ref = database.getReference("/Suggests").orderByChild("time")
 
         ref.addListenerForSingleValueEvent(object :ValueEventListener{
             override fun onCancelled(p0: DatabaseError) {
@@ -189,9 +186,7 @@ class SuggestActivity : AppCompatActivity() {
                         adapter.add(SuggestItem(suggest))
                     }
                 }
-                val popi = layoutInflater.inflate(R.layout.layout_popup_suggests, null)
-                val recycleSuggests = popi.findViewById<RecyclerView>(R.id.recycle_suggests)
-                recycleSuggests.adapter = adapter
+                recycle_suggests.adapter = adapter
             }
         })
     }

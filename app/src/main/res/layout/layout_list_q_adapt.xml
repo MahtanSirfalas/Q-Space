@@ -2,7 +2,8 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               android:orientation="vertical"
               android:layout_width="match_parent"
-              android:layout_height="wrap_content" android:layout_margin="8dp" android:id="@+id/list_suggests">
+              android:layout_height="wrap_content" android:layout_margin="8dp" android:id="@+id/list_suggests"
+              android:padding="8dp">
 
     <TextView
             android:text="user"
@@ -12,7 +13,8 @@
     <TextView
             android:text="Some kind of post about a question or total bullshit..."
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" android:id="@+id/tv_suggest_body"/>
+            android:layout_height="wrap_content" android:id="@+id/tv_suggest_body"
+            android:textColor="@color/colorPrimaryDark"/>
     <TextView
             android:text="date|time"
             android:layout_width="match_parent"
