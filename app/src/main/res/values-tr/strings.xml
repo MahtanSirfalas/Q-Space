@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Q Space</string>
+    <string name="action_out">Çıkış Yap</string>
+    <!-- General -->
+    <string name="title_activity_lvl">Aşamalar</string>
+    <string name="title_activity_ordered">OrderedActivity</string>
+    <string name="title_activity_suggest">Soru Öner</string>
+    <string name="title_activity_random">RandomActivity</string>
+    <!-- Login Activity -->
+    <string name="loading">Yükleniyor</string>
+    <string name="sign_in_google">Google hesabınla oturum aç</string>
+    <string name="enter_nickname">Kullanıcı adı girin</string>
+    <string name="enter_email">E-mail adresini girin</string>
+    <string name="enter_password">Şifrenizi girin</string>
+    <string name="register">Kayıt ol</string>
+    <string name="already_account">Hesabım Var</string>
+    <string name="need_account">Hesabım yok</string>
+    <string name="nick_error">Kullanıcı adı alınmış!</string>
+    <string name="nick_error_toast">Kullanıcı adını değiştirip tekrar deneyin..</string>
+    <string name="failed_verify_email">Doğrulama postası gönderirken bir sorun oluştu</string>
+    <string name="verify_email_sent">Doğrulama e-postası gönderildi</string>
+    <!-- Main Activity -->
+    <string name="tv_warn">E-mail adresini doğrula..!</string>
+    <string name="play">Oyna</string>
+    <string name="profile">Profil</string>
+    <string name="suggest_q">Soru_Öner</string>
+    <string name="info">Bilgi</string>
+    <string name="listener_cancelled">Uyarı: Internet bağlantınızın aktif olup olmadığını kontrol edin!</string>
+    <!-- Profile Activity -->
+    <string name="level">"Seviye Etiketi: "</string>
+    <string name="total_points">"Toplam Puan: "</string>
+    <string name="username">"Kullanıcı Adı: "</string>
+    <string name="email">"E-mail: "</string>
+    <string name="tv_earned_upvote">"Kazanılan destek oyu = "</string>
+    <string name="tv_earned_upvote1">
+        \nTopluluğa karışmaya başladın, böyle devam et.</string>
+    <string name="tv_earned_upvote2">
+        \nArtık hatırda yer etmeye başladın.</string>
+    <string name="tv_earned_upvote3">
+        \nKısaca diyebiliriz ki, toplulukta popüler olmaya başladın.</string>
+    <string name="tv_earned_upvote4">
+        \nEn popüler birkaç kullanıcı arasına girdin, Q Space topluluğunda seni tanımayan yok.</string>
+    <string name="tv_earned_upvote5">Henüz yorumlarına destek oyu gelmedi. Pes etme!</string>
+    <!-- Suggest Activity -->
+    <string name="suggest_intro">Burada bize bir soru önerebilirsin. Uygun bir zamanda inceleyeceğiz. O zamana kadar yine buradan düzenleyip gönderebilir ya da silebilirsin.
+        Sorunuz kabul edilirse e-posta ile iletişime geçeceğiz.
+    </string>
+    <string name="date_time">Tarih | Saat</string>
+    <string name="send">Gönder</string>
+    <!-- Comment Activity -->
+    <string name="touch_longer">Destek oyu için uzun bas</string>
+    <string name="own_comment">Kendi yorumun oylanamaz ama silinebilir.</string>
+    <string name="upvote_back">Oyunu geri aldın</string>
+    <string name="minimum_letters">En az 5 harf!</string>
+    <string name="write_comment">Yorumunu gir…</string>
+    <string name="comment_will_deleted">Yorumunuzu silmek istediğinizden emin misiniz?</string>
+    <string name="no_don_t">Hayır, silme</string>
+    <string name="yes_delete">Evet, sil</string>
+    <!-- Ordered Activity -->
+    <string name="num1">Numara 1</string>
+    <string name="num2">Numara 2</string>
+    <string name="num3">Numara 3</string>
+    <string name="bravo">Bravo! Doğru cevap!</string>
+    <string name="wrong_answer">Yanlış cevap, tekrar dene!</string>
+    <string name="come_on">Hadi ama, bu bölümü daha önce geçtin!</string>
+
+    <string name="pw">get the obvious stuff out of the way</string>
+    <string name="auth_fail">Kayıt tamamlanamadı; bağlantınızı kontrol edin.</string>
+    <string name="congratulations">Tebrikler!!!</string>
+    <string name="show_comments">Yorumlar</string>
+    <string name="give_up_read_comments">Yorumları şu an okumak isterseniz, bu sorudan kazanacağınız puanları feda
+        edeceksiniz, emin misiniz?
+    </string>
+    <string name="no">Hayır</string>
+    <string name="popup_internet">Q Space oynayabilmek için aktif internet bağlantısı gereklidir. İlerlemenizi ve oyun
+        içi durumunuzu eş zamanlı olarak senkronize ediyoruz.
+    </string>
+    <string name="yes_give_up">Evet, feda et.</string>
+
+</resources>

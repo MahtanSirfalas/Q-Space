@@ -9,7 +9,7 @@
             android:text="user"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" android:id="@+id/tv_userName" android:textStyle="bold"
-            android:textSize="16sp" android:textAlignment="center" android:textColor="@color/yellowDark"/>
+            android:textSize="16sp" android:textAlignment="textStart" android:textColor="@color/yellowDark"/>
     <TextView
             android:text="Some kind of post about a question or total bullshit..."
             android:layout_width="match_parent"

@@ -7,18 +7,20 @@
     <string name="title_activity_suggest">Suggest Q</string>
     <string name="title_activity_random">RandomActivity</string>
     <!-- Login Activity -->
+
     <string name="loading">Loading</string>
     <string name="sign_in_google">Sign in with Google account</string>
     <string name="enter_nickname">Enter a username</string>
     <string name="enter_email">Enter your e-mail</string>
     <string name="enter_password">Enter your password</string>
-    <string name="log_in">Log In</string>
-    <string name="already_account">Already Have an Account?</string>
+    <string name="register">Register</string>
+    <string name="already_account">Already Have an Account</string>
     <string name="need_account">Need an Account?</string>
     <string name="nick_error">Username is Already Taken!</string>
     <string name="nick_error_toast">Change username and try again..</string>
-    <string name="auth_fail">Authentication failed, check internet connection.</string>
+    <string name="auth_fail">Registration failed, check internet connection.</string>
     <string name="failed_verify_email">Failed to send verification email</string>
+    <string name="verify_email_sent">Verification e-mail is sent</string>
     <!-- Main Activity -->
     <string name="tv_warn">Verify your e-mail address..!</string>
     <string name="play">Play</string>
@@ -27,23 +29,23 @@
     <string name="info">Info</string>
     <string name="listener_cancelled">Warning: Check if you have an active internet connection!</string>
     <!-- Profile Activity -->
-    <string name="level">Level: </string>
+    <string name="level">"Level Tag: "</string>
     <string name="total_points">Total Points: </string>
     <string name="username">Username: </string>
     <string name="email">E-Mail: </string>
     <string name="tv_earned_upvote">Upvotes gained = </string>
     <string name="tv_earned_upvote1">
-        You are joining the community, go on like that.</string>
+        \nYou are joining the community, go on like that.</string>
     <string name="tv_earned_upvote2">
-        It seems like some of the users remember you.</string>
+        \nIt seems like some of the users remember you.</string>
     <string name="tv_earned_upvote3">
-        With a quick glance We can tell that you are getting popular in the community</string>
+        \nWith a quick glance We can tell that you are getting popular in the community</string>
     <string name="tv_earned_upvote4">
-        You are one of the most popular community members, every player knows you</string>
+        \nYou are one of the most popular community members, every player knows you</string>
     <string name="tv_earned_upvote5">You didn\'t gain any Upvotes for your comments until now. Keep up the good work!</string>
     <!-- Suggest Activity -->
-    <string name="suggest_intro">You can suggest a question to us. We will review it in time. Until that; the
-        suggestion is editable and removable
+    <string name="suggest_intro">You can suggest a question to us. We will review it in time. Until that; the suggestion
+        is editable and removable.
     </string>
     <string name="date_time">date | time</string>
     <string name="send">Send</string>
@@ -53,6 +55,26 @@
     <string name="upvote_back">You Took Back the Upvote</string>
     <string name="minimum_letters">Minimum 5 letters!</string>
     <string name="write_comment">Write your comment here…</string>
+    <string name="comment_will_deleted">Your comment will be deleted, Are you sure?</string>
+    <string name="yes_delete">Yes, delete</string>
+    <string name="no_don_t">No, don\'t</string>
+    <!-- Ordered Activity -->
+    <string name="num1">Number 1</string>
+    <string name="num2">Number 2</string>
+    <string name="num3">Number 3</string>
+    <string name="bravo">Bravo! Answer is accepted!</string>
+    <string name="wrong_answer">Wrong answer, try again!</string>
+    <string name="come_on">Come on mate you passed this stage before!</string>
 
     <string name="pw">get the obvious stuff out of the way</string>
+    <string name="congratulations">Congratulations!!!</string>
+    <string name="show_comments">Comments</string>
+    <string name="give_up_read_comments">Reading comments now will sacrifice the points you will gain from this question,
+        Are you sure?
+    </string>
+    <string name="yes_give_up">Yes; Give Up!</string>
+    <string name="no">No</string>
+    <string name="popup_internet">You need an active internet connection to play Q Space. We synchronize your progress
+        and status simultaneously.
+    </string>
 </resources>

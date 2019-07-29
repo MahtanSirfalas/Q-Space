@@ -171,19 +171,48 @@
                         app:layout_constraintEnd_toEndOf="@+id/buttInfo"
                         app:layout_constraintBottom_toBottomOf="@+id/buttInfo"
                         app:layout_constraintStart_toStartOf="@+id/buttInfo"
-                        app:layout_constraintTop_toTopOf="@+id/buttInfo" android:layout_marginTop="16dp"/>
+                        app:layout_constraintTop_toTopOf="@+id/buttInfo" android:layout_marginTop="16dp"
+                        app:layout_constraintHorizontal_bias="0.0" app:layout_constraintVertical_bias="1.0"/>
                 <androidx.constraintlayout.widget.Group android:layout_width="wrap_content"
                                                         android:layout_height="wrap_content" android:id="@+id/groupWarn"
                                                         app:constraint_referenced_ids="tvWarn,ivWarn"
                                                         android:visibility="invisible"/>
-                <ImageView
+                <androidx.constraintlayout.widget.ConstraintLayout
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" app:srcCompat="@drawable/ic_ufo"
-                        android:id="@+id/ivUfo"
-                        android:layout_marginBottom="8dp"
+                        android:layout_height="wrap_content"
                         app:layout_constraintBottom_toBottomOf="@+id/ivInfo"
-                        app:layout_constraintEnd_toEndOf="@+id/ivInfo" android:layout_marginEnd="8dp"
-                        android:visibility="invisible"/>
+                        android:id="@+id/ufo_layout"
+                        app:layout_constraintStart_toStartOf="@+id/ivInfo" android:layout_marginStart="32dp">
+
+                    <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" app:srcCompat="@drawable/ic_ufo"
+                            android:id="@+id/ivUfo"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                    />
+                    <TextView
+                            android:text='"Q?!@,#$"'
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" android:id="@+id/tv_ufo" android:background="#B9F29B14"
+                            android:textColor="@color/colorSpaceWhite"
+                            android:fontFamily="@font/coda"
+                            android:visibility="invisible"
+                            app:layout_constraintTop_toTopOf="@+id/butt_ufo"
+                            app:layout_constraintBottom_toTopOf="@+id/butt_ufo"
+                            app:layout_constraintStart_toEndOf="@+id/butt_ufo"
+                            app:layout_constraintEnd_toEndOf="parent"/>
+                    <Button
+                            android:layout_width="0dp"
+                            android:layout_height="0dp" android:id="@+id/butt_ufo"
+                            android:background="@android:color/transparent"
+                            app:layout_constraintEnd_toEndOf="@+id/ivUfo"
+                            app:layout_constraintBottom_toBottomOf="@+id/ivUfo"
+                            app:layout_constraintTop_toTopOf="@+id/ivUfo"
+                            app:layout_constraintStart_toStartOf="@+id/ivUfo"
+                            android:onClick="ufoClickAction"/>
+                </androidx.constraintlayout.widget.ConstraintLayout>
                 <!--<Chronometer-->
                 <!--android:id="@+id/view_timer"-->
                 <!--android:layout_width="wrap_content" android:layout_height="wrap_content"-->

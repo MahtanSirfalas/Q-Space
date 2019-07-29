@@ -6,15 +6,14 @@ import android.graphics.drawable.AnimationDrawable
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
+import android.view.Gravity
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import android.view.animation.AnimationUtils
-import android.widget.PopupWindow
-import android.widget.Toast
+import android.widget.Toast.*
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout
-import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
 import com.ust.spaceq.models.Suggests
@@ -77,7 +76,9 @@ class SuggestActivity : AppCompatActivity() {
                 }
             }else{
                 Log.d(TAG, "SEND pressed; less than 10")
-                Toast.makeText(this, "Too Short",Toast.LENGTH_SHORT).show()
+                val toast = makeText(baseContext, "Too Short", LENGTH_SHORT)
+                toast.setGravity(Gravity.CENTER, 0, 0)
+                toast.show()
             }
         }
         ibRemove.setOnClickListener {
@@ -173,7 +174,9 @@ class SuggestActivity : AppCompatActivity() {
         ref.addListenerForSingleValueEvent(object :ValueEventListener{
             override fun onCancelled(p0: DatabaseError) {
                 Log.d(TAG, "WARNING: Comment Fetching FAILED!")
-                Toast.makeText(baseContext, getString(R.string.listener_cancelled), Toast.LENGTH_LONG).show()
+                val toast = makeText(baseContext, getString(R.string.listener_cancelled), LENGTH_LONG)
+                toast.setGravity(Gravity.CENTER, 0, 0)
+                toast.show()
             }
             override fun onDataChange(p0: DataSnapshot) {
                 val adapter = GroupAdapter<ViewHolder>()

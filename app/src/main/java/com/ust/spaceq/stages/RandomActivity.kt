@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.util.Log
+import android.view.Gravity
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
@@ -14,7 +15,7 @@ import android.view.animation.AnimationUtils
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.PopupWindow
-import android.widget.Toast
+import android.widget.Toast.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
 import com.google.firebase.analytics.FirebaseAnalytics
@@ -40,13 +41,15 @@ private lateinit var stageRef : DatabaseReference
 class RandomActivity : AppCompatActivity() {
     val TAG = "RandomActivity"
     lateinit var randomNumberTask: Runnable
+    lateinit var randomNumberTask1: Runnable
+    lateinit var randomNumberTask2: Runnable
     lateinit var mainHandler: Handler
     lateinit var updatePointTask: Runnable
     var isRunning = false
     var num1 = 0
     var num2 = 0
     var num3 = 0
-    val operator = listOf<String>("+","-")
+    val operator = listOf("+","-")
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -78,12 +81,36 @@ class RandomActivity : AppCompatActivity() {
                 mainHandler.postDelayed(this, 10)
             }
         }
+        randomNumberTask1 = object:Runnable{
+            override fun run() {
+                var numList = mutableListOf<Int>()
+                for (i in 10..199){
+                    if (i%6==0 && i%8==0){
+                        numList.add(i)
+                    }else{}
+                }
+                val ranNum = (numList).random()
+                tvRandom.text = ranNum.toString()
+                mainHandler.postDelayed(this, 10)
+            }
+        }
+        randomNumberTask2 = object:Runnable{
+            override fun run() {
+                val numList = mutableListOf<Int>(4,6,8)
+                val ranNum = (numList).random()
+                tvRandom.text = ranNum.toString()
+                mainHandler.postDelayed(this, 100)
+            }
+        }
+
         fun startcheck() {
             stageRef.addListenerForSingleValueEvent(object: ValueEventListener {
                 override fun onCancelled(p0: DatabaseError) {
                     Log.d(TAG, "stageRef Data couldn't read; No Internet Connection/No Response " +
                             "from database/Wrong datapath")
-                    Toast.makeText(baseContext, "WARNING: Be Sure that you have an active internet connection!", Toast.LENGTH_LONG).show()
+                    val toast = makeText(baseContext, getString(R.string.listener_cancelled), LENGTH_LONG)
+                    toast.setGravity(Gravity.CENTER, 0, 0)
+                    toast.show()
                 }
                 override fun onDataChange(p0: DataSnapshot) {
                     if (p0.hasChildren()){
@@ -106,8 +133,9 @@ class RandomActivity : AppCompatActivity() {
                             mainHandler.post(updatePointTask)
                         }else{
                             commentAnimation()
-                            Toast.makeText(baseContext,"You passed that stage before.",
-                                Toast.LENGTH_SHORT).show()
+                            val toast = makeText(baseContext, "You passed that stage before.", LENGTH_SHORT)
+                            toast.setGravity(Gravity.TOP, 0, 100)
+                            toast.show()
                         }
                     }else{
                         stageRef.child("point").setValue(1006)
@@ -128,12 +156,16 @@ class RandomActivity : AppCompatActivity() {
                     Log.d(TAG, "uAnswer is assigned as $uAnswer")
                 }catch (ex:Exception){
                     Log.d(TAG, "Something's Wrong; uAnswer couldn't assign!")
-                    Toast.makeText(baseContext, "Please Enter a Valid Value", Toast.LENGTH_SHORT).show()
+                    val toast = makeText(baseContext, "Please Enter a Valid Value", LENGTH_SHORT)
+                    toast.setGravity(Gravity.CENTER, 0, 0)
+                    toast.show()
                 }
                 stageRef.addListenerForSingleValueEvent(object : ValueEventListener{
                     override fun onCancelled(p0: DatabaseError) {
                         Log.d(TAG, "stageRef Data couldn't read; No Internet Connection/No Response from database/Wrong datapath")
-                        Toast.makeText(baseContext, "WARNING: Be Sure that you have an active internet connection!", Toast.LENGTH_LONG).show()
+                        val toast = makeText(baseContext, getString(R.string.listener_cancelled), LENGTH_LONG)
+                        toast.setGravity(Gravity.CENTER, 0, 0)
+                        toast.show()
                     }
                     override fun onDataChange(p0: DataSnapshot) {
                         var point = p0.child("point").value as Long
@@ -156,51 +188,74 @@ class RandomActivity : AppCompatActivity() {
                                 starAnimation()
 
                                 Log.d(TAG, "$levelKey: Answer ($uAnswer) is equal to $answer; Accepted!")
-                                Toast.makeText(baseContext, "Bravo! answer is accepted!", Toast.LENGTH_SHORT).show()
+                                val toast = makeText(baseContext, getString(R.string.bravo), LENGTH_SHORT)
+                                toast.setGravity(Gravity.CENTER, 0, 0)
+                                toast.show()
                             }else{
                                 point -= 10
                                 stageRef.child("point").setValue(point)
                                 Log.d(TAG, "Something's Wrong; $uAnswer != $answer! point is updated:$point")
-                                Toast.makeText(baseContext, "Wrong answer, try again!", Toast.LENGTH_SHORT).show()
+                                val toast = makeText(baseContext, getString(R.string.wrong_answer), LENGTH_SHORT)
+                                toast.setGravity(Gravity.CENTER, 0, 0)
+                                toast.show()
                             }
                         }else{
                             if (answer == uAnswer){
                                 starAnimation()
                                 Log.d(TAG, "$levelKey: Answer ($uAnswer) is equal to $answer; " +
                                         "But no points added to the database")
-                                Toast.makeText(baseContext, "Bravo! Your answer is accepted!", Toast.LENGTH_SHORT).show()
+                                val toast = makeText(baseContext, getString(R.string.bravo), LENGTH_SHORT)
+                                toast.setGravity(Gravity.CENTER, 0, 0)
+                                toast.show()
                             }else{
                                 Log.d(TAG, "Something's Wrong; $uAnswer != $answer!")
-                                Toast.makeText(baseContext, "Come on mate you passed this stage before!", Toast.LENGTH_SHORT).show()
+                                val toast = makeText(baseContext, getString(R.string.come_on), LENGTH_SHORT)
+                                toast.setGravity(Gravity.CENTER, 0, 0)
+                                toast.show()
                             }
                         }
                     }
                 })
             }else{
                 Log.d(TAG, "tv_answer1 is empty!")
-                Toast.makeText(applicationContext, "Enter Your Answer!", Toast.LENGTH_SHORT).show()
+                val toast = makeText(baseContext, "Enter Your Answer!", LENGTH_SHORT)
+                toast.setGravity(Gravity.CENTER, 0, 0)
+                toast.show()
             }
         }
-
         startQuestion()
         startcheck()
-
     }
 
     private fun startQuestion(){
         val atf2 = AnimationUtils.loadAnimation(this, R.anim.atf2)
         val gfo1 = AnimationUtils.loadAnimation(this, R.anim.gfo1)
+        //Number 1 action
         tvRandom.visibility = View.VISIBLE
         tvRandom.startAnimation(atf2)
         atf2.setAnimationListener(object : Animation.AnimationListener {
             override fun onAnimationStart(p0: Animation?) {
                 Log.d(TAG, "tvRandom 1: START")
-                mainHandler.post(randomNumberTask)
+                when(levelKey){
+                    "Stage 3"->{
+                        mainHandler.post(randomNumberTask)
+                    }
+                    "Stage 8"->{
+                        mainHandler.post(randomNumberTask1)
+                    }
+                }
             }
             override fun onAnimationRepeat(p0: Animation?) {}
             override fun onAnimationEnd(p0: Animation?) {
                 Log.d(TAG, "tvRandom 1: END")
-                mainHandler.removeCallbacks(randomNumberTask)
+                when(levelKey){
+                    "Stage 3"->{
+                        mainHandler.removeCallbacks(randomNumberTask)
+                    }
+                    "Stage 8"->{
+                        mainHandler.removeCallbacks(randomNumberTask1)
+                    }
+                }
                 tvRandom.startAnimation(gfo1)
                 gfo1.setAnimationListener(object : Animation.AnimationListener {
                     override fun onAnimationStart(p0: Animation?) {
@@ -210,18 +265,33 @@ class RandomActivity : AppCompatActivity() {
                     override fun onAnimationRepeat(p0: Animation?) {}
                     override fun onAnimationEnd(p0: Animation?) {
                         tvRandom.visibility = View.INVISIBLE
+                        //Number 2 action
                         tvRandom.startAnimation(atf2)
                         atf2.setAnimationListener(object : Animation.AnimationListener {
                             override fun onAnimationStart(p0: Animation?) {
-                                tvLabel.text = "Number 2"
+                                tvLabel.text = getString(R.string.num2)
                                 Log.d(TAG, "tvRandom 2: START")
                                 tvRandom.visibility = View.VISIBLE
-                                mainHandler.post(randomNumberTask)
+                                when(levelKey){
+                                    "Stage 3"->{
+                                        mainHandler.post(randomNumberTask)
+                                    }
+                                    "Stage 8"->{
+                                        mainHandler.post(randomNumberTask2)
+                                    }
+                                }
                             }
                             override fun onAnimationRepeat(p0: Animation?) {}
                             override fun onAnimationEnd(p0: Animation?) {
                                 Log.d(TAG, "tvRandom 2: END")
-                                mainHandler.removeCallbacks(randomNumberTask)
+                                when(levelKey){
+                                    "Stage 3"->{
+                                        mainHandler.removeCallbacks(randomNumberTask)
+                                    }
+                                    "Stage 8"->{
+                                        mainHandler.removeCallbacks(randomNumberTask2)
+                                    }
+                                }
 
                                 tvRandom.startAnimation(gfo1)
                                 gfo1.setAnimationListener(object : Animation.AnimationListener {
@@ -232,19 +302,33 @@ class RandomActivity : AppCompatActivity() {
                                     override fun onAnimationRepeat(p0: Animation?) {}
                                     override fun onAnimationEnd(p0: Animation?) {
                                         tvRandom.visibility = View.INVISIBLE
-
+                                        //Number 3 action
                                         tvRandom.startAnimation(atf2)
                                         atf2.setAnimationListener(object : Animation.AnimationListener {
                                             override fun onAnimationStart(p0: Animation?) {
                                                 Log.d(TAG, "tvRandom 3: START")
-                                                tvLabel.text = "Number 3"
+                                                tvLabel.text = getString(R.string.num3)
                                                 tvRandom.visibility = View.VISIBLE
-                                                mainHandler.post(randomNumberTask)
+                                                when(levelKey){
+                                                    "Stage 3"->{
+                                                        mainHandler.post(randomNumberTask)
+                                                    }
+                                                    "Stage 8"->{
+                                                        mainHandler.post(randomNumberTask)
+                                                    }
+                                                }
                                             }
                                             override fun onAnimationRepeat(p0: Animation?) {}
                                             override fun onAnimationEnd(p0: Animation?) {
                                                 Log.d(TAG, "tvRandom 3: END")
-                                                mainHandler.removeCallbacks(randomNumberTask)
+                                                when(levelKey){
+                                                    "Stage 3"->{
+                                                        mainHandler.removeCallbacks(randomNumberTask)
+                                                    }
+                                                    "Stage 8"->{
+                                                        mainHandler.removeCallbacks(randomNumberTask)
+                                                    }
+                                                }
 
                                                 tvRandom.startAnimation(gfo1)
                                                 gfo1.setAnimationListener(object : Animation.AnimationListener {
@@ -293,7 +377,7 @@ class RandomActivity : AppCompatActivity() {
 //
         val window = PopupWindow(this)
         val show = layoutInflater.inflate(R.layout.layout_popup, null)
-        window.isOutsideTouchable = true
+//        window.isOutsideTouchable = true
         val atf1 = AnimationUtils.loadAnimation(baseContext, R.anim.atf1)
 //
         val starkayar = AnimationUtils.loadAnimation(baseContext, R.anim.starkayar)
@@ -331,7 +415,8 @@ class RandomActivity : AppCompatActivity() {
                         iv_yellowStar.startAnimation(yellowstar1)
                         iv_starKayar.visibility = View.GONE
                         iv_starKayar1.visibility = View.GONE
-
+                        buttAnswer.visibility = View.INVISIBLE
+                        etAnswer.isFocusable = false
                     }
                 })
             }
@@ -340,31 +425,39 @@ class RandomActivity : AppCompatActivity() {
 
     private fun levelAdapt(level:String){
         val fadein = AnimationUtils.loadAnimation(this, R.anim.abc_fade_in)
+        ib_back.visibility = View.VISIBLE
+        ib_next.visibility = View.VISIBLE
+        ib_back.startAnimation(fadein)
+        ib_next.startAnimation(fadein)
         when (level){
             "Stage 3" -> {
-                ib_back.visibility = View.VISIBLE
-                ib_next.visibility = View.VISIBLE
-                ib_back.startAnimation(fadein)
-                ib_next.startAnimation(fadein)
-
                 val operator1 = operator.shuffled()[0]
                 val operator2 = operator.shuffled()[1]
-
                 when (operator1){
                     "+"-> if (operator2 == "+"){
                         answer = num1 + num2 + num3
-                        tvLabel.text ="Number1 + Number2 + Number3"
+                        tvLabel.text ="${getString(R.string.num1)} + ${getString(R.string.num2)} + ${getString(R.string.num3)}"
                     }else{
                         answer = num1 + num2 - num3
-                        tvLabel.text ="Number1 + Number2 - Number3"
+                        tvLabel.text ="${getString(R.string.num1)} + ${getString(R.string.num2)} - ${getString(R.string.num3)}"
                     }
                     "-"-> if (operator2 == "+"){
                         answer = num1 - num2 + num3
-                        tvLabel.text ="Number1 - Number2 + Number3"
+                        tvLabel.text ="${getString(R.string.num1)} - ${getString(R.string.num2)} + ${getString(R.string.num3)}"
                     }else{
                         answer = num1 - num2 - num3
-                        tvLabel.text ="Number1 - Number2 - Number3"
+                        tvLabel.text ="${getString(R.string.num1)} - ${getString(R.string.num2)} - ${getString(R.string.num3)}"
                     }
+                }
+            }
+            "Stage 8" -> {
+                val operator2 = operator.shuffled()[0]
+                if (operator2 == "+"){
+                    answer = num1 / num2 + num3
+                    tvLabel.text = "${getString(R.string.num1)} / ${getString(R.string.num2)} + ${getString(R.string.num3)}"
+                }else{
+                    answer = num1 / num2 - num3
+                    tvLabel.text = "${getString(R.string.num1)} / ${getString(R.string.num2)} - ${getString(R.string.num3)}"
                 }
             }
         }
@@ -406,7 +499,6 @@ class RandomActivity : AppCompatActivity() {
                         }
                         window.dismiss()
                         startActivity(intent)
-
                     }
                     buttNo.setOnClickListener {
                         window.dismiss()
@@ -442,6 +534,13 @@ class RandomActivity : AppCompatActivity() {
                 intent.putExtra("tvName", nick)
                 startActivity(intent)
             }
+            "Stage 8" -> {
+                levelKey = "Stage 7"
+                val intent = Intent(this@RandomActivity, OrderedActivity::class.java)
+                intent.putExtra("levelKey", levelKey)
+                intent.putExtra("tvName", nick)
+                startActivity(intent)
+            }
             else -> {}
         }
     }
@@ -454,7 +553,6 @@ class RandomActivity : AppCompatActivity() {
         }
         Log.d(TAG, "mainMenu pressed..")
         val intent = Intent(this@RandomActivity, MainActivity::class.java)
-//        intent.putExtra("email", email)
         startActivity(intent)
     }
 
@@ -509,7 +607,6 @@ class RandomActivity : AppCompatActivity() {
             item.itemId == R.id.action_profile -> showProfile(null)
             item.itemId == R.id.action_home -> mainMenu(null)
             else -> {
-
             }
         }
 

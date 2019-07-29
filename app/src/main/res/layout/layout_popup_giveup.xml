@@ -7,7 +7,7 @@
                                                    android:background="@drawable/custom_comment">
 
     <TextView
-            android:text="Reading comments will sacrifice the points you will gain from this question, Are you sure?"
+            android:text="@string/give_up_read_comments"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:id="@+id/tv_uSure" android:gravity="center" app:layout_constraintEnd_toEndOf="parent"
@@ -15,7 +15,7 @@
             android:layout_marginTop="8dp" android:layout_marginEnd="8dp" android:layout_marginStart="8dp"
             android:layout_marginBottom="8dp" app:layout_constraintBottom_toTopOf="@+id/buttYes"/>
     <Button
-            android:text="Yes; Give Up!"
+            android:text="@string/yes_give_up"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" android:id="@+id/buttYes"
             android:layout_marginTop="8dp"
@@ -25,7 +25,7 @@
             android:textColor="@color/colorSpaceWhite" app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintHorizontal_bias="0.6" android:layout_marginBottom="8dp"/>
     <Button
-            android:text="No"
+            android:text="@string/no"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" android:id="@+id/buttNo"
             app:layout_constraintEnd_toEndOf="parent"

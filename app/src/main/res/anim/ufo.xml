@@ -7,20 +7,18 @@
                android:repeatMode="restart"
                android:repeatCount="infinite"
                android:duration="40000"/>
-
-    <scale android:fromXScale="0dp"
-           android:fromYScale="0dp"
-           android:toXScale="48dp"
-           android:toYScale="48dp"
-           android:repeatCount="infinite"
-           android:repeatMode="reverse"
-           android:duration="20000"/>
     <translate
             android:fromXDelta="-500"
             android:toXDelta="0"
             android:repeatCount="infinite"
             android:repeatMode="reverse"
             android:duration="20000"/>
-
+    <scale android:fromXScale="0dp"
+           android:fromYScale="0dp"
+           android:toXScale="112dp"
+           android:toYScale="71dp"
+           android:repeatCount="infinite"
+           android:repeatMode="reverse"
+           android:duration="20000"/>
 
 </set>

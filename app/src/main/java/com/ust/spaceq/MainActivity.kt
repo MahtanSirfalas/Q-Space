@@ -1,20 +1,22 @@
 package com.ust.spaceq
 
+import android.animation.*
 import android.annotation.TargetApi
 import android.content.Intent
 import android.graphics.drawable.AnimationDrawable
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
+import android.view.Gravity
 import androidx.appcompat.app.AppCompatActivity
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
-import android.view.animation.Animation
-import android.view.animation.AnimationUtils
+import android.view.animation.*
 import android.widget.PopupWindow
-import android.widget.Toast
+import android.widget.Toast.*
 import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.core.view.ViewCompat
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
@@ -84,7 +86,9 @@ class MainActivity : AppCompatActivity() {
             }
             override fun onCancelled(p0: DatabaseError) {
                 Log.d(TAG, "Something's Wrong: User information get FAILED")
-                Toast.makeText(baseContext, getString(R.string.listener_cancelled),Toast.LENGTH_LONG).show()
+                val toast = makeText(baseContext, getString(R.string.listener_cancelled), LENGTH_LONG)
+                toast.setGravity(Gravity.CENTER, 0, 0)
+                toast.show()
             }
         })
         //sayaç burada yatmaktadır yiğen
@@ -111,6 +115,68 @@ class MainActivity : AppCompatActivity() {
             Log.d(TAG, "verifiedCheck = ${user.isEmailVerified}")
             groupWarn.visibility = View.VISIBLE
         }
+    }
+
+    fun onStartAnimation(){
+        val ufo = findViewById<ConstraintLayout>(R.id.ufo_layout)
+//        val valueAnimator = ValueAnimator.ofFloat(0f, -1000f)
+//
+////2
+//        valueAnimator.addUpdateListener {
+//            // 3
+//            val value = it.animatedValue as Float
+//            // 4
+//            ufo.translationY = value
+//        }
+//
+////5
+//        valueAnimator.interpolator = LinearInterpolator()
+//        valueAnimator.repeatMode = ValueAnimator.REVERSE
+//        valueAnimator.repeatCount = ValueAnimator.INFINITE
+//        valueAnimator.duration = 10000
+////6
+//        valueAnimator.start()
+        //ObjectAnimator
+        val scaleX = PropertyValuesHolder.ofFloat(View.SCALE_X,0f,1f)
+        val scaleY = PropertyValuesHolder.ofFloat(View.SCALE_Y, 0f,1f)
+        val scaleufo = ObjectAnimator.ofPropertyValuesHolder(ufo, scaleX, scaleY).apply {
+            interpolator = AccelerateInterpolator()
+            duration = 20000
+            repeatCount = ValueAnimator.INFINITE
+            repeatMode = ValueAnimator.REVERSE
+        }
+        val translationX = ObjectAnimator.ofFloat(ufo,View.TRANSLATION_X, -300f).apply {
+            interpolator = AccelerateInterpolator()
+            duration = 20000
+            repeatCount = ValueAnimator.INFINITE
+            repeatMode = ValueAnimator.REVERSE
+        }
+        val translationY = ObjectAnimator.ofFloat(ufo,View.TRANSLATION_Y, -1000f).apply {
+            interpolator = AccelerateDecelerateInterpolator()
+            duration = 40000
+            repeatCount = ValueAnimator.INFINITE
+            repeatMode = ValueAnimator.REVERSE
+        }
+        AnimatorSet().apply {
+            play(scaleufo).with(translationX).with(translationY)
+            start()
+        }
+//        val objectAnimator= ObjectAnimator.ofFloat(ufo, View.TRANSLATION_X, 100f)
+//        objectAnimator.duration = duration
+//        objectAnimator.start()
+        //ViewPropertyAnimator
+//        ViewCompat.animate(ufo)
+//            .translationX(-300f)
+//            .translationY(-1000f)
+//            .setDuration(1000)
+//            .setInterpolator(AccelerateDecelerateInterpolator()).startDelay = 50
+
+    }
+
+    fun ufoClickAction(view:View?){
+        Log.d(TAG, "UFO CLICKED!!!")
+        tv_ufo.visibility = View.VISIBLE
+            tv_ufo.postDelayed(Runnable { tv_ufo.visibility = View.INVISIBLE }, 3000)
     }
 
     fun levelTagClarification(){
@@ -156,7 +222,10 @@ class MainActivity : AppCompatActivity() {
                 }else{Log.d(TAG, "Not first run!")}
                 tvName.visibility = View.VISIBLE
                 tvName.startAnimation(rtl)
-                ufoAnimation()
+
+//                ufo_layout.visibility = View.VISIBLE
+                onStartAnimation()
+//                ufoAnimation()
             }
         })
     }
@@ -183,9 +252,11 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun ufoAnimation(){
-        val ufo = AnimationUtils.loadAnimation(this, R.anim.ufo)
-        ivUfo.visibility = View.VISIBLE
-        ivUfo.startAnimation(ufo)
+        ufo_layout.visibility = View.VISIBLE
+
+        /*val ufo = AnimationUtils.loadAnimation(this, R.anim.ufo)
+        ufo_layout.visibility = View.VISIBLE
+        ufo_layout.startAnimation(ufo)*/
     }
 
     fun showLvl(view: View?) {

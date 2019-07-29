@@ -7,6 +7,7 @@ import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.util.Log
+import android.view.Gravity
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
@@ -15,7 +16,7 @@ import android.view.animation.AnimationUtils
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.PopupWindow
-import android.widget.Toast
+import android.widget.Toast.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
 import com.google.firebase.analytics.FirebaseAnalytics
@@ -59,7 +60,8 @@ class OrderedActivity : AppCompatActivity() {
         animationDrawable.setExitFadeDuration(4000)
         animationDrawable.start()
 
-        qAnswer = mapOf("Stage 1" to 95, "Stage 2" to 12, "Stage 4" to 116, "Stage 5" to 119, "Stage 6" to 8)
+        qAnswer = mapOf("Stage 1" to 95, "Stage 2" to 12, "Stage 4" to 116, "Stage 5" to 119, "Stage 6" to 8,
+            "Stage 7" to 99)
 
         firebaseAnalytics = FirebaseAnalytics.getInstance(this)
         auth = FirebaseAuth.getInstance()
@@ -81,7 +83,9 @@ class OrderedActivity : AppCompatActivity() {
                 override fun onCancelled(p0: DatabaseError) {
                     Log.d(TAG, "stageRef Data couldn't read; No Internet Connection/No Response " +
                             "from database/Wrong datapath")
-                    Toast.makeText(baseContext, "WARNING: Be Sure that you have an active internet connection!", Toast.LENGTH_LONG).show()
+                    val toast = makeText(baseContext, "WARNING: Be Sure that you have an active internet connection!", LENGTH_LONG)
+                    toast.setGravity(Gravity.TOP or Gravity.START, 0, 0)
+                    toast.show()
                 }
                 override fun onDataChange(p0: DataSnapshot) {
                     if (p0.hasChildren()){
@@ -103,8 +107,9 @@ class OrderedActivity : AppCompatActivity() {
                             }
                             mainHandler.post(updatePointTask)
                         }else{
-                            Toast.makeText(baseContext,"You passed that stage before.",
-                                Toast.LENGTH_SHORT).show()
+                            val toast = makeText(baseContext, "You passed that stage before.", LENGTH_SHORT)
+                            toast.setGravity(Gravity.CENTER, 0, 0)
+                            toast.show()
                         }
                     }else{
                         stageRef.child("point").setValue(1004)
@@ -158,7 +163,7 @@ class OrderedActivity : AppCompatActivity() {
 //
         val window = PopupWindow(this)
         val show = layoutInflater.inflate(R.layout.layout_popup, null)
-        window.isOutsideTouchable = true
+//        window.isOutsideTouchable = true
         val atf1 = AnimationUtils.loadAnimation(baseContext, R.anim.atf1)
 //
         val starkayar = AnimationUtils.loadAnimation(baseContext, R.anim.starkayar)
@@ -196,7 +201,8 @@ class OrderedActivity : AppCompatActivity() {
                         iv_yellowStar.startAnimation(yellowstar1)
                         iv_starKayar.visibility = View.GONE
                         iv_starKayar1.visibility = View.GONE
-
+                        buttAnswer1.visibility = View.INVISIBLE
+                        tv_answer1.isFocusable = false
                     }
                 })
             }
@@ -218,7 +224,9 @@ class OrderedActivity : AppCompatActivity() {
                 Log.d(TAG, "uAnswer is assigned as $uAnswer")
             } catch (ex: Exception) {
                 Log.d(TAG, "Something's Wrong; uAnswer couldn't assign!")
-                Toast.makeText(baseContext, "Please Enter a Valid Value", Toast.LENGTH_SHORT).show()
+                val toast = makeText(baseContext, "Please Enter a Valid Value", LENGTH_SHORT)
+                toast.setGravity(Gravity.CENTER, 0, 0)
+                toast.show()
             }
 
             stageRef.addListenerForSingleValueEvent(object:ValueEventListener{
@@ -272,12 +280,16 @@ class OrderedActivity : AppCompatActivity() {
                             starAnimation()
 
                             Log.d(TAG, "$levelKey: Answer ($uAnswer) is equal to $answer; Accepted!")
-                            Toast.makeText(baseContext, "Bravo! answer is accepted!", Toast.LENGTH_SHORT).show()
+                            val toast = makeText(baseContext, "Bravo! answer is accepted!", LENGTH_SHORT)
+                            toast.setGravity(Gravity.TOP, 0, 100)
+                            toast.show()
                         } else {
                             point -= 10
                             stageRef.child("point").setValue(point)
                             Log.d(TAG, "Something's Wrong; $uAnswer != $answer!")
-                            Toast.makeText(baseContext, "Wrong answer, try again!", Toast.LENGTH_SHORT).show()
+                            val toast = makeText(baseContext, "Wrong answer, try again!", LENGTH_SHORT)
+                            toast.setGravity(Gravity.CENTER, 0, 100)
+                            toast.show()
                         }
                     }else{
                         if(uAnswer == answer){
@@ -285,17 +297,23 @@ class OrderedActivity : AppCompatActivity() {
 
                             Log.d(TAG, "$levelKey: Answer ($uAnswer) is equal to $answer; " +
                                     "But no points added to the database")
-                            Toast.makeText(baseContext, "Bravo! Your answer is accepted!", Toast.LENGTH_SHORT).show()
+                            val toast = makeText(baseContext, "Bravo! answer is accepted!", LENGTH_SHORT)
+                            toast.setGravity(Gravity.TOP, 0, 100)
+                            toast.show()
                         }else{
                             Log.d(TAG, "Something's Wrong; $uAnswer != $answer!")
-                            Toast.makeText(baseContext, "Come on mate you answered the question before!", Toast.LENGTH_SHORT).show()
+                            val toast = makeText(baseContext, "Come on mate you answered the question before!", LENGTH_SHORT)
+                            toast.setGravity(Gravity.CENTER, 0, 100)
+                            toast.show()
                         }
                     }
                 }
             })
         }else {
             Log.d(TAG, "tv_answer1 is empty!")
-            Toast.makeText(applicationContext, "Enter Your Answer!", Toast.LENGTH_SHORT).show()
+            val toast = makeText(baseContext, "Enter Your Answer!", LENGTH_SHORT)
+            toast.setGravity(Gravity.CENTER, 0, 100)
+            toast.show()
         }
     }
 
@@ -377,7 +395,21 @@ class OrderedActivity : AppCompatActivity() {
                 ib_back.startAnimation(fadein)
                 ib_next.startAnimation(fadein)
                 Log.d(TAG, "$level adaptation is done successfully!")
-
+            }
+            "Stage 7" -> {
+                groupOrder.visibility = View.VISIBLE
+                animationOrder()
+                say1.text = "6=24"
+                say2.text = "8=48"
+                say3.text = "10=80"
+                say4.text = "11= ?"
+                textQ.text = "What should be instead of  ? sign"
+                say4.setTextColor(resources.getColor(R.color.colorSpaceWhite))
+                ib_back.visibility = View.VISIBLE
+                ib_next.visibility = View.VISIBLE
+                ib_back.startAnimation(fadein)
+                ib_next.startAnimation(fadein)
+                Log.d(TAG, "$level adaptation is done successfully!")
             }
             else -> {
                 Log.d(TAG, "Something's Wrong; levelAdapt is failed!")
@@ -421,6 +453,20 @@ class OrderedActivity : AppCompatActivity() {
                 intent.putExtra("tvName", nick)
                 startActivity(intent)
             }
+            "Stage 6" -> {
+                levelKey = "Stage 7"
+                val intent = Intent(this@OrderedActivity, OrderedActivity::class.java)
+                intent.putExtra("levelKey", levelKey)
+                intent.putExtra("tvName", nick)
+                startActivity(intent)
+            }
+            "Stage 7" -> {
+                levelKey = "Stage 8"
+                val intent = Intent(this@OrderedActivity, RandomActivity::class.java)
+                intent.putExtra("levelKey", levelKey)
+                intent.putExtra("tvName", nick)
+                startActivity(intent)
+            }
             else -> {}
         }
     }
@@ -456,6 +502,13 @@ class OrderedActivity : AppCompatActivity() {
             }
             "Stage 6" -> {
                 levelKey = "Stage 5"
+                val intent = Intent(this@OrderedActivity, OrderedActivity::class.java)
+                intent.putExtra("levelKey", levelKey)
+                intent.putExtra("tvName", nick)
+                startActivity(intent)
+            }
+            "Stage 7" -> {
+                levelKey = "Stage 6"
                 val intent = Intent(this@OrderedActivity, OrderedActivity::class.java)
                 intent.putExtra("levelKey", levelKey)
                 intent.putExtra("tvName", nick)

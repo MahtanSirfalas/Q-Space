@@ -67,7 +67,7 @@
                 android:textColorLink="@color/colorSpaceWhite" android:textCursorDrawable="@null"
                 android:fontFamily="@font/gruppo" android:textSize="14sp" android:textStyle="bold"/>
         <Button
-                android:text="@string/log_in"
+                android:text="@string/register"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:id="@+id/buttLogin"

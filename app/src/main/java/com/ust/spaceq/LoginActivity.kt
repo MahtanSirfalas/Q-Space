@@ -8,10 +8,11 @@ import android.text.Editable
 import android.text.TextUtils
 import android.text.TextWatcher
 import android.util.Log
+import android.view.Gravity
 import android.view.View
 import android.widget.EditText
 import android.widget.ScrollView
-import android.widget.Toast
+import android.widget.Toast.*
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
@@ -177,7 +178,9 @@ class LoginActivity : AppCompatActivity() {
                     Log.d(TAG, "usernameError; username is already taken $checkNick")
                     tvNickError.text = getString(R.string.nick_error)
                     tvNickError.visibility = View.VISIBLE
-                    Toast.makeText(baseContext, getString(R.string.nick_error_toast), Toast.LENGTH_LONG).show()
+                    val toast = makeText(baseContext, getString(R.string.nick_error_toast), LENGTH_LONG)
+                    toast.setGravity(Gravity.CENTER, 0, 0)
+                    toast.show()
                 }
             }
         })
@@ -214,7 +217,9 @@ class LoginActivity : AppCompatActivity() {
             }else{
                 //Fail -> display message below
                 Log.w(TAG, "createUserWithEmail:failure", task.exception)
-                Toast.makeText(baseContext, getString(R.string.auth_fail), Toast.LENGTH_SHORT).show()
+                val toast = makeText(baseContext, getString(R.string.auth_fail), LENGTH_SHORT)
+                toast.setGravity(Gravity.CENTER, 0, 0)
+                toast.show()
                 updateUI(null)
             }
         }
@@ -234,7 +239,9 @@ class LoginActivity : AppCompatActivity() {
                 updateUI(user)
             }else{
                 Log.w(TAG, "signInWithEmail:failure!",task.exception)
-                Toast.makeText(baseContext,R.string.auth_fail, Toast.LENGTH_SHORT).show()
+                val toast = makeText(baseContext, getString(R.string.auth_fail), LENGTH_SHORT)
+                toast.setGravity(Gravity.CENTER, 0, 0)
+                toast.show()
                 updateUI(null)
             }
         }
@@ -270,7 +277,9 @@ class LoginActivity : AppCompatActivity() {
             intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK.or(Intent.FLAG_ACTIVITY_NEW_TASK)
             startActivity(intent)
         }else{
-            Toast.makeText(this, "Log in or Create an Account.", Toast.LENGTH_SHORT).show()
+            val toast = makeText(baseContext, "Log in or Create an Account.", LENGTH_SHORT)
+            toast.setGravity(Gravity.CENTER, 0, 0)
+            toast.show()
         }
     }
 
@@ -337,7 +346,7 @@ class LoginActivity : AppCompatActivity() {
                 } else {
                     // If sign in fails, display a message to the user.
                     Log.w(TAG, "signInWithCredential:failure", task.exception)
-                    Snackbar.make(layoutbg, R.string.auth_fail, Snackbar.LENGTH_SHORT).show()
+                    Snackbar.make(layoutbg, getString(R.string.auth_fail), Snackbar.LENGTH_SHORT).show()
                     updateUI(null)
                 }
                 // ...
@@ -357,14 +366,14 @@ class LoginActivity : AppCompatActivity() {
 //                verifyEmailButton.isEnabled = true
 
                 if (task.isSuccessful) {
-                    Toast.makeText(baseContext,
-                        "Verification email sent to ${user.email} ",
-                        Toast.LENGTH_SHORT).show()
+                    val toast = makeText(baseContext, getString(R.string.verify_email_sent), LENGTH_SHORT)
+                    toast.setGravity(Gravity.CENTER, 0, 0)
+                    toast.show()
                 } else {
                     Log.e(TAG, "sendEmailVerification", task.exception)
-                    Toast.makeText(baseContext,
-                        R.string.failed_verify_email,
-                        Toast.LENGTH_SHORT).show()
+                    val toast = makeText(baseContext, getString(R.string.failed_verify_email), LENGTH_SHORT)
+                    toast.setGravity(Gravity.CENTER, 0, 0)
+                    toast.show()
                 }
                 // [END_EXCLUDE]
             }

@@ -6,11 +6,12 @@ import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.view.Gravity
 import android.view.View
 import android.view.animation.AnimationUtils
 import android.widget.Button
 import android.widget.PopupWindow
-import android.widget.Toast
+import android.widget.Toast.*
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
@@ -62,8 +63,9 @@ class CommentActivity : AppCompatActivity() {
         recycleComment.addOnItemTouchListener(RecyclerItemClickListenr(this, recycleComment, object : RecyclerItemClickListenr.OnItemClickListener {
 
             override fun onItemClick(view: View, position: Int) {
-
-                Toast.makeText(baseContext,getString(R.string.touch_longer),Toast.LENGTH_SHORT).show()
+                val toast = makeText(baseContext, getString(R.string.touch_longer), LENGTH_SHORT)
+                toast.setGravity(Gravity.CENTER, 0, 0)
+                toast.show()
             }
 
             override fun onItemLongClick(view: View?, position: Int) {
@@ -109,7 +111,9 @@ class CommentActivity : AppCompatActivity() {
                                             window.dismiss()
                                         }
                                         Log.d(TAG, "Users' post")
-                                        Toast.makeText(baseContext, getString(R.string.own_comment), Toast.LENGTH_SHORT).show()
+                                        val toast = makeText(baseContext, getString(R.string.own_comment), LENGTH_SHORT)
+                                        toast.setGravity(Gravity.CENTER, 0, 0)
+                                        toast.show()
                                     }else{
                                         //Removing upvote from the specific comment
                                         var count = upvoteCount-1
@@ -120,7 +124,9 @@ class CommentActivity : AppCompatActivity() {
                                         view?.tvUpvotes?.setBackgroundColor(Color.TRANSPARENT)
                                         fetchComments()
                                         Log.d(TAG, "$uid found in upvoters, taken back!")
-                                        Toast.makeText(baseContext, getString(R.string.upvote_back),Toast.LENGTH_SHORT).show()
+                                        val toast = makeText(baseContext, getString(R.string.upvote_back), LENGTH_SHORT)
+                                        toast.setGravity(Gravity.CENTER, 0, 0)
+                                        toast.show()
                                         //Mirroring upvote to the other side
                                         votedRef.addListenerForSingleValueEvent(object:ValueEventListener{
                                             override fun onCancelled(p0: DatabaseError) {}
@@ -168,7 +174,6 @@ class CommentActivity : AppCompatActivity() {
                             }
                         }
                     }
-
                 })
             }
         }))
@@ -195,7 +200,9 @@ class CommentActivity : AppCompatActivity() {
             textCom.text.clear()
             fetchComments()
         }else{
-            Toast.makeText(baseContext,getString(R.string.minimum_letters),Toast.LENGTH_SHORT).show()
+            val toast = makeText(baseContext, getString(R.string.minimum_letters), LENGTH_SHORT)
+            toast.setGravity(Gravity.CENTER, 0, 0)
+            toast.show()
             Log.d(TAG, "textCom = null")
         }
     }
@@ -220,9 +227,14 @@ class CommentActivity : AppCompatActivity() {
 
             override fun onCancelled(p0: DatabaseError) {
                 Log.d(TAG, "WARNING: Comment Fetching FAILED!")
-                Toast.makeText(baseContext, getString(R.string.listener_cancelled), Toast.LENGTH_LONG).show()
+                val toast = makeText(baseContext, getString(R.string.listener_cancelled), LENGTH_LONG)
+                toast.setGravity(Gravity.CENTER, 0, 0)
+                toast.show()
             }
         })
+    }
+    override fun onBackPressed(){
+        this@CommentActivity.finish()
     }
 }
 
