@@ -63,9 +63,11 @@ class ProfileActivity : AppCompatActivity() {
                 val userPoints = p0.child("points").value
                 uName = p0.child("nickName").value as String
                 avatar = p0.child("avatar").value as String
-                textLevel.text = getString(R.string.level) + userLevel.toString()
-                textPoints.text = getString(R.string.total_points) + userPoints.toString()
-                textName.text = getString(R.string.username) + uName
+
+                textName.text = uName
+                textMail.text = email
+                textLevel.text = userLevel.toString()
+                textPoints.text = userPoints.toString()
                 Picasso.get().load(avatar).into(ivAvatar_circle)
 
                 Log.d(TAG, "user informations parsed")
@@ -117,13 +119,16 @@ class ProfileActivity : AppCompatActivity() {
                             tvEarnedUpvote.text = getString(R.string.tv_earned_upvote) + upCount.toString() +
                                     getString(R.string.tv_earned_upvote4)
                         }
+                        else->{
+                            tvEarnedUpvote.text = getString(R.string.tv_earned_upvote5)
+                        }
                     }
                 }else{
                     tvEarnedUpvote.text = getString(R.string.tv_earned_upvote5)
                 }
             }
         })
-        textMail.text = getString(R.string.email) + email
+
 
         buttAvatar.setOnClickListener {
             Log.d(TAG, "avatar selector clicked")
@@ -211,12 +216,6 @@ class ProfileActivity : AppCompatActivity() {
     private fun animations(){
         val fadein = AnimationUtils.loadAnimation(this, R.anim.abc_fade_in)
         profile_card.visibility = View.VISIBLE
-        /*textName.visibility = View.VISIBLE
-        textMail.visibility = View.VISIBLE
-        textLevel.visibility = View.VISIBLE
-        textPoints.visibility = View.VISIBLE
-        buttAvatar.visibility = View.VISIBLE
-        ivAvatar_circle.visibility = View.VISIBLE*/
         profile_card.startAnimation(fadein)
     }
 

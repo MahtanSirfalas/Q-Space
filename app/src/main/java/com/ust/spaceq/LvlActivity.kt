@@ -27,7 +27,6 @@ private lateinit var levelKey: String
 private lateinit var stageList: Map<String,Button>
 private var cevap: Int = 1
 
-
 class LvlActivity : AppCompatActivity() {
     val TAG = "LvLActivity"
 
@@ -38,7 +37,8 @@ class LvlActivity : AppCompatActivity() {
 
         qAnswer = mapOf("Stage 1" to 95, "Stage 2" to 116)
         stageList = mapOf("Stage 1" to buttL1, "Stage 2" to buttL2, "Stage 3" to buttL3, "Stage 4" to buttL4,
-            "Stage 5" to buttL5, "Stage 6" to buttL6, "Stage 7" to buttL7, "Stage 8" to buttL8)
+            "Stage 5" to buttL5, "Stage 6" to buttL6, "Stage 7" to buttL7, "Stage 8" to buttL8,"Stage 9" to buttL9,
+            "Stage 10" to buttL10)
 
 
         firebaseAnalytics = FirebaseAnalytics.getInstance(this)
@@ -239,6 +239,22 @@ class LvlActivity : AppCompatActivity() {
         startActivity(intent)
     }
 
+    fun showStage9(view: View?){
+        levelKey = "Stage 9"
+        val intent = Intent(this@LvlActivity, OrderedActivity::class.java)
+        intent.putExtra("tvName", nick)
+        intent.putExtra("levelKey", levelKey)
+        startActivity(intent)
+    }
+
+    fun showStage10(view: View?){
+        levelKey = "Stage 10"
+        val intent = Intent(this@LvlActivity, OrderedActivity::class.java)
+        intent.putExtra("tvName", nick)
+        intent.putExtra("levelKey", levelKey)
+        startActivity(intent)
+    }
+
     private fun mainMenu(view: View?){
         Log.d(TAG, "mainMenu pressed..")
         val intent = Intent(this@LvlActivity, MainActivity::class.java)
@@ -258,6 +274,7 @@ class LvlActivity : AppCompatActivity() {
         startActivity(Intent(this@LvlActivity, LoginActivity::class.java))
         this@LvlActivity.finish()
     }
+
     override fun onBackPressed() {
         this.finish()
         mainMenu(null)

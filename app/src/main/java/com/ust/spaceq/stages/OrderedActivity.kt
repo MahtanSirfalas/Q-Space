@@ -1,5 +1,8 @@
 package com.ust.spaceq.stages
 
+import android.animation.ObjectAnimator
+import android.animation.PropertyValuesHolder
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.AnimationDrawable
@@ -13,6 +16,7 @@ import android.view.MenuItem
 import android.view.View
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
+import android.view.animation.OvershootInterpolator
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.PopupWindow
@@ -61,7 +65,7 @@ class OrderedActivity : AppCompatActivity() {
         animationDrawable.start()
 
         qAnswer = mapOf("Stage 1" to 95, "Stage 2" to 12, "Stage 4" to 116, "Stage 5" to 119, "Stage 6" to 8,
-            "Stage 7" to 99)
+            "Stage 7" to 99,"Stage 9" to 16, "Stage 10" to 6)
 
         firebaseAnalytics = FirebaseAnalytics.getInstance(this)
         auth = FirebaseAuth.getInstance()
@@ -160,53 +164,25 @@ class OrderedActivity : AppCompatActivity() {
     }*/
 
     private fun starAnimation(){
-//
         val window = PopupWindow(this)
         val show = layoutInflater.inflate(R.layout.layout_popup, null)
 //        window.isOutsideTouchable = true
-        val atf1 = AnimationUtils.loadAnimation(baseContext, R.anim.atf1)
-//
-        val starkayar = AnimationUtils.loadAnimation(baseContext, R.anim.starkayar)
-        val starkayar1 = AnimationUtils.loadAnimation(baseContext, R.anim.starkayar1)
-        val fadein = AnimationUtils.loadAnimation(baseContext, R.anim.abc_fade_in)
-        val gfo = AnimationUtils.loadAnimation(baseContext, R.anim.gfo)
-        val yellowstar = AnimationUtils.loadAnimation(baseContext, R.anim.yellowstar)
-        val yellowstar1 = AnimationUtils.loadAnimation(baseContext, R.anim.yellowstar1)
-        iv_starKayar.visibility = View.VISIBLE
-        iv_starKayar1.visibility = View.VISIBLE
-        iv_starKayar.startAnimation(starkayar)
-        iv_starKayar1.startAnimation(starkayar1)
-        starkayar.setAnimationListener(object : Animation.AnimationListener {
-            override fun onAnimationStart(p0: Animation?) {}
-            override fun onAnimationRepeat(p0: Animation?) {}
-            override fun onAnimationEnd(p0: Animation?) {
-                iv_starKayar.startAnimation(gfo)
-                iv_starKayar1.startAnimation(gfo)
-                iv_yellowStar.visibility = View.VISIBLE
-                iv_yellowStar.startAnimation(fadein)
-//                Pop up window
-                val imageShow = show.findViewById<ImageView>(R.id.iv_spaceMedal)
-                window.contentView = show
-                window.showAtLocation(buttAnswer1,1,0,100)
-                show.startAnimation(atf1)
-                imageShow.setOnClickListener{
-                    window.dismiss()
-                }
-                fadein.setAnimationListener(object : Animation.AnimationListener{
-                    override fun onAnimationStart(p0: Animation?) {}
-                    override fun onAnimationRepeat(p0: Animation?) {}
-                    override fun onAnimationEnd(p0: Animation?) {
-//                        iv_meteor.visibility = View.GONE
-                        iv_yellowStar.startAnimation(yellowstar)
-                        iv_yellowStar.startAnimation(yellowstar1)
-                        iv_starKayar.visibility = View.GONE
-                        iv_starKayar1.visibility = View.GONE
-                        buttAnswer1.visibility = View.INVISIBLE
-                        tv_answer1.isFocusable = false
-                    }
-                })
-            }
-        })
+
+        //                Pop up window
+        val imageShow = show.findViewById<ImageView>(R.id.iv_spaceMedal)
+        window.contentView = show
+        window.showAtLocation(buttAnswer1,1,0,100)
+        val scaleX = PropertyValuesHolder.ofFloat(View.SCALE_X, 0.5f,1f)
+        val scaleY = PropertyValuesHolder.ofFloat(View.SCALE_Y, 0.5f,1f)
+        val alpha = PropertyValuesHolder.ofFloat(View.ALPHA,0f,1f)
+        ObjectAnimator.ofPropertyValuesHolder(show, scaleX,scaleY,alpha).apply {
+            interpolator = OvershootInterpolator()
+            duration = 600
+        }.start()
+//                show.startAnimation(atf1)
+        imageShow.setOnClickListener{
+            window.dismiss()
+        }
     }
 
     private fun commentAnimation(){
@@ -337,6 +313,7 @@ class OrderedActivity : AppCompatActivity() {
         buttAnswer1.startAnimation(animtv)
     }
 
+    @SuppressLint("SetTextI18n")
     private fun levelAdapt(level: String) {
         val fadein = AnimationUtils.loadAnimation(this, R.anim.abc_fade_in)
         when (level) {
@@ -359,7 +336,6 @@ class OrderedActivity : AppCompatActivity() {
                 uc4_say2.setTextColor(Color.WHITE)
                 animationUcgen()
                 Log.d(TAG, "$level adaptation is done successfully!")
-
             }
             "Stage 4" -> {
                 groupOrder.visibility = View.VISIBLE
@@ -409,6 +385,37 @@ class OrderedActivity : AppCompatActivity() {
                 ib_next.visibility = View.VISIBLE
                 ib_back.startAnimation(fadein)
                 ib_next.startAnimation(fadein)
+                Log.d(TAG, "$level adaptation is done successfully!")
+            }
+            "Stage 9"->{
+                ib_back.visibility = View.VISIBLE
+                ib_next.visibility = View.VISIBLE
+                ib_back.startAnimation(fadein)
+                ib_next.startAnimation(fadein)
+                uc3_say2.setTextColor(Color.WHITE)
+                animationUcgen()
+                uc1_say1.text = "7"
+                uc1_say2.text = "17"
+                uc1_say3.text = "27"
+                uc2_say1.text = "11"
+                uc2_say2.text = "17"
+                uc2_say3.text = "23"
+                uc3_say1.text = "10"
+                uc3_say2.text = ".?"
+                uc3_say3.text = "25"
+                uc4_say1.text = "16"
+                uc4_say2.text = "17"
+                uc4_say3.text = "18"
+                Log.d(TAG, "$level adaptation is done successfully!")
+            }
+            "Stage 10"->{
+                ib_back.visibility = View.VISIBLE
+                ib_next.visibility = View.VISIBLE
+                ib_back.startAnimation(fadein)
+                ib_next.startAnimation(fadein)
+                group_table.visibility = View.VISIBLE
+                tv_table_r42.setTextColor(resources.getColor(R.color.yellowDark))
+                group_table.startAnimation(fadein)
                 Log.d(TAG, "$level adaptation is done successfully!")
             }
             else -> {
@@ -467,6 +474,13 @@ class OrderedActivity : AppCompatActivity() {
                 intent.putExtra("tvName", nick)
                 startActivity(intent)
             }
+            "Stage 9" -> {
+                levelKey = "Stage 10"
+                val intent = Intent(this@OrderedActivity, OrderedActivity::class.java)
+                intent.putExtra("levelKey", levelKey)
+                intent.putExtra("tvName", nick)
+                startActivity(intent)
+            }
             else -> {}
         }
     }
@@ -509,6 +523,20 @@ class OrderedActivity : AppCompatActivity() {
             }
             "Stage 7" -> {
                 levelKey = "Stage 6"
+                val intent = Intent(this@OrderedActivity, OrderedActivity::class.java)
+                intent.putExtra("levelKey", levelKey)
+                intent.putExtra("tvName", nick)
+                startActivity(intent)
+            }
+            "Stage 9" -> {
+                levelKey = "Stage 8"
+                val intent = Intent(this@OrderedActivity, RandomActivity::class.java)
+                intent.putExtra("levelKey", levelKey)
+                intent.putExtra("tvName", nick)
+                startActivity(intent)
+            }
+            "Stage 10" -> {
+                levelKey = "Stage 9"
                 val intent = Intent(this@OrderedActivity, OrderedActivity::class.java)
                 intent.putExtra("levelKey", levelKey)
                 intent.putExtra("tvName", nick)

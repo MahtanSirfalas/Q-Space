@@ -551,6 +551,127 @@
                         android:layout_marginStart="8dp"
                         app:layout_constraintBottom_toBottomOf="@+id/gQ_iv1"
                         app:layout_constraintTop_toTopOf="@+id/gQ_iv1" android:visibility="invisible"/>
+                <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" android:id="@+id/group_table"
+                        app:layout_constraintEnd_toEndOf="parent" android:layout_marginEnd="8dp"
+                        app:layout_constraintStart_toStartOf="parent" android:layout_marginStart="8dp"
+                        android:layout_marginTop="8dp" app:layout_constraintTop_toTopOf="parent"
+                        android:layout_marginBottom="8dp" app:layout_constraintBottom_toTopOf="@+id/tv_answer1"
+                        android:visibility="gone">
+
+                    <TextView
+                            android:text="65"
+                            android:minWidth="35dp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" android:id="@+id/tv_table_r1"
+                            android:textColor="@color/colorPrimaryDark" android:background="@drawable/custom_comment"
+                            android:textSize="24sp" android:paddingStart="4dp" android:paddingEnd="4dp"
+                            app:layout_constraintStart_toStartOf="parent" app:layout_constraintTop_toTopOf="parent"
+                            android:layout_marginTop="8dp" android:layout_marginStart="8dp" android:gravity="center"/>
+                    <TextView
+                            android:text="27"
+                            android:minWidth="35dp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" android:id="@+id/tv_table_r21"
+                            android:textColor="@color/colorPrimaryDark" android:background="@drawable/custom_comment"
+                            android:textSize="24sp" android:paddingStart="4dp" android:paddingEnd="4dp"
+                            app:layout_constraintTop_toTopOf="@+id/tv_table_r1"
+                            app:layout_constraintBottom_toBottomOf="@+id/tv_table_r1"
+                            app:layout_constraintStart_toEndOf="@+id/tv_table_r1" android:layout_marginStart="8dp"
+                            android:gravity="center"/>
+                    <TextView
+                            android:text="38"
+                            android:minWidth="35dp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" android:id="@+id/tv_table_r22"
+                            android:textColor="@color/colorPrimaryDark" android:background="@drawable/custom_comment"
+                            android:textSize="24sp" android:paddingStart="4dp" android:paddingEnd="4dp"
+                            android:layout_marginTop="8dp"
+                            app:layout_constraintTop_toBottomOf="@+id/tv_table_r21"
+                            app:layout_constraintStart_toStartOf="@+id/tv_table_r21"
+                            app:layout_constraintEnd_toEndOf="@+id/tv_table_r21" android:gravity="center"/>
+                    <TextView
+                            android:text="16"
+                            android:minWidth="35dp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" android:id="@+id/tv_table_r31"
+                            android:textColor="@color/colorPrimaryDark" android:background="@drawable/custom_comment"
+                            android:textSize="24sp" android:paddingStart="4dp" android:paddingEnd="4dp"
+                            app:layout_constraintStart_toEndOf="@+id/tv_table_r21"
+                            android:layout_marginStart="8dp"
+                            app:layout_constraintTop_toTopOf="@+id/tv_table_r21"
+                            app:layout_constraintBottom_toBottomOf="@+id/tv_table_r21" android:gravity="center"/>
+                    <TextView
+                            android:text="11"
+                            android:minWidth="35dp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textColor="@color/colorPrimaryDark" android:background="@drawable/custom_comment"
+                            android:textSize="24sp" android:paddingStart="4dp" android:paddingEnd="4dp"
+                            android:layout_marginTop="8dp"
+                            app:layout_constraintTop_toBottomOf="@+id/tv_table_r31"
+                            app:layout_constraintStart_toStartOf="@+id/tv_table_r31"
+                            app:layout_constraintEnd_toEndOf="@+id/tv_table_r31" android:id="@+id/tv_table_r32"
+                            android:gravity="center"/>
+                    <TextView
+                            android:text="27"
+                            android:minWidth="35dp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" android:id="@+id/tv_table_r33"
+                            android:textColor="@color/colorPrimaryDark" android:background="@drawable/custom_comment"
+                            android:textSize="24sp" android:paddingStart="4dp" android:paddingEnd="4dp"
+                            android:layout_marginTop="8dp"
+                            app:layout_constraintTop_toBottomOf="@id/tv_table_r32"
+                            app:layout_constraintEnd_toEndOf="@id/tv_table_r32"
+                            app:layout_constraintStart_toStartOf="@id/tv_table_r32" android:gravity="center"/>
+                    <TextView
+                            android:text="10"
+                            android:minWidth="35dp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" android:id="@+id/tv_table_r41"
+                            android:textColor="@color/colorPrimaryDark" android:background="@drawable/custom_comment"
+                            android:textSize="24sp" android:paddingStart="4dp" android:paddingEnd="4dp"
+                            app:layout_constraintStart_toEndOf="@+id/tv_table_r31"
+                            android:layout_marginStart="8dp"
+                            app:layout_constraintTop_toTopOf="@+id/tv_table_r31"
+                            app:layout_constraintBottom_toBottomOf="@+id/tv_table_r31"
+                            app:layout_constraintEnd_toEndOf="parent" android:layout_marginEnd="8dp"
+                            android:gravity="center"/>
+                    <TextView
+                            android:text=".?"
+                            android:minWidth="35dp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" android:id="@+id/tv_table_r42"
+                            android:textColor="@color/colorPrimaryDark" android:background="@drawable/custom_comment"
+                            android:textSize="24sp" android:paddingStart="4dp" android:paddingEnd="4dp"
+                            app:layout_constraintTop_toBottomOf="@+id/tv_table_r41"
+                            app:layout_constraintEnd_toEndOf="@+id/tv_table_r41"
+                            app:layout_constraintStart_toStartOf="@+id/tv_table_r41" android:layout_marginTop="8dp"
+                            android:gravity="center"/>
+                    <TextView
+                            android:text="5"
+                            android:minWidth="35dp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" android:id="@+id/tv_table_r43"
+                            android:textColor="@color/colorPrimaryDark" android:background="@drawable/custom_comment"
+                            android:textSize="24sp" android:paddingStart="4dp" android:paddingEnd="4dp"
+                            android:layout_marginTop="8dp"
+                            app:layout_constraintTop_toBottomOf="@+id/tv_table_r42"
+                            app:layout_constraintEnd_toEndOf="@+id/tv_table_r42"
+                            app:layout_constraintStart_toStartOf="@+id/tv_table_r42" android:gravity="center"/>
+                    <TextView
+                            android:text="22"
+                            android:minWidth="35dp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" android:id="@+id/tv_table_r44"
+                            android:textColor="@color/colorPrimaryDark" android:background="@drawable/custom_comment"
+                            android:textSize="24sp" android:paddingStart="4dp" android:paddingEnd="4dp"
+                            android:layout_marginTop="8dp"
+                            app:layout_constraintTop_toBottomOf="@+id/tv_table_r43"
+                            app:layout_constraintStart_toStartOf="@+id/tv_table_r43"
+                            app:layout_constraintEnd_toEndOf="@+id/tv_table_r43" android:gravity="center"/>
+                </androidx.constraintlayout.widget.ConstraintLayout>
             </androidx.constraintlayout.widget.ConstraintLayout>
         </ScrollView>
     </LinearLayout>

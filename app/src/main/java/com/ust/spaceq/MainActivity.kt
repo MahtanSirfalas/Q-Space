@@ -193,7 +193,7 @@ class MainActivity : AppCompatActivity() {
             override fun onAnimationStart(p0: Animation?) {}
             override fun onAnimationRepeat(p0: Animation?) {}
             override fun onAnimationEnd(p0: Animation?) {
-                if (firstRunControl == true){
+                if (firstRunControl){
                     window.contentView = show
                     window.showAtLocation(layoutbg,1,0,0)
                     show.startAnimation(fadein)
@@ -202,7 +202,6 @@ class MainActivity : AppCompatActivity() {
                 tvName.visibility = View.VISIBLE
                 tvName.startAnimation(rtl)
 
-//                ufo_layout.visibility = View.VISIBLE
                 onStartAnimation()
 //                ufoAnimation()
             }

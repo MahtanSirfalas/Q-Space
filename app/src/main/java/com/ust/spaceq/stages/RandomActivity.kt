@@ -1,5 +1,7 @@
 package com.ust.spaceq.stages
 
+import android.animation.ObjectAnimator
+import android.animation.PropertyValuesHolder
 import android.content.Intent
 import android.graphics.drawable.AnimationDrawable
 import android.os.Bundle
@@ -12,6 +14,7 @@ import android.view.MenuItem
 import android.view.View
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
+import android.view.animation.OvershootInterpolator
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.PopupWindow
@@ -189,7 +192,7 @@ class RandomActivity : AppCompatActivity() {
 
                                 Log.d(TAG, "$levelKey: Answer ($uAnswer) is equal to $answer; Accepted!")
                                 val toast = makeText(baseContext, getString(R.string.bravo), LENGTH_SHORT)
-                                toast.setGravity(Gravity.CENTER, 0, 0)
+                                toast.setGravity(Gravity.CENTER, 0, -200)
                                 toast.show()
                             }else{
                                 point -= 10
@@ -205,7 +208,7 @@ class RandomActivity : AppCompatActivity() {
                                 Log.d(TAG, "$levelKey: Answer ($uAnswer) is equal to $answer; " +
                                         "But no points added to the database")
                                 val toast = makeText(baseContext, getString(R.string.bravo), LENGTH_SHORT)
-                                toast.setGravity(Gravity.CENTER, 0, 0)
+                                toast.setGravity(Gravity.CENTER, 0, -200)
                                 toast.show()
                             }else{
                                 Log.d(TAG, "Something's Wrong; $uAnswer != $answer!")
@@ -378,49 +381,21 @@ class RandomActivity : AppCompatActivity() {
         val window = PopupWindow(this)
         val show = layoutInflater.inflate(R.layout.layout_popup, null)
 //        window.isOutsideTouchable = true
-        val atf1 = AnimationUtils.loadAnimation(baseContext, R.anim.atf1)
-//
-        val starkayar = AnimationUtils.loadAnimation(baseContext, R.anim.starkayar)
-        val starkayar1 = AnimationUtils.loadAnimation(baseContext, R.anim.starkayar1)
-        val fadein = AnimationUtils.loadAnimation(baseContext, R.anim.abc_fade_in)
-        val gfo = AnimationUtils.loadAnimation(baseContext, R.anim.gfo)
-        val yellowstar = AnimationUtils.loadAnimation(baseContext, R.anim.yellowstar)
-        val yellowstar1 = AnimationUtils.loadAnimation(baseContext, R.anim.yellowstar1)
-        iv_starKayar.visibility = View.VISIBLE
-        iv_starKayar1.visibility = View.VISIBLE
-        iv_starKayar.startAnimation(starkayar)
-        iv_starKayar1.startAnimation(starkayar1)
-        starkayar.setAnimationListener(object : Animation.AnimationListener {
-            override fun onAnimationStart(p0: Animation?) {}
-            override fun onAnimationRepeat(p0: Animation?) {}
-            override fun onAnimationEnd(p0: Animation?) {
-                iv_starKayar.startAnimation(gfo)
-                iv_starKayar1.startAnimation(gfo)
-                iv_yellowStar.visibility = View.VISIBLE
-                iv_yellowStar.startAnimation(fadein)
-//                Pop up window
-                val imageShow = show.findViewById<ImageView>(R.id.iv_spaceMedal)
-                window.contentView = show
-                window.showAtLocation(buttAnswer,1,0,100)
-                show.startAnimation(atf1)
-                imageShow.setOnClickListener{
-                    window.dismiss()
-                }
-                fadein.setAnimationListener(object : Animation.AnimationListener{
-                    override fun onAnimationStart(p0: Animation?) {}
-                    override fun onAnimationRepeat(p0: Animation?) {}
-                    override fun onAnimationEnd(p0: Animation?) {
-//                        iv_meteor.visibility = View.GONE
-                        iv_yellowStar.startAnimation(yellowstar)
-                        iv_yellowStar.startAnimation(yellowstar1)
-                        iv_starKayar.visibility = View.GONE
-                        iv_starKayar1.visibility = View.GONE
-                        buttAnswer.visibility = View.INVISIBLE
-                        etAnswer.isFocusable = false
-                    }
-                })
-            }
-        })
+
+        //                Pop up window
+        val imageShow = show.findViewById<ImageView>(R.id.iv_spaceMedal)
+        window.contentView = show
+        window.showAtLocation(buttAnswer,1,0,100)
+        val scaleX = PropertyValuesHolder.ofFloat(View.SCALE_X, 0.5f,1f)
+        val scaleY = PropertyValuesHolder.ofFloat(View.SCALE_Y, 0.5f,1f)
+        val alpha = PropertyValuesHolder.ofFloat(View.ALPHA,0f,1f)
+        ObjectAnimator.ofPropertyValuesHolder(show, scaleX,scaleY,alpha).apply {
+            interpolator = OvershootInterpolator()
+            duration = 600
+        }.start()
+        imageShow.setOnClickListener{
+            window.dismiss()
+        }
     }
 
     private fun levelAdapt(level:String){
@@ -513,9 +488,17 @@ class RandomActivity : AppCompatActivity() {
     }
 
     fun showNext(view:View?){
+        ib_next.setColorFilter(resources.getColor(R.color.colorPurple))
         when(levelKey){
             "Stage 3" -> {
                 levelKey = "Stage 4"
+                val intent = Intent(this@RandomActivity, OrderedActivity::class.java)
+                intent.putExtra("levelKey", levelKey)
+                intent.putExtra("tvName", nick)
+                startActivity(intent)
+            }
+            "Stage 8" -> {
+                levelKey = "Stage 9"
                 val intent = Intent(this@RandomActivity, OrderedActivity::class.java)
                 intent.putExtra("levelKey", levelKey)
                 intent.putExtra("tvName", nick)
@@ -526,6 +509,7 @@ class RandomActivity : AppCompatActivity() {
     }
 
     fun showBack(view:View?){
+        ib_back.setColorFilter(resources.getColor(R.color.colorPurple))
         when(levelKey){
             "Stage 3" -> {
                 levelKey = "Stage 2"
