@@ -182,7 +182,8 @@
                         android:layout_height="wrap_content"
                         app:layout_constraintBottom_toBottomOf="@+id/ivInfo"
                         android:id="@+id/ufo_layout"
-                        app:layout_constraintStart_toStartOf="@+id/ivInfo" android:layout_marginStart="32dp">
+                        app:layout_constraintStart_toStartOf="@+id/ivInfo" android:layout_marginStart="32dp"
+                        android:visibility="invisible">
 
                     <ImageView
                             android:layout_width="wrap_content"

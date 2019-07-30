@@ -119,57 +119,36 @@ class MainActivity : AppCompatActivity() {
 
     fun onStartAnimation(){
         val ufo = findViewById<ConstraintLayout>(R.id.ufo_layout)
-//        val valueAnimator = ValueAnimator.ofFloat(0f, -1000f)
-//
-////2
-//        valueAnimator.addUpdateListener {
-//            // 3
-//            val value = it.animatedValue as Float
-//            // 4
-//            ufo.translationY = value
-//        }
-//
-////5
-//        valueAnimator.interpolator = LinearInterpolator()
-//        valueAnimator.repeatMode = ValueAnimator.REVERSE
-//        valueAnimator.repeatCount = ValueAnimator.INFINITE
-//        valueAnimator.duration = 10000
-////6
-//        valueAnimator.start()
+        ufo.visibility = View.VISIBLE
         //ObjectAnimator
         val scaleX = PropertyValuesHolder.ofFloat(View.SCALE_X,0f,1f)
         val scaleY = PropertyValuesHolder.ofFloat(View.SCALE_Y, 0f,1f)
         val scaleufo = ObjectAnimator.ofPropertyValuesHolder(ufo, scaleX, scaleY).apply {
-            interpolator = AccelerateInterpolator()
-            duration = 20000
+            duration = 15000
             repeatCount = ValueAnimator.INFINITE
             repeatMode = ValueAnimator.REVERSE
         }
         val translationX = ObjectAnimator.ofFloat(ufo,View.TRANSLATION_X, -300f).apply {
-            interpolator = AccelerateInterpolator()
-            duration = 20000
+            duration = 10000
+            repeatCount = ValueAnimator.INFINITE
+            repeatMode = ValueAnimator.REVERSE
+        }
+        val translationX1 = ObjectAnimator.ofFloat(ufo, View.TRANSLATION_X, -500f).apply {
+            duration = 10000
             repeatCount = ValueAnimator.INFINITE
             repeatMode = ValueAnimator.REVERSE
         }
         val translationY = ObjectAnimator.ofFloat(ufo,View.TRANSLATION_Y, -1000f).apply {
             interpolator = AccelerateDecelerateInterpolator()
-            duration = 40000
+            duration = 30000
             repeatCount = ValueAnimator.INFINITE
             repeatMode = ValueAnimator.REVERSE
         }
-        AnimatorSet().apply {
+        val animSet = AnimatorSet().apply {
             play(scaleufo).with(translationX).with(translationY)
-            start()
+            play(translationX1).after(translationX)
         }
-//        val objectAnimator= ObjectAnimator.ofFloat(ufo, View.TRANSLATION_X, 100f)
-//        objectAnimator.duration = duration
-//        objectAnimator.start()
-        //ViewPropertyAnimator
-//        ViewCompat.animate(ufo)
-//            .translationX(-300f)
-//            .translationY(-1000f)
-//            .setDuration(1000)
-//            .setInterpolator(AccelerateDecelerateInterpolator()).startDelay = 50
+        animSet.start()
 
     }
 
