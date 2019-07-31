@@ -1,5 +1,6 @@
 package com.ust.spaceq
 
+import android.annotation.SuppressLint
 import android.annotation.TargetApi
 import android.graphics.Color
 import android.os.Build
@@ -11,6 +12,7 @@ import android.view.View
 import android.view.animation.AnimationUtils
 import android.widget.Button
 import android.widget.PopupWindow
+import android.widget.TextView
 import android.widget.Toast.*
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.auth.FirebaseAuth
@@ -61,16 +63,57 @@ class CommentActivity : AppCompatActivity() {
         window.isOutsideTouchable = true
         val fadein = AnimationUtils.loadAnimation(this, R.anim.abc_fade_in)
         recycleComment.addOnItemTouchListener(RecyclerItemClickListenr(this, recycleComment, object : RecyclerItemClickListenr.OnItemClickListener {
-            override fun onItemDoubleTap(view: View?, position: Int) {
-                Log.d(TAG, view?.tvName?.text.toString() + "Comment double tapped")
-            }
-
             override fun onItemClick(view: View, position: Int) {
                 val toast = makeText(baseContext, getString(R.string.touch_longer), LENGTH_SHORT)
-                toast.setGravity(Gravity.CENTER, 0, 0)
+                toast.setGravity(Gravity.TOP, 0, 100)
                 toast.show()
             }
-
+            //Player detail popup
+            override fun onItemDoubleTap(view: View?, position: Int) {
+                Log.d(TAG, view?.tvName?.text.toString() + "Comment double tapped")
+                val player = view?.tvName?.text.toString()
+                val playerRef = database.getReference("/Users")
+                playerRef.addListenerForSingleValueEvent(object:ValueEventListener{
+                    override fun onCancelled(p0: DatabaseError) {}
+                    @SuppressLint("SetTextI18n")
+                    override fun onDataChange(p0: DataSnapshot) {
+                        p0.children.forEach {
+                            val play = it.child("nickName").value as String
+                            if (play == player){
+                                val playerLevel = it.child("level").value as String
+                                val playerPoints = it.child("points").value as Long
+                                val playerUps = if (it.child("upCount").exists()){
+                                    it.child("upCount").value as Long
+                                }else{
+                                    0
+                                }
+                                val playerQuote = if (it.child("userQuote").exists()){
+                                     it.child("userQuote").value as String
+                                }else{
+                                    "Something but fish yet"
+                                }
+                                val ushow = layoutInflater.inflate(R.layout.layout_popup_player, null)
+                                window.contentView = ushow
+                                window.showAtLocation(view,1,0,0)
+                                ushow.startAnimation(fadein)
+                                val playername = ushow.findViewById<TextView>(R.id.tv_player_name)
+                                val playerquote = ushow.findViewById<TextView>(R.id.tv_player_quote)
+                                val playerlevel = ushow.findViewById<TextView>(R.id.tv_player_level)
+                                val playerpoints = ushow.findViewById<TextView>(R.id.tv_player_points)
+                                val playerups = ushow.findViewById<TextView>(R.id.tv_player_ups)
+                                playername.text = player
+                                playerquote.text = getString(R.string.player_quote, playerQuote)
+                                playerlevel.text = getString(R.string.player_level, playerLevel)
+                                playerpoints.text = getString(R.string.player_points, playerPoints)
+                                playerups.text = getString(R.string.player_ups, playerUps)
+                            }else{
+                                Log.d(TAG, "$play passed")
+                            }
+                        }
+                    }
+                })
+            }
+            //Comment Upvote/Remove Upvote/Delete Own Comment
             override fun onItemLongClick(view: View?, position: Int) {
                 val comm = view?.tvComment?.text.toString()
                 Log.d(TAG, "onItemLongClick; Upvote pressed!!!")
@@ -85,7 +128,6 @@ class CommentActivity : AppCompatActivity() {
                         p0.children.forEach {
                             val comms = it.child("post").value as String
                             if (comm == comms){
-
                                 val key = it.key.toString()
                                 val itemRef = database.getReference("/Posts/$levelKey/$key")
                                 val upvotes = it.child("upvotes").value as MutableList<String>
@@ -142,7 +184,6 @@ class CommentActivity : AppCompatActivity() {
                                             }
                                         })
                                     }
-
                                 }else{
                                     //Upvoting the specific comment
                                     var count = upvoteCount+1
@@ -171,7 +212,6 @@ class CommentActivity : AppCompatActivity() {
                                         }
                                     })
                                 }
-
                             }else{
                                 Log.d(TAG, "Passing Next Comment")
                             }
@@ -236,6 +276,7 @@ class CommentActivity : AppCompatActivity() {
             }
         })
     }
+
     override fun onBackPressed(){
         this@CommentActivity.finish()
     }

@@ -57,6 +57,10 @@
     <string name="comment_will_deleted">Yorumunuzu silmek istediğinizden emin misiniz?</string>
     <string name="no_don_t">Hayır, silme</string>
     <string name="yes_delete">Evet, sil</string>
+    <string name="player_quote">diyor ki \'%1$s\'</string>
+    <string name="player_level">\'%1$s\' mevkinde</string>
+    <string name="player_points">\'%1$d\' puan topladı</string>
+    <string name="player_ups">\'%1$d\' artı oy aldı</string>
     <!-- Ordered Activity -->
     <string name="num1">Numara 1</string>
     <string name="num2">Numara 2</string>
