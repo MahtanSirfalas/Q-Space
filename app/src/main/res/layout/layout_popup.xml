@@ -40,7 +40,7 @@
             app:layout_constraintTop_toBottomOf="@+id/textView" android:layout_marginBottom="8dp"
             app:layout_constraintBottom_toBottomOf="parent"/>
     <Button
-            android:text="Next Stage"
+            android:text="@string/next_stage"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/butt_next_pop" android:onClick="showNext" android:fontFamily="@font/coda"
@@ -50,12 +50,12 @@
             app:layout_constraintStart_toEndOf="@+id/button"
             app:layout_constraintVertical_bias="0.0" app:layout_constraintEnd_toEndOf="@+id/textView"/>
     <Button
-            android:text="Main Menu"
+            android:text="@string/main_menu"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" android:id="@+id/butt_main_pop"
             android:background="@drawable/butt_profile_tabs"
             android:fontFamily="@font/coda" android:textColor="@color/colorSpaceWhite"
             app:layout_constraintEnd_toStartOf="@+id/button"
             app:layout_constraintTop_toTopOf="@+id/button" app:layout_constraintBottom_toBottomOf="@+id/button"
-            app:layout_constraintStart_toStartOf="@+id/textView" android:textSize="12sp"/>
+            app:layout_constraintStart_toStartOf="@+id/textView" android:textSize="12sp" android:onClick="mainMenu"/>
 </androidx.constraintlayout.widget.ConstraintLayout>

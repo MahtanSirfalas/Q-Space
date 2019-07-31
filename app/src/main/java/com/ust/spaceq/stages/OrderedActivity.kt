@@ -23,6 +23,7 @@ import android.widget.PopupWindow
 import android.widget.Toast.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.core.view.marginTop
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
@@ -65,7 +66,8 @@ class OrderedActivity : AppCompatActivity() {
         animationDrawable.start()
 
         qAnswer = mapOf("Stage 1" to 95, "Stage 2" to 12, "Stage 4" to 116, "Stage 5" to 119, "Stage 6" to 8,
-            "Stage 7" to 99,"Stage 9" to 16, "Stage 10" to 6)
+            "Stage 7" to 99,"Stage 9" to 16, "Stage 10" to 6, "Stage 11" to 215674, "Stage 12" to 80, "Stage 13" to 63,
+            "Stage 14" to 98)
 
         firebaseAnalytics = FirebaseAnalytics.getInstance(this)
         auth = FirebaseAuth.getInstance()
@@ -183,6 +185,9 @@ class OrderedActivity : AppCompatActivity() {
         imageShow.setOnClickListener{
             window.dismiss()
         }
+
+        tv_answer1.isFocusable = false
+        buttAnswer1.visibility = View.INVISIBLE
     }
 
     private fun commentAnimation(){
@@ -418,6 +423,64 @@ class OrderedActivity : AppCompatActivity() {
                 group_table.startAnimation(fadein)
                 Log.d(TAG, "$level adaptation is done successfully!")
             }
+            "Stage 11"->{
+                ib_back.visibility = View.VISIBLE
+                ib_next.visibility = View.VISIBLE
+                ib_back.startAnimation(fadein)
+                ib_next.startAnimation(fadein)
+                group_under.visibility = View.VISIBLE
+                tv_under.text = """6+3+4 = 182439
+                    |9+2+4 = 183652
+                    |8+6+4 = 483274
+                    |5+4+5 = 202541
+                """.trimMargin()
+                tv_under1.text = "7+3+8 = ?"
+                group_under.startAnimation(fadein)
+                Log.d(TAG, "$level adaptation is done successfully!")
+            }
+            "Stage 12"->{
+                ib_back.visibility = View.VISIBLE
+                ib_next.visibility = View.VISIBLE
+                ib_back.startAnimation(fadein)
+                ib_next.startAnimation(fadein)
+                group_under.visibility = View.VISIBLE
+                tv_under.text = """12       8       88
+                    | 9       7       56
+                """.trimMargin()
+                tv_under1.text = "41       2       ?"
+                group_under.startAnimation(fadein)
+                Log.d(TAG, "$level adaptation is done successfully!")
+            }
+            "Stage 13"->{
+                ib_back.visibility = View.VISIBLE
+                ib_next.visibility = View.VISIBLE
+                ib_back.startAnimation(fadein)
+                ib_next.startAnimation(fadein)
+                group_under.visibility = View.VISIBLE
+                tv_under.text = "18,    46,    94,    ?,    52,    61"
+                tv_under1.text = getString(R.string.missing_number)
+                val param = tv_under1.layoutParams as ConstraintLayout.LayoutParams
+                param.setMargins(0,16,0,0)
+                tv_under1.layoutParams = param
+                tv_under1.gravity = Gravity.CENTER_HORIZONTAL
+                group_under.startAnimation(fadein)
+                Log.d(TAG, "$level adaptation is done successfully!")
+            }
+            "Stage 14"->{
+                ib_back.visibility = View.VISIBLE
+                ib_next.visibility = View.VISIBLE
+                ib_back.startAnimation(fadein)
+                ib_next.startAnimation(fadein)
+                group_under.visibility = View.VISIBLE
+                tv_under.text = """3+4 = 18
+                    |3+7 = 27 
+                    |5+8 = 60
+                    |6+7 = 72
+                """.trimMargin()
+                tv_under1.text = "7+8 = ?"
+                group_under.startAnimation(fadein)
+                Log.d(TAG, "$level adaptation is done successfully!")
+            }
             else -> {
                 Log.d(TAG, "Something's Wrong; levelAdapt is failed!")
             }
@@ -481,6 +544,34 @@ class OrderedActivity : AppCompatActivity() {
                 intent.putExtra("tvName", nick)
                 startActivity(intent)
             }
+            "Stage 10" -> {
+                levelKey = "Stage 11"
+                val intent = Intent(this@OrderedActivity, OrderedActivity::class.java)
+                intent.putExtra("levelKey", levelKey)
+                intent.putExtra("tvName", nick)
+                startActivity(intent)
+            }
+            "Stage 11" -> {
+                levelKey = "Stage 12"
+                val intent = Intent(this@OrderedActivity, OrderedActivity::class.java)
+                intent.putExtra("levelKey", levelKey)
+                intent.putExtra("tvName", nick)
+                startActivity(intent)
+            }
+            "Stage 12" -> {
+                levelKey = "Stage 13"
+                val intent = Intent(this@OrderedActivity, OrderedActivity::class.java)
+                intent.putExtra("levelKey", levelKey)
+                intent.putExtra("tvName", nick)
+                startActivity(intent)
+            }
+            "Stage 13" -> {
+                levelKey = "Stage 14"
+                val intent = Intent(this@OrderedActivity, OrderedActivity::class.java)
+                intent.putExtra("levelKey", levelKey)
+                intent.putExtra("tvName", nick)
+                startActivity(intent)
+            }
             else -> {}
         }
     }
@@ -537,6 +628,34 @@ class OrderedActivity : AppCompatActivity() {
             }
             "Stage 10" -> {
                 levelKey = "Stage 9"
+                val intent = Intent(this@OrderedActivity, OrderedActivity::class.java)
+                intent.putExtra("levelKey", levelKey)
+                intent.putExtra("tvName", nick)
+                startActivity(intent)
+            }
+            "Stage 11" -> {
+                levelKey = "Stage 10"
+                val intent = Intent(this@OrderedActivity, OrderedActivity::class.java)
+                intent.putExtra("levelKey", levelKey)
+                intent.putExtra("tvName", nick)
+                startActivity(intent)
+            }
+            "Stage 12" -> {
+                levelKey = "Stage 11"
+                val intent = Intent(this@OrderedActivity, OrderedActivity::class.java)
+                intent.putExtra("levelKey", levelKey)
+                intent.putExtra("tvName", nick)
+                startActivity(intent)
+            }
+            "Stage 13" -> {
+                levelKey = "Stage 12"
+                val intent = Intent(this@OrderedActivity, OrderedActivity::class.java)
+                intent.putExtra("levelKey", levelKey)
+                intent.putExtra("tvName", nick)
+                startActivity(intent)
+            }
+            "Stage 14" -> {
+                levelKey = "Stage 13"
                 val intent = Intent(this@OrderedActivity, OrderedActivity::class.java)
                 intent.putExtra("levelKey", levelKey)
                 intent.putExtra("tvName", nick)
@@ -648,7 +767,7 @@ class OrderedActivity : AppCompatActivity() {
         buttAnswer1.startAnimation(animtv)
     }
 
-    private fun mainMenu(view: View?) {
+    fun mainMenu(view: View?) {
         if (isRunning){
             mainHandler.removeCallbacks(updatePointTask)
         }else{

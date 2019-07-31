@@ -37,8 +37,11 @@ class ProfileActivity : AppCompatActivity() {
         setContentView(R.layout.activity_profile)
 
         val stageList = listOf("Stage 1", "Stage 2", "Stage 3", "Stage 4",
-            "Stage 5","Stage 6","Stage 7","Stage 8", "Stage 9", "Stage 10")
-        val statsList = mutableListOf<String>("","","","","","","","","","")
+            "Stage 5","Stage 6","Stage 7","Stage 8", "Stage 9", "Stage 10", "Stage 11", "Stage 12", "Stage 13",
+            "Stage 14", "Stage 15", "Stage 16", "Stage 17", "Stage 18", "Stage 19", "Stage 20", "Stage 21", "Stage 22",
+            "Stage 23","Stage 24", "Stage 25", "Stage 26", "Stage 27", "Stage 28", "Stage 29", "Stage 30")
+        val statsList = mutableListOf<String>("","","","","","","","","","","","","","","","","","",
+            "","","","","","","","","","","","")
 
         val constraintLayout = findViewById<ConstraintLayout>(R.id.layoutbg)
         val animationDrawable = constraintLayout.background as AnimationDrawable
@@ -246,7 +249,9 @@ class ProfileActivity : AppCompatActivity() {
 
     override fun onBackPressed() {
         Log.d(TAG, "Back Pressed")
+        val intent = Intent(this@ProfileActivity, MainActivity::class.java)
         this.finish()
+        startActivity(intent)
     }
     //Custom stageList Adapter
     private class StageListAdapter(context: Context,val mLayout:Int , var list1:List<String>,

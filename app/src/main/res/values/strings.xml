@@ -65,6 +65,7 @@
     <string name="bravo">Bravo! Answer is accepted!</string>
     <string name="wrong_answer">Wrong answer, try again!</string>
     <string name="come_on">Come on mate you passed this stage before!</string>
+    <string name="missing_number">Missing number?</string>
 
     <string name="pw">get the obvious stuff out of the way</string>
     <string name="congratulations">Congratulations!!!</string>
@@ -77,4 +78,6 @@
     <string name="popup_internet">You need an active internet connection to play Q Space. We synchronize your progress
         and status simultaneously.
     </string>
+    <string name="next_stage">Next Stage</string>
+    <string name="main_menu">Main Menu</string>
 </resources>

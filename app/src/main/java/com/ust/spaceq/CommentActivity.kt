@@ -61,6 +61,9 @@ class CommentActivity : AppCompatActivity() {
         window.isOutsideTouchable = true
         val fadein = AnimationUtils.loadAnimation(this, R.anim.abc_fade_in)
         recycleComment.addOnItemTouchListener(RecyclerItemClickListenr(this, recycleComment, object : RecyclerItemClickListenr.OnItemClickListener {
+            override fun onItemDoubleTap(view: View?, position: Int) {
+                Log.d(TAG, view?.tvName?.text.toString() + "Comment double tapped")
+            }
 
             override fun onItemClick(view: View, position: Int) {
                 val toast = makeText(baseContext, getString(R.string.touch_longer), LENGTH_SHORT)

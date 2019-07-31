@@ -396,6 +396,8 @@ class RandomActivity : AppCompatActivity() {
         imageShow.setOnClickListener{
             window.dismiss()
         }
+        buttAnswer.visibility = View.INVISIBLE
+        etAnswer.isFocusable = false
     }
 
     private fun levelAdapt(level:String){
@@ -529,7 +531,7 @@ class RandomActivity : AppCompatActivity() {
         }
     }
 
-    private fun mainMenu(view: View?) {
+    fun mainMenu(view: View?) {
         if (isRunning){
             mainHandler.removeCallbacks(updatePointTask)
         }else{

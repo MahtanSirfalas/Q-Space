@@ -15,6 +15,8 @@ class RecyclerItemClickListenr(context: Context, recyclerView: RecyclerView, pri
 
         fun onItemLongClick(view: View?, position: Int)
 
+        fun onItemDoubleTap(view:View?, position: Int)
+
     }
 
     init {
@@ -30,6 +32,14 @@ class RecyclerItemClickListenr(context: Context, recyclerView: RecyclerView, pri
                 if (childView != null && mListener != null) {
                     mListener.onItemLongClick(childView, recyclerView.getChildAdapterPosition(childView))
                 }
+            }
+            //Try Double Tap
+            override fun onDoubleTap(e: MotionEvent): Boolean {
+                val childView = recyclerView.findChildViewUnder(e.x, e.y)
+                if (childView != null && mListener != null){
+                    mListener.onItemDoubleTap(childView, recyclerView.getChildAdapterPosition(childView))
+                }
+                return true
             }
         })
     }

@@ -64,6 +64,7 @@
     <string name="bravo">Bravo! Doğru cevap!</string>
     <string name="wrong_answer">Yanlış cevap, tekrar dene!</string>
     <string name="come_on">Hadi ama, bu bölümü daha önce geçtin!</string>
+    <string name="missing_number">Eksik sayı nedir?</string>
 
     <string name="pw">get the obvious stuff out of the way</string>
     <string name="auth_fail">Kayıt tamamlanamadı; bağlantınızı kontrol edin.</string>
@@ -77,5 +78,7 @@
         içi durumunuzu eş zamanlı olarak senkronize ediyoruz.
     </string>
     <string name="yes_give_up">Evet, feda et.</string>
+    <string name="main_menu">Ana Menü</string>
+    <string name="next_stage">Sonraki Soru</string>
 
 </resources>
