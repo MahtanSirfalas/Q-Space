@@ -7,6 +7,8 @@ import android.content.Intent
 import android.graphics.BitmapFactory
 import android.graphics.Color
 import android.graphics.drawable.AnimationDrawable
+import android.inputmethodservice.Keyboard
+import android.inputmethodservice.KeyboardView
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -17,6 +19,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.animation.AnimationUtils
+import android.view.inputmethod.InputMethodManager
 import android.widget.*
 import android.widget.Toast.LENGTH_LONG
 import androidx.constraintlayout.widget.ConstraintLayout
@@ -63,7 +66,7 @@ class ProfileActivity : AppCompatActivity() {
             @SuppressLint("SetTextI18n")//strings without "" suppress.
             override fun onDataChange(p0: DataSnapshot) {
                 val userLevel = p0.child("level").value
-                val userPoints = p0.child("points").value
+                val userPoints = p0.child("points").value as Long
                 uName = p0.child("nickName").value as String
                 avatar = p0.child("avatar").value as String
 
@@ -72,6 +75,18 @@ class ProfileActivity : AppCompatActivity() {
                 textLevel.text = userLevel.toString()
                 textPoints.text = userPoints.toString()
                 Picasso.get().load(avatar).into(ivAvatar_circle)
+
+                if (userPoints>=5000){
+                    etQuote.isFocusable = true
+                    etQuote.isFocusableInTouchMode = true
+                    if(p0.child("userQuote").exists()){
+                        val uQuote = p0.child("userQuote").value as String
+                        etQuote.setText(uQuote)
+                    }
+                }else{
+                    etQuote.isFocusable = false
+                    etQuote.isFocusableInTouchMode = false
+                }
 
                 Log.d(TAG, "user informations parsed")
                 if(p0.child("stages").exists()){
@@ -158,6 +173,31 @@ class ProfileActivity : AppCompatActivity() {
         }
         val slidein = AnimationUtils.loadAnimation(this, R.anim.abc_slide_in_top)
         selectorButts.startAnimation(slidein)
+
+        etQuote.onFocusChangeListener = object : View.OnFocusChangeListener{
+            override fun onFocusChange(p0: View?, p1: Boolean) {
+                if(p1){
+                    buttSave.visibility = View.VISIBLE
+                    buttSave.startAnimation(fadein)
+                }else{
+                    etQuote.isActivated = false
+                    etQuote.isSelected = false
+                    buttSave.visibility = View.GONE
+                    //Hide the Fucking Keyboard!!
+                    val inputMethodManager = getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
+                    if (p0 != null) {
+                        inputMethodManager.hideSoftInputFromWindow(p0.windowToken, 0)
+                    }
+                }
+            }
+        }
+        buttSave.setOnClickListener {
+            val uQuote = etQuote.text.toString()
+            userRef.child("userQuote").setValue(uQuote)
+            etQuote.isActivated = false
+            etQuote.isSelected = false
+            layoutbg.requestFocus()
+        }
     }
     var selectedPhotoUri: Uri? = null
 

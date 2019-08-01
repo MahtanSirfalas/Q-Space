@@ -21,4 +21,9 @@
         <item name="android:textColor">@color/colorSpaceWhite</item>
     </style>
 
+    <style name="sugg_et" parent="Theme.AppCompat.Light">
+        <item name="colorControlNormal">@color/warningred</item>
+        <item name="colorControlActivated">@color/warningdarkred</item>
+    </style>
+
 </resources>

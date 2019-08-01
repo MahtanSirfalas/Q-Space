@@ -613,7 +613,7 @@
                             app:layout_constraintTop_toBottomOf="@+id/tv_table_r31"
                             app:layout_constraintStart_toStartOf="@+id/tv_table_r31"
                             app:layout_constraintEnd_toEndOf="@+id/tv_table_r31" android:id="@+id/tv_table_r32"
-                            android:gravity="center"/>
+                            android:gravity="center" android:fontFamily="sans-serif"/>
                     <TextView
                             android:text="27"
                             android:minWidth="35dp"
@@ -703,6 +703,232 @@
                             app:layout_constraintStart_toStartOf="@+id/tv_under" android:gravity="start"
                             app:layout_constraintBottom_toBottomOf="parent"/>
                 </androidx.constraintlayout.widget.ConstraintLayout>
+                <LinearLayout
+                        android:orientation="vertical"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" android:id="@+id/group_table_full"
+                        app:layout_constraintEnd_toEndOf="parent" android:layout_marginEnd="8dp"
+                        app:layout_constraintStart_toStartOf="parent" android:layout_marginStart="8dp"
+                        app:layout_constraintTop_toTopOf="parent" android:layout_marginTop="8dp"
+                        android:layout_marginBottom="8dp" app:layout_constraintBottom_toTopOf="@+id/tv_answer1"
+                        android:visibility="gone">
+                    <LinearLayout
+                            android:orientation="horizontal"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content">
+                        <TextView
+                                android:text="21"
+                                android:minWidth="35dp"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content" android:id="@+id/tv_full_r1s1"
+                                android:textColor="@color/colorPrimaryDark"
+                                android:background="@drawable/custom_comment"
+                                android:textSize="24sp"
+                                app:layout_constraintTop_toBottomOf="@+id/tv_table_r43"
+                                app:layout_constraintStart_toStartOf="@+id/tv_table_r43"
+                                app:layout_constraintEnd_toEndOf="@+id/tv_table_r43" android:gravity="center"
+                                android:layout_weight="0" android:paddingStart="4dp" android:paddingEnd="4dp"
+                                android:layout_margin="2dp"/>
+                        <TextView
+                                android:text="7"
+                                android:minWidth="35dp"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content" android:id="@+id/tv_full_r1s2"
+                                android:textColor="@color/colorPrimaryDark"
+                                android:background="@drawable/custom_comment"
+                                android:textSize="24sp"
+                                app:layout_constraintTop_toBottomOf="@+id/tv_table_r43"
+                                app:layout_constraintStart_toStartOf="@+id/tv_table_r43"
+                                app:layout_constraintEnd_toEndOf="@+id/tv_table_r43" android:gravity="center"
+                                android:layout_weight="0" android:paddingStart="4dp" android:paddingEnd="4dp"
+                                android:layout_margin="2dp"/>
+                        <TextView
+                                android:text="4"
+                                android:minWidth="35dp"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content" android:id="@+id/tv_full_r1s3"
+                                android:textColor="@color/colorPrimaryDark"
+                                android:background="@drawable/custom_comment"
+                                android:textSize="24sp"
+                                app:layout_constraintTop_toBottomOf="@+id/tv_table_r43"
+                                app:layout_constraintStart_toStartOf="@+id/tv_table_r43"
+                                app:layout_constraintEnd_toEndOf="@+id/tv_table_r43" android:gravity="center"
+                                android:layout_weight="0" android:paddingStart="4dp" android:paddingEnd="4dp"
+                                android:layout_margin="2dp"/>
+                        <TextView
+                                android:text="7"
+                                android:minWidth="35dp"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content" android:id="@+id/tv_full_r1s4"
+                                android:textColor="@color/colorPrimaryDark"
+                                android:background="@drawable/custom_comment"
+                                android:textSize="24sp"
+                                app:layout_constraintTop_toBottomOf="@+id/tv_table_r43"
+                                app:layout_constraintStart_toStartOf="@+id/tv_table_r43"
+                                app:layout_constraintEnd_toEndOf="@+id/tv_table_r43" android:gravity="center"
+                                android:layout_weight="0" android:paddingStart="4dp" android:paddingEnd="4dp"
+                                android:layout_margin="2dp"/>
+                    </LinearLayout>
+                    <LinearLayout
+                            android:orientation="horizontal"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content">
+                        <TextView
+                                android:text="18"
+                                android:minWidth="35dp"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content" android:id="@+id/tv_full_r2s1"
+                                android:textColor="@color/colorPrimaryDark"
+                                android:background="@drawable/custom_comment"
+                                android:textSize="24sp" android:paddingStart="4dp" android:paddingEnd="4dp"
+                                app:layout_constraintTop_toBottomOf="@+id/tv_table_r43"
+                                app:layout_constraintStart_toStartOf="@+id/tv_table_r43"
+                                app:layout_constraintEnd_toEndOf="@+id/tv_table_r43" android:gravity="center"
+                                android:layout_weight="0" android:layout_margin="2dp"/>
+                        <TextView
+                                android:text="17"
+                                android:minWidth="35dp"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content" android:id="@+id/tv_full_r2s2"
+                                android:textColor="@color/colorPrimaryDark"
+                                android:background="@drawable/custom_comment"
+                                android:textSize="24sp" android:paddingStart="4dp" android:paddingEnd="4dp"
+                                app:layout_constraintTop_toBottomOf="@+id/tv_table_r43"
+                                app:layout_constraintStart_toStartOf="@+id/tv_table_r43"
+                                app:layout_constraintEnd_toEndOf="@+id/tv_table_r43" android:gravity="center"
+                                android:layout_weight="0" android:layout_margin="2dp"/>
+                        <TextView
+                                android:text="7"
+                                android:minWidth="35dp"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content" android:id="@+id/tv_full_r2s3"
+                                android:textColor="@color/colorPrimaryDark"
+                                android:background="@drawable/custom_comment"
+                                android:textSize="24sp" android:paddingStart="4dp" android:paddingEnd="4dp"
+                                app:layout_constraintTop_toBottomOf="@+id/tv_table_r43"
+                                app:layout_constraintStart_toStartOf="@+id/tv_table_r43"
+                                app:layout_constraintEnd_toEndOf="@+id/tv_table_r43" android:gravity="center"
+                                android:layout_weight="0" android:layout_margin="2dp"/>
+                        <TextView
+                                android:text="5"
+                                android:minWidth="35dp"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content" android:id="@+id/tv_full_r2s4"
+                                android:textColor="@color/colorPrimaryDark"
+                                android:background="@drawable/custom_comment"
+                                android:textSize="24sp" android:paddingStart="4dp" android:paddingEnd="4dp"
+                                app:layout_constraintTop_toBottomOf="@+id/tv_table_r43"
+                                app:layout_constraintStart_toStartOf="@+id/tv_table_r43"
+                                app:layout_constraintEnd_toEndOf="@+id/tv_table_r43" android:gravity="center"
+                                android:layout_weight="0" android:layout_margin="2dp"/>
+                    </LinearLayout>
+                    <LinearLayout
+                            android:orientation="horizontal"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content">
+                        <TextView
+                                android:text="11"
+                                android:minWidth="35dp"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content" android:id="@+id/tv_full_r3s1"
+                                android:textColor="@color/colorPrimaryDark"
+                                android:background="@drawable/custom_comment"
+                                android:textSize="24sp" android:paddingStart="4dp" android:paddingEnd="4dp"
+                                app:layout_constraintTop_toBottomOf="@+id/tv_table_r43"
+                                app:layout_constraintStart_toStartOf="@+id/tv_table_r43"
+                                app:layout_constraintEnd_toEndOf="@+id/tv_table_r43" android:gravity="center"
+                                android:layout_weight="0" android:layout_margin="2dp"/>
+                        <TextView
+                                android:text="38"
+                                android:minWidth="35dp"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content" android:id="@+id/tv_full_r3s2"
+                                android:textColor="@color/colorPrimaryDark"
+                                android:background="@drawable/custom_comment"
+                                android:textSize="24sp" android:paddingStart="4dp" android:paddingEnd="4dp"
+                                app:layout_constraintTop_toBottomOf="@+id/tv_table_r43"
+                                app:layout_constraintStart_toStartOf="@+id/tv_table_r43"
+                                app:layout_constraintEnd_toEndOf="@+id/tv_table_r43" android:gravity="center"
+                                android:layout_weight="0" android:layout_margin="2dp"/>
+                        <TextView
+                                android:text=".?"
+                                android:minWidth="35dp"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content" android:id="@+id/tv_full_r3s3"
+                                android:textColor="@color/colorSpaceWhite"
+                                android:background="@drawable/custom_butt_profile_tabs"
+                                android:textSize="24sp" android:paddingStart="4dp" android:paddingEnd="4dp"
+                                app:layout_constraintTop_toBottomOf="@+id/tv_table_r43"
+                                app:layout_constraintStart_toStartOf="@+id/tv_table_r43"
+                                app:layout_constraintEnd_toEndOf="@+id/tv_table_r43" android:gravity="center"
+                                android:layout_weight="0" android:layout_margin="2dp"/>
+                        <TextView
+                                android:text="7"
+                                android:minWidth="35dp"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content" android:id="@+id/tv_full_r3s4"
+                                android:textColor="@color/colorPrimaryDark"
+                                android:background="@drawable/custom_comment"
+                                android:textSize="24sp" android:paddingStart="4dp" android:paddingEnd="4dp"
+                                app:layout_constraintTop_toBottomOf="@+id/tv_table_r43"
+                                app:layout_constraintStart_toStartOf="@+id/tv_table_r43"
+                                app:layout_constraintEnd_toEndOf="@+id/tv_table_r43" android:gravity="center"
+                                android:layout_weight="0" android:layout_margin="2dp"/>
+                    </LinearLayout>
+                    <LinearLayout
+                            android:orientation="horizontal"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content">
+                        <TextView
+                                android:text="3"
+                                android:minWidth="35dp"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content" android:id="@+id/tv_full_r4s1"
+                                android:textColor="@color/colorPrimaryDark"
+                                android:background="@drawable/custom_comment"
+                                android:textSize="24sp" android:paddingStart="4dp" android:paddingEnd="4dp"
+                                app:layout_constraintTop_toBottomOf="@+id/tv_table_r43"
+                                app:layout_constraintStart_toStartOf="@+id/tv_table_r43"
+                                app:layout_constraintEnd_toEndOf="@+id/tv_table_r43" android:gravity="center"
+                                android:layout_weight="0" android:layout_margin="2dp"/>
+                        <TextView
+                                android:text="27"
+                                android:minWidth="35dp"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content" android:id="@+id/tv_full_r4s2"
+                                android:textColor="@color/colorPrimaryDark"
+                                android:background="@drawable/custom_comment"
+                                android:textSize="24sp" android:paddingStart="4dp" android:paddingEnd="4dp"
+                                app:layout_constraintTop_toBottomOf="@+id/tv_table_r43"
+                                app:layout_constraintStart_toStartOf="@+id/tv_table_r43"
+                                app:layout_constraintEnd_toEndOf="@+id/tv_table_r43" android:gravity="center"
+                                android:layout_weight="0" android:layout_margin="2dp"/>
+                        <TextView
+                                android:text="6"
+                                android:minWidth="35dp"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content" android:id="@+id/tv_full_r4s3"
+                                android:textColor="@color/colorPrimaryDark"
+                                android:background="@drawable/custom_comment"
+                                android:textSize="24sp" android:paddingStart="4dp" android:paddingEnd="4dp"
+                                app:layout_constraintTop_toBottomOf="@+id/tv_table_r43"
+                                app:layout_constraintStart_toStartOf="@+id/tv_table_r43"
+                                app:layout_constraintEnd_toEndOf="@+id/tv_table_r43" android:gravity="center"
+                                android:layout_weight="0" android:layout_margin="2dp"/>
+                        <TextView
+                                android:text="5"
+                                android:minWidth="35dp"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content" android:id="@+id/tv_full_r4s4"
+                                android:textColor="@color/colorPrimaryDark"
+                                android:background="@drawable/custom_comment"
+                                android:textSize="24sp" android:paddingStart="4dp" android:paddingEnd="4dp"
+                                app:layout_constraintTop_toBottomOf="@+id/tv_table_r43"
+                                app:layout_constraintStart_toStartOf="@+id/tv_table_r43"
+                                app:layout_constraintEnd_toEndOf="@+id/tv_table_r43" android:gravity="center"
+                                android:layout_weight="0" android:layout_margin="2dp"/>
+                    </LinearLayout>
+                </LinearLayout>
             </androidx.constraintlayout.widget.ConstraintLayout>
         </ScrollView>
     </LinearLayout>

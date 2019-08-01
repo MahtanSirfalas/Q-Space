@@ -3,6 +3,7 @@ package com.ust.spaceq.stages
 import android.animation.ObjectAnimator
 import android.animation.PropertyValuesHolder
 import android.annotation.SuppressLint
+import android.app.Activity
 import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.AnimationDrawable
@@ -17,6 +18,7 @@ import android.view.View
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
 import android.view.animation.OvershootInterpolator
+import android.view.inputmethod.InputMethodManager
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.PopupWindow
@@ -67,7 +69,7 @@ class OrderedActivity : AppCompatActivity() {
 
         qAnswer = mapOf("Stage 1" to 95, "Stage 2" to 12, "Stage 4" to 116, "Stage 5" to 119, "Stage 6" to 8,
             "Stage 7" to 99,"Stage 9" to 16, "Stage 10" to 6, "Stage 11" to 215674, "Stage 12" to 80, "Stage 13" to 63,
-            "Stage 14" to 98)
+            "Stage 14" to 98, "Stage 15" to 7, "Stage 16" to 4, "Stage 17" to 87)
 
         firebaseAnalytics = FirebaseAnalytics.getInstance(this)
         auth = FirebaseAuth.getInstance()
@@ -199,6 +201,10 @@ class OrderedActivity : AppCompatActivity() {
     fun slayButton(view: View?) {
         Log.d(TAG, "slayButton pressed")
         val kontrol = tv_answer1.text.toString()
+        val inputMethodManager = getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
+        if(view != null){
+            inputMethodManager.hideSoftInputFromWindow(view.windowToken, 0)
+        }
         if (kontrol.trim().isNotEmpty()) {
             try {
                 uAnswer = tv_answer1.text.toString().toInt()
@@ -481,6 +487,45 @@ class OrderedActivity : AppCompatActivity() {
                 group_under.startAnimation(fadein)
                 Log.d(TAG, "$level adaptation is done successfully!")
             }
+            "Stage 15"->{
+                ib_back.visibility = View.VISIBLE
+                ib_next.visibility = View.VISIBLE
+                ib_back.startAnimation(fadein)
+                ib_next.startAnimation(fadein)
+                group_table_full.visibility = View.VISIBLE
+                group_table_full.startAnimation(fadein)
+                Log.d(TAG, "$level adaptation is done successfully!")
+            }
+            "Stage 16"->{
+                ib_back.visibility = View.VISIBLE
+                ib_next.visibility = View.VISIBLE
+                ib_back.startAnimation(fadein)
+                ib_next.startAnimation(fadein)
+                group_under.visibility = View.VISIBLE
+                tv_under.text = """1836 = 6
+                    |1732 = 0
+                    |9999 = 4
+                    |8888 = 8
+                """.trimMargin()
+                tv_under1.text = "3919 = ?"
+                group_under.startAnimation(fadein)
+                Log.d(TAG, "$level adaptation is done successfully!")
+            }
+            "Stage 17"->{
+                ib_back.visibility = View.VISIBLE
+                ib_next.visibility = View.VISIBLE
+                ib_back.startAnimation(fadein)
+                ib_next.startAnimation(fadein)
+                group_under.visibility = View.VISIBLE
+                tv_under.text = "l6,    06,    68,    88,    .?,    98"
+                tv_under1.text = getString(R.string.missing_number)
+                val param = tv_under1.layoutParams as ConstraintLayout.LayoutParams
+                param.setMargins(0,16,0,0)
+                tv_under1.layoutParams = param
+                tv_under1.gravity = Gravity.CENTER_HORIZONTAL
+                group_under.startAnimation(fadein)
+                Log.d(TAG, "$level adaptation is done successfully!")
+            }
             else -> {
                 Log.d(TAG, "Something's Wrong; levelAdapt is failed!")
             }
@@ -572,6 +617,27 @@ class OrderedActivity : AppCompatActivity() {
                 intent.putExtra("tvName", nick)
                 startActivity(intent)
             }
+            "Stage 14" -> {
+                levelKey = "Stage 15"
+                val intent = Intent(this@OrderedActivity, OrderedActivity::class.java)
+                intent.putExtra("levelKey", levelKey)
+                intent.putExtra("tvName", nick)
+                startActivity(intent)
+            }
+            "Stage 15" -> {
+                levelKey = "Stage 16"
+                val intent = Intent(this@OrderedActivity, OrderedActivity::class.java)
+                intent.putExtra("levelKey", levelKey)
+                intent.putExtra("tvName", nick)
+                startActivity(intent)
+            }
+            "Stage 16" -> {
+                levelKey = "Stage 17"
+                val intent = Intent(this@OrderedActivity, OrderedActivity::class.java)
+                intent.putExtra("levelKey", levelKey)
+                intent.putExtra("tvName", nick)
+                startActivity(intent)
+            }
             else -> {}
         }
     }
@@ -656,6 +722,27 @@ class OrderedActivity : AppCompatActivity() {
             }
             "Stage 14" -> {
                 levelKey = "Stage 13"
+                val intent = Intent(this@OrderedActivity, OrderedActivity::class.java)
+                intent.putExtra("levelKey", levelKey)
+                intent.putExtra("tvName", nick)
+                startActivity(intent)
+            }
+            "Stage 15" -> {
+                levelKey = "Stage 14"
+                val intent = Intent(this@OrderedActivity, OrderedActivity::class.java)
+                intent.putExtra("levelKey", levelKey)
+                intent.putExtra("tvName", nick)
+                startActivity(intent)
+            }
+            "Stage 16" -> {
+                levelKey = "Stage 15"
+                val intent = Intent(this@OrderedActivity, OrderedActivity::class.java)
+                intent.putExtra("levelKey", levelKey)
+                intent.putExtra("tvName", nick)
+                startActivity(intent)
+            }
+            "Stage 17" -> {
+                levelKey = "Stage 16"
                 val intent = Intent(this@OrderedActivity, OrderedActivity::class.java)
                 intent.putExtra("levelKey", levelKey)
                 intent.putExtra("tvName", nick)

@@ -1,6 +1,7 @@
 package com.ust.spaceq
 
 import android.annotation.TargetApi
+import android.app.Activity
 import android.content.Intent
 import android.graphics.drawable.AnimationDrawable
 import android.os.Build
@@ -11,6 +12,7 @@ import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import android.view.animation.AnimationUtils
+import android.view.inputmethod.InputMethodManager
 import android.widget.Toast.*
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout
@@ -57,6 +59,10 @@ class SuggestActivity : AppCompatActivity() {
         animations()
 
         buttSend.setOnClickListener {
+            val inputMethodManager = getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
+            if (it != null){
+                inputMethodManager.hideSoftInputFromWindow(it.windowToken, 0)
+            }
             val keyWord = etSuggest.text.toString()
             if(keyWord.length >= 10){
                 if(keyWord==getString(R.string.pw)){
@@ -105,7 +111,6 @@ class SuggestActivity : AppCompatActivity() {
                     tvZaman.text = zaman
                 }else{}
             }
-
         })
     }
 

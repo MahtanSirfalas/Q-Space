@@ -39,7 +39,7 @@ class LvlActivity : AppCompatActivity() {
         stageList = mapOf("Stage 1" to buttL1, "Stage 2" to buttL2, "Stage 3" to buttL3, "Stage 4" to buttL4,
             "Stage 5" to buttL5, "Stage 6" to buttL6, "Stage 7" to buttL7, "Stage 8" to buttL8,"Stage 9" to buttL9,
             "Stage 10" to buttL10, "Stage 11" to buttL11, "Stage 12" to buttL12, "Stage 13" to buttL13,
-            "Stage 14" to buttL14)
+            "Stage 14" to buttL14, "Stage 15" to buttL15, "Stage 16" to buttL16, "Stage 17" to buttL17)
 
         firebaseAnalytics = FirebaseAnalytics.getInstance(this)
         auth = FirebaseAuth.getInstance()
@@ -281,6 +281,30 @@ class LvlActivity : AppCompatActivity() {
 
     fun showStage14(view: View?){
         levelKey = "Stage 14"
+        val intent = Intent(this@LvlActivity, OrderedActivity::class.java)
+        intent.putExtra("tvName", nick)
+        intent.putExtra("levelKey", levelKey)
+        startActivity(intent)
+    }
+
+    fun showStage15(view: View?){
+        levelKey = "Stage 15"
+        val intent = Intent(this@LvlActivity, OrderedActivity::class.java)
+        intent.putExtra("tvName", nick)
+        intent.putExtra("levelKey", levelKey)
+        startActivity(intent)
+    }
+
+    fun showStage16(view: View?){
+        levelKey = "Stage 16"
+        val intent = Intent(this@LvlActivity, OrderedActivity::class.java)
+        intent.putExtra("tvName", nick)
+        intent.putExtra("levelKey", levelKey)
+        startActivity(intent)
+    }
+
+    fun showStage17(view: View?){
+        levelKey = "Stage 17"
         val intent = Intent(this@LvlActivity, OrderedActivity::class.java)
         intent.putExtra("tvName", nick)
         intent.putExtra("levelKey", levelKey)

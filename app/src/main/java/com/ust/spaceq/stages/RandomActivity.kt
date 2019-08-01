@@ -2,6 +2,7 @@ package com.ust.spaceq.stages
 
 import android.animation.ObjectAnimator
 import android.animation.PropertyValuesHolder
+import android.app.Activity
 import android.content.Intent
 import android.graphics.drawable.AnimationDrawable
 import android.os.Bundle
@@ -15,6 +16,7 @@ import android.view.View
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
 import android.view.animation.OvershootInterpolator
+import android.view.inputmethod.InputMethodManager
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.PopupWindow
@@ -152,6 +154,11 @@ class RandomActivity : AppCompatActivity() {
 
         buttAnswer.setOnClickListener {
             Log.d(TAG, "Slay button pressed")
+            val inputMethodManager = getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
+            if(it != null){
+                inputMethodManager.hideSoftInputFromWindow(it.windowToken, 0)
+            }
+
             val kontrol = etAnswer.text.toString()
             if (kontrol.trim().isNotEmpty()){
                 try {

@@ -28,10 +28,10 @@
     <string name="info">Bilgi</string>
     <string name="listener_cancelled">Uyarı: Internet bağlantınızın aktif olup olmadığını kontrol edin!</string>
     <!-- Profile Activity -->
-    <string name="level">"Seviye Etiketi: "</string>
-    <string name="total_points">"Toplam Puan: "</string>
-    <string name="username">"Kullanıcı Adı: "</string>
-    <string name="email">"E-mail: "</string>
+    <string name="level">"Lokasyon:"</string>
+    <string name="total_points">"Toplam Puan:"</string>
+    <string name="username">"Kullanıcı Adı:"</string>
+    <string name="email">"E-mail:"</string>
     <string name="tv_earned_upvote">"Kazanılan destek oyu = "</string>
     <string name="tv_earned_upvote1">
         \nTopluluğa karışmaya başladın, böyle devam et.</string>

@@ -29,10 +29,10 @@
     <string name="info">Info</string>
     <string name="listener_cancelled">Warning: Check if you have an active internet connection!</string>
     <!-- Profile Activity -->
-    <string name="level">"Level Tag: "</string>
-    <string name="total_points">Total Points: </string>
-    <string name="username">Username: </string>
-    <string name="email">E-Mail: </string>
+    <string name="level">"Location:"</string>
+    <string name="total_points">Total Points:</string>
+    <string name="username">Username:</string>
+    <string name="email">E-Mail:</string>
     <string name="tv_earned_upvote">Upvotes gained = </string>
     <string name="tv_earned_upvote1">
         \nYou are joining the community, go on like that.</string>

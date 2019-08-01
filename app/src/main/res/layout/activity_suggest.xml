@@ -76,6 +76,7 @@
                         android:layout_width="0dp"
                         android:layout_height="200dp"
                         android:inputType="textMultiLine"
+                        android:theme="@style/sugg_et"
                         android:gravity="start|top"
                         android:ems="10"
                         android:translationZ="10dp"
