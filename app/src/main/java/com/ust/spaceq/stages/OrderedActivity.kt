@@ -69,7 +69,7 @@ class OrderedActivity : AppCompatActivity() {
 
         qAnswer = mapOf("Stage 1" to 95, "Stage 2" to 12, "Stage 4" to 116, "Stage 5" to 119, "Stage 6" to 8,
             "Stage 7" to 99,"Stage 9" to 16, "Stage 10" to 6, "Stage 11" to 215674, "Stage 12" to 80, "Stage 13" to 63,
-            "Stage 14" to 98, "Stage 15" to 7, "Stage 16" to 4, "Stage 17" to 87)
+            "Stage 14" to 98, "Stage 15" to 7, "Stage 16" to 4, "Stage 17" to 87,"Stage 18" to 17, "Stage 19" to 200)
 
         firebaseAnalytics = FirebaseAnalytics.getInstance(this)
         auth = FirebaseAuth.getInstance()
@@ -526,6 +526,37 @@ class OrderedActivity : AppCompatActivity() {
                 group_under.startAnimation(fadein)
                 Log.d(TAG, "$level adaptation is done successfully!")
             }
+            "Stage 18"->{
+                ib_back.visibility = View.VISIBLE
+                ib_next.visibility = View.VISIBLE
+                ib_back.startAnimation(fadein)
+                ib_next.startAnimation(fadein)
+                group_under.visibility = View.VISIBLE
+                tv_under.text = """13                       7                        5
+                    |
+                    |
+                    |4                        8                        20
+                    |
+                    |
+                    |19                        .?                        11
+                    |
+                """.trimMargin()
+                tv_under1.text = getString(R.string.missing_number)
+                val param = tv_under1.layoutParams as ConstraintLayout.LayoutParams
+                param.setMargins(0,16,0,0)
+                tv_under1.gravity = Gravity.CENTER
+                group_under.startAnimation(fadein)
+                Log.d(TAG, "$level adaptation is done successfully!")
+            }
+            "Stage 19"->{
+                ib_back.visibility = View.VISIBLE
+                ib_next.visibility = View.VISIBLE
+                ib_back.startAnimation(fadein)
+                ib_next.startAnimation(fadein)
+                group_tableQ.visibility = View.VISIBLE
+                group_tableQ.startAnimation(fadein)
+                Log.d(TAG, "$level adaptation is done successfully!")
+            }
             else -> {
                 Log.d(TAG, "Something's Wrong; levelAdapt is failed!")
             }
@@ -638,6 +669,20 @@ class OrderedActivity : AppCompatActivity() {
                 intent.putExtra("tvName", nick)
                 startActivity(intent)
             }
+            "Stage 17" -> {
+                levelKey = "Stage 18"
+                val intent = Intent(this@OrderedActivity, OrderedActivity::class.java)
+                intent.putExtra("levelKey", levelKey)
+                intent.putExtra("tvName", nick)
+                startActivity(intent)
+            }
+            "Stage 18" -> {
+                levelKey = "Stage 19"
+                val intent = Intent(this@OrderedActivity, OrderedActivity::class.java)
+                intent.putExtra("levelKey", levelKey)
+                intent.putExtra("tvName", nick)
+                startActivity(intent)
+            }
             else -> {}
         }
     }
@@ -743,6 +788,20 @@ class OrderedActivity : AppCompatActivity() {
             }
             "Stage 17" -> {
                 levelKey = "Stage 16"
+                val intent = Intent(this@OrderedActivity, OrderedActivity::class.java)
+                intent.putExtra("levelKey", levelKey)
+                intent.putExtra("tvName", nick)
+                startActivity(intent)
+            }
+            "Stage 18" -> {
+                levelKey = "Stage 17"
+                val intent = Intent(this@OrderedActivity, OrderedActivity::class.java)
+                intent.putExtra("levelKey", levelKey)
+                intent.putExtra("tvName", nick)
+                startActivity(intent)
+            }
+            "Stage 19" -> {
+                levelKey = "Stage 18"
                 val intent = Intent(this@OrderedActivity, OrderedActivity::class.java)
                 intent.putExtra("levelKey", levelKey)
                 intent.putExtra("tvName", nick)

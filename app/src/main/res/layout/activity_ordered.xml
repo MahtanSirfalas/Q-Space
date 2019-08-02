@@ -673,6 +673,7 @@
                             app:layout_constraintEnd_toEndOf="@+id/tv_table_r43" android:gravity="center"/>
                 </androidx.constraintlayout.widget.ConstraintLayout>
                 <androidx.constraintlayout.widget.ConstraintLayout
+                        android:minWidth="200dp"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content" android:id="@+id/group_under"
                         app:layout_constraintEnd_toEndOf="parent" android:layout_marginEnd="8dp"
@@ -693,15 +694,15 @@
                             android:gravity="start"/>
                     <TextView
                             android:text="5+3+2 = 15"
-                            android:layout_width="0dp"
+                            android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:textColor="@color/colorSpaceWhite" android:fontFamily="@font/coda"
                             android:textSize="24sp"
                             android:id="@+id/tv_under1"
                             app:layout_constraintTop_toBottomOf="@+id/tv_under"
-                            app:layout_constraintEnd_toEndOf="@+id/tv_under"
-                            app:layout_constraintStart_toStartOf="@+id/tv_under" android:gravity="start"
-                            app:layout_constraintBottom_toBottomOf="parent"/>
+                            android:gravity="start"
+                            app:layout_constraintBottom_toBottomOf="parent" app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"/>
                 </androidx.constraintlayout.widget.ConstraintLayout>
                 <LinearLayout
                         android:orientation="vertical"
@@ -929,6 +930,58 @@
                                 android:layout_weight="0" android:layout_margin="2dp"/>
                     </LinearLayout>
                 </LinearLayout>
+                <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintEnd_toEndOf="parent" android:layout_marginEnd="8dp"
+                        app:layout_constraintStart_toStartOf="parent" android:layout_marginStart="8dp"
+                        app:layout_constraintTop_toTopOf="parent" android:id="@+id/group_tableQ"
+                        app:layout_constraintBottom_toTopOf="@+id/tv_answer1"
+                        android:visibility="gone">
+
+                    <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" app:srcCompat="@drawable/ic_table"
+                            android:id="@+id/imageView" app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintBottom_toBottomOf="parent" app:layout_constraintHorizontal_bias="1.0"
+                            app:layout_constraintVertical_bias="1.0"/>
+                    <TextView
+                            android:text="240cm"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" android:id="@+id/textView3"
+                            android:textColor="@color/colorSpaceWhite"
+                            android:textSize="18sp"
+                            android:fontFamily="@font/coda"
+                            app:layout_constraintTop_toTopOf="parent" android:layout_marginBottom="8dp"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            android:layout_marginStart="12dp" app:layout_constraintStart_toStartOf="@+id/imageView"
+                            app:layout_constraintEnd_toStartOf="@+id/guideline4"/>
+                    <TextView
+                            android:text="160cm"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" android:id="@+id/textView4"
+                            android:textColor="@color/colorSpaceWhite" android:fontFamily="@font/coda"
+                            android:textSize="18sp"
+                            app:layout_constraintTop_toTopOf="parent" android:layout_marginBottom="32dp"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent" android:layout_marginStart="24dp"
+                            app:layout_constraintStart_toStartOf="parent"/>
+                    <TextView
+                            android:text=" ?"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" android:id="@+id/textView5"
+                            android:fontFamily="@font/coda" android:textColor="@color/colorSpaceWhite"
+                            android:textSize="36sp"
+                            android:layout_marginEnd="8dp" app:layout_constraintEnd_toEndOf="@+id/imageView"
+                            android:layout_marginTop="8dp" app:layout_constraintTop_toTopOf="parent"
+                            android:layout_marginBottom="8dp" app:layout_constraintBottom_toBottomOf="parent"/>
+                    <androidx.constraintlayout.widget.Guideline android:layout_width="wrap_content"
+                                                                android:layout_height="wrap_content"
+                                                                android:id="@+id/guideline4"
+                                                                app:layout_constraintGuide_percent="0.5"
+                                                                android:orientation="vertical"/>
+                </androidx.constraintlayout.widget.ConstraintLayout>
             </androidx.constraintlayout.widget.ConstraintLayout>
         </ScrollView>
     </LinearLayout>
