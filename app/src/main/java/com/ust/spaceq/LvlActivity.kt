@@ -40,7 +40,8 @@ class LvlActivity : AppCompatActivity() {
             "Stage 5" to buttL5, "Stage 6" to buttL6, "Stage 7" to buttL7, "Stage 8" to buttL8,"Stage 9" to buttL9,
             "Stage 10" to buttL10, "Stage 11" to buttL11, "Stage 12" to buttL12, "Stage 13" to buttL13,
             "Stage 14" to buttL14, "Stage 15" to buttL15, "Stage 16" to buttL16, "Stage 17" to buttL17,
-            "Stage 18" to buttL18, "Stage 19" to buttL19)
+            "Stage 18" to buttL18, "Stage 19" to buttL19, "Stage 20" to buttL20, "Stage 21" to buttL21,
+            "Stage 22" to buttL22)
 
         firebaseAnalytics = FirebaseAnalytics.getInstance(this)
         auth = FirebaseAuth.getInstance()
@@ -49,10 +50,7 @@ class LvlActivity : AppCompatActivity() {
         nick = intent.getStringExtra("tvName")
         val userRef = database.reference.child("Users/$uid")
         userRef.addListenerForSingleValueEvent(object: ValueEventListener{
-            override fun onCancelled(p0: DatabaseError) {
-                Log.d(TAG, "userRef data couldn't read!")
-            }
-
+            override fun onCancelled(p0: DatabaseError) {Log.d(TAG, "userRef data couldn't read!")}
             override fun onDataChange(p0: DataSnapshot) {
                 if (p0.child("stages").exists()){
                     val stages = p0.child("stages").value as HashMap<*, *>
@@ -82,9 +80,7 @@ class LvlActivity : AppCompatActivity() {
                     animations()
                     Log.d(TAG, "stages doesn't exist yet!")
                 }
-
             }
-
         })
     }
 
@@ -172,160 +168,21 @@ class LvlActivity : AppCompatActivity() {
 
     }
 
-    fun showStage1(view: View?){
-        levelKey = "Stage 1"
-        cevap = qAnswer["Stage 1"] as Int
-        val intent = Intent(this@LvlActivity, OrderedActivity::class.java)
-        intent.putExtra("tvName", nick)
-        intent.putExtra("levelKey", levelKey)
-        intent.putExtra("cevap", cevap)
-        startActivity(intent)
-    }
-
-    fun showStage2(view: View?){
-        levelKey = "Stage 2"
-        cevap = qAnswer["Stage 2"] as Int
-        val intent = Intent(this@LvlActivity, OrderedActivity::class.java)
-        intent.putExtra("tvName", nick)
-        intent.putExtra("levelKey", levelKey)
-        intent.putExtra("cevap", cevap)
-        startActivity(intent)
-    }
-
-    fun showStage3(view: View?){
-        levelKey = "Stage 3"
-        val intent = Intent(this@LvlActivity, RandomActivity::class.java)
-        intent.putExtra("tvName", nick)
-        intent.putExtra("levelKey", levelKey)
-        startActivity(intent)
-    }
-
-    fun showStage4(view: View?){
-        levelKey = "Stage 4"
-        val intent = Intent(this@LvlActivity, OrderedActivity::class.java)
-        intent.putExtra("tvName", nick)
-        intent.putExtra("levelKey", levelKey)
-        startActivity(intent)
-    }
-
-    fun showStage5(view: View?){
-        levelKey = "Stage 5"
-        val intent = Intent(this@LvlActivity, OrderedActivity::class.java)
-        intent.putExtra("tvName", nick)
-        intent.putExtra("levelKey", levelKey)
-        startActivity(intent)
-    }
-
-    fun showStage6(view: View?){
-        levelKey = "Stage 6"
-        val intent = Intent(this@LvlActivity, OrderedActivity::class.java)
-        intent.putExtra("tvName", nick)
-        intent.putExtra("levelKey", levelKey)
-        startActivity(intent)
-    }
-
-    fun showStage7(view: View?){
-        levelKey = "Stage 7"
-        val intent = Intent(this@LvlActivity, OrderedActivity::class.java)
-        intent.putExtra("tvName", nick)
-        intent.putExtra("levelKey", levelKey)
-        startActivity(intent)
-    }
-
-    fun showStage8(view: View?){
-        levelKey = "Stage 8"
-        val intent = Intent(this@LvlActivity, RandomActivity::class.java)
-        intent.putExtra("tvName", nick)
-        intent.putExtra("levelKey", levelKey)
-        startActivity(intent)
-    }
-
-    fun showStage9(view: View?){
-        levelKey = "Stage 9"
-        val intent = Intent(this@LvlActivity, OrderedActivity::class.java)
-        intent.putExtra("tvName", nick)
-        intent.putExtra("levelKey", levelKey)
-        startActivity(intent)
-    }
-
-    fun showStage10(view: View?){
-        levelKey = "Stage 10"
-        val intent = Intent(this@LvlActivity, OrderedActivity::class.java)
-        intent.putExtra("tvName", nick)
-        intent.putExtra("levelKey", levelKey)
-        startActivity(intent)
-    }
-
-    fun showStage11(view: View?){
-        levelKey = "Stage 11"
-        val intent = Intent(this@LvlActivity, OrderedActivity::class.java)
-        intent.putExtra("tvName", nick)
-        intent.putExtra("levelKey", levelKey)
-        startActivity(intent)
-    }
-
-    fun showStage12(view: View?){
-        levelKey = "Stage 12"
-        val intent = Intent(this@LvlActivity, OrderedActivity::class.java)
-        intent.putExtra("tvName", nick)
-        intent.putExtra("levelKey", levelKey)
-        startActivity(intent)
-    }
-
-    fun showStage13(view: View?){
-        levelKey = "Stage 13"
-        val intent = Intent(this@LvlActivity, OrderedActivity::class.java)
-        intent.putExtra("tvName", nick)
-        intent.putExtra("levelKey", levelKey)
-        startActivity(intent)
-    }
-
-    fun showStage14(view: View?){
-        levelKey = "Stage 14"
-        val intent = Intent(this@LvlActivity, OrderedActivity::class.java)
-        intent.putExtra("tvName", nick)
-        intent.putExtra("levelKey", levelKey)
-        startActivity(intent)
-    }
-
-    fun showStage15(view: View?){
-        levelKey = "Stage 15"
-        val intent = Intent(this@LvlActivity, OrderedActivity::class.java)
-        intent.putExtra("tvName", nick)
-        intent.putExtra("levelKey", levelKey)
-        startActivity(intent)
-    }
-
-    fun showStage16(view: View?){
-        levelKey = "Stage 16"
-        val intent = Intent(this@LvlActivity, OrderedActivity::class.java)
-        intent.putExtra("tvName", nick)
-        intent.putExtra("levelKey", levelKey)
-        startActivity(intent)
-    }
-
-    fun showStage17(view: View?){
-        levelKey = "Stage 17"
-        val intent = Intent(this@LvlActivity, OrderedActivity::class.java)
-        intent.putExtra("tvName", nick)
-        intent.putExtra("levelKey", levelKey)
-        startActivity(intent)
-    }
-
-    fun showStage18(view: View?){
-        levelKey = "Stage 18"
-        val intent = Intent(this@LvlActivity, OrderedActivity::class.java)
-        intent.putExtra("tvName", nick)
-        intent.putExtra("levelKey", levelKey)
-        startActivity(intent)
-    }
-
-    fun showStage19(view: View?){
-        levelKey = "Stage 19"
-        val intent = Intent(this@LvlActivity, OrderedActivity::class.java)
-        intent.putExtra("tvName", nick)
-        intent.putExtra("levelKey", levelKey)
-        startActivity(intent)
+    fun showStage(view: View?){
+        val buttonStage = (view as Button).text.toString()
+        levelKey = "Stage $buttonStage"
+        Log.d(TAG, "buttL$buttonStage pressed")
+        if(buttonStage == "3" || buttonStage == "8"){
+            val intent = Intent(this@LvlActivity, RandomActivity::class.java)
+            intent.putExtra("tvName", nick)
+            intent.putExtra("levelKey", levelKey)
+            startActivity(intent)
+        }else{
+            val intent = Intent(this@LvlActivity, OrderedActivity::class.java)
+            intent.putExtra("tvName", nick)
+            intent.putExtra("levelKey", levelKey)
+            startActivity(intent)
+        }
     }
 
     private fun mainMenu(view: View?){
@@ -368,7 +225,6 @@ class LvlActivity : AppCompatActivity() {
             item.itemId == R.id.action_profile -> showProfile(null)
             item.itemId == R.id.action_home -> mainMenu(null)
             else -> {
-
             }
         }
 

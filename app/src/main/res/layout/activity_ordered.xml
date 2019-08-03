@@ -775,7 +775,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content">
                         <TextView
-                                android:text="18"
+                                android:text="26"
                                 android:minWidth="35dp"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content" android:id="@+id/tv_full_r2s1"
@@ -787,7 +787,7 @@
                                 app:layout_constraintEnd_toEndOf="@+id/tv_table_r43" android:gravity="center"
                                 android:layout_weight="0" android:layout_margin="2dp"/>
                         <TextView
-                                android:text="17"
+                                android:text="9"
                                 android:minWidth="35dp"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content" android:id="@+id/tv_full_r2s2"
@@ -981,6 +981,73 @@
                                                                 android:id="@+id/guideline4"
                                                                 app:layout_constraintGuide_percent="0.5"
                                                                 android:orientation="vertical"/>
+                </androidx.constraintlayout.widget.ConstraintLayout>
+                <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" android:id="@+id/group_gaga"
+                        app:layout_constraintEnd_toEndOf="parent" android:layout_marginEnd="8dp"
+                        app:layout_constraintStart_toStartOf="parent" android:layout_marginStart="8dp"
+                        app:layout_constraintTop_toTopOf="parent" android:layout_marginTop="8dp"
+                        android:layout_marginBottom="8dp" app:layout_constraintBottom_toTopOf="@+id/tv_answer1"
+                        android:visibility="gone">
+
+                    <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" app:srcCompat="@drawable/ic_gagagugu"
+                            android:id="@+id/ivGaga" app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent" app:layout_constraintTop_toTopOf="parent"
+                            app:layout_constraintBottom_toBottomOf="parent" android:layout_marginEnd="8dp"/>
+                    <TextView
+                            android:text=" ?"
+                            android:maxWidth="300dp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" android:id="@+id/tv_qmark"
+                            android:fontFamily="@font/coda" android:textSize="36sp"
+                            android:textColor="@color/colorSpaceWhite"
+                            android:layout_marginEnd="24dp" app:layout_constraintEnd_toEndOf="parent"
+                            android:layout_marginTop="8dp" app:layout_constraintTop_toTopOf="parent"/>
+                    <RadioGroup
+                            android:orientation="horizontal"
+                            android:layout_width="0dp" android:layout_height="wrap_content"
+                            app:layout_constraintEnd_toEndOf="parent" android:layout_marginEnd="8dp"
+                            app:layout_constraintStart_toStartOf="parent" android:layout_marginStart="8dp"
+                            android:layout_marginBottom="8dp" app:layout_constraintBottom_toBottomOf="parent"
+                            android:layout_marginTop="8dp" app:layout_constraintTop_toTopOf="parent"
+                            android:background="@drawable/custom_ucomment" android:id="@+id/radioGaga">
+                        <RadioButton
+                                android:id="@+id/radioA"
+                                android:checked="true"
+                                android:text="1"
+                                android:buttonTint="@color/colorSpace"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content" android:layout_weight="1"
+                                android:onClick="checkButton" android:textColorLink="@color/colorPrimaryDark"
+                                android:textColorHighlight="@color/colorSpace"/>
+                        <RadioButton
+                                android:id="@+id/radioB"
+                                android:text="2"
+                                android:buttonTint="@color/colorSpace"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content" android:layout_weight="1"
+                                android:onClick="checkButton" android:textColorLink="@color/colorPrimaryDark"
+                                android:textColorHighlight="@color/colorSpace"/>
+                        <RadioButton
+                                android:id="@+id/radioC"
+                                android:text="3"
+                                android:buttonTint="@color/colorSpace"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content" android:layout_weight="1"
+                                android:onClick="checkButton" android:textColorLink="@color/colorPrimaryDark"
+                                android:textColorHighlight="@color/colorSpace"/>
+                        <RadioButton
+                                android:id="@+id/radioD"
+                                android:text="4"
+                                android:buttonTint="@color/colorSpace"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content" android:layout_weight="1"
+                                android:onClick="checkButton" android:textColorLink="@color/colorPrimaryDark"
+                                android:textColorHighlight="@color/colorSpace"/>
+                    </RadioGroup>
                 </androidx.constraintlayout.widget.ConstraintLayout>
             </androidx.constraintlayout.widget.ConstraintLayout>
         </ScrollView>

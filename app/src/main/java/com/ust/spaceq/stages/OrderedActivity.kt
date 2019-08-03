@@ -10,6 +10,7 @@ import android.graphics.drawable.AnimationDrawable
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
+import android.text.Editable
 import android.util.Log
 import android.view.Gravity
 import android.view.Menu
@@ -19,12 +20,11 @@ import android.view.animation.Animation
 import android.view.animation.AnimationUtils
 import android.view.animation.OvershootInterpolator
 import android.view.inputmethod.InputMethodManager
-import android.widget.Button
-import android.widget.ImageView
-import android.widget.PopupWindow
+import android.widget.*
 import android.widget.Toast.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.constraintlayout.widget.ConstraintSet
 import androidx.core.view.marginTop
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.auth.FirebaseAuth
@@ -33,7 +33,11 @@ import com.ust.spaceq.*
 import com.ust.spaceq.R
 
 import kotlinx.android.synthetic.main.activity_ordered.*
+import kotlinx.android.synthetic.main.activity_ordered.ibComment
+import kotlinx.android.synthetic.main.activity_ordered.ib_back
+import kotlinx.android.synthetic.main.activity_ordered.ib_next
 import kotlinx.android.synthetic.main.activity_ordered.toolbar
+import kotlinx.android.synthetic.main.activity_random.*
 import kotlin.Exception
 
 private lateinit var firebaseAnalytics: FirebaseAnalytics
@@ -69,7 +73,8 @@ class OrderedActivity : AppCompatActivity() {
 
         qAnswer = mapOf("Stage 1" to 95, "Stage 2" to 12, "Stage 4" to 116, "Stage 5" to 119, "Stage 6" to 8,
             "Stage 7" to 99,"Stage 9" to 16, "Stage 10" to 6, "Stage 11" to 215674, "Stage 12" to 80, "Stage 13" to 63,
-            "Stage 14" to 98, "Stage 15" to 7, "Stage 16" to 4, "Stage 17" to 87,"Stage 18" to 17, "Stage 19" to 200)
+            "Stage 14" to 98, "Stage 15" to 7, "Stage 16" to 4, "Stage 17" to 87,"Stage 18" to 17, "Stage 19" to 200,
+            "Stage 20" to 4,"Stage 21" to -3, "Stage 22" to 3)
 
         firebaseAnalytics = FirebaseAnalytics.getInstance(this)
         auth = FirebaseAuth.getInstance()
@@ -557,6 +562,61 @@ class OrderedActivity : AppCompatActivity() {
                 group_tableQ.startAnimation(fadein)
                 Log.d(TAG, "$level adaptation is done successfully!")
             }
+            "Stage 20"->{
+                ib_back.visibility = View.VISIBLE
+                ib_next.visibility = View.VISIBLE
+                ib_back.startAnimation(fadein)
+                ib_next.startAnimation(fadein)
+                group_gaga.visibility = View.VISIBLE
+                group_gaga.startAnimation(fadein)
+                Log.d(TAG, "$level adaptation is done successfully!")
+            }
+            "Stage 21"->{
+                ib_back.visibility = View.VISIBLE
+                ib_next.visibility = View.VISIBLE
+                ib_back.startAnimation(fadein)
+                ib_next.startAnimation(fadein)
+                group_table_full.visibility = View.VISIBLE
+                tv_full_r1s4.visibility = View.GONE
+                tv_full_r2s4.visibility = View.GONE
+                tv_full_r3s4.visibility = View.GONE
+                tv_full_r4s4.visibility = View.GONE
+                tv_full_r1s1.text = "8"
+                tv_full_r1s2.text = "3"
+                tv_full_r1s3.text = "32"
+                tv_full_r2s1.text = "34"
+                tv_full_r2s2.text = "29"
+                tv_full_r2s3.text = "23"
+                tv_full_r3s1.text = "42"
+                tv_full_r3s2.text = "37"
+                tv_full_r3s3.text = "32"
+                tv_full_r4s1.text = "7"
+                tv_full_r4s2.text = "?"
+                tv_full_r4s3.text = "28"
+                tv_full_r3s3.background = resources.getDrawable(R.drawable.custom_comment)
+                tv_full_r3s3.setTextColor(resources.getColor(R.color.colorPrimaryDark))
+                tv_full_r4s2.background = resources.getDrawable(R.drawable.custom_butt_profile_tabs)
+                tv_full_r4s2.setTextColor(resources.getColor(R.color.colorSpaceWhite))
+                Log.d(TAG, "$level adaptation is done successfully!")
+            }
+            "Stage 22"->{
+                ib_back.visibility = View.VISIBLE
+                ib_next.visibility = View.VISIBLE
+                ib_back.startAnimation(fadein)
+                ib_next.startAnimation(fadein)
+                group_gaga.visibility = View.VISIBLE
+                ivGaga.setImageResource(R.drawable.ic_tetrisl)
+                val constraintSet = ConstraintSet()
+                constraintSet.clone(group_gaga)
+                constraintSet.clear(tv_qmark.id, ConstraintSet.END)
+                constraintSet.connect(tv_qmark.id, ConstraintSet.START, group_gaga.id, ConstraintSet.START, 8)
+                constraintSet.connect(tv_qmark.id, ConstraintSet.TOP, group_gaga.id, ConstraintSet.TOP, 16)
+                constraintSet.applyTo(group_gaga)
+                tv_qmark.textSize = 18f
+                tv_qmark.text = "Which figure results\nby combining all four objects at top-right?"
+                group_gaga.startAnimation(fadein)
+                Log.d(TAG, "$level adaptation is done successfully!")
+            }
             else -> {
                 Log.d(TAG, "Something's Wrong; levelAdapt is failed!")
             }
@@ -678,6 +738,27 @@ class OrderedActivity : AppCompatActivity() {
             }
             "Stage 18" -> {
                 levelKey = "Stage 19"
+                val intent = Intent(this@OrderedActivity, OrderedActivity::class.java)
+                intent.putExtra("levelKey", levelKey)
+                intent.putExtra("tvName", nick)
+                startActivity(intent)
+            }
+            "Stage 19" -> {
+                levelKey = "Stage 20"
+                val intent = Intent(this@OrderedActivity, OrderedActivity::class.java)
+                intent.putExtra("levelKey", levelKey)
+                intent.putExtra("tvName", nick)
+                startActivity(intent)
+            }
+            "Stage 20" -> {
+                levelKey = "Stage 21"
+                val intent = Intent(this@OrderedActivity, OrderedActivity::class.java)
+                intent.putExtra("levelKey", levelKey)
+                intent.putExtra("tvName", nick)
+                startActivity(intent)
+            }
+            "Stage 21" -> {
+                levelKey = "Stage 22"
                 val intent = Intent(this@OrderedActivity, OrderedActivity::class.java)
                 intent.putExtra("levelKey", levelKey)
                 intent.putExtra("tvName", nick)
@@ -807,8 +888,37 @@ class OrderedActivity : AppCompatActivity() {
                 intent.putExtra("tvName", nick)
                 startActivity(intent)
             }
+            "Stage 20" -> {
+                levelKey = "Stage 19"
+                val intent = Intent(this@OrderedActivity, OrderedActivity::class.java)
+                intent.putExtra("levelKey", levelKey)
+                intent.putExtra("tvName", nick)
+                startActivity(intent)
+            }
+            "Stage 21" -> {
+                levelKey = "Stage 20"
+                val intent = Intent(this@OrderedActivity, OrderedActivity::class.java)
+                intent.putExtra("levelKey", levelKey)
+                intent.putExtra("tvName", nick)
+                startActivity(intent)
+            }
+            "Stage 22" -> {
+                levelKey = "Stage 21"
+                val intent = Intent(this@OrderedActivity, OrderedActivity::class.java)
+                intent.putExtra("levelKey", levelKey)
+                intent.putExtra("tvName", nick)
+                startActivity(intent)
+            }
             else -> {}
         }
+    }
+
+    fun checkButton(view: View?){
+        val radioId = radioGaga.checkedRadioButtonId
+
+        val radioButton:RadioButton = findViewById(radioId)
+
+        tv_answer1.setText(radioButton.text)
     }
 
     fun showComments(view: View?) {
