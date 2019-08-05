@@ -349,7 +349,7 @@
                         android:layout_marginBottom="8dp" android:background="@drawable/custom_butt_stage"
                         android:textColor="@color/colorSpaceWhite" android:textColorHighlight="@color/colorAccent"
                         android:textColorHint="@color/colorSpaceWhite" android:fontFamily="@font/coda"
-                        android:visibility="invisible" android:textSize="18sp"/>
+                        android:visibility="invisible" android:textSize="18sp" android:onClick="showStage"/>
                 <Button
                         android:text="24"
                         android:layout_width="60dp"
@@ -456,7 +456,7 @@
                         android:layout_marginBottom="8dp" android:background="@drawable/custom_butt_stage"
                         android:textColor="@color/colorSpaceWhite" android:textColorHighlight="@color/colorAccent"
                         android:textColorHint="@color/colorSpaceWhite" android:fontFamily="@font/coda"
-                        android:visibility="invisible" android:textSize="18sp"/>
+                        android:visibility="gone" android:textSize="18sp"/>
                 <Button
                         android:text="32"
                         android:layout_width="60dp" android:layout_height="60dp"
@@ -471,7 +471,7 @@
                         app:layout_constraintTop_toBottomOf="@id/buttL31"
                         android:background="@drawable/custom_butt_stage" android:textColor="@color/colorSpaceWhite"
                         android:textColorHighlight="@color/colorAccent" android:textColorHint="@color/colorSpaceWhite"
-                        android:fontFamily="@font/coda" android:visibility="invisible" android:textSize="18sp"/>
+                        android:fontFamily="@font/coda" android:visibility="gone" android:textSize="18sp"/>
                 <Button
                         android:text="33"
                         android:layout_width="60dp" android:layout_height="60dp"
@@ -486,7 +486,7 @@
                         app:layout_constraintTop_toBottomOf="@id/buttL32"
                         android:background="@drawable/custom_butt_stage" android:textColor="@color/colorSpaceWhite"
                         android:textColorHighlight="@color/colorAccent" android:textColorHint="@color/colorSpaceWhite"
-                        android:fontFamily="@font/coda" android:visibility="invisible" android:textSize="18sp"/>
+                        android:fontFamily="@font/coda" android:visibility="gone" android:textSize="18sp"/>
                 <Button
                         android:text="34"
                         android:layout_width="60dp" android:layout_height="60dp"
@@ -501,7 +501,7 @@
                         app:layout_constraintTop_toBottomOf="@id/buttL33"
                         android:background="@drawable/custom_butt_stage" android:textColor="@color/colorSpaceWhite"
                         android:textColorHighlight="@color/colorAccent" android:textColorHint="@color/colorSpaceWhite"
-                        android:fontFamily="@font/coda" android:visibility="invisible" android:textSize="18sp"/>
+                        android:fontFamily="@font/coda" android:visibility="gone" android:textSize="18sp"/>
                 <Button
                         android:text="35"
                         android:layout_width="60dp" android:layout_height="60dp"
@@ -516,7 +516,7 @@
                         app:layout_constraintTop_toBottomOf="@id/buttL34"
                         android:background="@drawable/custom_butt_stage" android:textColor="@color/colorSpaceWhite"
                         android:textColorHighlight="@color/colorAccent" android:textColorHint="@color/colorSpaceWhite"
-                        android:fontFamily="@font/coda" android:visibility="invisible" android:textSize="18sp"/>
+                        android:fontFamily="@font/coda" android:visibility="gone" android:textSize="18sp"/>
                 <Button
                         android:text="36"
                         android:layout_width="60dp" android:layout_height="60dp"
@@ -531,7 +531,7 @@
                         app:layout_constraintEnd_toStartOf="@id/buttL41"
                         android:background="@drawable/custom_butt_stage" android:textColor="@color/colorSpaceWhite"
                         android:textColorHighlight="@color/colorAccent" android:textColorHint="@color/colorSpaceWhite"
-                        android:fontFamily="@font/coda" android:visibility="visible" android:textSize="18sp"/>
+                        android:fontFamily="@font/coda" android:visibility="gone" android:textSize="18sp"/>
                 <Button
                         android:text="37"
                         android:layout_width="60dp" android:layout_height="60dp"
@@ -546,7 +546,7 @@
                         app:layout_constraintEnd_toStartOf="@id/buttL42"
                         android:background="@drawable/custom_butt_stage" android:textColor="@color/colorSpaceWhite"
                         android:textColorHighlight="@color/colorAccent" android:textColorHint="@color/colorSpaceWhite"
-                        android:fontFamily="@font/coda" android:visibility="visible" android:textSize="18sp"/>
+                        android:fontFamily="@font/coda" android:visibility="gone" android:textSize="18sp"/>
                 <Button
                         android:text="38"
                         android:layout_width="60dp" android:layout_height="60dp"
@@ -561,7 +561,7 @@
                         app:layout_constraintEnd_toStartOf="@id/buttL43"
                         android:background="@drawable/custom_butt_stage" android:textColor="@color/colorSpaceWhite"
                         android:textColorHighlight="@color/colorAccent" android:textColorHint="@color/colorSpaceWhite"
-                        android:fontFamily="@font/coda" android:visibility="visible" android:textSize="18sp"/>
+                        android:fontFamily="@font/coda" android:visibility="gone" android:textSize="18sp"/>
                 <Button
                         android:text="39"
                         android:layout_width="60dp" android:layout_height="60dp"
@@ -576,7 +576,7 @@
                         app:layout_constraintEnd_toStartOf="@id/buttL44"
                         android:background="@drawable/custom_butt_stage" android:textColor="@color/colorSpaceWhite"
                         android:textColorHighlight="@color/colorAccent" android:textColorHint="@color/colorSpaceWhite"
-                        android:fontFamily="@font/coda" android:visibility="visible" android:textSize="18sp"/>
+                        android:fontFamily="@font/coda" android:visibility="gone" android:textSize="18sp"/>
                 <Button
                         android:text="40"
                         android:layout_width="60dp" android:layout_height="60dp"
@@ -591,7 +591,7 @@
                         app:layout_constraintEnd_toStartOf="@id/buttL45"
                         android:background="@drawable/custom_butt_stage" android:textColor="@color/colorSpaceWhite"
                         android:textColorHighlight="@color/colorAccent" android:textColorHint="@color/colorSpaceWhite"
-                        android:fontFamily="@font/coda" android:visibility="visible" android:textSize="18sp"/>
+                        android:fontFamily="@font/coda" android:visibility="gone" android:textSize="18sp"/>
                 <Button
                         android:text="41"
                         android:layout_width="60dp" android:layout_height="60dp"
@@ -606,7 +606,7 @@
                         app:layout_constraintEnd_toStartOf="@id/buttL46"
                         android:background="@drawable/custom_butt_stage" android:textColor="@color/colorSpaceWhite"
                         android:textColorHighlight="@color/colorAccent" android:textColorHint="@color/colorSpaceWhite"
-                        android:fontFamily="@font/coda" android:visibility="visible" android:textSize="18sp"/>
+                        android:fontFamily="@font/coda" android:visibility="gone" android:textSize="18sp"/>
                 <Button
                         android:text="42"
                         android:layout_width="60dp" android:layout_height="60dp"
@@ -621,7 +621,7 @@
                         app:layout_constraintEnd_toStartOf="@id/buttL47"
                         android:background="@drawable/custom_butt_stage" android:textColor="@color/colorSpaceWhite"
                         android:textColorHighlight="@color/colorAccent" android:textColorHint="@color/colorSpaceWhite"
-                        android:fontFamily="@font/coda" android:visibility="visible" android:textSize="18sp"/>
+                        android:fontFamily="@font/coda" android:visibility="gone" android:textSize="18sp"/>
                 <Button
                         android:text="43"
                         android:layout_width="60dp" android:layout_height="60dp"
@@ -636,7 +636,7 @@
                         app:layout_constraintEnd_toStartOf="@id/buttL48"
                         android:background="@drawable/custom_butt_stage" android:textColor="@color/colorSpaceWhite"
                         android:textColorHighlight="@color/colorAccent" android:textColorHint="@color/colorSpaceWhite"
-                        android:fontFamily="@font/coda" android:visibility="visible" android:textSize="18sp"/>
+                        android:fontFamily="@font/coda" android:visibility="gone" android:textSize="18sp"/>
                 <Button
                         android:text="44"
                         android:layout_width="60dp" android:layout_height="60dp"
@@ -651,7 +651,7 @@
                         app:layout_constraintEnd_toStartOf="@id/buttL49"
                         android:background="@drawable/custom_butt_stage" android:textColor="@color/colorSpaceWhite"
                         android:textColorHighlight="@color/colorAccent" android:textColorHint="@color/colorSpaceWhite"
-                        android:fontFamily="@font/coda" android:visibility="visible" android:textSize="18sp"/>
+                        android:fontFamily="@font/coda" android:visibility="gone" android:textSize="18sp"/>
                 <Button
                         android:text="45"
                         android:layout_width="60dp" android:layout_height="60dp"
@@ -666,7 +666,7 @@
                         app:layout_constraintEnd_toStartOf="@id/buttL50"
                         android:background="@drawable/custom_butt_stage" android:textColor="@color/colorSpaceWhite"
                         android:textColorHighlight="@color/colorAccent" android:textColorHint="@color/colorSpaceWhite"
-                        android:fontFamily="@font/coda" android:visibility="visible" android:textSize="18sp"/>
+                        android:fontFamily="@font/coda" android:visibility="gone" android:textSize="18sp"/>
                 <Button
                         android:text="46"
                         android:layout_width="60dp" android:layout_height="60dp"
@@ -681,7 +681,7 @@
                         app:layout_constraintEnd_toEndOf="parent" android:background="@drawable/custom_butt_stage"
                         android:textColor="@color/colorSpaceWhite" android:textColorHighlight="@color/colorAccent"
                         android:textColorHint="@color/colorSpaceWhite" android:fontFamily="@font/coda"
-                        android:visibility="visible" android:textSize="18sp"/>
+                        android:visibility="gone" android:textSize="18sp"/>
                 <Button
                         android:text="47"
                         android:layout_width="60dp" android:layout_height="60dp"
@@ -696,7 +696,7 @@
                         app:layout_constraintEnd_toEndOf="parent" android:background="@drawable/custom_butt_stage"
                         android:textColor="@color/colorSpaceWhite" android:textColorHighlight="@color/colorAccent"
                         android:textColorHint="@color/colorSpaceWhite" android:fontFamily="@font/coda"
-                        android:visibility="visible" android:textSize="18sp"/>
+                        android:visibility="gone" android:textSize="18sp"/>
                 <Button
                         android:text="48"
                         android:layout_width="60dp" android:layout_height="60dp"
@@ -711,7 +711,7 @@
                         app:layout_constraintEnd_toEndOf="parent" android:background="@drawable/custom_butt_stage"
                         android:textColor="@color/colorSpaceWhite" android:textColorHighlight="@color/colorAccent"
                         android:textColorHint="@color/colorSpaceWhite" android:fontFamily="@font/coda"
-                        android:visibility="visible" android:textSize="18sp"/>
+                        android:visibility="gone" android:textSize="18sp"/>
                 <Button
                         android:text="49"
                         android:layout_width="60dp" android:layout_height="60dp"
@@ -726,7 +726,7 @@
                         app:layout_constraintEnd_toEndOf="parent" android:background="@drawable/custom_butt_stage"
                         android:textColor="@color/colorSpaceWhite" android:textColorHighlight="@color/colorAccent"
                         android:textColorHint="@color/colorSpaceWhite" android:fontFamily="@font/coda"
-                        android:visibility="visible" android:textSize="18sp"/>
+                        android:visibility="gone" android:textSize="18sp"/>
                 <Button
                         android:text="50"
                         android:layout_width="60dp" android:layout_height="60dp"
@@ -741,7 +741,7 @@
                         app:layout_constraintEnd_toEndOf="parent" android:background="@drawable/custom_butt_stage"
                         android:textColor="@color/colorSpaceWhite" android:textColorHighlight="@color/colorAccent"
                         android:textColorHint="@color/colorSpaceWhite" android:fontFamily="@font/coda"
-                        android:visibility="visible" android:textSize="18sp"/>
+                        android:visibility="gone" android:textSize="18sp"/>
             </androidx.constraintlayout.widget.ConstraintLayout>
         </HorizontalScrollView>
     </LinearLayout>

@@ -41,7 +41,7 @@ class LvlActivity : AppCompatActivity() {
             "Stage 10" to buttL10, "Stage 11" to buttL11, "Stage 12" to buttL12, "Stage 13" to buttL13,
             "Stage 14" to buttL14, "Stage 15" to buttL15, "Stage 16" to buttL16, "Stage 17" to buttL17,
             "Stage 18" to buttL18, "Stage 19" to buttL19, "Stage 20" to buttL20, "Stage 21" to buttL21,
-            "Stage 22" to buttL22)
+            "Stage 22" to buttL22, "Stage 23" to buttL23)
 
         firebaseAnalytics = FirebaseAnalytics.getInstance(this)
         auth = FirebaseAuth.getInstance()
@@ -172,7 +172,7 @@ class LvlActivity : AppCompatActivity() {
         val buttonStage = (view as Button).text.toString()
         levelKey = "Stage $buttonStage"
         Log.d(TAG, "buttL$buttonStage pressed")
-        if(buttonStage == "3" || buttonStage == "8"){
+        if(buttonStage == "3" || buttonStage == "8" || buttonStage == "23"){
             val intent = Intent(this@LvlActivity, RandomActivity::class.java)
             intent.putExtra("tvName", nick)
             intent.putExtra("levelKey", levelKey)

@@ -456,10 +456,11 @@ class OrderedActivity : AppCompatActivity() {
                 ib_next.startAnimation(fadein)
                 group_under.visibility = View.VISIBLE
                 tv_under.text = """12       8       88
-                    | 9       7       56
-                """.trimMargin()
-                tv_under1.text = "41       2       ?"
+                    | 9        7       56""".trimMargin()
+                tv_under1.text = "41        2         ?"
                 group_under.startAnimation(fadein)
+                tv_under.gravity = Gravity.CENTER
+                tv_under1.gravity = Gravity.CENTER
                 Log.d(TAG, "$level adaptation is done successfully!")
             }
             "Stage 13"->{
@@ -569,6 +570,7 @@ class OrderedActivity : AppCompatActivity() {
                 ib_next.startAnimation(fadein)
                 group_gaga.visibility = View.VISIBLE
                 group_gaga.startAnimation(fadein)
+                tv_answer1.isFocusable = false
                 Log.d(TAG, "$level adaptation is done successfully!")
             }
             "Stage 21"->{
@@ -616,6 +618,7 @@ class OrderedActivity : AppCompatActivity() {
                 tv_qmark.text = "Which figure results\nby combining all four objects at top-right?"
                 group_gaga.startAnimation(fadein)
                 Log.d(TAG, "$level adaptation is done successfully!")
+                tv_answer1.isFocusable = false
             }
             else -> {
                 Log.d(TAG, "Something's Wrong; levelAdapt is failed!")
@@ -760,6 +763,13 @@ class OrderedActivity : AppCompatActivity() {
             "Stage 21" -> {
                 levelKey = "Stage 22"
                 val intent = Intent(this@OrderedActivity, OrderedActivity::class.java)
+                intent.putExtra("levelKey", levelKey)
+                intent.putExtra("tvName", nick)
+                startActivity(intent)
+            }
+            "Stage 22" -> {
+                levelKey = "Stage 23"
+                val intent = Intent(this@OrderedActivity, RandomActivity::class.java)
                 intent.putExtra("levelKey", levelKey)
                 intent.putExtra("tvName", nick)
                 startActivity(intent)
