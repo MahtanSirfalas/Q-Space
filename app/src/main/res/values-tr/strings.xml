@@ -86,5 +86,6 @@
     <string name="next_stage">Sonraki Soru</string>
     <string name="choose_not_included">Tabloda hangisi yoktu?</string>
     <string name="keep_in_mind">Aklında Tut!</string>
+    <string name="the_next_number">Sıradaki numara nedir?</string>
 
 </resources>

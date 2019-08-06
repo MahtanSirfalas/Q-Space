@@ -618,6 +618,13 @@ class RandomActivity : AppCompatActivity() {
                 intent.putExtra("tvName", nick)
                 startActivity(intent)
             }
+            "Stage 23" -> {
+                levelKey = "Stage 24"
+                val intent = Intent(this@RandomActivity, OrderedActivity::class.java)
+                intent.putExtra("levelKey", levelKey)
+                intent.putExtra("tvName", nick)
+                startActivity(intent)
+            }
             else -> {}
         }
     }

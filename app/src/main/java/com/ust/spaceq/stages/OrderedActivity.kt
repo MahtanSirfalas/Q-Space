@@ -74,7 +74,7 @@ class OrderedActivity : AppCompatActivity() {
         qAnswer = mapOf("Stage 1" to 95, "Stage 2" to 12, "Stage 4" to 116, "Stage 5" to 119, "Stage 6" to 8,
             "Stage 7" to 99,"Stage 9" to 16, "Stage 10" to 6, "Stage 11" to 215674, "Stage 12" to 80, "Stage 13" to 63,
             "Stage 14" to 98, "Stage 15" to 7, "Stage 16" to 4, "Stage 17" to 87,"Stage 18" to 17, "Stage 19" to 200,
-            "Stage 20" to 4,"Stage 21" to -3, "Stage 22" to 3)
+            "Stage 20" to 4,"Stage 21" to -3, "Stage 22" to 3, "Stage 24" to 35, "Stage 25" to 6)
 
         firebaseAnalytics = FirebaseAnalytics.getInstance(this)
         auth = FirebaseAuth.getInstance()
@@ -395,7 +395,7 @@ class OrderedActivity : AppCompatActivity() {
                 say2.text = "8=48"
                 say3.text = "10=80"
                 say4.text = "11= ?"
-                textQ.text = "What should be instead of  ? sign"
+                textQ.text = "What should replace with '?'"
                 say4.setTextColor(resources.getColor(R.color.colorSpaceWhite))
                 ib_back.visibility = View.VISIBLE
                 ib_next.visibility = View.VISIBLE
@@ -430,7 +430,8 @@ class OrderedActivity : AppCompatActivity() {
                 ib_back.startAnimation(fadein)
                 ib_next.startAnimation(fadein)
                 group_table.visibility = View.VISIBLE
-                tv_table_r42.setTextColor(resources.getColor(R.color.yellowDark))
+                tv_table_r42.setTextColor(resources.getColor(R.color.colorSpaceWhite))
+                tv_table_r42.background = resources.getDrawable(R.drawable.butt_profile_tabs)
                 group_table.startAnimation(fadein)
                 Log.d(TAG, "$level adaptation is done successfully!")
             }
@@ -489,7 +490,9 @@ class OrderedActivity : AppCompatActivity() {
                     |5+8 = 60
                     |6+7 = 72
                 """.trimMargin()
-                tv_under1.text = "7+8 = ?"
+                tv_under1.text = "7+8 =  ?"
+                tv_under.gravity = Gravity.START
+                tv_under1.gravity = Gravity.START
                 group_under.startAnimation(fadein)
                 Log.d(TAG, "$level adaptation is done successfully!")
             }
@@ -514,6 +517,8 @@ class OrderedActivity : AppCompatActivity() {
                     |8888 = 8
                 """.trimMargin()
                 tv_under1.text = "3919 = ?"
+                tv_under.textSize = 28f
+                tv_under1.textSize = 28f
                 group_under.startAnimation(fadein)
                 Log.d(TAG, "$level adaptation is done successfully!")
             }
@@ -529,6 +534,7 @@ class OrderedActivity : AppCompatActivity() {
                 param.setMargins(0,16,0,0)
                 tv_under1.layoutParams = param
                 tv_under1.gravity = Gravity.CENTER_HORIZONTAL
+                tv_under.textSize = 28f
                 group_under.startAnimation(fadein)
                 Log.d(TAG, "$level adaptation is done successfully!")
             }
@@ -544,7 +550,7 @@ class OrderedActivity : AppCompatActivity() {
                     |4                        8                        20
                     |
                     |
-                    |19                        .?                        11
+                    |19                         ?                        11
                     |
                 """.trimMargin()
                 tv_under1.text = getString(R.string.missing_number)
@@ -619,6 +625,44 @@ class OrderedActivity : AppCompatActivity() {
                 group_gaga.startAnimation(fadein)
                 Log.d(TAG, "$level adaptation is done successfully!")
                 tv_answer1.isFocusable = false
+            }
+            "Stage 24"->{
+                ib_back.visibility = View.VISIBLE
+                ib_next.visibility = View.VISIBLE
+                ib_back.startAnimation(fadein)
+                ib_next.startAnimation(fadein)
+                uc3_say2.setTextColor(Color.WHITE)
+                animationUcgen()
+                uc1_say1.text = "7"
+                uc1_say2.text = "13"
+                uc1_say3.text = "29"
+                uc2_say1.text = "11"
+                uc2_say2.text = "19"
+                uc2_say3.text = "37"
+                uc3_say1.text = "15"
+                uc3_say2.text = "27"
+                uc3_say3.text = "59"
+                uc4_say1.text = "19"
+                uc4_say2.text = ".?"
+                uc4_say3.text = "71"
+                uc3_say2.setTextColor(resources.getColor(R.color.colorPurple))
+                uc4_say2.setTextColor(resources.getColor(R.color.colorSpaceWhite))
+                Log.d(TAG, "$level adaptation is done successfully!")
+            }
+            "Stage 25"->{
+                ib_back.visibility = View.VISIBLE
+                ib_next.visibility = View.VISIBLE
+                ib_back.startAnimation(fadein)
+                ib_next.startAnimation(fadein)
+                group_under.visibility = View.VISIBLE
+                tv_under.text = """2-7 = 2
+                    |3+10 = 6
+                """.trimMargin()
+                tv_under1.text = "5-13 = ?"
+                group_under.startAnimation(fadein)
+                tv_under.textSize = 36f
+                tv_under1.textSize = 36f
+                Log.d(TAG, "$level adaptation is done successfully!")
             }
             else -> {
                 Log.d(TAG, "Something's Wrong; levelAdapt is failed!")
@@ -914,6 +958,20 @@ class OrderedActivity : AppCompatActivity() {
             }
             "Stage 22" -> {
                 levelKey = "Stage 21"
+                val intent = Intent(this@OrderedActivity, OrderedActivity::class.java)
+                intent.putExtra("levelKey", levelKey)
+                intent.putExtra("tvName", nick)
+                startActivity(intent)
+            }
+            "Stage 24" -> {
+                levelKey = "Stage 23"
+                val intent = Intent(this@OrderedActivity, RandomActivity::class.java)
+                intent.putExtra("levelKey", levelKey)
+                intent.putExtra("tvName", nick)
+                startActivity(intent)
+            }
+            "Stage 25" -> {
+                levelKey = "Stage 24"
                 val intent = Intent(this@OrderedActivity, OrderedActivity::class.java)
                 intent.putExtra("levelKey", levelKey)
                 intent.putExtra("tvName", nick)
