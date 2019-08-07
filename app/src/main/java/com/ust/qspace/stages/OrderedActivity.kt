@@ -1,9 +1,10 @@
-package com.ust.spaceq.stages
+package com.ust.qspace.stages
 
 import android.animation.ObjectAnimator
 import android.animation.PropertyValuesHolder
 import android.annotation.SuppressLint
 import android.app.Activity
+import android.content.Context
 import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.AnimationDrawable
@@ -16,7 +17,6 @@ import android.view.Gravity
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
-import android.view.animation.Animation
 import android.view.animation.AnimationUtils
 import android.view.animation.OvershootInterpolator
 import android.view.inputmethod.InputMethodManager
@@ -25,19 +25,17 @@ import android.widget.Toast.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.constraintlayout.widget.ConstraintSet
-import androidx.core.view.marginTop
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
-import com.ust.spaceq.*
-import com.ust.spaceq.R
+import com.ust.qspace.*
+import com.ust.qspace.R
 
 import kotlinx.android.synthetic.main.activity_ordered.*
 import kotlinx.android.synthetic.main.activity_ordered.ibComment
 import kotlinx.android.synthetic.main.activity_ordered.ib_back
 import kotlinx.android.synthetic.main.activity_ordered.ib_next
 import kotlinx.android.synthetic.main.activity_ordered.toolbar
-import kotlinx.android.synthetic.main.activity_random.*
 import kotlin.Exception
 
 private lateinit var firebaseAnalytics: FirebaseAnalytics
@@ -74,7 +72,8 @@ class OrderedActivity : AppCompatActivity() {
         qAnswer = mapOf("Stage 1" to 95, "Stage 2" to 12, "Stage 4" to 116, "Stage 5" to 119, "Stage 6" to 8,
             "Stage 7" to 99,"Stage 9" to 16, "Stage 10" to 6, "Stage 11" to 215674, "Stage 12" to 80, "Stage 13" to 63,
             "Stage 14" to 98, "Stage 15" to 7, "Stage 16" to 4, "Stage 17" to 87,"Stage 18" to 17, "Stage 19" to 200,
-            "Stage 20" to 4,"Stage 21" to -3, "Stage 22" to 3, "Stage 24" to 35, "Stage 25" to 6)
+            "Stage 20" to 4, "Stage 21" to -3, "Stage 22" to 3, "Stage 24" to 35, "Stage 25" to 6, "Stage 26" to 1113122113,
+            "Stage 27" to 40)
 
         firebaseAnalytics = FirebaseAnalytics.getInstance(this)
         auth = FirebaseAuth.getInstance()
@@ -137,6 +136,13 @@ class OrderedActivity : AppCompatActivity() {
         commentAnimation()
 //        chrono.base = SystemClock.elapsedRealtime()
 //        chrono.start()
+        //force keyboard show
+        /*textQ.isClickable = true
+        textQ.setOnClickListener {
+            Log.d(TAG, "textQclicked")
+            val inputMethodManager = getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
+            inputMethodManager.toggleSoftInput(InputMethodManager.SHOW_FORCED, InputMethodManager.HIDE_IMPLICIT_ONLY)
+        }*/
     }
 
     private fun animationOrder(){
@@ -517,8 +523,6 @@ class OrderedActivity : AppCompatActivity() {
                     |8888 = 8
                 """.trimMargin()
                 tv_under1.text = "3919 = ?"
-                tv_under.textSize = 28f
-                tv_under1.textSize = 28f
                 group_under.startAnimation(fadein)
                 Log.d(TAG, "$level adaptation is done successfully!")
             }
@@ -534,7 +538,6 @@ class OrderedActivity : AppCompatActivity() {
                 param.setMargins(0,16,0,0)
                 tv_under1.layoutParams = param
                 tv_under1.gravity = Gravity.CENTER_HORIZONTAL
-                tv_under.textSize = 28f
                 group_under.startAnimation(fadein)
                 Log.d(TAG, "$level adaptation is done successfully!")
             }
@@ -662,6 +665,36 @@ class OrderedActivity : AppCompatActivity() {
                 group_under.startAnimation(fadein)
                 tv_under.textSize = 36f
                 tv_under1.textSize = 36f
+                Log.d(TAG, "$level adaptation is done successfully!")
+            }
+            "Stage 26"->{
+                ib_back.visibility = View.VISIBLE
+                ib_next.visibility = View.VISIBLE
+                ib_back.startAnimation(fadein)
+                ib_next.startAnimation(fadein)
+                group_under.visibility = View.VISIBLE
+                tv_under.text = "13, 1113, 3113, 132113, ..?"
+                tv_under1.text = getString(R.string.missing_number)
+                val param = tv_under1.layoutParams as ConstraintLayout.LayoutParams
+                param.setMargins(0,16,0,0)
+                tv_under1.layoutParams = param
+                tv_under1.gravity = Gravity.CENTER_HORIZONTAL
+                group_under.startAnimation(fadein)
+                Log.d(TAG, "$level adaptation is done successfully!")
+            }
+            "Stage 27"->{
+                ib_back.visibility = View.VISIBLE
+                ib_next.visibility = View.VISIBLE
+                ib_back.startAnimation(fadein)
+                ib_next.startAnimation(fadein)
+                group_under.visibility = View.VISIBLE
+                tv_under.text = "7,    13,    18,    26,    29,    39,    .?."
+                tv_under1.text = getString(R.string.missing_number)
+                val param = tv_under1.layoutParams as ConstraintLayout.LayoutParams
+                param.setMargins(0,16,0,0)
+                tv_under1.layoutParams = param
+                tv_under1.gravity = Gravity.CENTER_HORIZONTAL
+                group_under.startAnimation(fadein)
                 Log.d(TAG, "$level adaptation is done successfully!")
             }
             else -> {
@@ -814,6 +847,27 @@ class OrderedActivity : AppCompatActivity() {
             "Stage 22" -> {
                 levelKey = "Stage 23"
                 val intent = Intent(this@OrderedActivity, RandomActivity::class.java)
+                intent.putExtra("levelKey", levelKey)
+                intent.putExtra("tvName", nick)
+                startActivity(intent)
+            }
+            "Stage 24" -> {
+                levelKey = "Stage 25"
+                val intent = Intent(this@OrderedActivity, OrderedActivity::class.java)
+                intent.putExtra("levelKey", levelKey)
+                intent.putExtra("tvName", nick)
+                startActivity(intent)
+            }
+            "Stage 25" -> {
+                levelKey = "Stage 26"
+                val intent = Intent(this@OrderedActivity, OrderedActivity::class.java)
+                intent.putExtra("levelKey", levelKey)
+                intent.putExtra("tvName", nick)
+                startActivity(intent)
+            }
+            "Stage 26" -> {
+                levelKey = "Stage 27"
+                val intent = Intent(this@OrderedActivity, OrderedActivity::class.java)
                 intent.putExtra("levelKey", levelKey)
                 intent.putExtra("tvName", nick)
                 startActivity(intent)
@@ -972,6 +1026,20 @@ class OrderedActivity : AppCompatActivity() {
             }
             "Stage 25" -> {
                 levelKey = "Stage 24"
+                val intent = Intent(this@OrderedActivity, OrderedActivity::class.java)
+                intent.putExtra("levelKey", levelKey)
+                intent.putExtra("tvName", nick)
+                startActivity(intent)
+            }
+            "Stage 26" -> {
+                levelKey = "Stage 25"
+                val intent = Intent(this@OrderedActivity, OrderedActivity::class.java)
+                intent.putExtra("levelKey", levelKey)
+                intent.putExtra("tvName", nick)
+                startActivity(intent)
+            }
+            "Stage 27" -> {
+                levelKey = "Stage 26"
                 val intent = Intent(this@OrderedActivity, OrderedActivity::class.java)
                 intent.putExtra("levelKey", levelKey)
                 intent.putExtra("tvName", nick)

@@ -1,4 +1,4 @@
-package com.ust.spaceq
+package com.ust.qspace
 
 import android.annotation.SuppressLint
 import android.app.Activity
@@ -7,8 +7,6 @@ import android.content.Intent
 import android.graphics.BitmapFactory
 import android.graphics.Color
 import android.graphics.drawable.AnimationDrawable
-import android.inputmethodservice.Keyboard
-import android.inputmethodservice.KeyboardView
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle

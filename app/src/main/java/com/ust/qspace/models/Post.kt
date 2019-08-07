@@ -1,4 +1,4 @@
-package com.ust.spaceq.models
+package com.ust.qspace.models
 
 import android.os.Parcelable
 import kotlinx.android.parcel.Parcelize

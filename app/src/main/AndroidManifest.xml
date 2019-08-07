@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-          package="com.ust.spaceq">
+          package="com.ust.qspace">
 
     <uses-permission android:name="android.permission.INTERNET"/>
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
@@ -14,30 +14,30 @@
             android:supportsRtl="true"
             android:theme="@style/AppTheme">
         <activity
-                android:name=".stages.RandomActivity"
+                android:name="com.ust.qspace.stages.RandomActivity"
                 android:label="@string/title_activity_random"
                 android:theme="@style/AppTheme.NoActionBar">
         </activity>
         <activity
-                android:name=".SuggestActivity"
+                android:name="com.ust.qspace.SuggestActivity"
                 android:label="@string/title_activity_suggest"
                 android:theme="@style/AppTheme.NoActionBar">
         </activity>
         <activity
-                android:name=".stages.OrderedActivity"
+                android:name="com.ust.qspace.stages.OrderedActivity"
                 android:label="@string/title_activity_ordered"
                 android:theme="@style/AppTheme.NoActionBar">
         </activity>
         <activity
-                android:name=".LvlActivity"
+                android:name="com.ust.qspace.LvlActivity"
                 android:label="@string/title_activity_lvl"
                 android:theme="@style/AppTheme.NoActionBar">
         </activity>
-        <activity android:name=".ProfileActivity">
+        <activity android:name="com.ust.qspace.ProfileActivity">
         </activity>
-        <activity android:name=".CommentActivity">
+        <activity android:name="com.ust.qspace.CommentActivity">
         </activity>
-        <activity android:name=".LoginActivity">
+        <activity android:name="com.ust.qspace.LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
 
@@ -45,7 +45,7 @@
             </intent-filter>
         </activity>
         <activity
-                android:name=".MainActivity"
+                android:name="com.ust.qspace.MainActivity"
                 android:label="@string/app_name"
                 android:theme="@style/AppTheme.NoActionBar">
         </activity>

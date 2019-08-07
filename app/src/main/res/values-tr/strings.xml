@@ -20,6 +20,8 @@
     <string name="nick_error_toast">Kullanıcı adını değiştirip tekrar deneyin..</string>
     <string name="failed_verify_email">Doğrulama postası gönderirken bir sorun oluştu</string>
     <string name="verify_email_sent">Doğrulama e-postası gönderildi</string>
+    <string name="reset_email_sent">Şifre resetleme postası %1$s adresine gönderildi!</string>
+    <string name="reset_email_failed">Resetleme postası gönderilemedi; üyelik posta adresinizi kontrol edin!</string>
     <!-- Main Activity -->
     <string name="tv_warn">E-mail adresini doğrula..!</string>
     <string name="play">Oyna</string>

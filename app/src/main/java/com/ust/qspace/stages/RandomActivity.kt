@@ -1,4 +1,4 @@
-package com.ust.spaceq.stages
+package com.ust.qspace.stages
 
 import android.animation.*
 import android.app.Activity
@@ -18,17 +18,15 @@ import android.widget.*
 import android.widget.Toast.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
-import androidx.core.animation.addListener
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
-import com.ust.spaceq.*
-import com.ust.spaceq.R
+import com.ust.qspace.*
+import com.ust.qspace.R
 
 import kotlinx.android.synthetic.main.activity_random.*
 import kotlinx.android.synthetic.main.activity_random.ibComment
 import kotlinx.android.synthetic.main.activity_random.toolbar
-import java.util.*
 
 private lateinit var firebaseAnalytics: FirebaseAnalytics
 private lateinit var auth: FirebaseAuth

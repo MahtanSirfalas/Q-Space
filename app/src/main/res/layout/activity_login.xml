@@ -30,17 +30,6 @@
                 android:textColorHint="@color/colorGreyLight" android:textColorLink="@color/colorSpaceWhite"
                 android:textCursorDrawable="@null" android:fontFamily="@font/gruppo" android:textSize="14sp"
                 android:textStyle="bold"/>
-        <TextView
-                android:text="TextView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" android:id="@+id/tvNickError"
-                android:textColor="@android:color/holo_red_dark"
-                android:fontFamily="@font/coda" android:textStyle="bold" android:visibility="invisible"
-                app:layout_constraintEnd_toEndOf="@+id/buttYok" android:layout_marginStart="8dp"
-                app:layout_constraintStart_toStartOf="@+id/buttYok"
-                android:layout_marginBottom="8dp"
-                app:layout_constraintBottom_toBottomOf="parent" android:textSize="14sp" android:layout_marginTop="66dp"
-                app:layout_constraintTop_toBottomOf="@+id/buttGoogle"/>
         <EditText
                 android:layout_width="0dp"
                 android:layout_height="50dp"
@@ -114,14 +103,24 @@
                 android:textColorHighlight="@color/colorAccent" android:textColorHint="@color/colorSpaceWhite"
                 android:fontFamily="@font/coda" android:textSize="18sp"/>
         <Button
+                android:text="Reset Password"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" android:id="@+id/buttResetPass"
+                android:fontFamily="@font/coda"
+                android:textColor="@color/colorSpaceWhite" android:background="@android:color/transparent"
+                app:layout_constraintTop_toBottomOf="@+id/buttVar" android:layout_marginEnd="8dp"
+                app:layout_constraintEnd_toEndOf="parent" android:layout_marginStart="8dp"
+                app:layout_constraintStart_toStartOf="parent"
+                android:layout_marginTop="8dp" android:onClick="resetPassword"/>
+        <Button
                 android:text="@string/sign_in_google"
                 android:drawableStart="@drawable/ic_googleicon"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content" android:id="@+id/buttGoogle"
+                app:layout_constraintTop_toBottomOf="@+id/buttResetPass"
                 android:background="@drawable/custom_butt_google" app:layout_constraintEnd_toEndOf="parent"
                 android:layout_marginEnd="8dp" app:layout_constraintStart_toStartOf="parent"
                 android:layout_marginStart="8dp"
-                android:layout_marginTop="8dp" app:layout_constraintTop_toBottomOf="@+id/buttYok"
                 android:layout_marginBottom="8dp" app:layout_constraintBottom_toTopOf="@+id/tvNickError"
                 android:textAlignment="center" android:textColor="@color/colorPrimaryDark" android:textAllCaps="false"
                 android:fontFamily="@font/coda" android:textSize="16sp"
@@ -137,6 +136,17 @@
                 app:layout_constraintVertical_bias="0.0"
                 app:layout_constraintEnd_toEndOf="@+id/buttGoogle" android:layout_marginEnd="8dp"
         />
+        <TextView
+                android:text="TextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" android:id="@+id/tvNickError"
+                android:textColor="@android:color/holo_red_dark"
+                android:fontFamily="@font/coda" android:textStyle="bold" android:visibility="invisible"
+                app:layout_constraintEnd_toEndOf="@+id/buttYok" android:layout_marginStart="8dp"
+                app:layout_constraintStart_toStartOf="@+id/buttYok"
+                android:layout_marginBottom="8dp"
+                app:layout_constraintBottom_toBottomOf="parent" android:textSize="14sp" android:layout_marginTop="66dp"
+                app:layout_constraintTop_toBottomOf="@+id/buttGoogle"/>
         <androidx.constraintlayout.widget.Guideline android:layout_width="wrap_content"
                                                     android:layout_height="wrap_content" android:id="@+id/guideline"
                                                     app:layout_constraintGuide_percent="0.5"

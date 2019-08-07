@@ -1,4 +1,4 @@
-package com.ust.spaceq
+package com.ust.qspace
 
 import android.content.Intent
 import android.graphics.drawable.AnimationDrawable
@@ -12,6 +12,7 @@ import android.view.Gravity
 import android.view.View
 import android.widget.EditText
 import android.widget.ScrollView
+import android.widget.Toast
 import android.widget.Toast.*
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
@@ -24,6 +25,7 @@ import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.GoogleAuthProvider
 import com.google.firebase.database.*
 import kotlinx.android.synthetic.main.activity_login.*
+import java.lang.Exception
 import android.widget.Button as Button
 
 class LoginActivity : AppCompatActivity() {
@@ -76,6 +78,8 @@ class LoginActivity : AppCompatActivity() {
         yok.visibility = View.INVISIBLE
         gir.isClickable = false
         gir.visibility = View.INVISIBLE
+        buttResetPass.isClickable = false
+        buttResetPass.visibility = View.INVISIBLE
 
         yes.setOnClickListener {
             yok.isClickable = true
@@ -88,6 +92,8 @@ class LoginActivity : AppCompatActivity() {
             yarat.visibility = View.INVISIBLE
             nick.isClickable = false
             nick.visibility = View.INVISIBLE
+            buttResetPass.isClickable = true
+            buttResetPass.visibility = View.VISIBLE
         }
 
         yok.setOnClickListener {
@@ -101,6 +107,8 @@ class LoginActivity : AppCompatActivity() {
             yarat.visibility = View.VISIBLE
             nick.isClickable = true
             nick.visibility = View.VISIBLE
+            buttResetPass.isClickable = false
+            buttResetPass.visibility = View.INVISIBLE
         }
 
         val loginTextWatcher = object : TextWatcher {
@@ -268,6 +276,35 @@ class LoginActivity : AppCompatActivity() {
 
         return valid
     }
+    //Resetting password by e-mail
+    fun resetPassword(view: View){
+        val emailAddress = etEmail.text.toString()
+
+        if (emailAddress.contains("@",ignoreCase = true)){
+                try {
+                    auth.sendPasswordResetEmail(emailAddress)
+                        .addOnCompleteListener {
+                            if (it.isSuccessful){
+                                Log.d(TAG, "Reset password e-mail sent!")
+                                val toast = makeText(this, getString(R.string.reset_email_sent,emailAddress), LENGTH_LONG)
+                                toast.setGravity(Gravity.TOP,0,150)
+                                toast.show()
+                            }else{
+                                Log.d(TAG, "Reset pw e-mail couldn't sent!")
+                                val toast = makeText(this, getString(R.string.reset_email_failed), LENGTH_LONG)
+                                toast.setGravity(Gravity.TOP,0,150)
+                                toast.show()
+                            }
+                        }
+                }catch (e:Exception){
+                    Log.w(TAG, "Check connection or...",e)
+                }
+            }else{
+            val toast = makeText(this, getString(R.string.enter_email), LENGTH_LONG)
+            toast.setGravity(Gravity.TOP,0,150)
+            toast.show()
+        }
+    }
 
     fun updateUI(user: FirebaseUser?){
 //        hideProgressDialog()  i don't know wth is that?
@@ -308,10 +345,12 @@ class LoginActivity : AppCompatActivity() {
             } catch (e: ApiException) {
                 // Google Sign In failed, update UI appropriately
                 Log.w(TAG, "Google sign in failed", e)
+                Log.d(TAG, "requestCode = $requestCode ///// RC_SIGN_IN = $RC_SIGN_IN")
                 // ...
             }
         }
     }
+
     private fun firebaseAuthWithGoogle(acct: GoogleSignInAccount) {
         Log.d(TAG, "firebaseAuthWithGoogle:" + acct.id!!)
 

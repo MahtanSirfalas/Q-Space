@@ -1,4 +1,4 @@
-package com.ust.spaceq
+package com.ust.qspace
 
 import android.animation.*
 import android.annotation.TargetApi
@@ -16,7 +16,6 @@ import android.view.animation.*
 import android.widget.PopupWindow
 import android.widget.Toast.*
 import androidx.constraintlayout.widget.ConstraintLayout
-import androidx.core.view.ViewCompat
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions

@@ -1,4 +1,4 @@
-package com.ust.spaceq
+package com.ust.qspace
 
 import org.junit.Test
 

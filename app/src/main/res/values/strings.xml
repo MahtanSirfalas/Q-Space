@@ -7,7 +7,6 @@
     <string name="title_activity_suggest">Suggest Q</string>
     <string name="title_activity_random">RandomActivity</string>
     <!-- Login Activity -->
-
     <string name="loading">Loading</string>
     <string name="sign_in_google">Sign in with Google account</string>
     <string name="enter_nickname">Enter a username</string>
@@ -21,6 +20,8 @@
     <string name="auth_fail">Registration failed, check internet connection.</string>
     <string name="failed_verify_email">Failed to send verification email</string>
     <string name="verify_email_sent">Verification e-mail is sent</string>
+    <string name="reset_email_sent">Reset password e-mail sent to %1$s</string>
+    <string name="reset_email_failed">Reset pw e-mail couldn\'t sent; Check if e-mail address is valid!</string>
     <!-- Main Activity -->
     <string name="tv_warn">Verify your e-mail address..!</string>
     <string name="play">Play</string>

@@ -1,4 +1,4 @@
-package com.ust.spaceq
+package com.ust.qspace
 
 import android.annotation.TargetApi
 import android.app.Activity
@@ -18,7 +18,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
-import com.ust.spaceq.models.Suggests
+import com.ust.qspace.models.Suggests
 import com.xwray.groupie.GroupAdapter
 import com.xwray.groupie.Item
 import com.xwray.groupie.ViewHolder

@@ -1,4 +1,4 @@
-package com.ust.spaceq
+package com.ust.qspace
 
 import android.annotation.SuppressLint
 import android.annotation.TargetApi
@@ -18,8 +18,8 @@ import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
 import com.squareup.picasso.Picasso
-import com.ust.spaceq.models.Post
-import com.ust.spaceq.models.RecyclerItemClickListenr
+import com.ust.qspace.models.Post
+import com.ust.qspace.models.RecyclerItemClickListenr
 import com.xwray.groupie.GroupAdapter
 import com.xwray.groupie.Item
 import com.xwray.groupie.ViewHolder

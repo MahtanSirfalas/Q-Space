@@ -14,7 +14,7 @@ android {
     compileSdkVersion 29
     buildToolsVersion "29.0.0"
     defaultConfig {
-        applicationId "com.ust.spaceq"
+        applicationId "com.ust.qspace"
         minSdkVersion 18
         targetSdkVersion 29
         versionCode 1

@@ -1,4 +1,4 @@
-package com.ust.spaceq
+package com.ust.qspace
 
 import androidx.test.InstrumentationRegistry
 import androidx.test.runner.AndroidJUnit4
