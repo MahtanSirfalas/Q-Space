@@ -4,14 +4,12 @@ import android.animation.ObjectAnimator
 import android.animation.PropertyValuesHolder
 import android.annotation.SuppressLint
 import android.app.Activity
-import android.content.Context
 import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.AnimationDrawable
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
-import android.text.Editable
 import android.util.Log
 import android.view.Gravity
 import android.view.Menu
@@ -25,6 +23,7 @@ import android.widget.Toast.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.constraintlayout.widget.ConstraintSet
+import androidx.constraintlayout.widget.Group
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
@@ -71,9 +70,9 @@ class OrderedActivity : AppCompatActivity() {
 
         qAnswer = mapOf("Stage 1" to 95, "Stage 2" to 12, "Stage 4" to 116, "Stage 5" to 119, "Stage 6" to 8,
             "Stage 7" to 99,"Stage 9" to 16, "Stage 10" to 6, "Stage 11" to 215674, "Stage 12" to 80, "Stage 13" to 63,
-            "Stage 14" to 98, "Stage 15" to 7, "Stage 16" to 4, "Stage 17" to 87,"Stage 18" to 17, "Stage 19" to 200,
+            "Stage 14" to 98, "Stage 15" to 7, "Stage 16" to 4, "Stage 17" to 87,"Stage 18" to 19, "Stage 19" to 200,
             "Stage 20" to 4, "Stage 21" to -3, "Stage 22" to 3, "Stage 24" to 35, "Stage 25" to 6, "Stage 26" to 1113122113,
-            "Stage 27" to 40)
+            "Stage 27" to 16, "Stage 28" to 40, "Stage 29" to 49, "Stage 30" to 6)
 
         firebaseAnalytics = FirebaseAnalytics.getInstance(this)
         auth = FirebaseAuth.getInstance()
@@ -254,8 +253,7 @@ class OrderedActivity : AppCompatActivity() {
                                     level = p0s.child("level").value as String
                                     if (levelP != level){
                                         when(level){
-                                            "Epimetheus" -> {
-                                                TODO("Tag changes affects work!!")}
+                                            "Epimetheus" -> {}
                                             "Atlas" -> {}
                                             "Hyperion" -> {}
                                             "Charon" -> {}
@@ -547,13 +545,13 @@ class OrderedActivity : AppCompatActivity() {
                 ib_back.startAnimation(fadein)
                 ib_next.startAnimation(fadein)
                 group_under.visibility = View.VISIBLE
-                tv_under.text = """13                       7                        5
+                tv_under.text = """14                       7                        7
                     |
                     |
-                    |4                        8                        20
+                    |5                        8                        21
                     |
                     |
-                    |19                         ?                        11
+                    |19                         ?                        12
                     |
                 """.trimMargin()
                 tv_under1.text = getString(R.string.missing_number)
@@ -662,9 +660,10 @@ class OrderedActivity : AppCompatActivity() {
                     |3+10 = 6
                 """.trimMargin()
                 tv_under1.text = "5-13 = ?"
+                val param = tv_under1.layoutParams as ConstraintLayout.LayoutParams
+                param.setMargins(0,16,0,0)
+                tv_under1.layoutParams = param
                 group_under.startAnimation(fadein)
-                tv_under.textSize = 36f
-                tv_under1.textSize = 36f
                 Log.d(TAG, "$level adaptation is done successfully!")
             }
             "Stage 26"->{
@@ -688,12 +687,56 @@ class OrderedActivity : AppCompatActivity() {
                 ib_back.startAnimation(fadein)
                 ib_next.startAnimation(fadein)
                 group_under.visibility = View.VISIBLE
+                tv_under.text = "11X11 = 4\n" +
+                        "15X15 = 9"
+                tv_under1.text = "14X14 = ?"
+                val param = tv_under1.layoutParams as ConstraintLayout.LayoutParams
+                param.setMargins(0,8,0,0)
+                tv_under1.layoutParams = param
+                group_under.startAnimation(fadein)
+                Log.d(TAG, "$level adaptation is done successfully!")
+            }
+            "Stage 28"->{
+                ib_back.visibility = View.VISIBLE
+                ib_next.visibility = View.VISIBLE
+                ib_back.startAnimation(fadein)
+                ib_next.startAnimation(fadein)
+                group_under.visibility = View.VISIBLE
                 tv_under.text = "7,    13,    18,    26,    29,    39,    .?."
                 tv_under1.text = getString(R.string.missing_number)
                 val param = tv_under1.layoutParams as ConstraintLayout.LayoutParams
                 param.setMargins(0,16,0,0)
                 tv_under1.layoutParams = param
                 tv_under1.gravity = Gravity.CENTER_HORIZONTAL
+                group_under.startAnimation(fadein)
+                Log.d(TAG, "$level adaptation is done successfully!")
+            }
+            "Stage 29"->{
+                ib_back.visibility = View.VISIBLE
+                ib_next.visibility = View.VISIBLE
+                ib_back.startAnimation(fadein)
+                ib_next.startAnimation(fadein)
+                group_under.visibility = View.VISIBLE
+                tv_under.text = "7+3 = 34\n" +
+                        "8+2 = 39"
+                tv_under1.text = "10-3 = ?"
+                val param = tv_under1.layoutParams as ConstraintLayout.LayoutParams
+                param.setMargins(0,8,0,0)
+                tv_under1.layoutParams = param
+                group_under.startAnimation(fadein)
+                Log.d(TAG, "$level adaptation is done successfully!")
+            }
+            "Stage 30"->{
+                ib_back.visibility = View.VISIBLE
+                ib_next.visibility = View.VISIBLE
+                ib_back.startAnimation(fadein)
+                ib_next.startAnimation(fadein)
+                group_under.visibility = View.VISIBLE
+                tv_under.text = "12149 = 77"
+                tv_under1.text = "94 = ?"
+                val param = tv_under1.layoutParams as ConstraintLayout.LayoutParams
+                param.setMargins(0,16,0,0)
+                tv_under1.layoutParams = param
                 group_under.startAnimation(fadein)
                 Log.d(TAG, "$level adaptation is done successfully!")
             }
@@ -872,6 +915,27 @@ class OrderedActivity : AppCompatActivity() {
                 intent.putExtra("tvName", nick)
                 startActivity(intent)
             }
+            "Stage 27" -> {
+                levelKey = "Stage 28"
+                val intent = Intent(this@OrderedActivity, OrderedActivity::class.java)
+                intent.putExtra("levelKey", levelKey)
+                intent.putExtra("tvName", nick)
+                startActivity(intent)
+            }
+            "Stage 28" -> {
+                levelKey = "Stage 29"
+                val intent = Intent(this@OrderedActivity, OrderedActivity::class.java)
+                intent.putExtra("levelKey", levelKey)
+                intent.putExtra("tvName", nick)
+                startActivity(intent)
+            }
+            "Stage 29" -> {
+                levelKey = "Stage 30"
+                val intent = Intent(this@OrderedActivity, OrderedActivity::class.java)
+                intent.putExtra("levelKey", levelKey)
+                intent.putExtra("tvName", nick)
+                startActivity(intent)
+            }
             else -> {}
         }
     }
@@ -1040,6 +1104,27 @@ class OrderedActivity : AppCompatActivity() {
             }
             "Stage 27" -> {
                 levelKey = "Stage 26"
+                val intent = Intent(this@OrderedActivity, OrderedActivity::class.java)
+                intent.putExtra("levelKey", levelKey)
+                intent.putExtra("tvName", nick)
+                startActivity(intent)
+            }
+            "Stage 28" -> {
+                levelKey = "Stage 27"
+                val intent = Intent(this@OrderedActivity, OrderedActivity::class.java)
+                intent.putExtra("levelKey", levelKey)
+                intent.putExtra("tvName", nick)
+                startActivity(intent)
+            }
+            "Stage 29" -> {
+                levelKey = "Stage 28"
+                val intent = Intent(this@OrderedActivity, OrderedActivity::class.java)
+                intent.putExtra("levelKey", levelKey)
+                intent.putExtra("tvName", nick)
+                startActivity(intent)
+            }
+            "Stage 30" -> {
+                levelKey = "Stage 29"
                 val intent = Intent(this@OrderedActivity, OrderedActivity::class.java)
                 intent.putExtra("levelKey", levelKey)
                 intent.putExtra("tvName", nick)

@@ -42,7 +42,8 @@ class LvlActivity : AppCompatActivity() {
             "Stage 14" to buttL14, "Stage 15" to buttL15, "Stage 16" to buttL16, "Stage 17" to buttL17,
             "Stage 18" to buttL18, "Stage 19" to buttL19, "Stage 20" to buttL20, "Stage 21" to buttL21,
             "Stage 22" to buttL22, "Stage 23" to buttL23, "Stage 24" to buttL24, "Stage 25" to buttL25,
-            "Stage 26" to buttL26, "Stage 27" to buttL27)
+            "Stage 26" to buttL26, "Stage 27" to buttL27, "Stage 28" to buttL28, "Stage 29" to buttL29,
+            "Stage 30" to buttL30)
 
         firebaseAnalytics = FirebaseAnalytics.getInstance(this)
         auth = FirebaseAuth.getInstance()

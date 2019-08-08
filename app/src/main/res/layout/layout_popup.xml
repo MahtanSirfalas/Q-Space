@@ -4,19 +4,21 @@
                                                    xmlns:tools="http://schemas.android.com/tools"
                                                    android:layout_width="wrap_content"
                                                    android:layout_height="wrap_content"
+                                                   android:maxWidth="280dp"
                                                    android:background="@drawable/custom_comment"
-                                                   android:padding="16dp">
+                                                   android:padding="8dp">
 
     <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" app:srcCompat="@drawable/ic_spacemedal" android:id="@+id/iv_spaceMedal"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            android:layout_marginTop="8dp" app:layout_constraintTop_toTopOf="parent" android:layout_marginBottom="8dp"
+            android:layout_marginBottom="8dp"
             app:layout_constraintBottom_toTopOf="@+id/textView" tools:ignore="VectorDrawableCompat"
             android:tint="@color/colorPurple" app:tintMode="multiply"
             android:backgroundTint="@android:color/transparent"
-            android:background="@android:color/transparent"/>
+            android:background="@android:color/transparent" android:layout_marginTop="8dp"
+            app:layout_constraintTop_toTopOf="parent"/>
     <TextView
             android:text="@string/congratulations"
             android:layout_width="0dp"

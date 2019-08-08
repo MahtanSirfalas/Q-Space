@@ -60,7 +60,7 @@
     <string name="yes_delete">Yes, delete</string>
     <string name="no_don_t">No, don\'t</string>
     <string name="player_quote">says \'%1$s\'</string>
-    <string name="player_level">is at \'%1$s\'</string>
+    <string name="player_level">is on \'%1$s\'</string>
     <string name="player_points">has \'%1$d\' points</string>
     <string name="player_ups">has \'%1$d\' Upvotes</string>
     <!-- Ordered Activity -->

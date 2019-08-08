@@ -416,7 +416,7 @@
                         android:layout_marginEnd="16dp" android:background="@drawable/custom_butt_stage"
                         android:textColor="@color/colorSpaceWhite" android:textColorHighlight="@color/colorAccent"
                         android:textColorHint="@color/colorSpaceWhite" android:fontFamily="@font/coda"
-                        android:visibility="invisible" android:textSize="18sp"/>
+                        android:visibility="invisible" android:textSize="18sp" android:onClick="showStage"/>
                 <Button
                         android:text="29"
                         android:layout_width="60dp"
@@ -430,7 +430,7 @@
                         android:layout_marginEnd="16dp" android:background="@drawable/custom_butt_stage"
                         android:textColor="@color/colorSpaceWhite" android:textColorHighlight="@color/colorAccent"
                         android:textColorHint="@color/colorSpaceWhite" android:fontFamily="@font/coda"
-                        android:visibility="invisible" android:textSize="18sp"/>
+                        android:visibility="invisible" android:textSize="18sp" android:onClick="showStage"/>
                 <Button
                         android:text="30"
                         android:layout_width="60dp"
@@ -443,7 +443,7 @@
                         android:layout_marginEnd="16dp" android:background="@drawable/custom_butt_stage"
                         android:textColor="@color/colorSpaceWhite" android:textColorHighlight="@color/colorAccent"
                         android:textColorHint="@color/colorSpaceWhite" android:fontFamily="@font/coda"
-                        android:visibility="invisible" android:textSize="18sp"/>
+                        android:visibility="invisible" android:textSize="18sp" android:onClick="showStage"/>
                 <Button
                         android:text="31"
                         android:layout_width="60dp" android:layout_height="60dp"
