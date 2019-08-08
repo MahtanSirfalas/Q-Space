@@ -26,4 +26,11 @@
         <item name="colorControlActivated">@color/warningdarkred</item>
     </style>
 
+    <style name="ToggleSwitchTheme" parent="ThemeOverlay.AppCompat.Light">
+        <item name="colorAccent">@color/colorPink</item>
+        <item name="colorControlActivated">@color/colorPink</item>
+        <item name="colorSwitchThumbNormal">@color/colorSpaceWhite</item>
+        <item name="android:colorForeground">@color/colorSpaceWhite</item>
+    </style>
+
 </resources>

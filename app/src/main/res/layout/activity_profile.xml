@@ -39,6 +39,7 @@
             app:layout_constraintEnd_toEndOf="parent" android:layout_marginEnd="8dp"
             app:layout_constraintStart_toStartOf="parent" android:layout_marginStart="8dp"
             android:visibility="invisible"/>
+
     <androidx.constraintlayout.widget.ConstraintLayout
             android:background="@android:color/transparent"
             android:translationZ="10dp"
@@ -69,7 +70,7 @@
                 android:layout_marginStart="8dp" android:layout_marginBottom="4dp"
                 app:layout_constraintBottom_toTopOf="@+id/etQuote"/>
         <Button
-                android:text="Select Avatar"
+                android:text="@string/select_avatar"
                 android:layout_width="120dp"
                 android:layout_height="120dp" android:id="@+id/buttAvatar"
                 android:background="@drawable/custom_avatar" android:textColor="@color/colorSpaceWhite"
@@ -78,6 +79,16 @@
                 app:layout_constraintStart_toStartOf="@+id/ivAvatar_circle"
                 app:layout_constraintTop_toTopOf="@+id/ivAvatar_circle"
                 app:layout_constraintBottom_toBottomOf="@+id/ivAvatar_circle"/>
+        <AutoCompleteTextView
+                android:text="@string/after_points_quote"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" android:id="@+id/etQuote" android:maxLength="200"
+                android:textColor="@color/colorSpaceWhite" android:fontFamily="@font/coda" android:textStyle="italic"
+                android:textSize="16sp"
+                app:layout_constraintTop_toBottomOf="@+id/buttAvatar"
+                app:layout_constraintBottom_toTopOf="@+id/textName" app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent" android:layout_marginStart="8dp"
+                android:layout_marginEnd="8dp"/>
         <TextView
                 android:text="@string/username"
                 android:layout_width="wrap_content"
@@ -138,16 +149,6 @@
                 app:layout_constraintTop_toBottomOf="@+id/textMail"
                 android:textSize="18sp" android:layout_marginBottom="4dp"
                 app:layout_constraintStart_toStartOf="@+id/guideline2"/>
-        <AutoCompleteTextView
-                android:text="After 5000 points you can add a quote here!"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" android:id="@+id/etQuote" android:maxLength="200"
-                android:textColor="@color/colorSpaceWhite" android:fontFamily="@font/coda" android:textStyle="italic"
-                android:textSize="14sp"
-                app:layout_constraintTop_toBottomOf="@+id/buttAvatar"
-                app:layout_constraintBottom_toTopOf="@+id/textName" app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent" android:layout_marginStart="8dp"
-                android:layout_marginEnd="8dp"/>
         <Button
                 android:text="Save"
                 android:layout_width="0dp"
@@ -160,7 +161,6 @@
                 android:layout_marginBottom="4dp" app:layout_constraintBottom_toBottomOf="parent"
                 android:visibility="gone"/>
     </androidx.constraintlayout.widget.ConstraintLayout>
-
     <ScrollView
             android:fillViewport="true"
             android:layout_width="0dp"
@@ -178,20 +178,22 @@
                     android:layout_height="wrap_content" android:id="@+id/tvEarnedHead"
                     android:textColor="@color/colorSpace" android:textStyle="bold" android:textAlignment="center"
                     android:background="@drawable/custom_ucomment" android:paddingLeft="4dp"
-                    android:paddingRight="4dp" android:fontFamily="@font/coda" android:layout_marginTop="8dp"/>
+                    android:paddingRight="4dp" android:fontFamily="@font/coda" android:layout_marginTop="8dp"
+                    android:textSize="18sp"/>
             <TextView
                     android:text="TextView"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content" android:id="@+id/tvEarnedUpvote"
                     android:textColor="@color/colorSpaceWhite" android:textAlignment="center"
-                    android:fontFamily="@font/coda"/>
+                    android:fontFamily="@font/coda" android:textSize="16sp"/>
             <TextView
                     android:text="-TOTAL POINTS-"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" android:id="@+id/tvTotalHead"
                     android:textColor="@color/colorSpace" android:textStyle="bold" android:textAlignment="center"
                     android:background="@drawable/custom_ucomment" android:paddingLeft="4dp"
-                    android:paddingRight="4dp" android:fontFamily="@font/coda" android:layout_marginTop="8dp"/>
+                    android:paddingRight="4dp" android:fontFamily="@font/coda" android:layout_marginTop="8dp"
+                    android:textSize="18sp"/>
             <TextView
                     android:text="0"
                     android:layout_width="wrap_content"
@@ -199,7 +201,7 @@
                     android:textColor="@color/colorSpaceWhite" android:background="@android:color/transparent"
                     android:fontFamily="@font/coda"
                     android:visibility="visible"
-                    android:textSize="14sp" android:gravity="center"/>
+                    android:textSize="16sp" android:gravity="center"/>
             <TextView
                     android:text="-STAGE POINTS-"
                     android:layout_width="wrap_content"
@@ -207,7 +209,7 @@
                     android:textColor="@color/colorSpace" android:fontFamily="@font/coda"
                     android:textAlignment="center" android:textStyle="bold"
                     android:background="@drawable/custom_ucomment" android:paddingLeft="4dp"
-                    android:paddingRight="4dp" android:layout_marginTop="8dp"/>
+                    android:paddingRight="4dp" android:layout_marginTop="8dp" android:textSize="18sp"/>
             <ListView
                     android:layout_width="match_parent"
                     android:layout_height="match_parent" android:id="@+id/lvStages"

@@ -89,5 +89,12 @@
     <string name="choose_not_included">Tabloda hangisi yoktu?</string>
     <string name="keep_in_mind">Aklında Tut!</string>
     <string name="the_next_number">Sıradaki numara nedir?</string>
+    <string name="enter_answer">Cevap girin!</string>
+    <string name="after_points_quote">5000 puana ulaştıktan sonra alıntı paylaşabilirsiniz!</string>
+    <string name="select_avatar">Avatar Seçin</string>
+    <string name="privacy_policy">Gizlilik Politikası</string>
+    <string name="settings">Ayarlar</string>
+    <string name="terms_conditions"><![CDATA[Hükümler&Koşullar]]></string>
+    <string name="title_activity_settings">SettingsActivity</string>
 
 </resources>

@@ -264,7 +264,6 @@ class CommentActivity : AppCompatActivity() {
                         adapter.add(PostItem(post))
                     }
                 }
-
                 recycleComment.adapter = adapter
             }
 

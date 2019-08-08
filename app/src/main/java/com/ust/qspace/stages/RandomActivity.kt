@@ -23,6 +23,7 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
 import com.ust.qspace.*
 import com.ust.qspace.R
+import com.ust.qspace.trees.SettingsActivity
 
 import kotlinx.android.synthetic.main.activity_random.*
 import kotlinx.android.synthetic.main.activity_random.ibComment
@@ -151,9 +152,7 @@ class RandomActivity : AppCompatActivity() {
                             mainHandler.post(updatePointTask)
                         }else{
                             commentAnimation()
-                            val toast = makeText(baseContext, "You passed that stage before.", LENGTH_SHORT)
-                            toast.setGravity(Gravity.TOP, 0, 100)
-                            toast.show()
+                            Log.d(TAG, "Stage passed before!")
                         }
                     }else{
                         stageRef.child("point").setValue(1006)
@@ -241,7 +240,7 @@ class RandomActivity : AppCompatActivity() {
                 })
             }else{
                 Log.d(TAG, "tv_answer1 is empty!")
-                val toast = makeText(baseContext, "Enter Your Answer!", LENGTH_SHORT)
+                val toast = makeText(baseContext, getString(R.string.enter_answer), LENGTH_SHORT)
                 toast.setGravity(Gravity.CENTER, 0, 0)
                 toast.show()
             }
@@ -666,6 +665,17 @@ class RandomActivity : AppCompatActivity() {
         startActivity(intent)
     }
 
+    private fun showSettings(view:View?){
+        if (isRunning){
+            mainHandler.removeCallbacks(updatePointTask)
+        }else{
+            Log.d(TAG, "isRunning false")
+        }
+        Log.d(TAG, "action_settings pressed!")
+        val intent = Intent(this@RandomActivity, SettingsActivity::class.java)
+        startActivity(intent)
+    }
+
     fun showProfile(view: View?) {
         if (isRunning){
             mainHandler.removeCallbacks(updatePointTask)
@@ -716,6 +726,7 @@ class RandomActivity : AppCompatActivity() {
             item.itemId == R.id.action_out -> signOut(null)
             item.itemId == R.id.action_profile -> showProfile(null)
             item.itemId == R.id.action_home -> mainMenu(null)
+            item.itemId == R.id.action_settings -> showSettings(null)
             else -> {
             }
         }

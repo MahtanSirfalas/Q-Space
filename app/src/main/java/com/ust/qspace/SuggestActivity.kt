@@ -19,6 +19,7 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
 import com.ust.qspace.models.Suggests
+import com.ust.qspace.trees.SettingsActivity
 import com.xwray.groupie.GroupAdapter
 import com.xwray.groupie.Item
 import com.xwray.groupie.ViewHolder
@@ -102,7 +103,6 @@ class SuggestActivity : AppCompatActivity() {
         suggestRef.addListenerForSingleValueEvent(object : ValueEventListener {
             override fun onCancelled(p0: DatabaseError) {
             }
-
             override fun onDataChange(p0: DataSnapshot) {
                 if (p0.exists() && p0.hasChildren()){
                     val question = p0.child("question").value as String
@@ -137,6 +137,12 @@ class SuggestActivity : AppCompatActivity() {
         startActivity(intent)
     }
 
+    private fun showSettings(view:View?){
+        Log.d(TAG, "action_settings pressed!")
+        val intent = Intent(this@SuggestActivity, SettingsActivity::class.java)
+        startActivity(intent)
+    }
+
     fun signOut(view: View?){
         Log.d(TAG, "signOut pressed..")
         auth.signOut()
@@ -150,7 +156,7 @@ class SuggestActivity : AppCompatActivity() {
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         // Inflate the menu; this adds items to the action bar if it is present.
-        menuInflater.inflate(R.menu.menu_main, menu)
+        menuInflater.inflate(R.menu.menu_suggest, menu)
         return true
     }
 
@@ -162,6 +168,7 @@ class SuggestActivity : AppCompatActivity() {
             item.itemId == R.id.action_out -> signOut(null)
             item.itemId == R.id.action_profile -> showProfile(null)
             item.itemId == R.id.action_home -> mainMenu(null)
+            item.itemId == R.id.action_settings -> showSettings(null)
             else -> {
 
             }

@@ -23,6 +23,7 @@ import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
 import com.squareup.picasso.Picasso
+import com.ust.qspace.trees.SettingsActivity
 
 import kotlinx.android.synthetic.main.activity_main.*
 
@@ -308,6 +309,12 @@ class MainActivity : AppCompatActivity() {
         })
     }
 
+    private fun showSettings(view:View?){
+        Log.d(TAG, "action_settings pressed!")
+        val intent = Intent(this@MainActivity, SettingsActivity::class.java)
+        startActivity(intent)
+    }
+
     private fun mainMenu(view: View?){
         Log.d(TAG, "mainMenu pressed..")
         val intent = Intent(this@MainActivity, MainActivity::class.java)
@@ -343,6 +350,7 @@ class MainActivity : AppCompatActivity() {
         when {
             item.itemId == R.id.action_out -> signOut(null)
             item.itemId == R.id.action_home -> mainMenu(null)
+            item.itemId == R.id.action_settings -> showSettings(null)
             else -> {
 
             }

@@ -145,10 +145,8 @@ class ProfileActivity : AppCompatActivity() {
             }
         })
 
-
         buttAvatar.setOnClickListener {
             Log.d(TAG, "avatar selector clicked")
-
             val intent = Intent(Intent.ACTION_PICK)
             intent.type = "image/*"
             startActivityForResult(intent, 0)

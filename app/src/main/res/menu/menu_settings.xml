@@ -1,7 +1,7 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
       xmlns:app="http://schemas.android.com/apk/res-auto"
       xmlns:tools="http://schemas.android.com/tools"
-      tools:context="com.ust.qspace.SuggestActivity">
+      tools:context="com.ust.qspace.trees.SettingsActivity">
     <item android:icon="@android:drawable/ic_dialog_dialer"
           app:showAsAction="ifRoom"
           android:id="@+id/action_home" android:title="Home"/>
@@ -14,10 +14,6 @@
           app:showAsAction="never"/>
     <item android:id="@+id/terms_condition"
           android:title="@string/terms_conditions"
-          android:orderInCategory="100"
-          app:showAsAction="never"/>
-    <item android:id="@+id/action_settings"
-          android:title="@string/settings"
           android:orderInCategory="100"
           app:showAsAction="never"/>
     <item android:id="@+id/action_out"

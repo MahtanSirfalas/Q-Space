@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".trees.SettingsActivity">
+
+    <com.google.android.material.appbar.AppBarLayout
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:theme="@style/AppTheme.AppBarOverlay">
+
+        <androidx.appcompat.widget.Toolbar
+                android:id="@+id/toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                android:background="?attr/colorPrimary"
+                app:titleTextAppearance="@style/Toolbar.TitleText"
+                app:popupTheme="@style/AppTheme.PopupOverlay"/>
+
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior"
+            tools:showIn="@layout/activity_suggest"
+            tools:context=".trees.SettingsActivity"
+            android:background="@drawable/gradient1"
+            android:gravity="center" android:orientation="vertical">
+
+        <ScrollView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                tools:context=".trees.SettingsActivity" android:fillViewport="true">
+
+            <androidx.constraintlayout.widget.ConstraintLayout android:layout_width="match_parent"
+                                                               android:layout_height="wrap_content"
+                                                               android:background="@drawable/bg_gradient"
+                                                               android:id="@+id/layoutbg"
+                                                               android:focusableInTouchMode="true"
+                                                               android:padding="8dp">
+
+                <TextView
+                        android:text="UI Settings"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content" android:id="@+id/uiHead"
+                        android:textColor="@color/colorPrimaryDark" android:fontFamily="@font/coda"
+                        android:textSize="24sp"
+                        android:background="@drawable/custom_ucomment" android:layout_marginEnd="8dp"
+                        app:layout_constraintEnd_toEndOf="parent" android:layout_marginStart="8dp"
+                        app:layout_constraintStart_toStartOf="parent" android:layout_marginTop="8dp"
+                        app:layout_constraintTop_toTopOf="parent" android:gravity="center"/>
+                <androidx.appcompat.widget.SwitchCompat
+                        android:text="White Fonts in Questions"
+                        android:theme="@style/ToggleSwitchTheme"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content" android:id="@+id/sw_white_font"
+                        android:textColor="@color/colorSpaceWhite"
+                        android:fontFamily="@font/coda" android:textSize="18sp" android:layout_marginEnd="8dp"
+                        app:layout_constraintEnd_toEndOf="parent" android:layout_marginStart="8dp"
+                        app:layout_constraintStart_toStartOf="parent" android:layout_marginTop="16dp"
+                        app:layout_constraintTop_toBottomOf="@+id/uiHead"/>
+                <androidx.appcompat.widget.SwitchCompat
+                        android:text="Simple Stages UI"
+                        android:theme="@style/ToggleSwitchTheme"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content" android:id="@+id/sw_simple_stage"
+                        android:textColor="@color/colorSpaceWhite"
+                        android:fontFamily="@font/coda" android:textSize="18sp"
+                        android:layout_marginEnd="8dp"
+                        app:layout_constraintTop_toBottomOf="@id/sw_white_font"
+                        app:layout_constraintEnd_toEndOf="parent" android:layout_marginStart="8dp"
+                        app:layout_constraintStart_toStartOf="parent" android:layout_marginTop="16dp"
+                        android:enabled="false"/>
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </ScrollView>
+
+    </LinearLayout>
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

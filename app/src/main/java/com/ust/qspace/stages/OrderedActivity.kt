@@ -23,12 +23,14 @@ import android.widget.Toast.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.constraintlayout.widget.ConstraintSet
-import androidx.constraintlayout.widget.Group
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
 import com.ust.qspace.*
 import com.ust.qspace.R
+import com.ust.qspace.models.SettingsPrefs
+import com.ust.qspace.models.whiteFont
+import com.ust.qspace.trees.SettingsActivity
 
 import kotlinx.android.synthetic.main.activity_ordered.*
 import kotlinx.android.synthetic.main.activity_ordered.ibComment
@@ -94,7 +96,7 @@ class OrderedActivity : AppCompatActivity() {
                 override fun onCancelled(p0: DatabaseError) {
                     Log.d(TAG, "stageRef Data couldn't read; No Internet Connection/No Response " +
                             "from database/Wrong datapath")
-                    val toast = makeText(baseContext, "WARNING: Be Sure that you have an active internet connection!", LENGTH_LONG)
+                    val toast = makeText(baseContext, getString(R.string.listener_cancelled), LENGTH_LONG)
                     toast.setGravity(Gravity.TOP or Gravity.START, 0, 0)
                     toast.show()
                 }
@@ -118,9 +120,7 @@ class OrderedActivity : AppCompatActivity() {
                             }
                             mainHandler.post(updatePointTask)
                         }else{
-                            val toast = makeText(baseContext, "You passed that stage before.", LENGTH_SHORT)
-                            toast.setGravity(Gravity.CENTER, 0, 0)
-                            toast.show()
+                            Log.d(TAG, "Stage passed before.")
                         }
                     }else{
                         stageRef.child("point").setValue(1004)
@@ -276,14 +276,14 @@ class OrderedActivity : AppCompatActivity() {
                             starAnimation()
 
                             Log.d(TAG, "$levelKey: Answer ($uAnswer) is equal to $answer; Accepted!")
-                            val toast = makeText(baseContext, "Bravo! answer is accepted!", LENGTH_SHORT)
+                            val toast = makeText(baseContext, getString(R.string.bravo), LENGTH_SHORT)
                             toast.setGravity(Gravity.TOP, 0, 100)
                             toast.show()
                         } else {
                             point -= 10
                             stageRef.child("point").setValue(point)
                             Log.d(TAG, "Something's Wrong; $uAnswer != $answer!")
-                            val toast = makeText(baseContext, "Wrong answer, try again!", LENGTH_SHORT)
+                            val toast = makeText(baseContext, getString(R.string.wrong_answer), LENGTH_SHORT)
                             toast.setGravity(Gravity.CENTER, 0, 100)
                             toast.show()
                         }
@@ -293,12 +293,12 @@ class OrderedActivity : AppCompatActivity() {
 
                             Log.d(TAG, "$levelKey: Answer ($uAnswer) is equal to $answer; " +
                                     "But no points added to the database")
-                            val toast = makeText(baseContext, "Bravo! answer is accepted!", LENGTH_SHORT)
+                            val toast = makeText(baseContext, getString(R.string.bravo), LENGTH_SHORT)
                             toast.setGravity(Gravity.TOP, 0, 100)
                             toast.show()
                         }else{
                             Log.d(TAG, "Something's Wrong; $uAnswer != $answer!")
-                            val toast = makeText(baseContext, "Come on mate you answered the question before!", LENGTH_SHORT)
+                            val toast = makeText(baseContext, getString(R.string.come_on), LENGTH_SHORT)
                             toast.setGravity(Gravity.CENTER, 0, 100)
                             toast.show()
                         }
@@ -307,7 +307,7 @@ class OrderedActivity : AppCompatActivity() {
             })
         }else {
             Log.d(TAG, "tv_answer1 is empty!")
-            val toast = makeText(baseContext, "Enter Your Answer!", LENGTH_SHORT)
+            val toast = makeText(baseContext, getString(R.string.enter_answer), LENGTH_SHORT)
             toast.setGravity(Gravity.CENTER, 0, 100)
             toast.show()
         }
@@ -336,6 +336,8 @@ class OrderedActivity : AppCompatActivity() {
     @SuppressLint("SetTextI18n")
     private fun levelAdapt(level: String) {
         val fadein = AnimationUtils.loadAnimation(this, R.anim.abc_fade_in)
+        val settings = SettingsPrefs(this)
+        val whiteFonts = settings.getSetting(whiteFont)
         when (level) {
             "Stage 1" -> {
                 groupOrder.visibility = View.VISIBLE
@@ -346,6 +348,12 @@ class OrderedActivity : AppCompatActivity() {
                 say4.text = "76"
                 ib_next.visibility = View.VISIBLE
                 ib_next.startAnimation(fadein)
+                if (whiteFonts){
+                    say1.setTextColor(Color.WHITE)
+                    say2.setTextColor(Color.WHITE)
+                    say3.setTextColor(Color.WHITE)
+                    say4.setTextColor(Color.WHITE)
+                }
                 Log.d(TAG, "$level adaptation is done successfully!")
             }
             "Stage 2" -> {
@@ -355,6 +363,20 @@ class OrderedActivity : AppCompatActivity() {
                 ib_next.startAnimation(fadein)
                 uc4_say2.setTextColor(Color.WHITE)
                 animationUcgen()
+                if (whiteFonts){
+                    uc1_say1.setTextColor(Color.WHITE)
+                    uc1_say2.setTextColor(Color.WHITE)
+                    uc1_say3.setTextColor(Color.WHITE)
+                    uc2_say1.setTextColor(Color.WHITE)
+                    uc2_say2.setTextColor(Color.WHITE)
+                    uc2_say3.setTextColor(Color.WHITE)
+                    uc3_say1.setTextColor(Color.WHITE)
+                    uc3_say2.setTextColor(Color.WHITE)
+                    uc3_say3.setTextColor(Color.WHITE)
+                    uc4_say1.setTextColor(Color.WHITE)
+                    uc4_say2.setTextColor(Color.MAGENTA)
+                    uc4_say3.setTextColor(Color.WHITE)
+                }
                 Log.d(TAG, "$level adaptation is done successfully!")
             }
             "Stage 4" -> {
@@ -368,6 +390,12 @@ class OrderedActivity : AppCompatActivity() {
                 ib_next.visibility = View.VISIBLE
                 ib_back.startAnimation(fadein)
                 ib_next.startAnimation(fadein)
+                if (whiteFonts){
+                    say1.setTextColor(Color.WHITE)
+                    say2.setTextColor(Color.WHITE)
+                    say3.setTextColor(Color.WHITE)
+                    say4.setTextColor(Color.WHITE)
+                }
                 Log.d(TAG, "$level adaptation is done successfully!")
             }
             "Stage 5" -> {
@@ -381,6 +409,12 @@ class OrderedActivity : AppCompatActivity() {
                 ib_next.visibility = View.VISIBLE
                 ib_back.startAnimation(fadein)
                 ib_next.startAnimation(fadein)
+                if (whiteFonts){
+                    say1.setTextColor(Color.WHITE)
+                    say2.setTextColor(Color.WHITE)
+                    say3.setTextColor(Color.WHITE)
+                    say4.setTextColor(Color.WHITE)
+                }
                 Log.d(TAG, "$level adaptation is done successfully!")
             }
             "Stage 6" -> {
@@ -405,6 +439,12 @@ class OrderedActivity : AppCompatActivity() {
                 ib_next.visibility = View.VISIBLE
                 ib_back.startAnimation(fadein)
                 ib_next.startAnimation(fadein)
+                if (whiteFonts){
+                    say1.setTextColor(Color.WHITE)
+                    say2.setTextColor(Color.WHITE)
+                    say3.setTextColor(Color.WHITE)
+                    say4.setTextColor(Color.MAGENTA)
+                }
                 Log.d(TAG, "$level adaptation is done successfully!")
             }
             "Stage 9"->{
@@ -426,6 +466,20 @@ class OrderedActivity : AppCompatActivity() {
                 uc4_say1.text = "16"
                 uc4_say2.text = "17"
                 uc4_say3.text = "18"
+                if (whiteFonts){
+                    uc1_say1.setTextColor(Color.WHITE)
+                    uc1_say2.setTextColor(Color.WHITE)
+                    uc1_say3.setTextColor(Color.WHITE)
+                    uc2_say1.setTextColor(Color.WHITE)
+                    uc2_say2.setTextColor(Color.WHITE)
+                    uc2_say3.setTextColor(Color.WHITE)
+                    uc3_say1.setTextColor(Color.WHITE)
+                    uc3_say2.setTextColor(Color.MAGENTA)
+                    uc3_say3.setTextColor(Color.WHITE)
+                    uc4_say1.setTextColor(Color.WHITE)
+                    uc4_say2.setTextColor(Color.WHITE)
+                    uc4_say3.setTextColor(Color.WHITE)
+                }
                 Log.d(TAG, "$level adaptation is done successfully!")
             }
             "Stage 10"->{
@@ -451,6 +505,10 @@ class OrderedActivity : AppCompatActivity() {
                     |5+4+5 = 202541
                 """.trimMargin()
                 tv_under1.text = "7+3+8 = ?"
+                if (whiteFonts){
+                    tv_under.setTextColor(Color.WHITE)
+                    tv_under1.setTextColor(Color.MAGENTA)
+                }
                 group_under.startAnimation(fadein)
                 Log.d(TAG, "$level adaptation is done successfully!")
             }
@@ -463,6 +521,10 @@ class OrderedActivity : AppCompatActivity() {
                 tv_under.text = """12       8       88
                     | 9        7       56""".trimMargin()
                 tv_under1.text = "41        2         ?"
+                if (whiteFonts){
+                    tv_under.setTextColor(Color.WHITE)
+                    tv_under1.setTextColor(Color.MAGENTA)
+                }
                 group_under.startAnimation(fadein)
                 tv_under.gravity = Gravity.CENTER
                 tv_under1.gravity = Gravity.CENTER
@@ -480,6 +542,10 @@ class OrderedActivity : AppCompatActivity() {
                 param.setMargins(0,16,0,0)
                 tv_under1.layoutParams = param
                 tv_under1.gravity = Gravity.CENTER_HORIZONTAL
+                if (whiteFonts){
+                    tv_under.setTextColor(Color.WHITE)
+                    tv_under1.setTextColor(Color.MAGENTA)
+                }
                 group_under.startAnimation(fadein)
                 Log.d(TAG, "$level adaptation is done successfully!")
             }
@@ -497,6 +563,10 @@ class OrderedActivity : AppCompatActivity() {
                 tv_under1.text = "7+8 =  ?"
                 tv_under.gravity = Gravity.START
                 tv_under1.gravity = Gravity.START
+                if (whiteFonts){
+                    tv_under.setTextColor(Color.WHITE)
+                    tv_under1.setTextColor(Color.MAGENTA)
+                }
                 group_under.startAnimation(fadein)
                 Log.d(TAG, "$level adaptation is done successfully!")
             }
@@ -521,6 +591,10 @@ class OrderedActivity : AppCompatActivity() {
                     |8888 = 8
                 """.trimMargin()
                 tv_under1.text = "3919 = ?"
+                if (whiteFonts){
+                    tv_under.setTextColor(Color.WHITE)
+                    tv_under1.setTextColor(Color.MAGENTA)
+                }
                 group_under.startAnimation(fadein)
                 Log.d(TAG, "$level adaptation is done successfully!")
             }
@@ -536,6 +610,10 @@ class OrderedActivity : AppCompatActivity() {
                 param.setMargins(0,16,0,0)
                 tv_under1.layoutParams = param
                 tv_under1.gravity = Gravity.CENTER_HORIZONTAL
+                if (whiteFonts){
+                    tv_under.setTextColor(Color.WHITE)
+                    tv_under1.setTextColor(Color.MAGENTA)
+                }
                 group_under.startAnimation(fadein)
                 Log.d(TAG, "$level adaptation is done successfully!")
             }
@@ -558,6 +636,10 @@ class OrderedActivity : AppCompatActivity() {
                 val param = tv_under1.layoutParams as ConstraintLayout.LayoutParams
                 param.setMargins(0,16,0,0)
                 tv_under1.gravity = Gravity.CENTER
+                if (whiteFonts){
+                    tv_under.setTextColor(Color.WHITE)
+                    tv_under1.setTextColor(Color.MAGENTA)
+                }
                 group_under.startAnimation(fadein)
                 Log.d(TAG, "$level adaptation is done successfully!")
             }
@@ -648,6 +730,20 @@ class OrderedActivity : AppCompatActivity() {
                 uc4_say3.text = "71"
                 uc3_say2.setTextColor(resources.getColor(R.color.colorPurple))
                 uc4_say2.setTextColor(resources.getColor(R.color.colorSpaceWhite))
+                if (whiteFonts){
+                    uc1_say1.setTextColor(Color.WHITE)
+                    uc1_say2.setTextColor(Color.WHITE)
+                    uc1_say3.setTextColor(Color.WHITE)
+                    uc2_say1.setTextColor(Color.WHITE)
+                    uc2_say2.setTextColor(Color.WHITE)
+                    uc2_say3.setTextColor(Color.WHITE)
+                    uc3_say1.setTextColor(Color.WHITE)
+                    uc3_say2.setTextColor(Color.WHITE)
+                    uc3_say3.setTextColor(Color.WHITE)
+                    uc4_say1.setTextColor(Color.WHITE)
+                    uc4_say2.setTextColor(Color.MAGENTA)
+                    uc4_say3.setTextColor(Color.WHITE)
+                }
                 Log.d(TAG, "$level adaptation is done successfully!")
             }
             "Stage 25"->{
@@ -663,6 +759,10 @@ class OrderedActivity : AppCompatActivity() {
                 val param = tv_under1.layoutParams as ConstraintLayout.LayoutParams
                 param.setMargins(0,16,0,0)
                 tv_under1.layoutParams = param
+                if (whiteFonts){
+                    tv_under.setTextColor(Color.WHITE)
+                    tv_under1.setTextColor(Color.MAGENTA)
+                }
                 group_under.startAnimation(fadein)
                 Log.d(TAG, "$level adaptation is done successfully!")
             }
@@ -678,6 +778,10 @@ class OrderedActivity : AppCompatActivity() {
                 param.setMargins(0,16,0,0)
                 tv_under1.layoutParams = param
                 tv_under1.gravity = Gravity.CENTER_HORIZONTAL
+                if (whiteFonts){
+                    tv_under.setTextColor(Color.WHITE)
+                    tv_under1.setTextColor(Color.MAGENTA)
+                }
                 group_under.startAnimation(fadein)
                 Log.d(TAG, "$level adaptation is done successfully!")
             }
@@ -693,6 +797,10 @@ class OrderedActivity : AppCompatActivity() {
                 val param = tv_under1.layoutParams as ConstraintLayout.LayoutParams
                 param.setMargins(0,8,0,0)
                 tv_under1.layoutParams = param
+                if (whiteFonts){
+                    tv_under.setTextColor(Color.WHITE)
+                    tv_under1.setTextColor(Color.MAGENTA)
+                }
                 group_under.startAnimation(fadein)
                 Log.d(TAG, "$level adaptation is done successfully!")
             }
@@ -708,6 +816,10 @@ class OrderedActivity : AppCompatActivity() {
                 param.setMargins(0,16,0,0)
                 tv_under1.layoutParams = param
                 tv_under1.gravity = Gravity.CENTER_HORIZONTAL
+                if (whiteFonts){
+                    tv_under.setTextColor(Color.WHITE)
+                    tv_under1.setTextColor(Color.MAGENTA)
+                }
                 group_under.startAnimation(fadein)
                 Log.d(TAG, "$level adaptation is done successfully!")
             }
@@ -723,6 +835,10 @@ class OrderedActivity : AppCompatActivity() {
                 val param = tv_under1.layoutParams as ConstraintLayout.LayoutParams
                 param.setMargins(0,8,0,0)
                 tv_under1.layoutParams = param
+                if (whiteFonts){
+                    tv_under.setTextColor(Color.WHITE)
+                    tv_under1.setTextColor(Color.MAGENTA)
+                }
                 group_under.startAnimation(fadein)
                 Log.d(TAG, "$level adaptation is done successfully!")
             }
@@ -737,6 +853,10 @@ class OrderedActivity : AppCompatActivity() {
                 val param = tv_under1.layoutParams as ConstraintLayout.LayoutParams
                 param.setMargins(0,16,0,0)
                 tv_under1.layoutParams = param
+                if (whiteFonts){
+                    tv_under.setTextColor(Color.WHITE)
+                    tv_under1.setTextColor(Color.MAGENTA)
+                }
                 group_under.startAnimation(fadein)
                 Log.d(TAG, "$level adaptation is done successfully!")
             }
@@ -1256,6 +1376,17 @@ class OrderedActivity : AppCompatActivity() {
         startActivity(intent)
     }
 
+    private fun showSettings(view:View?){
+        if (isRunning){
+            mainHandler.removeCallbacks(updatePointTask)
+        }else{
+            Log.d(TAG, "isRunning false")
+        }
+        Log.d(TAG, "action_settings pressed!")
+        val intent = Intent(this@OrderedActivity, SettingsActivity::class.java)
+        startActivity(intent)
+    }
+
     fun showProfile(view: View?) {
         if (isRunning){
             mainHandler.removeCallbacks(updatePointTask)
@@ -1306,6 +1437,7 @@ class OrderedActivity : AppCompatActivity() {
             item.itemId == R.id.action_out -> signOut(null)
             item.itemId == R.id.action_profile -> showProfile(null)
             item.itemId == R.id.action_home -> mainMenu(null)
+            item.itemId == R.id.action_settings -> showSettings(null)
             else -> {
 
             }

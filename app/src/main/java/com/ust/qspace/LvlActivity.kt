@@ -14,6 +14,7 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
 import com.ust.qspace.stages.OrderedActivity
 import com.ust.qspace.stages.RandomActivity
+import com.ust.qspace.trees.SettingsActivity
 
 import kotlinx.android.synthetic.main.activity_lvl.*
 
@@ -193,6 +194,12 @@ class LvlActivity : AppCompatActivity() {
         startActivity(intent)
     }
 
+    private fun showSettings(view:View?){
+        Log.d(TAG, "action_settings pressed!")
+        val intent = Intent(this@LvlActivity, SettingsActivity::class.java)
+        startActivity(intent)
+    }
+
     fun showProfile(view: View?){
         Log.d(TAG, "Profile pressed..")
         val intent = Intent(this@LvlActivity, ProfileActivity::class.java)
@@ -226,6 +233,7 @@ class LvlActivity : AppCompatActivity() {
             item.itemId == R.id.action_out -> signOut(null)
             item.itemId == R.id.action_profile -> showProfile(null)
             item.itemId == R.id.action_home -> mainMenu(null)
+            item.itemId == R.id.action_settings -> showSettings(null)
             else -> {
             }
         }

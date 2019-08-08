@@ -14,30 +14,35 @@
             android:supportsRtl="true"
             android:theme="@style/AppTheme">
         <activity
-                android:name="com.ust.qspace.stages.RandomActivity"
+                android:name=".trees.SettingsActivity"
+                android:label="@string/title_activity_settings"
+                android:theme="@style/AppTheme.NoActionBar">
+        </activity>
+        <activity
+                android:name=".stages.RandomActivity"
                 android:label="@string/title_activity_random"
                 android:theme="@style/AppTheme.NoActionBar">
         </activity>
         <activity
-                android:name="com.ust.qspace.SuggestActivity"
+                android:name=".SuggestActivity"
                 android:label="@string/title_activity_suggest"
                 android:theme="@style/AppTheme.NoActionBar">
         </activity>
         <activity
-                android:name="com.ust.qspace.stages.OrderedActivity"
+                android:name=".stages.OrderedActivity"
                 android:label="@string/title_activity_ordered"
                 android:theme="@style/AppTheme.NoActionBar">
         </activity>
         <activity
-                android:name="com.ust.qspace.LvlActivity"
+                android:name=".LvlActivity"
                 android:label="@string/title_activity_lvl"
                 android:theme="@style/AppTheme.NoActionBar">
         </activity>
-        <activity android:name="com.ust.qspace.ProfileActivity">
+        <activity android:name=".ProfileActivity">
         </activity>
-        <activity android:name="com.ust.qspace.CommentActivity">
+        <activity android:name=".CommentActivity">
         </activity>
-        <activity android:name="com.ust.qspace.LoginActivity">
+        <activity android:name=".LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
 
@@ -45,7 +50,7 @@
             </intent-filter>
         </activity>
         <activity
-                android:name="com.ust.qspace.MainActivity"
+                android:name=".MainActivity"
                 android:label="@string/app_name"
                 android:theme="@style/AppTheme.NoActionBar">
         </activity>

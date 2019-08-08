@@ -9,15 +9,19 @@
           android:title="Profile"
           app:showAsAction="ifRoom" android:icon="@drawable/ic_profile_white"/>
     <item android:id="@+id/pivacy_policy"
-          android:title="Privacy Policy"
+          android:title="@string/privacy_policy"
           android:orderInCategory="100"
           app:showAsAction="never"/>
     <item android:id="@+id/terms_condition"
-          android:title="Terms&amp;Conditions"
+          android:title="@string/terms_conditions"
+          android:orderInCategory="100"
+          app:showAsAction="never"/>
+    <item android:id="@+id/action_settings"
+          android:title="@string/settings"
           android:orderInCategory="100"
           app:showAsAction="never"/>
     <item android:id="@+id/action_out"
-          android:title="Sign Out"
+          android:title="@string/action_out"
           android:orderInCategory="100"
           android:icon="@drawable/ic_signout_black" app:showAsAction="never"/>
 </menu>
