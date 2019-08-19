@@ -128,11 +128,11 @@ class LvlActivity : AppCompatActivity() {
         buttL28.visibility = View.VISIBLE
         buttL29.visibility = View.VISIBLE
         buttL30.visibility = View.VISIBLE
-        buttL31.visibility = View.VISIBLE
+        /*buttL31.visibility = View.VISIBLE
         buttL32.visibility = View.VISIBLE
         buttL33.visibility = View.VISIBLE
         buttL34.visibility = View.VISIBLE
-        buttL35.visibility = View.VISIBLE
+        buttL35.visibility = View.VISIBLE*/
         buttL1.startAnimation(ltr)
         buttL2.startAnimation(ltr)
         buttL3.startAnimation(ltr)
@@ -163,11 +163,11 @@ class LvlActivity : AppCompatActivity() {
         buttL28.startAnimation(ltr5)
         buttL29.startAnimation(ltr5)
         buttL30.startAnimation(ltr5)
-        buttL31.startAnimation(ltr6)
+        /*buttL31.startAnimation(ltr6)
         buttL32.startAnimation(ltr6)
         buttL33.startAnimation(ltr6)
         buttL34.startAnimation(ltr6)
-        buttL35.startAnimation(ltr6)
+        buttL35.startAnimation(ltr6)*/
 
     }
 

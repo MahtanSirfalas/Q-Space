@@ -88,7 +88,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/buttAvatar"
                 app:layout_constraintBottom_toTopOf="@+id/textName" app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent" android:layout_marginStart="8dp"
-                android:layout_marginEnd="8dp"/>
+                android:layout_marginEnd="8dp" android:shadowColor="#111111" android:shadowRadius="10"/>
         <TextView
                 android:text="@string/username"
                 android:layout_width="wrap_content"
@@ -97,7 +97,8 @@
                 android:fontFamily="@font/coda" android:textSize="18sp" android:textStyle="bold"
                 app:layout_constraintBottom_toBottomOf="@+id/textName" android:background="@android:color/transparent"
                 android:padding="2dp" app:layout_constraintTop_toTopOf="@+id/textName"
-                app:layout_constraintEnd_toStartOf="@+id/guideline2" android:layout_marginEnd="4dp"/>
+                app:layout_constraintEnd_toStartOf="@+id/guideline2" android:layout_marginEnd="4dp"
+                android:shadowColor="#111111" android:shadowRadius="10"/>
         <TextView
                 android:text="user"
                 android:layout_width="wrap_content"
@@ -109,7 +110,8 @@
                 app:layout_constraintTop_toBottomOf="@+id/etQuote"
                 android:layout_marginBottom="4dp"
                 app:layout_constraintBottom_toTopOf="@+id/textMail" android:textSize="18sp"
-                app:layout_constraintStart_toStartOf="@+id/guideline2"/>
+                app:layout_constraintStart_toStartOf="@+id/guideline2" android:shadowColor="#111111"
+                android:shadowRadius="10"/>
         <TextView
                 android:text="@string/email"
                 android:layout_width="wrap_content"
@@ -118,7 +120,8 @@
                 android:fontFamily="@font/coda" android:textSize="18sp" android:textStyle="bold" android:padding="2dp"
                 app:layout_constraintTop_toTopOf="@+id/textMail"
                 app:layout_constraintBottom_toBottomOf="@+id/textMail"
-                android:layout_marginEnd="4dp" app:layout_constraintEnd_toStartOf="@+id/guideline2"/>
+                android:layout_marginEnd="4dp" app:layout_constraintEnd_toStartOf="@+id/guideline2"
+                android:shadowColor="#111111" android:shadowRadius="10"/>
         <TextView
                 android:text="user@gmail.com"
                 android:layout_width="wrap_content"
@@ -128,7 +131,8 @@
                 android:visibility="visible"
                 app:layout_constraintTop_toBottomOf="@+id/textName" android:layout_marginBottom="4dp"
                 app:layout_constraintBottom_toTopOf="@+id/textLevel" android:textSize="18sp"
-                app:layout_constraintStart_toStartOf="@+id/guideline2"/>
+                app:layout_constraintStart_toStartOf="@+id/guideline2" android:shadowColor="#111111"
+                android:shadowRadius="10"/>
         <TextView
                 android:text="@string/level"
                 android:layout_width="wrap_content"
@@ -137,7 +141,8 @@
                 android:fontFamily="@font/coda" android:textSize="18sp" android:textStyle="bold" android:padding="2dp"
                 app:layout_constraintTop_toTopOf="@+id/textLevel"
                 app:layout_constraintBottom_toBottomOf="@+id/textLevel"
-                android:layout_marginEnd="4dp" app:layout_constraintEnd_toStartOf="@+id/guideline2"/>
+                android:layout_marginEnd="4dp" app:layout_constraintEnd_toStartOf="@+id/guideline2"
+                android:shadowColor="#111111" android:shadowRadius="10"/>
         <TextView
                 android:text="Dactyl"
                 android:layout_width="wrap_content"
@@ -148,7 +153,8 @@
                 app:layout_constraintBottom_toTopOf="@+id/buttSave"
                 app:layout_constraintTop_toBottomOf="@+id/textMail"
                 android:textSize="18sp" android:layout_marginBottom="4dp"
-                app:layout_constraintStart_toStartOf="@+id/guideline2"/>
+                app:layout_constraintStart_toStartOf="@+id/guideline2" android:shadowColor="#111111"
+                android:shadowRadius="10"/>
         <Button
                 android:text="Save"
                 android:layout_width="0dp"
@@ -163,6 +169,7 @@
     </androidx.constraintlayout.widget.ConstraintLayout>
     <ScrollView
             android:fillViewport="true"
+            android:translationZ="10dp"
             android:layout_width="0dp"
             android:layout_height="0dp" app:layout_constraintEnd_toEndOf="@+id/profile_card"
             app:layout_constraintStart_toStartOf="@+id/profile_card"
@@ -185,7 +192,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content" android:id="@+id/tvEarnedUpvote"
                     android:textColor="@color/colorSpaceWhite" android:textAlignment="center"
-                    android:fontFamily="@font/coda" android:textSize="16sp"/>
+                    android:fontFamily="@font/coda" android:textSize="16sp" android:shadowColor="#0F0F0F"
+                    android:shadowRadius="10"/>
             <TextView
                     android:text="-TOTAL POINTS-"
                     android:layout_width="wrap_content"
@@ -201,7 +209,8 @@
                     android:textColor="@color/colorSpaceWhite" android:background="@android:color/transparent"
                     android:fontFamily="@font/coda"
                     android:visibility="visible"
-                    android:textSize="16sp" android:gravity="center"/>
+                    android:textSize="16sp" android:gravity="center" android:shadowColor="#0F0F0F"
+                    android:shadowRadius="10"/>
             <TextView
                     android:text="-STAGE POINTS-"
                     android:layout_width="wrap_content"
