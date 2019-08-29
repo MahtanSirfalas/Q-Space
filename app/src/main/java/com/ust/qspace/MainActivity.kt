@@ -16,6 +16,7 @@ import android.view.animation.*
 import android.widget.PopupWindow
 import android.widget.Toast.*
 import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.room.Room
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
@@ -23,6 +24,9 @@ import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
 import com.squareup.picasso.Picasso
+import com.ust.qspace.models.StagePrefs
+import com.ust.qspace.room.AppRoomDatabase
+import com.ust.qspace.room.AppRoomEntity
 import com.ust.qspace.trees.SettingsActivity
 
 import kotlinx.android.synthetic.main.activity_main.*
@@ -38,8 +42,9 @@ lateinit var email: String
 lateinit var uid: String
 lateinit var avatar: String
 lateinit var uName: String
-var points: Long = 0
+lateinit var db:AppRoomDatabase
 lateinit var level: String
+var points: Long = 0
 var verifiedCheck = false
 
 @TargetApi(Build.VERSION_CODES.O)
@@ -64,6 +69,14 @@ class MainActivity : AppCompatActivity() {
         auth = FirebaseAuth.getInstance()
         database = FirebaseDatabase.getInstance()
         databaseReference = database.reference.child("Users")
+        Thread{
+            db=
+                Room.databaseBuilder(
+                    applicationContext,
+                    AppRoomDatabase::class.java,
+                    "RoomDB:$uid"
+                ).build()
+        }.start()
 
         val user = auth.currentUser
         uid = user!!.uid
@@ -72,6 +85,8 @@ class MainActivity : AppCompatActivity() {
         val userReference = databaseReference.child(uid)
 
         /*userName.text  = userReference.orderByChild("nickName").toString()*/
+
+        val stagePref = StagePrefs(this)
 
         userReference.addListenerForSingleValueEvent(object : ValueEventListener {
             override fun onDataChange(p0: DataSnapshot) {
@@ -83,6 +98,7 @@ class MainActivity : AppCompatActivity() {
                 Log.d(TAG, "onCreate: avatar and uName assigned")
                 animationTop()
                 levelTagClarification()
+
             }
             override fun onCancelled(p0: DatabaseError) {
                 Log.d(TAG, "Something's Wrong: User information get FAILED")
@@ -203,7 +219,8 @@ class MainActivity : AppCompatActivity() {
                 tvName.startAnimation(rtl)
 
                 onStartAnimation()
-//                ufoAnimation()
+                synchronRoomDb()
+
             }
         })
     }
@@ -227,14 +244,6 @@ class MainActivity : AppCompatActivity() {
         buttProfil.startAnimation(atf)
         buttSoru.startAnimation(atf)
         buttInfo.startAnimation(atf)
-    }
-
-    private fun ufoAnimation(){
-        ufo_layout.visibility = View.VISIBLE
-
-        /*val ufo = AnimationUtils.loadAnimation(this, R.anim.ufo)
-        ufo_layout.visibility = View.VISIBLE
-        ufo_layout.startAnimation(ufo)*/
     }
 
     fun showLvl(view: View?) {
@@ -333,6 +342,66 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    private fun synchronRoomDb(){
+        val stagesReference= databaseReference.child("$uid/stages")
+
+        stagesReference.addListenerForSingleValueEvent(object :ValueEventListener{
+            override fun onCancelled(p0: DatabaseError) {}
+            override fun onDataChange(p0: DataSnapshot) {
+                if (p0.hasChildren()){
+                    p0.children.forEach {
+                        Thread{
+
+                            val dbStage = db.stageDao().getOne(it.key.toString())
+                            val lastInd = it.key.toString().length
+                            val id = it.key.toString().substring(6, lastInd).toInt()
+                            val fireName = it.key.toString()
+                            val sPoint = it.child("/point").value
+                            val firePoint = sPoint.toString().toInt()
+                            val fireControl = it.child("/control").value as Boolean
+                            val stageEnt = AppRoomEntity(id, fireName, firePoint, fireControl)
+
+                            if (dbStage != null){
+
+                                val roomName = dbStage.db_stage_name
+                                val roomPoint = dbStage.db_stage_points
+                                val roomControl = dbStage.db_stage_control
+
+                                if (roomName == fireName){
+                                    if (fireControl && roomControl && firePoint>roomPoint){
+                                        stagesReference.child("/point").setValue(roomPoint)
+                                        Log.d(TAG, "$fireName: Points updated in fireDB")
+                                    }
+                                    else if (fireControl && roomControl && firePoint<roomPoint){
+                                        db.stageDao().update(stageEnt)
+                                        Log.d(TAG, "$fireName: Points updated in RoomDB")
+                                    }
+                                    else if (fireControl && !roomControl){
+                                        stagesReference.child("/$fireName/point").setValue(roomPoint)
+                                        stagesReference.child("/$fireName/control").setValue(roomControl)
+                                        Log.d(TAG, "$fireName: Points + Control updated in fireDB")
+                                    }
+                                    else if (!fireControl && roomControl){
+                                        db.stageDao().update(stageEnt)
+                                        Log.d(TAG, "$fireName: Points + Control updated in RoomDB")
+                                    }else{
+                                        Log.d(TAG, "No need to update $fireName! $fireControl")
+                                    }
+                                }
+                                else{
+                                    Log.d(TAG, "$fireName couldn't found in RoomDB = $roomName")
+                                }
+                            }else{
+                                db.stageDao().insert(stageEnt)
+                                Log.d(TAG, "$fireName: $fireControl")
+                            }
+                        }.start()
+                    }
+                }
+            }
+        })
+    }
+
     override fun onBackPressed() {
         mainMenu(null)
     }
@@ -361,16 +430,4 @@ class MainActivity : AppCompatActivity() {
             else -> super.onOptionsItemSelected(item)
         }
     }
-
-//    Tried to adapt answers in a single method, failed!!!
-//    private fun answerAdapter(sonek: String){
-//        when(sonek) {
-//            "Q1" -> answerQ1.text.toString().toInt()
-//            "Q2" -> answerQ2.text.toString().toInt()
-//            else -> {
-//                Log.d(TAG, "answer func. failed!!!")
-//            }
-//        }
-//    }
-
 }

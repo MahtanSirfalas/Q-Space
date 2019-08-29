@@ -29,6 +29,7 @@ import com.google.firebase.database.*
 import com.ust.qspace.*
 import com.ust.qspace.R
 import com.ust.qspace.models.SettingsPrefs
+import com.ust.qspace.models.StagePrefs
 import com.ust.qspace.models.whiteFont
 import com.ust.qspace.trees.SettingsActivity
 
@@ -56,6 +57,7 @@ class OrderedActivity : AppCompatActivity() {
     lateinit var mainHandler:Handler
     lateinit var updatePointTask: Runnable
     var isRunning = false
+    val stagePref = StagePrefs(this)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -105,16 +107,26 @@ class OrderedActivity : AppCompatActivity() {
                         Log.d(TAG, "$levelKey; RERUNS!")
                         var point = p0.child("point").value as Long
                         var control = p0.child("control").value as Boolean
+
+//                        var prefControl = stagePref.getStagePref(levelKey)
                         if (control){
                             point -= 2
                             stageRef.child("point").setValue(point)
-
+                            //
+                            /*stagePref.setPointsPref(levelKey, point)
+                            stagePref.setStagePref(levelKey, control)
+                            var prefPoint = stagePref.getPointsPref(levelKey)*/
+                            //
                             updatePointTask = object : Runnable {
                                 override fun run() {
                                     isRunning = true
+                                    /*prefPoint -= 2
+                                    stagePref.setPointsPref(levelKey, prefPoint)*/
+                                    // every step below; updates the database
                                     point -= 2
                                     Log.d(TAG, "point UPDATED: $point")
                                     stageRef.child("point").setValue(point)
+                                    //
                                     mainHandler.postDelayed(this, 10000)
                                 }
                             }

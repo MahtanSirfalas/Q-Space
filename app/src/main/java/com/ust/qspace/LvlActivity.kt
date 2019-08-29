@@ -12,6 +12,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
+import com.ust.qspace.models.StagePrefs
 import com.ust.qspace.stages.OrderedActivity
 import com.ust.qspace.stages.RandomActivity
 import com.ust.qspace.trees.SettingsActivity
@@ -65,6 +66,7 @@ class LvlActivity : AppCompatActivity() {
                             val control = p0.child("stages/$item/control").value as Boolean
                             val point = p0.child("stages/$item/point").value as Long
                             val buton = stageList[item]
+
                             if (control){
                                 Log.d(TAG, "$item: Pass")
                             }else{
