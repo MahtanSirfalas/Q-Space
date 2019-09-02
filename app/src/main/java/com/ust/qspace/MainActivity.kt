@@ -24,7 +24,6 @@ import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
 import com.squareup.picasso.Picasso
-import com.ust.qspace.models.StagePrefs
 import com.ust.qspace.room.AppRoomDatabase
 import com.ust.qspace.room.AppRoomEntity
 import com.ust.qspace.trees.SettingsActivity
@@ -82,11 +81,11 @@ class MainActivity : AppCompatActivity() {
         uid = user!!.uid
         email = user.email.toString()
         user.reload()
+
         val userReference = databaseReference.child(uid)
 
         /*userName.text  = userReference.orderByChild("nickName").toString()*/
 
-        val stagePref = StagePrefs(this)
 
         userReference.addListenerForSingleValueEvent(object : ValueEventListener {
             override fun onDataChange(p0: DataSnapshot) {
@@ -369,7 +368,7 @@ class MainActivity : AppCompatActivity() {
 
                                 if (roomName == fireName){
                                     if (fireControl && roomControl && firePoint>roomPoint){
-                                        stagesReference.child("/point").setValue(roomPoint)
+                                        stagesReference.child("/$fireName/point").setValue(roomPoint)
                                         Log.d(TAG, "$fireName: Points updated in fireDB")
                                     }
                                     else if (fireControl && roomControl && firePoint<roomPoint){
@@ -397,6 +396,16 @@ class MainActivity : AppCompatActivity() {
                             }
                         }.start()
                     }
+                }else{
+                    Thread{
+                        db.stageDao().getAll()?.forEach {
+                            val roomName = it.db_stage_name
+                            val roomPoint = it.db_stage_points
+                            val roomControl = it.db_stage_control
+                            stagesReference.child("/$roomName/point").setValue(roomPoint)
+                            stagesReference.child("/$roomName/control").setValue(roomControl)
+                        }
+                    }.start()
                 }
             }
         })
@@ -431,3 +440,4 @@ class MainActivity : AppCompatActivity() {
         }
     }
 }
+

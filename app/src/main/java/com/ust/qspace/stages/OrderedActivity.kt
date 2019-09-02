@@ -29,8 +29,8 @@ import com.google.firebase.database.*
 import com.ust.qspace.*
 import com.ust.qspace.R
 import com.ust.qspace.models.SettingsPrefs
-import com.ust.qspace.models.StagePrefs
 import com.ust.qspace.models.whiteFont
+import com.ust.qspace.room.AppRoomEntity
 import com.ust.qspace.trees.SettingsActivity
 
 import kotlinx.android.synthetic.main.activity_ordered.*
@@ -57,7 +57,6 @@ class OrderedActivity : AppCompatActivity() {
     lateinit var mainHandler:Handler
     lateinit var updatePointTask: Runnable
     var isRunning = false
-    val stagePref = StagePrefs(this)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -94,7 +93,42 @@ class OrderedActivity : AppCompatActivity() {
         Log.d(TAG, "levelKey=$levelKey, answer=$answer")
 
         fun startcheck() {
-            stageRef.addListenerForSingleValueEvent(object:ValueEventListener{
+
+            Thread{
+                var dbStage = db.stageDao().getOne(levelKey)
+
+                if (dbStage != null){
+                    var point = dbStage.db_stage_points
+                    var control = dbStage.db_stage_control
+
+                    if (control) {
+                        point -= 2
+                        stagePointControlUpdate(point, control)
+                        updatePointTask = object : Runnable{
+                            override fun run() {
+                                isRunning = true
+                                point -= 2
+                                stagePointControlUpdate(point, control)
+                                Log.d(TAG, "$levelKey point updated to $point")
+                                mainHandler.postDelayed(this, 10000)
+                            }
+                        }
+                        mainHandler.post(updatePointTask)
+                    }else{
+                        Log.d(TAG, "Stage passed before.")
+                    }
+
+                }else{
+                    val lastInd = levelKey.length
+                    val id = levelKey.substring(6, lastInd).toInt()
+                    var stageEnt = AppRoomEntity(id, levelKey, 1004, true)
+                    db.stageDao().insert(stageEnt)
+                    Log.d(TAG, "First run on $levelKey, adaptation DONE!")
+                    startcheck()
+                }
+            }.start()
+
+            /*stageRef.addListenerForSingleValueEvent(object:ValueEventListener{
                 override fun onCancelled(p0: DatabaseError) {
                     Log.d(TAG, "stageRef Data couldn't read; No Internet Connection/No Response " +
                             "from database/Wrong datapath")
@@ -108,20 +142,14 @@ class OrderedActivity : AppCompatActivity() {
                         var point = p0.child("point").value as Long
                         var control = p0.child("control").value as Boolean
 
-//                        var prefControl = stagePref.getStagePref(levelKey)
                         if (control){
                             point -= 2
                             stageRef.child("point").setValue(point)
-                            //
-                            /*stagePref.setPointsPref(levelKey, point)
-                            stagePref.setStagePref(levelKey, control)
-                            var prefPoint = stagePref.getPointsPref(levelKey)*/
-                            //
+
                             updatePointTask = object : Runnable {
                                 override fun run() {
                                     isRunning = true
-                                    /*prefPoint -= 2
-                                    stagePref.setPointsPref(levelKey, prefPoint)*/
+
                                     // every step below; updates the database
                                     point -= 2
                                     Log.d(TAG, "point UPDATED: $point")
@@ -141,9 +169,11 @@ class OrderedActivity : AppCompatActivity() {
                         startcheck()
                     }
                 }
-            })
+            })*/
         }
-        startcheck()
+        Thread{
+            startcheck()
+        }.start()
         commentAnimation()
 //        chrono.base = SystemClock.elapsedRealtime()
 //        chrono.start()
@@ -155,6 +185,17 @@ class OrderedActivity : AppCompatActivity() {
             inputMethodManager.toggleSoftInput(InputMethodManager.SHOW_FORCED, InputMethodManager.HIDE_IMPLICIT_ONLY)
         }*/
     }
+
+    fun stagePointControlUpdate(point: Int, control: Boolean){
+        val lastInd = levelKey.length
+        val id = levelKey.substring(6, lastInd).toInt()
+        val stageEnt = AppRoomEntity(id, levelKey, point, control)
+        Thread{
+            db.stageDao().update(stageEnt)
+        }.start()
+
+    }
+
 
     private fun animationOrder(){
         val animsay = AnimationUtils.loadAnimation(this, R.anim.abc_slide_in_top)
@@ -277,6 +318,7 @@ class OrderedActivity : AppCompatActivity() {
                                             "Titan" -> {}
                                             "Moon" -> {}
                                             "Enceladus" -> {}
+                                            "Pluto" -> {}
                                             "Mars" -> {}
                                             else -> {
                                                 Log.d(TAG, "Level didn't change!")

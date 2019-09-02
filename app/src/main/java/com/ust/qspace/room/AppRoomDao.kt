@@ -2,7 +2,6 @@ package com.ust.qspace.room
 
 import androidx.room.*
 
-
 @Dao
 interface AppRoomDao {
 

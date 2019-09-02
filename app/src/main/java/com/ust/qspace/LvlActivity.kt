@@ -12,7 +12,6 @@ import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
-import com.ust.qspace.models.StagePrefs
 import com.ust.qspace.stages.OrderedActivity
 import com.ust.qspace.stages.RandomActivity
 import com.ust.qspace.trees.SettingsActivity
@@ -52,7 +51,7 @@ class LvlActivity : AppCompatActivity() {
         database = FirebaseDatabase.getInstance()
         databaseReference = database.reference.child("Users")
         nick = intent.getStringExtra("tvName")
-        val userRef = database.reference.child("Users/$uid")
+        /*val userRef = database.reference.child("Users/$uid")
         userRef.addListenerForSingleValueEvent(object: ValueEventListener{
             override fun onCancelled(p0: DatabaseError) {Log.d(TAG, "userRef data couldn't read!")}
             override fun onDataChange(p0: DataSnapshot) {
@@ -86,7 +85,36 @@ class LvlActivity : AppCompatActivity() {
                     Log.d(TAG, "stages doesn't exist yet!")
                 }
             }
-        })
+        })*/
+
+        Thread{
+            val checkRoomDb = db.stageDao().getAll()
+            if (checkRoomDb != null){
+                for (item in stageList.keys){
+                    val dbStage = db.stageDao().getOne(item)
+                    val buton = stageList[item]
+                    if (dbStage != null){
+                        val roomPoint = dbStage.db_stage_points
+                        val roomControl = dbStage.db_stage_control
+                        if (roomControl){
+                            Log.d(TAG, "$item: Pass")
+                        }else{
+                            if (roomPoint == 0){
+                                buton?.setBackgroundResource(R.drawable.custom_butt_lvl)
+                                Log.d(TAG, "$item: Given Up")
+                            }else{
+                                buton?.setBackgroundResource(R.drawable.custom_butt_stagewon)
+                                Log.d(TAG, "$item: Finished")
+                            }
+                        }
+                        Log.d(TAG, "stageList: $item applied")
+                    }else{}
+                }
+            }else{
+                Log.d(TAG, "stages doesn't exist yet!")
+            }
+        }.start()
+        animations()
     }
 
     private fun animations(){
