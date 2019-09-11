@@ -27,6 +27,7 @@ import android.widget.Toast.makeText
 import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.constraintlayout.widget.ConstraintSet
+import com.google.firebase.FirebaseError
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
@@ -38,6 +39,7 @@ import com.ust.qspace.room.AppRoomEntity
 import com.ust.qspace.trees.SettingsActivity
 import kotlinx.android.synthetic.main.activity_ordered.*
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.runBlocking
 
@@ -116,6 +118,7 @@ class OrderedActivity : AppCompatActivity() {
                         }
                         mainHandler.post(updatePointTask)
                     }else{
+
                         Log.d(TAG, "Stage passed before.")
                     }
 
@@ -265,6 +268,8 @@ class OrderedActivity : AppCompatActivity() {
             runBlocking(Dispatchers.Default) {
                 synchronDBs()
             }
+
+            Thread.sleep(50)
 
             stageRef.addListenerForSingleValueEvent(object:ValueEventListener{
                 override fun onCancelled(p0: DatabaseError) {
@@ -1288,9 +1293,12 @@ class OrderedActivity : AppCompatActivity() {
         val show = layoutInflater.inflate(R.layout.layout_popup_giveup, null)
         window.isOutsideTouchable = true
         val atf1 = AnimationUtils.loadAnimation(baseContext, R.anim.atf1)
+
         runBlocking(Dispatchers.Default) {
             synchronDBs()
         }
+
+        Thread.sleep(50)
 
         stageRef.addListenerForSingleValueEvent(object : ValueEventListener {
             override fun onCancelled(p0: DatabaseError) {}
@@ -1335,7 +1343,39 @@ class OrderedActivity : AppCompatActivity() {
         })
     }
 
+    fun checkFireDBForExist(){
+
+        stageRef.addListenerForSingleValueEvent(object:ValueEventListener{
+            override fun onCancelled(p0: DatabaseError) {}
+            override fun onDataChange(p0: DataSnapshot) {
+                runBlocking(Dispatchers.Default) {
+                    if (!p0.exists()){
+                        var dbStage = db.stageDao().getOne(levelKey)
+                        val roomPoint = dbStage.db_stage_points.toLong()
+                        val roomControl = dbStage.db_stage_control
+                        stageRef.child("point").setValue(roomPoint, {error, ref->
+                            if (error == null){
+                                Log.d(TAG, "fireDB point done")
+                            }
+                        })
+                        stageRef.child("control").setValue(roomControl, {error, ref->
+                            if (error == null){
+                                Log.d(TAG, "fireDB control done")
+                            }
+                        })
+                    }
+                }
+            }
+        })
+    }
+
     suspend fun synchronDBs(){
+
+        runBlocking(Dispatchers.Default) {
+            checkFireDBForExist()
+        }
+
+
         stageRef.addListenerForSingleValueEvent(object :ValueEventListener{
             override fun onCancelled(p0: DatabaseError) {}
             override fun onDataChange(p0: DataSnapshot) {
@@ -1343,7 +1383,8 @@ class OrderedActivity : AppCompatActivity() {
                     var dbStage = db.stageDao().getOne(levelKey)
                     var roomPoint = dbStage.db_stage_points.toLong()
                     val roomControl = dbStage.db_stage_control
-                    var firePoint = p0.child("point").value as Long
+                    val sPoint = p0.child("/point").value
+                    var firePoint = sPoint.toString().toInt()
                     val fireControl = p0.child("control").value as Boolean
                     if (roomControl && fireControl){
                         stageRef.child("point").setValue(roomPoint)
@@ -1360,7 +1401,15 @@ class OrderedActivity : AppCompatActivity() {
                         val stageEnt = AppRoomEntity(id, levelKey, firePoint.toInt(), fireControl)
                         db.stageDao().update(stageEnt)
                         Log.d(TAG, "fireDB control = $fireControl => roomDB updated")
-                    }else if (roomControl != null && fireControl == null){
+                    }
+                    else if (!roomControl && !fireControl) {
+                        val lastInd = levelKey.length
+                        val id = levelKey.substring(6, lastInd).toInt()
+                        val stageEnt = AppRoomEntity(id, levelKey, firePoint.toInt(), fireControl)
+                        db.stageDao().update(stageEnt)
+                        Log.d(TAG, "!roomControl && !fireControl => roomDB updated")
+                    }
+                    else if (roomControl != null && fireControl == null){
                         stageRef.child("point").setValue(roomPoint)
                         stageRef.child("control").setValue(roomControl)
                         Log.d(TAG, "roomDB control = $roomControl => fireDB point+control updated")
@@ -1368,6 +1417,7 @@ class OrderedActivity : AppCompatActivity() {
                         Log.d(TAG, "roomControl == null or Something's Wrong!")
                     }
                 }
+
                 /*
                 Thread{ // synchronDBs
                     var dbStage = db.stageDao().getOne(levelKey)
@@ -1400,7 +1450,7 @@ class OrderedActivity : AppCompatActivity() {
                 }.start()*/
             }
         })
-        delay(100)
+        delay(10)
     }
 
     private fun groupShapeVisibility(){
@@ -1541,4 +1591,5 @@ class OrderedActivity : AppCompatActivity() {
         }
     }
 }
+
 

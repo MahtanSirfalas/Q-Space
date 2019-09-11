@@ -383,7 +383,12 @@ class MainActivity : AppCompatActivity() {
                                     else if (!fireControl && roomControl){
                                         db.stageDao().update(stageEnt)
                                         Log.d(TAG, "$fireName: Points + Control updated in RoomDB")
-                                    }else{
+                                    }
+                                    else if (!fireControl && !roomControl){
+                                        db.stageDao().update(stageEnt)
+                                        Log.d(TAG, "$fireName: Points + Control updated in RoomDB")
+                                    }
+                                    else{
                                         Log.d(TAG, "No need to update $fireName! $fireControl")
                                     }
                                 }
