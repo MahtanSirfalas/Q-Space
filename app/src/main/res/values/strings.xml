@@ -101,4 +101,70 @@
     <string name="settings">Settings</string>
     <string name="terms_conditions"><![CDATA[Terms&Conditions]]></string>
     <string name="privacy_policy">Privacy Policy</string>
+    <!-- Info Activity -->
+    <string name="title_activity_info">InfoActivity</string>
+    <string name="info_intro">Hello %1$s. \n
+        Q Space is a math based game which inspired from iq tests.\n
+    </string>
+    <string name="info_mission">
+        Mission: Q Space aims to entertain while solving some math based iq tests.\n
+    </string>
+    <string name="info_vision">
+        Vision: Q Space; in the long run, as an interactive game, targets drawing attention to the abstract thought basics with a wide profile community, step by step.\n
+    </string>
+    <string name="info_how">
+        \"What can i do?\"\n
+        - First; you can enjoy the stages.\n
+        - You can comment to the stages to share your perspective. So some questions may have different solutions to the same answer.\n
+        - You can upvote the useful comments\n
+        - You can suggest a question to the Q Space!\n
+        - With the steps above, you can get points \n
+            *to gain some extra features\n
+            *to jump up to a new moon or planet\n
+            *You may even find some secrets…\n
+
+        Have Fun!
+    </string>
+    <string name="info_how_to">
+        \"How can i see the comments or write one to the stages?\"\n
+        - In every stage there is a button on the right bottom. But you have to find the right answer or give up from the points to see them.\n
+        \n\n
+        \"How to upvote a comment?\"\n
+        - By long pressing(touching) to the specific comment. Just a note you can\'t upvote your own comment\n
+        \n\n
+        \"How to undo my upvote?\"\n
+        - Same with upvoting; by long pressing(touching) to the comment that upvoted before. (Green number at the bottom right corner of the comment means you upvoted the comment before)\n
+        \n\n
+        \"How to see another player\'s profile summary?\"\n
+        - Double pressing(touching) to the comment will pop up a window that contains the summary of the player.\n
+        \n\n
+        \"How to delete my comment?\"\n
+        - By long pressing(touching) to your own comment.\n
+        \n\n
+        \"How to edit my comment?\"\n
+        - If you wrote a comment to any stage\'s comment page but didn\'t leave the current page, writing a new comment will replace your last comment. But if you left that page before you can\'t edit your comment.\n
+        \n\n
+        \"Why should i comment?\"\n
+        - If your comment gets an upvote you will gain some points.\n
+        \n\n
+        \"Is the game ok for kids?\"\n
+        - Sure, therefore; we didn\'t add P.M. and subcomment functions to the game?\n
+        \n\n
+        \"What is that ufo in the main menu?\"\n
+        - Ask yourself!\n
+        \n\n
+        \"How may i know if my question suggest reviewed?\"\n
+        - You will see an empty text area when you opened the "Suggest_Q" page.\n
+        \n\n
+        \"When will you add my suggested question?\"\n
+        - If it is approved, it would be added to the queue. So it will be published when it is time.\n
+        \n\n
+        \"How may i know if it\'s approved?\"\n
+        - We will mail you to inform.\n
+        \n\n
+        \"Stage scoring procedure?\"\n
+        - Answer as fast as you can.\n
+        \n\n
+    </string>
+    <string name="faq">--FAQ--</string>
 </resources>

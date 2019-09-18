@@ -18,10 +18,7 @@ import android.view.View
 import android.view.animation.AnimationUtils
 import android.view.animation.OvershootInterpolator
 import android.view.inputmethod.InputMethodManager
-import android.widget.Button
-import android.widget.ImageView
-import android.widget.PopupWindow
-import android.widget.RadioButton
+import android.widget.*
 import android.widget.Toast.LENGTH_SHORT
 import android.widget.Toast.makeText
 import androidx.appcompat.app.AppCompatActivity
@@ -61,6 +58,8 @@ class OrderedActivity : AppCompatActivity() {
     lateinit var updatePointTask: Runnable
     var isRunning = false
 
+    private var mValueEventListener: ValueEventListener? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_ordered)
@@ -96,14 +95,13 @@ class OrderedActivity : AppCompatActivity() {
         Log.d(TAG, "levelKey=$levelKey, answer=$answer")
 
         fun startcheck() {
-
             Thread{
                 var dbStage = db.stageDao().getOne(levelKey)
 
                 if (dbStage != null){
                     var point = dbStage.db_stage_points
                     var control = dbStage.db_stage_control
-
+                    stageStartFireDBCheck(point, control)
                     if (control) {
                         point -= 2
                         stagePointControlUpdate(point, control)
@@ -133,49 +131,6 @@ class OrderedActivity : AppCompatActivity() {
                     startcheck()
                 }
             }.start()
-
-            /*stageRef.addListenerForSingleValueEvent(object:ValueEventListener{
-                override fun onCancelled(p0: DatabaseError) {
-                    Log.d(TAG, "stageRef Data couldn't read; No Internet Connection/No Response " +
-                            "from database/Wrong datapath")
-                    val toast = makeText(baseContext, getString(R.string.listener_cancelled), LENGTH_LONG)
-                    toast.setGravity(Gravity.TOP or Gravity.START, 0, 0)
-                    toast.show()
-                }
-                override fun onDataChange(p0: DataSnapshot) {
-                    if (p0.hasChildren()){
-                        Log.d(TAG, "$levelKey; RERUNS!")
-                        var point = p0.child("point").value as Long
-                        var control = p0.child("control").value as Boolean
-
-                        if (control){
-                            point -= 2
-                            stageRef.child("point").setValue(point)
-
-                            updatePointTask = object : Runnable {
-                                override fun run() {
-                                    isRunning = true
-
-                                    // every step below; updates the database
-                                    point -= 2
-                                    Log.d(TAG, "point UPDATED: $point")
-                                    stageRef.child("point").setValue(point)
-                                    //
-                                    mainHandler.postDelayed(this, 10000)
-                                }
-                            }
-                            mainHandler.post(updatePointTask)
-                        }else{
-                            Log.d(TAG, "Stage passed before.")
-                        }
-                    }else{
-                        stageRef.child("point").setValue(1004)
-                        stageRef.child("control").setValue(true)
-                        Log.d(TAG, "First run on $levelKey, adaptation DONE!")
-                        startcheck()
-                    }
-                }
-            })*/
         }
         Thread{
             startcheck()
@@ -201,7 +156,6 @@ class OrderedActivity : AppCompatActivity() {
         }.start()
 
     }
-
 
     private fun animationOrder(){
         val animsay = AnimationUtils.loadAnimation(this, R.anim.abc_slide_in_top)
@@ -247,6 +201,20 @@ class OrderedActivity : AppCompatActivity() {
         ibComment.startAnimation(commAnim)
     }
 
+    fun stageStartFireDBCheck(point: Int, control: Boolean){
+        //Warranty to make firedb exist at the start of the stage!
+        stageRef.addListenerForSingleValueEvent(object: ValueEventListener{
+            override fun onCancelled(p0: DatabaseError) {}
+            override fun onDataChange(p0: DataSnapshot) {
+                if (!p0.exists()){
+                    stageRef.child("point").setValue(point.toLong())
+                    stageRef.child("control").setValue(control)
+                    Log.d(TAG, "stageStartFireDBCheck: fireDB updated")
+                }
+            }
+        })
+    }
+
     fun slayButton(view: View?) {
         Log.d(TAG, "slayButton pressed")
         val kontrol = tv_answer1.text.toString()
@@ -255,6 +223,9 @@ class OrderedActivity : AppCompatActivity() {
             inputMethodManager.hideSoftInputFromWindow(view.windowToken, 0)
         }
         if (kontrol.trim().isNotEmpty()) {
+            runBlocking(Dispatchers.Default) {
+                synchronDBs()
+            }
             try {
                 uAnswer = tv_answer1.text.toString().toInt()
                 Log.d(TAG, "uAnswer is assigned as $uAnswer")
@@ -265,18 +236,13 @@ class OrderedActivity : AppCompatActivity() {
                 toast.show()
             }
 
-            runBlocking(Dispatchers.Default) {
-                synchronDBs()
-            }
+            stageRef.addListenerForSingleValueEvent(object:ValueEventListener{
+                override fun onCancelled(p0: DatabaseError) {
+                    Log.d(TAG, "stageRef Data couldn't read; No Internet Connection/No Response from database/Wrong datapath")
+                }
 
-            runBlocking(Dispatchers.Default) {
-                stageRef.addListenerForSingleValueEvent(object:ValueEventListener{
-                    override fun onCancelled(p0: DatabaseError) {
-                        Log.d(TAG, "stageRef Data couldn't read; No Internet Connection/No Response from database/Wrong datapath")
-                    }
-
-                    override fun onDataChange(p0: DataSnapshot) {
-
+                override fun onDataChange(p0: DataSnapshot) {
+                    if (p0.exists()){
                         var point = p0.child("point").value as Long
                         val control = p0.child("control").value as Boolean
                         val userRef = databaseReference.child(uid)
@@ -326,6 +292,10 @@ class OrderedActivity : AppCompatActivity() {
                                                     Log.d(TAG, "Level didn't change!")
                                                 }
                                             }
+                                            mValueEventListener?.let {
+                                                stageRef.removeEventListener(it)
+                                                Log.d(TAG, "stageRef EventListener Removed!")
+                                            }
                                         }
                                     }
                                 })
@@ -349,6 +319,10 @@ class OrderedActivity : AppCompatActivity() {
                                 val toast = makeText(baseContext, getString(R.string.wrong_answer), LENGTH_SHORT)
                                 toast.setGravity(Gravity.CENTER, 0, 100)
                                 toast.show()
+                                mValueEventListener?.let {
+                                    stageRef.removeEventListener(it)
+                                    Log.d(TAG, "stageRef EventListener Removed!")
+                                }
                             }
                         }else{
                             if(uAnswer == answer){
@@ -359,16 +333,29 @@ class OrderedActivity : AppCompatActivity() {
                                 val toast = makeText(baseContext, getString(R.string.bravo), LENGTH_SHORT)
                                 toast.setGravity(Gravity.TOP, 0, 100)
                                 toast.show()
+                                mValueEventListener?.let {
+                                    stageRef.removeEventListener(it)
+                                    Log.d(TAG, "stageRef EventListener Removed!")
+                                }
                             }else{
                                 Log.d(TAG, "Something's Wrong; $uAnswer != $answer!")
                                 val toast = makeText(baseContext, getString(R.string.come_on), LENGTH_SHORT)
                                 toast.setGravity(Gravity.CENTER, 0, 100)
                                 toast.show()
+                                mValueEventListener?.let {
+                                    stageRef.removeEventListener(it)
+                                    Log.d(TAG, "stageRef EventListener Removed!")
+                                }
                             }
                         }
+                    }else{
+                        runBlocking(Dispatchers.Default) {
+                            synchronDBs()
+                        }
+                        slayButton(null)
                     }
-                })
-            }
+                }
+            })
 
 
         }else {
@@ -1324,6 +1311,9 @@ class OrderedActivity : AppCompatActivity() {
                             db.stageDao().update(stageEnt)
                             Log.d(TAG, "roomDB UPDATED: answer is wrong; -10 points")
                         }.start()
+                        mValueEventListener?.let{
+                            stageRef.removeEventListener(it)
+                        }
                         if (isRunning){
                             mainHandler.removeCallbacks(updatePointTask)
                         }else{
@@ -1335,6 +1325,10 @@ class OrderedActivity : AppCompatActivity() {
                     }
                     buttNo.setOnClickListener {
                         window.dismiss()
+                        mValueEventListener?.let {
+                            stageRef.removeEventListener(it)
+                            Log.d(TAG, "stageRef EventListener Removed!")
+                        }
                     }
                 }else{
                     Log.d(TAG, "Comments button pressed")
@@ -1345,225 +1339,94 @@ class OrderedActivity : AppCompatActivity() {
         })
     }
 
-    fun checkFireDBForExist(){
-
-        stageRef.addListenerForSingleValueEvent(object:ValueEventListener{
-            override fun onCancelled(p0: DatabaseError) {}
-            override fun onDataChange(p0: DataSnapshot) {
-                runBlocking(Dispatchers.Default) {
-                    if (!p0.exists()){
-                        var dbStage = db.stageDao().getOne(levelKey)
-                        val roomPoint = dbStage.db_stage_points.toLong()
-                        val roomControl = dbStage.db_stage_control
-                        stageRef.child("point").setValue(roomPoint)
-                        stageRef.child("control").setValue(roomControl)
-                    }
-                }
+    fun synchDBsBlock(roomControl:Boolean, fireControl:Boolean, roomPoint:Long, firePoint:String){
+        runBlocking (Dispatchers.Default){
+            if (roomControl && fireControl) {
+                stageRef.child("point").setValue(roomPoint)
+                Log.d(TAG, "roomDB control = $roomControl => fireDB point updated")
+            } else if (!roomControl && fireControl) {
+                stageRef.child("point").setValue(roomPoint)
+                stageRef.child("control").setValue(roomControl)
+                Log.d(
+                    TAG,
+                    "roomDB control = $roomControl => fireDB point+control updated"
+                )
+            } else if (roomControl && !fireControl) {
+                val lastInd = levelKey.length
+                val id = levelKey.substring(6, lastInd).toInt()
+                val stageEnt =
+                    AppRoomEntity(id, levelKey, firePoint.toInt(), fireControl)
+                db.stageDao().update(stageEnt)
+                Log.d(TAG, "fireDB control = $fireControl => roomDB updated")
+            } else if (!roomControl && !fireControl) {
+                val lastInd = levelKey.length
+                val id = levelKey.substring(6, lastInd).toInt()
+                val stageEnt =
+                    AppRoomEntity(id, levelKey, firePoint.toInt(), fireControl)
+                db.stageDao().update(stageEnt)
+                Log.d(TAG, "!roomControl && !fireControl => roomDB updated")
+            } else if (roomControl != null && fireControl == null) {
+                stageRef.child("point").setValue(roomPoint)
+                stageRef.child("control").setValue(roomControl)
+                Log.d(
+                    TAG,
+                    "roomDB control = $roomControl => fireDB point+control updated"
+                )
+            } else {
+                Log.d(TAG, "roomControl == null or Something's Wrong!")
             }
-        })
+        }
     }
 
     suspend fun synchronDBs(){
         Log.d(TAG, "synchrondbs start")
-        stageRef.addListenerForSingleValueEvent(object:ValueEventListener{
+
+        val mValueEventListener = object :ValueEventListener{
             override fun onCancelled(p0: DatabaseError) {
-                Log.d(TAG, "synchrondbs listener cancelled")
+                Log.d(TAG, "Listener:onCancelled")
             }
             override fun onDataChange(p0: DataSnapshot) {
-                runBlocking(Dispatchers.Default) {
+                Thread {
                     if (!p0.exists()){
-                        Log.d(TAG, "p0 exists")
+                        Log.d(TAG, "p0 does not exist")
                         var dbStage = db.stageDao().getOne(levelKey)
                         val roomPoint = dbStage.db_stage_points.toLong()
                         val roomControl = dbStage.db_stage_control
                         stageRef.child("point").setValue(roomPoint)
+                        Log.d(TAG, "fireDB point set: $roomPoint")
                         stageRef.child("control").setValue(roomControl)
                             .addOnSuccessListener {
-//                                runBlocking(Dispatchers.Default) {
+                                Log.d(TAG, "fireDB control set: $roomControl")
                                 val sPoint = p0.child("point").value
-                                Log.d(TAG, "$sPoint")
-                                var firepointstr = sPoint.toString()
-                                Log.d(TAG, "$firepointstr")
+                                Log.d(TAG, "sPoint = $sPoint")
                                 var firePoint = sPoint.toString()
+                                Log.d(TAG, "firePoint = $firePoint")
                                 val fireControl = p0.child("control").value as Boolean
-                                if (roomControl && fireControl) {
-                                    stageRef.child("point").setValue(roomPoint)
-                                    Log.d(TAG, "roomDB control = $roomControl => fireDB point updated")
-                                } else if (!roomControl && fireControl) {
-                                    stageRef.child("point").setValue(roomPoint)
-                                    stageRef.child("control").setValue(roomControl)
-                                    Log.d(
-                                        TAG,
-                                        "roomDB control = $roomControl => fireDB point+control updated"
-                                    )
-                                } else if (roomControl && !fireControl) {
-                                    val lastInd = levelKey.length
-                                    val id = levelKey.substring(6, lastInd).toInt()
-                                    val stageEnt =
-                                        AppRoomEntity(id, levelKey, firePoint.toInt(), fireControl)
-                                    db.stageDao().update(stageEnt)
-                                    Log.d(TAG, "fireDB control = $fireControl => roomDB updated")
-                                } else if (!roomControl && !fireControl) {
-                                    val lastInd = levelKey.length
-                                    val id = levelKey.substring(6, lastInd).toInt()
-                                    val stageEnt =
-                                        AppRoomEntity(id, levelKey, firePoint.toInt(), fireControl)
-                                    db.stageDao().update(stageEnt)
-                                    Log.d(TAG, "!roomControl && !fireControl => roomDB updated")
-                                } else if (roomControl != null && fireControl == null) {
-                                    stageRef.child("point").setValue(roomPoint)
-                                    stageRef.child("control").setValue(roomControl)
-                                    Log.d(
-                                        TAG,
-                                        "roomDB control = $roomControl => fireDB point+control updated"
-                                    )
-                                } else {
-                                    Log.d(TAG, "roomControl == null or Something's Wrong!")
-                                }
-//                                }
+                                synchDBsBlock(roomControl,fireControl,roomPoint,firePoint)
                             }
                     }
-                }
-            }
-        })
-
-        /*runBlocking(Dispatchers.Default) {
-            checkFireDBForExist()
-        }*/
-
-        /*Thread{
-            checkFireDBForExist()
-        }.run()*/
-
-        /*run{
-            delay(500)
-            stageRef.addListenerForSingleValueEvent(object :ValueEventListener{
-                override fun onCancelled(p0: DatabaseError) {}
-                override fun onDataChange(p0s: DataSnapshot) {
-                    runBlocking(Dispatchers.Default) {
+                    else{
+                        Log.d(TAG, "p0 exists")
                         var dbStage = db.stageDao().getOne(levelKey)
-                        var roomPoint = dbStage.db_stage_points.toLong()
+                        val roomPoint = dbStage.db_stage_points.toLong()
                         val roomControl = dbStage.db_stage_control
-                        val sPoint = p0s.child("point").value
-                        Log.d(TAG, "$sPoint")
-                        var firepointstr = sPoint.toString()
-                        Log.d(TAG, "$firepointstr")
+                        val sPoint = p0.child("point").value
+                        Log.d(TAG, "sPoint: $sPoint")
                         var firePoint = sPoint.toString()
-                        val fireControl = p0s.child("control").value as Boolean
-                        if (roomControl && fireControl) {
-                            stageRef.child("point").setValue(roomPoint)
-                            Log.d(TAG, "roomDB control = $roomControl => fireDB point updated")
-                        } else if (!roomControl && fireControl) {
-                            stageRef.child("point").setValue(roomPoint)
-                            stageRef.child("control").setValue(roomControl)
-                            Log.d(
-                                TAG,
-                                "roomDB control = $roomControl => fireDB point+control updated"
-                            )
-                        } else if (roomControl && !fireControl) {
-                            val lastInd = levelKey.length
-                            val id = levelKey.substring(6, lastInd).toInt()
-                            val stageEnt =
-                                AppRoomEntity(id, levelKey, firePoint.toInt(), fireControl)
-                            db.stageDao().update(stageEnt)
-                            Log.d(TAG, "fireDB control = $fireControl => roomDB updated")
-                        } else if (!roomControl && !fireControl) {
-                            val lastInd = levelKey.length
-                            val id = levelKey.substring(6, lastInd).toInt()
-                            val stageEnt =
-                                AppRoomEntity(id, levelKey, firePoint.toInt(), fireControl)
-                            db.stageDao().update(stageEnt)
-                            Log.d(TAG, "!roomControl && !fireControl => roomDB updated")
-                        } else if (roomControl != null && fireControl == null) {
-                            stageRef.child("point").setValue(roomPoint)
-                            stageRef.child("control").setValue(roomControl)
-                            Log.d(
-                                TAG,
-                                "roomDB control = $roomControl => fireDB point+control updated"
-                            )
-                        } else {
-                            Log.d(TAG, "roomControl == null or Something's Wrong!")
-                        }
+                        Log.d(TAG, "firePoint: $firePoint")
+                        val fireControl = p0.child("control").value as Boolean
+                        synchDBsBlock(roomControl,fireControl,roomPoint,firePoint)
+
                     }
-                }
-            })
-        }*/
-//        stageRef.addListenerForSingleValueEvent(object :ValueEventListener{
-//            override fun onCancelled(p0: DatabaseError) {}
-//            override fun onDataChange(p0: DataSnapshot) {
-//                runBlocking(Dispatchers.Default) {
-//                    delay(500)
-//                    var dbStage = db.stageDao().getOne(levelKey)
-//                    var roomPoint = dbStage.db_stage_points.toLong()
-//                    val roomControl = dbStage.db_stage_control
-//                    val sPoint = p0.child("/point").value
-//                    var firePoint = sPoint.toString().toInt()
-//                    val fireControl = p0.child("control").value as Boolean
-//                    if (roomControl && fireControl){
-//                        stageRef.child("point").setValue(roomPoint)
-//                        Log.d(TAG, "roomDB control = $roomControl => fireDB point updated")
-//                    }
-//                    else if (!roomControl && fireControl) {
-//                        stageRef.child("point").setValue(roomPoint)
-//                        stageRef.child("control").setValue(roomControl)
-//                        Log.d(TAG, "roomDB control = $roomControl => fireDB point+control updated")
-//                    }
-//                    else if (roomControl && !fireControl){
-//                        val lastInd = levelKey.length
-//                        val id = levelKey.substring(6, lastInd).toInt()
-//                        val stageEnt = AppRoomEntity(id, levelKey, firePoint.toInt(), fireControl)
-//                        db.stageDao().update(stageEnt)
-//                        Log.d(TAG, "fireDB control = $fireControl => roomDB updated")
-//                    }
-//                    else if (!roomControl && !fireControl) {
-//                        val lastInd = levelKey.length
-//                        val id = levelKey.substring(6, lastInd).toInt()
-//                        val stageEnt = AppRoomEntity(id, levelKey, firePoint.toInt(), fireControl)
-//                        db.stageDao().update(stageEnt)
-//                        Log.d(TAG, "!roomControl && !fireControl => roomDB updated")
-//                    }
-//                    else if (roomControl != null && fireControl == null){
-//                        stageRef.child("point").setValue(roomPoint)
-//                        stageRef.child("control").setValue(roomControl)
-//                        Log.d(TAG, "roomDB control = $roomControl => fireDB point+control updated")
-//                    }else{
-//                        Log.d(TAG, "roomControl == null or Something's Wrong!")
-//                    }
-//                }
-//
-//                /*
-//                Thread{ // synchronDBs
-//                    var dbStage = db.stageDao().getOne(levelKey)
-//                    var roomPoint = dbStage.db_stage_points.toLong()
-//                    val roomControl = dbStage.db_stage_control
-//                    var firePoint = p0.child("point").value as Long
-//                    val fireControl = p0.child("control").value as Boolean
-//                    if (roomControl && fireControl){
-//                        stageRef.child("point").setValue(roomPoint)
-//                        Log.d(TAG, "roomDB control = $roomControl => fireDB point updated")
-//                    }
-//                    else if (!roomControl && fireControl) {
-//                        stageRef.child("point").setValue(roomPoint)
-//                        stageRef.child("control").setValue(roomControl)
-//                        Log.d(TAG, "roomDB control = $roomControl => fireDB point+control updated")
-//                    }
-//                    else if (roomControl && !fireControl){
-//                        val lastInd = levelKey.length
-//                        val id = levelKey.substring(6, lastInd).toInt()
-//                        val stageEnt = AppRoomEntity(id, levelKey, firePoint.toInt(), fireControl)
-//                        db.stageDao().update(stageEnt)
-//                        Log.d(TAG, "fireDB control = $fireControl => roomDB updated")
-//                    }else if (roomControl != null && fireControl == null){
-//                        stageRef.child("point").setValue(roomPoint)
-//                        stageRef.child("control").setValue(roomControl)
-//                        Log.d(TAG, "roomDB control = $roomControl => fireDB point+control updated")
-//                    }else{
-//                        Log.d(TAG, "roomControl == null or Something's Wrong!")
-//                    }
-//                }.start()*/
-//            }
-//        })
+                }.start()
+            }
+        }
+
+        stageRef.addValueEventListener(mValueEventListener)
+
         delay(10)
+
+        this.mValueEventListener = mValueEventListener
     }
 
     private fun groupShapeVisibility(){

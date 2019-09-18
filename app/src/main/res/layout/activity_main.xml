@@ -150,20 +150,26 @@
                         app:layout_constraintTop_toTopOf="@+id/buttSoru"
                         app:layout_constraintStart_toStartOf="@+id/buttSoru"
                         android:layout_marginTop="12dp"/>
-                <Button android:id="@+id/buttInfo"
-                        android:text="@string/info"
-                        android:textColor="@color/colorSpaceWhite"
-                        android:background="@android:color/transparent"
+
+                <Button
+                        android:id="@+id/buttInfo"
                         android:layout_width="96dp"
-                        android:layout_height="108dp" android:fontFamily="@font/coda"
-                        android:textAllCaps="false"
-                        android:gravity="center_horizontal|top"
+                        android:layout_height="108dp"
+                        android:layout_marginStart="8dp"
                         android:layout_marginEnd="8dp"
-                        app:layout_constraintEnd_toEndOf="parent" android:layout_marginBottom="16dp"
+                        android:layout_marginBottom="16dp"
+                        android:background="@android:color/transparent"
+                        android:fontFamily="@font/coda"
+                        android:gravity="center_horizontal|top"
+                        android:onClick="showInfo"
+                        android:text="@string/info"
+                        android:textAllCaps="false"
+                        android:textColor="@color/colorSpaceWhite"
+                        android:textSize="18sp"
                         app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/ivSuggestQ"
-                        app:layout_constraintStart_toEndOf="@+id/buttSoru" android:layout_marginStart="8dp"
-                        android:textSize="18sp"/>
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toEndOf="@+id/buttSoru"
+                        app:layout_constraintTop_toBottomOf="@+id/ivSuggestQ" />
                 <ImageView
                         android:layout_width="96dp"
                         android:layout_height="96dp" app:srcCompat="@drawable/marsbutton100"

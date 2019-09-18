@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-          package="com.ust.qspace">
+        package="com.ust.qspace">
 
-    <uses-permission android:name="android.permission.INTERNET"/>
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
     <application
             android:allowBackup="true"
@@ -14,50 +14,46 @@
             android:supportsRtl="true"
             android:theme="@style/AppTheme">
         <activity
+                android:name=".InfoActivity"
+                android:label="@string/title_activity_info"
+                android:theme="@style/AppTheme.NoActionBar"></activity>
+        <activity
                 android:name=".trees.SettingsActivity"
                 android:label="@string/title_activity_settings"
-                android:theme="@style/AppTheme.NoActionBar">
-        </activity>
+                android:theme="@style/AppTheme.NoActionBar"></activity>
         <activity
                 android:name=".stages.RandomActivity"
                 android:label="@string/title_activity_random"
-                android:theme="@style/AppTheme.NoActionBar">
-        </activity>
+                android:theme="@style/AppTheme.NoActionBar"></activity>
         <activity
                 android:name=".SuggestActivity"
                 android:label="@string/title_activity_suggest"
-                android:theme="@style/AppTheme.NoActionBar">
-        </activity>
+                android:theme="@style/AppTheme.NoActionBar"></activity>
         <activity
                 android:name=".stages.OrderedActivity"
                 android:label="@string/title_activity_ordered"
-                android:theme="@style/AppTheme.NoActionBar">
-        </activity>
+                android:theme="@style/AppTheme.NoActionBar"></activity>
         <activity
                 android:name=".LvlActivity"
                 android:label="@string/title_activity_lvl"
-                android:theme="@style/AppTheme.NoActionBar">
-        </activity>
-        <activity android:name=".ProfileActivity">
-        </activity>
-        <activity android:name=".CommentActivity">
-        </activity>
+                android:theme="@style/AppTheme.NoActionBar"></activity>
+        <activity android:name=".ProfileActivity"></activity>
+        <activity android:name=".CommentActivity"></activity>
         <activity android:name=".LoginActivity">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
+                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER"/>
+                <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
         <activity
                 android:name=".MainActivity"
                 android:label="@string/app_name"
-                android:theme="@style/AppTheme.NoActionBar">
-        </activity>
+                android:theme="@style/AppTheme.NoActionBar"></activity>
 
         <meta-data
                 android:name="preloaded_fonts"
-                android:resource="@array/preloaded_fonts"/>
+                android:resource="@array/preloaded_fonts" />
     </application>
 
 </manifest>

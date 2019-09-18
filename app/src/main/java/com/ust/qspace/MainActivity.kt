@@ -317,6 +317,29 @@ class MainActivity : AppCompatActivity() {
         })
     }
 
+    fun showInfo(view:View?){
+        Log.d(TAG, "Info pressed")
+        val intent = Intent(this@MainActivity,InfoActivity::class.java)
+        val gfo = AnimationUtils.loadAnimation(this, R.anim.gfo2)
+        val fo = AnimationUtils.loadAnimation(this, R.anim.abc_fade_out)
+        ivInfo.startAnimation(gfo)
+        buttInfo.startAnimation(fo)
+        fo.setAnimationListener(object : Animation.AnimationListener{
+            override fun onAnimationRepeat(p0: Animation?) {}
+            override fun onAnimationStart(p0: Animation?) {}
+            override fun onAnimationEnd(p0: Animation?) {buttInfo.visibility = View.INVISIBLE}
+        })
+        gfo.setAnimationListener(object : Animation.AnimationListener {
+            override fun onAnimationStart(arg0: Animation) {}
+            override fun onAnimationRepeat(arg0: Animation) {}
+            override fun onAnimationEnd(arg0: Animation) {
+                startActivity(intent)
+                ivInfo.visibility = View.INVISIBLE
+                animation()
+            }
+        })
+    }
+
     private fun showSettings(view:View?){
         Log.d(TAG, "action_settings pressed!")
         val intent = Intent(this@MainActivity, SettingsActivity::class.java)
