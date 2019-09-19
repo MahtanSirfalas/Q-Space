@@ -96,8 +96,8 @@
     <string name="settings">Ayarlar</string>
     <string name="terms_conditions"><![CDATA[Hükümler&Koşullar]]></string>
     <string name="title_activity_settings">SettingsActivity</string>
-    <string name="title_activity_info">InfoActivity</string>
-
+    <!-- Info Activity -->
+    <string name="title_activity_info">Bilgi &amp; SSS</string>
     <string name="info_intro">Hoşgeldin %1$s. \n
         Q Space IQ testlerinden esinlenen matematik temelli bir oyundur.\n
     </string>
@@ -120,47 +120,33 @@
 
         İyi Eğlenceler!
     </string>
-    <string name="info_how_to">
-        \"Yorumları nasıl görebilir ve yorum yapabilirim?\"\n
-        - Her soru sayfasının sağ altında hareketli buton ile fakat bu butonu kullanabilmek için ya soruyu doğru cevaplamış ya da bu aşamadan kazanacağınız puanlardan feragat etmiş olmanız gerekmektedir.\n
-        \n\n
-        \"Bir yoruma destek oyu vermek istiyorum nasıl yaparım?\"\n
-        - İlgili yoruma uzun basarak(dokunarak). Aklınızda bulunsun kendi yorumunuza destek oyu veremezsiniz.\n
-        \n\n
-        \"Destek oyumu nasıl geri çekerim?\"\n
-        - Aynı şekilde; daha önce destek oyu verdiğiniz yoruma uzun basarak. (Yorumun sağ alt köşesindeki sayı yeşil ise destek oyu vermişsiniz demektir.)\n
-        \n\n
-        \"Başka oyuncunun profil kartını görebilir miyim?\"\n
-        - Yoruma çift dokunursanız(basarsanız), o yorumu yapan kişinin profil özetini içeren bir pencere açılır.\n
-        \n\n
-        \"Yorumumu nasıl silerim?\"\n
-        - Kendi yorumunuza uzun basarak(dokunarak).\n
-        \n\n
-        \"Yorumumu nasıl değiştirebilirim?\"\n
-        - Yorumunuzu değiştirmenin tek yolu var; yorum yaptıktan sonra sayfayı kapatmadıysanız, yeni bir yorum girdiğinizde bu yorum önceki yorumunuzun yerini alır.\n
-        \n\n
-        \"Neden yorum yapmalıyım?\"\n
-        - Paylaşmanın mutluluğu dışında mı? Yorumunuz ne kadar destek oyu toplarsa o kadar puan kazanırsınız.\n
-        \n\n
-        \"Oyun çocuklar için uygun mudur?\"\n
-        - Tabi ki uygundur hatta bu sebeple kullancılar arası özel mesaj ve alt yorum etkileşimi hiç bir zaman eklenmeyecektir?\n
-        \n\n
-        \"Ana menüdeki ufoda neyin nesi?\"\n
-        - Kendiniz sorun!\n
-        \n\n
-        \"Soru önerimin incelendiğini nasıl anlarım?\"\n
-        - Soru öner sayfasını açtığınızda önerdiğiniz soru taslağı yerine boş yazım alanı görürsünüz.\n
-        \n\n
-        \"Önerdiğim soruyu ne zaman ekleyeceksiniz?\"\n
-        - Kabul edildiyse sıraya eklenmiş olmalı. Zamanı geldiğinde ise Q Space\'de yayınlanır.\n
-        \n\n
-        \"Onaylandığını nasıl anlarım?\"\n
-        - Sizi bilgilendirmek için mail yollarız.\n
-        \n\n
-        \"Soru puanlama prosedürü?\"\n
-        - Cevaplayabildiğiniz kadar çabuk cevaplamaya bakın.\n
-        \n\n
-    </string>
+    <string name="info_faq_see_comments">\"Yorumları nasıl görebilir ve yorum yapabilirim?\"</string>
+    <string name="info_faq_see_comments_answer">Her soru sayfasının sağ altında hareketli buton ile fakat bu butonu kullanabilmek için ya soruyu doğru cevaplamış ya da bu aşamadan kazanacağınız puanlardan feragat etmiş olmanız gerekmektedir.</string>
+    <string name="info_faq_upvote">\"Bir yoruma destek oyu vermek istiyorum nasıl yaparım?\"</string>
+    <string name="info_faq_upvote_answer">İlgili yoruma uzun basarak(dokunarak). Aklınızda bulunsun kendi yorumunuza destek oyu veremezsiniz.</string>
+    <string name="info_faq_undo_upvote">\"Destek oyumu nasıl geri çekerim?\"</string>
+    <string name="info_faq_undo_upvote_answer">Aynı şekilde; daha önce destek oyu verdiğiniz yoruma uzun basarak. (Yorumun sağ alt köşesindeki sayı yeşil ise destek oyu vermişsiniz demektir.)</string>
+    <string name="info_faq_profile_sum">\"Başka oyuncunun profil kartını görebilir miyim?\"</string>
+    <string name="info_faq_profile_sum_answer">Yoruma çift dokunursanız(basarsanız), o yorumu yapan kişinin profil özetini içeren bir pencere açılır.</string>
+    <string name="info_faq_delete_comment">\"Yorumumu nasıl silerim?\"</string>
+    <string name="info_faq_delete_comment_answer">Kendi yorumunuza uzun basarak(dokunarak).</string>
+    <string name="info_faq_edit_comment">\"Yorumumu nasıl değiştirebilirim?\"</string>
+    <string name="info_faq_edit_comment_answer">Yorumunuzu değiştirmenin tek yolu var; yorum yaptıktan sonra sayfayı kapatmadıysanız, yeni bir yorum girdiğinizde bu yorum önceki yorumunuzun yerini alır.</string>
+    <string name="info_faq_should_comment">\"Neden yorum yapmalıyım?\"</string>
+    <string name="info_faq_should_comment_answer">Paylaşmanın mutluluğu dışında mı? Yorumunuz ne kadar destek oyu toplarsa o kadar puan kazanırsınız.</string>
+    <string name="info_faq_for_kids">\"Oyun çocuklar için uygun mudur?\"</string>
+    <string name="info_faq_for_kids_answer">Tabi ki uygundur hatta bu sebeple kullancılar arası özel mesaj ve alt yorum etkileşimi hiç bir zaman eklenmeyecektir?</string>
+    <string name="info_faq_ufo">\"Ana menüdeki ufoda neyin nesi?\"</string>
+    <string name="info_faq_ufo_answer">Kendiniz sorun!</string>
+    <string name="info_faq_suggest_review">\"Soru önerimin incelendiğini nasıl anlarım?\"</string>
+    <string name="info_faq_suggest_review_answer">Soru öner sayfasını açtığınızda önerdiğiniz soru taslağı yerine boş yazım alanı görürsünüz.</string>
+    <string name="info_faq_suggest_add">\"Önerdiğim soruyu ne zaman ekleyeceksiniz?\"</string>
+    <string name="info_faq_suggest_add_answer">Kabul edildiyse sıraya eklenmiş olmalı. Zamanı geldiğinde ise Q Space\'de yayınlanır.</string>
+    <string name="info_faq_suggest_approve">\"Onaylandığını nasıl anlarım?\"</string>
+    <string name="info_faq_suggest_approve_answer">Sizi bilgilendirmek için mail yollarız.</string>
+    <string name="info_faq_score_procedure">\"Soru puanlama prosedürü?\"</string>
+    <string name="info_faq_score_procedure_answer">Cevaplayabildiğiniz kadar çabuk cevaplamaya bakın.</string>
+
     <string name="faq">--SSS--</string>
 
 </resources>

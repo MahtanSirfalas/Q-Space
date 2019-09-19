@@ -102,12 +102,12 @@
     <string name="terms_conditions"><![CDATA[Terms&Conditions]]></string>
     <string name="privacy_policy">Privacy Policy</string>
     <!-- Info Activity -->
-    <string name="title_activity_info">InfoActivity</string>
+    <string name="title_activity_info">Info &amp; FAQs</string>
     <string name="info_intro">Hello %1$s. \n
         Q Space is a math based game which inspired from iq tests.\n
     </string>
     <string name="info_mission">
-        Mission: Q Space aims to entertain while solving some math based iq tests.\n
+        Mission: Q Space aims to entertain people while solving some math based iq tests.\n
     </string>
     <string name="info_vision">
         Vision: Q Space; in the long run, as an interactive game, targets drawing attention to the abstract thought basics with a wide profile community, step by step.\n
@@ -125,46 +125,32 @@
 
         Have Fun!
     </string>
-    <string name="info_how_to">
-        \"How can i see the comments or write one to the stages?\"\n
-        - In every stage there is a button on the right bottom. But you have to find the right answer or give up from the points to see them.\n
-        \n\n
-        \"How to upvote a comment?\"\n
-        - By long pressing(touching) to the specific comment. Just a note you can\'t upvote your own comment\n
-        \n\n
-        \"How to undo my upvote?\"\n
-        - Same with upvoting; by long pressing(touching) to the comment that upvoted before. (Green number at the bottom right corner of the comment means you upvoted the comment before)\n
-        \n\n
-        \"How to see another player\'s profile summary?\"\n
-        - Double pressing(touching) to the comment will pop up a window that contains the summary of the player.\n
-        \n\n
-        \"How to delete my comment?\"\n
-        - By long pressing(touching) to your own comment.\n
-        \n\n
-        \"How to edit my comment?\"\n
-        - If you wrote a comment to any stage\'s comment page but didn\'t leave the current page, writing a new comment will replace your last comment. But if you left that page before you can\'t edit your comment.\n
-        \n\n
-        \"Why should i comment?\"\n
-        - If your comment gets an upvote you will gain some points.\n
-        \n\n
-        \"Is the game ok for kids?\"\n
-        - Sure, therefore; we didn\'t add P.M. and subcomment functions to the game?\n
-        \n\n
-        \"What is that ufo in the main menu?\"\n
-        - Ask yourself!\n
-        \n\n
-        \"How may i know if my question suggest reviewed?\"\n
-        - You will see an empty text area when you opened the "Suggest_Q" page.\n
-        \n\n
-        \"When will you add my suggested question?\"\n
-        - If it is approved, it would be added to the queue. So it will be published when it is time.\n
-        \n\n
-        \"How may i know if it\'s approved?\"\n
-        - We will mail you to inform.\n
-        \n\n
-        \"Stage scoring procedure?\"\n
-        - Answer as fast as you can.\n
-        \n\n
-    </string>
-    <string name="faq">--FAQ--</string>
+    <string name="info_faq_see_comments">\"How can i see the comments or write one to the stages?\"</string>
+    <string name="info_faq_see_comments_answer">In every stage there is a button on the right bottom. But you have to find the right answer or give up from the points to see them.</string>
+    <string name="info_faq_upvote">\"How to upvote a comment?\"</string>
+    <string name="info_faq_upvote_answer">By long pressing(touching) to the specific comment. Just a note you can\'t upvote your own comment.</string>
+    <string name="info_faq_undo_upvote">\"How to undo my upvote?\"</string>
+    <string name="info_faq_undo_upvote_answer">Same with upvoting; by long pressing(touching) to the comment that upvoted before. (Green number at the bottom right corner of the comment means you upvoted the comment before)</string>
+    <string name="info_faq_profile_sum">\"How to see another player\'s profile summary?\"</string>
+    <string name="info_faq_profile_sum_answer">Double pressing(touching) to the comment will pop up a window that contains the summary of the player.</string>
+    <string name="info_faq_delete_comment">\"How to delete my comment?\"</string>
+    <string name="info_faq_delete_comment_answer">By long pressing(touching) to your own comment.</string>
+    <string name="info_faq_edit_comment">\"How to edit my comment?\"</string>
+    <string name="info_faq_edit_comment_answer">If you wrote a comment to any stage\'s comment page but didn\'t leave the current page, writing a new comment will replace your last comment. But if you left that page before you can\'t edit your comment.</string>
+    <string name="info_faq_should_comment">\"Why should i comment?\"</string>
+    <string name="info_faq_should_comment_answer">If your comment gets an upvote you will gain some points.</string>
+    <string name="info_faq_for_kids">\"Is the game ok for kids?\"</string>
+    <string name="info_faq_for_kids_answer">Sure, therefore; we didn\'t add P.M. and subcomment functions to the game?</string>
+    <string name="info_faq_ufo"> \"What is that ufo in the main menu?\"</string>
+    <string name="info_faq_ufo_answer">Ask yourself!</string>
+    <string name="info_faq_suggest_review">\"How may i know if my question suggest reviewed?\</string>
+    <string name="info_faq_suggest_review_answer">You will see an empty text area when you opened the "Suggest_Q" page.</string>
+    <string name="info_faq_suggest_add">\"When will you add my suggested question?\"</string>
+    <string name="info_faq_suggest_add_answer">If it is approved, it would be added to the queue. So it will be published when it is time.</string>
+    <string name="info_faq_suggest_approve">\"How may i know if it\'s approved?\"</string>
+    <string name="info_faq_suggest_approve_answer">We will mail you to inform.</string>
+    <string name="info_faq_score_procedure">\"Stage scoring procedure?\"</string>
+    <string name="info_faq_score_procedure_answer">Answer as fast as you can.</string>
+
+    <string name="faq">--FAQs--</string>
 </resources>

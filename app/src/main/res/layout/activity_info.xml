@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
@@ -16,6 +17,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
                 android:background="?attr/colorPrimary"
+                app:titleTextAppearance="@style/Toolbar.TitleText"
                 app:popupTheme="@style/AppTheme.PopupOverlay" />
 
     </com.google.android.material.appbar.AppBarLayout>
@@ -34,13 +36,27 @@
 
             <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:padding="8dp">
+                    android:layout_height="wrap_content">
+
+                <ImageView
+                        android:id="@+id/ivBack"
+                        android:layout_width="fill_parent"
+                        android:layout_height="fill_parent"
+                        android:adjustViewBounds="true"
+                        android:clickable="false"
+                        android:focusableInTouchMode="false"
+                        android:scaleType="centerCrop"
+                        android:src="@drawable/bg_info"
+                        android:visibility="visible"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
 
                 <TextView
                         android:id="@+id/tv_info_intro"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_marginStart="4dp"
+                        android:layout_marginEnd="@dimen/cardview_compat_inset_shadow"
                         android:fontFamily="@font/coda"
                         android:gravity="center"
                         android:padding="4dp"
@@ -55,6 +71,8 @@
                         android:id="@+id/tv_info_misvis"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_marginStart="4dp"
+                        android:layout_marginEnd="@dimen/cardview_compat_inset_shadow"
                         android:fontFamily="@font/coda"
                         android:gravity="start"
                         android:padding="4dp"
@@ -65,37 +83,447 @@
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/tv_info_intro" />
 
-                <TextView
-                        android:id="@+id/tv_info_faq_head"
-                        android:layout_width="wrap_content"
+                <Button
+                        android:id="@+id/butt_info_faq1_q"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="48dp"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginEnd="8dp"
+                        android:background="@drawable/custom_giveup"
                         android:fontFamily="@font/coda"
                         android:gravity="center"
-                        android:padding="4dp"
-                        android:text="@string/faq"
-                        android:textColor="@color/colorPink"
-                        android:textSize="18sp"
-                        android:textStyle="bold"
+                        android:onClick="faqQuestionClick"
+                        android:text="@string/info_faq_see_comments"
+                        android:textAllCaps="false"
+                        android:textColor="@color/colorSpaceWhite"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/tv_info_misvis" />
 
                 <TextView
-                        android:id="@+id/tv_info_faq"
+                        android:id="@+id/tv_info_faq1_a"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginEnd="8dp"
                         android:fontFamily="@font/coda"
                         android:gravity="start"
-                        android:padding="4dp"
-                        android:text="TextView"
+                        android:text="@string/info_faq_see_comments_answer"
                         android:textColor="@color/colorSpaceWhite"
                         android:textSize="16sp"
                         android:textStyle="italic"
+                        android:visibility="gone"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/tv_info_faq_head" />
+                        app:layout_constraintTop_toBottomOf="@id/butt_info_faq1_q" />
 
+                <Button
+                        android:id="@+id/butt_info_faq2_q"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginEnd="8dp"
+                        android:background="@drawable/custom_giveup"
+                        android:fontFamily="@font/coda"
+                        android:gravity="center"
+                        android:onClick="faqQuestionClick"
+                        android:text="@string/info_faq_upvote"
+                        android:textAllCaps="false"
+                        android:textColor="@color/colorSpaceWhite"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/tv_info_faq1_a" />
+
+                <TextView
+                        android:id="@+id/tv_info_faq2_a"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginEnd="8dp"
+                        android:fontFamily="@font/coda"
+                        android:gravity="start"
+                        android:text="@string/info_faq_upvote_answer"
+                        android:textColor="@color/colorSpaceWhite"
+                        android:textSize="16sp"
+                        android:textStyle="italic"
+                        android:visibility="gone"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/butt_info_faq2_q" />
+
+                <Button
+                        android:id="@+id/butt_info_faq3_q"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginEnd="8dp"
+                        android:background="@drawable/custom_giveup"
+                        android:fontFamily="@font/coda"
+                        android:gravity="center"
+                        android:onClick="faqQuestionClick"
+                        android:text="@string/info_faq_undo_upvote"
+                        android:textAllCaps="false"
+                        android:textColor="@color/colorSpaceWhite"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/tv_info_faq2_a" />
+
+                <TextView
+                        android:id="@+id/tv_info_faq3_a"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginEnd="8dp"
+                        android:fontFamily="@font/coda"
+                        android:gravity="start"
+                        android:text="@string/info_faq_undo_upvote_answer"
+                        android:textColor="@color/colorSpaceWhite"
+                        android:textSize="16sp"
+                        android:textStyle="italic"
+                        android:visibility="gone"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/butt_info_faq3_q" />
+
+                <Button
+                        android:id="@+id/butt_info_faq4_q"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginEnd="8dp"
+                        android:background="@drawable/custom_giveup"
+                        android:fontFamily="@font/coda"
+                        android:gravity="center"
+                        android:onClick="faqQuestionClick"
+                        android:text="@string/info_faq_profile_sum"
+                        android:textAllCaps="false"
+                        android:textColor="@color/colorSpaceWhite"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/tv_info_faq3_a" />
+
+                <TextView
+                        android:id="@+id/tv_info_faq4_a"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginEnd="8dp"
+                        android:fontFamily="@font/coda"
+                        android:gravity="start"
+                        android:text="@string/info_faq_profile_sum_answer"
+                        android:textColor="@color/colorSpaceWhite"
+                        android:textSize="16sp"
+                        android:textStyle="italic"
+                        android:visibility="gone"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/butt_info_faq4_q" />
+
+                <Button
+                        android:id="@+id/butt_info_faq5_q"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginEnd="8dp"
+                        android:background="@drawable/custom_giveup"
+                        android:fontFamily="@font/coda"
+                        android:gravity="center"
+                        android:onClick="faqQuestionClick"
+                        android:text="@string/info_faq_delete_comment"
+                        android:textAllCaps="false"
+                        android:textColor="@color/colorSpaceWhite"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/tv_info_faq4_a" />
+
+                <TextView
+                        android:id="@+id/tv_info_faq5_a"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginEnd="8dp"
+                        android:fontFamily="@font/coda"
+                        android:gravity="start"
+                        android:text="@string/info_faq_delete_comment_answer"
+                        android:textColor="@color/colorSpaceWhite"
+                        android:textSize="16sp"
+                        android:textStyle="italic"
+                        android:visibility="gone"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/butt_info_faq5_q" />
+
+                <Button
+                        android:id="@+id/butt_info_faq6_q"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginEnd="8dp"
+                        android:background="@drawable/custom_giveup"
+                        android:fontFamily="@font/coda"
+                        android:gravity="center"
+                        android:onClick="faqQuestionClick"
+                        android:text="@string/info_faq_edit_comment"
+                        android:textAllCaps="false"
+                        android:textColor="@color/colorSpaceWhite"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/tv_info_faq5_a" />
+
+                <TextView
+                        android:id="@+id/tv_info_faq6_a"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginEnd="8dp"
+                        android:fontFamily="@font/coda"
+                        android:gravity="start"
+                        android:text="@string/info_faq_edit_comment_answer"
+                        android:textColor="@color/colorSpaceWhite"
+                        android:textSize="16sp"
+                        android:textStyle="italic"
+                        android:visibility="gone"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/butt_info_faq6_q" />
+
+                <Button
+                        android:id="@+id/butt_info_faq7_q"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginEnd="8dp"
+                        android:background="@drawable/custom_giveup"
+                        android:fontFamily="@font/coda"
+                        android:gravity="center"
+                        android:onClick="faqQuestionClick"
+                        android:text="@string/info_faq_should_comment"
+                        android:textAllCaps="false"
+                        android:textColor="@color/colorSpaceWhite"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/tv_info_faq6_a" />
+
+                <TextView
+                        android:id="@+id/tv_info_faq7_a"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginEnd="8dp"
+                        android:fontFamily="@font/coda"
+                        android:gravity="start"
+                        android:text="@string/info_faq_should_comment_answer"
+                        android:textColor="@color/colorSpaceWhite"
+                        android:textSize="16sp"
+                        android:textStyle="italic"
+                        android:visibility="gone"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/butt_info_faq7_q" />
+
+                <Button
+                        android:id="@+id/butt_info_faq8_q"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginEnd="8dp"
+                        android:background="@drawable/custom_giveup"
+                        android:fontFamily="@font/coda"
+                        android:gravity="center"
+                        android:onClick="faqQuestionClick"
+                        android:text="@string/info_faq_for_kids"
+                        android:textAllCaps="false"
+                        android:textColor="@color/colorSpaceWhite"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/tv_info_faq7_a" />
+
+                <TextView
+                        android:id="@+id/tv_info_faq8_a"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginEnd="8dp"
+                        android:fontFamily="@font/coda"
+                        android:gravity="start"
+                        android:text="@string/info_faq_for_kids_answer"
+                        android:textColor="@color/colorSpaceWhite"
+                        android:textSize="16sp"
+                        android:textStyle="italic"
+                        android:visibility="gone"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/butt_info_faq8_q" />
+
+                <Button
+                        android:id="@+id/butt_info_faq9_q"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginEnd="8dp"
+                        android:background="@drawable/custom_giveup"
+                        android:fontFamily="@font/coda"
+                        android:gravity="center"
+                        android:onClick="faqQuestionClick"
+                        android:text="@string/info_faq_ufo"
+                        android:textAllCaps="false"
+                        android:textColor="@color/colorSpaceWhite"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/tv_info_faq8_a" />
+
+                <TextView
+                        android:id="@+id/tv_info_faq9_a"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginEnd="8dp"
+                        android:fontFamily="@font/coda"
+                        android:gravity="start"
+                        android:text="@string/info_faq_ufo_answer"
+                        android:textColor="@color/colorSpaceWhite"
+                        android:textSize="16sp"
+                        android:textStyle="italic"
+                        android:visibility="gone"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/butt_info_faq9_q" />
+
+                <Button
+                        android:id="@+id/butt_info_faq10_q"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginEnd="8dp"
+                        android:background="@drawable/custom_giveup"
+                        android:fontFamily="@font/coda"
+                        android:gravity="center"
+                        android:onClick="faqQuestionClick"
+                        android:text="@string/info_faq_suggest_add"
+                        android:textAllCaps="false"
+                        android:textColor="@color/colorSpaceWhite"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/tv_info_faq9_a" />
+
+                <TextView
+                        android:id="@+id/tv_info_faq10_a"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginEnd="8dp"
+                        android:fontFamily="@font/coda"
+                        android:gravity="start"
+                        android:text="@string/info_faq_suggest_add_answer"
+                        android:textColor="@color/colorSpaceWhite"
+                        android:textSize="16sp"
+                        android:textStyle="italic"
+                        android:visibility="gone"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/butt_info_faq10_q" />
+
+                <Button
+                        android:id="@+id/butt_info_faq11_q"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginEnd="8dp"
+                        android:background="@drawable/custom_giveup"
+                        android:fontFamily="@font/coda"
+                        android:gravity="center"
+                        android:onClick="faqQuestionClick"
+                        android:text="@string/info_faq_suggest_approve"
+                        android:textAllCaps="false"
+                        android:textColor="@color/colorSpaceWhite"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/tv_info_faq10_a" />
+
+                <TextView
+                        android:id="@+id/tv_info_faq11_a"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginEnd="8dp"
+                        android:fontFamily="@font/coda"
+                        android:gravity="start"
+                        android:text="@string/info_faq_suggest_approve_answer"
+                        android:textColor="@color/colorSpaceWhite"
+                        android:textSize="16sp"
+                        android:textStyle="italic"
+                        android:visibility="gone"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/butt_info_faq11_q" />
+
+                <Button
+                        android:id="@+id/butt_info_faq12_q"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginEnd="8dp"
+                        android:background="@drawable/custom_giveup"
+                        android:fontFamily="@font/coda"
+                        android:gravity="center"
+                        android:onClick="faqQuestionClick"
+                        android:text="@string/info_faq_suggest_review"
+                        android:textAllCaps="false"
+                        android:textColor="@color/colorSpaceWhite"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/tv_info_faq11_a" />
+
+                <TextView
+                        android:id="@+id/tv_info_faq12_a"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginEnd="8dp"
+                        android:fontFamily="@font/coda"
+                        android:gravity="start"
+                        android:text="@string/info_faq_suggest_review_answer"
+                        android:textColor="@color/colorSpaceWhite"
+                        android:textSize="16sp"
+                        android:textStyle="italic"
+                        android:visibility="gone"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/butt_info_faq12_q" />
+
+                <Button
+                        android:id="@+id/butt_info_faq13_q"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginEnd="8dp"
+                        android:background="@drawable/custom_giveup"
+                        android:fontFamily="@font/coda"
+                        android:gravity="center"
+                        android:onClick="faqQuestionClick"
+                        android:text="@string/info_faq_score_procedure"
+                        android:textAllCaps="false"
+                        android:textColor="@color/colorSpaceWhite"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/tv_info_faq12_a" />
+
+                <TextView
+                        android:id="@+id/tv_info_faq13_a"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginEnd="8dp"
+                        android:fontFamily="@font/coda"
+                        android:gravity="start"
+                        android:text="@string/info_faq_score_procedure_answer"
+                        android:textColor="@color/colorSpaceWhite"
+                        android:textSize="16sp"
+                        android:textStyle="italic"
+                        android:visibility="gone"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/butt_info_faq13_q" />
             </androidx.constraintlayout.widget.ConstraintLayout>
         </ScrollView>
     </LinearLayout>

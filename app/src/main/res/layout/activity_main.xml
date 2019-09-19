@@ -154,7 +154,7 @@
                 <Button
                         android:id="@+id/buttInfo"
                         android:layout_width="96dp"
-                        android:layout_height="108dp"
+                        android:layout_height="112dp"
                         android:layout_marginStart="8dp"
                         android:layout_marginEnd="8dp"
                         android:layout_marginBottom="16dp"
@@ -170,15 +170,19 @@
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toEndOf="@+id/buttSoru"
                         app:layout_constraintTop_toBottomOf="@+id/ivSuggestQ" />
+
                 <ImageView
-                        android:layout_width="96dp"
-                        android:layout_height="96dp" app:srcCompat="@drawable/marsbutton100"
                         android:id="@+id/ivInfo"
-                        app:layout_constraintEnd_toEndOf="@+id/buttInfo"
+                        android:layout_width="96dp"
+                        android:layout_height="96dp"
+                        android:layout_marginTop="20dp"
                         app:layout_constraintBottom_toBottomOf="@+id/buttInfo"
+                        app:layout_constraintEnd_toEndOf="@+id/buttInfo"
+                        app:layout_constraintHorizontal_bias="0.0"
                         app:layout_constraintStart_toStartOf="@+id/buttInfo"
-                        app:layout_constraintTop_toTopOf="@+id/buttInfo" android:layout_marginTop="16dp"
-                        app:layout_constraintHorizontal_bias="0.0" app:layout_constraintVertical_bias="1.0"/>
+                        app:layout_constraintTop_toTopOf="@+id/buttInfo"
+                        app:layout_constraintVertical_bias="1.0"
+                        app:srcCompat="@drawable/marsbutton100" />
                 <androidx.constraintlayout.widget.Group android:layout_width="wrap_content"
                                                         android:layout_height="wrap_content" android:id="@+id/groupWarn"
                                                         app:constraint_referenced_ids="tvWarn,ivWarn"
