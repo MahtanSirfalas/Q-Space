@@ -148,7 +148,7 @@
     <string name="info_faq_suggest_add">\"When will you add my suggested question?\"</string>
     <string name="info_faq_suggest_add_answer">If it is approved, it would be added to the queue. So it will be published when it is time.</string>
     <string name="info_faq_suggest_approve">\"How may i know if it\'s approved?\"</string>
-    <string name="info_faq_suggest_approve_answer">We will mail you to inform.</string>
+    <string name="info_faq_suggest_approve_answer">We will send e-mail to you to inform.</string>
     <string name="info_faq_score_procedure">\"Stage scoring procedure?\"</string>
     <string name="info_faq_score_procedure_answer">Answer as fast as you can.</string>
 

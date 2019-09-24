@@ -45,6 +45,8 @@ lateinit var db:AppRoomDatabase
 lateinit var level: String
 var points: Long = 0
 var verifiedCheck = false
+lateinit var animSet: AnimatorSet
+lateinit var ufoPauseAnimSet: AnimatorSet
 
 @TargetApi(Build.VERSION_CODES.O)
 class MainActivity : AppCompatActivity() {
@@ -159,7 +161,7 @@ class MainActivity : AppCompatActivity() {
             repeatCount = ValueAnimator.INFINITE
             repeatMode = ValueAnimator.REVERSE
         }
-        val animSet = AnimatorSet().apply {
+        animSet = AnimatorSet().apply {
             play(scaleufo).with(translationX).with(translationY)
             play(translationX1).after(translationX)
         }
@@ -167,10 +169,35 @@ class MainActivity : AppCompatActivity() {
 
     }
 
+    fun ufoPauseAnimation(){
+        val ufo = findViewById<ConstraintLayout>(R.id.ufo_layout)
+        val ufoLeft = ObjectAnimator.ofFloat(ufo, View.TRANSLATION_X, ufo.translationX+3f).apply {
+            duration = 750
+            repeatCount = ValueAnimator.INFINITE
+            repeatMode = ValueAnimator.REVERSE
+        }
+        val ufoUp = ObjectAnimator.ofFloat(ufo, View.TRANSLATION_Y, ufo.translationY+3f).apply {
+            interpolator = AccelerateDecelerateInterpolator()
+            duration = 1500
+            repeatCount = ValueAnimator.INFINITE
+            repeatMode = ValueAnimator.REVERSE
+        }
+        ufoPauseAnimSet = AnimatorSet().apply {
+            play(ufoLeft).with(ufoUp)
+        }
+        ufoPauseAnimSet.start()
+    }
+
     fun ufoClickAction(view:View?){
         Log.d(TAG, "UFO CLICKED!!!")
+        animSet.pause()
+        ufoPauseAnimation()
         tv_ufo.visibility = View.VISIBLE
-            tv_ufo.postDelayed(Runnable { tv_ufo.visibility = View.INVISIBLE }, 3000)
+            tv_ufo.postDelayed(Runnable {
+                tv_ufo.visibility = View.INVISIBLE
+                ufoPauseAnimSet.end()
+                animSet.resume()
+            }, 3000)
     }
 
     fun levelTagClarification(){
