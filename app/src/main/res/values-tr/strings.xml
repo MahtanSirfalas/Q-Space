@@ -29,6 +29,9 @@
     <string name="suggest_q">Soru_Öner</string>
     <string name="info">Bilgi</string>
     <string name="listener_cancelled">Uyarı: Internet bağlantınızın aktif olup olmadığını kontrol edin!</string>
+    <string name="ufo_foreign">\"Q?!@,#$\"</string>
+    <string name="ufo_hello">Sen de kimsin ahbap?</string>
+    <string name="ufo_hello_negative">\"Sana ne!\"</string>
     <!-- Profile Activity -->
     <string name="level">"Lokasyon:"</string>
     <string name="total_points">"Toplam Puan:"</string>

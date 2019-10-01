@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="start"
+        android:background="#16FF6F6F"
+        android:orientation="vertical"
+        android:scaleType="fitXY"
+        android:padding="4dp">
+
+    <TextView
+            android:id="@+id/tv_ufo_screen"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/coda"
+            android:text="@string/ufo_hello"
+            android:textAlignment="textStart"
+            android:textColor="@color/colorSpaceWhite"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+            android:id="@+id/butt_ufo_positive"
+            android:layout_width="match_parent"
+            android:layout_height="32dp"
+            android:layout_margin="4dp"
+            android:background="@drawable/custom_giveup"
+            android:fontFamily="@font/coda"
+            android:paddingLeft="8dp"
+            android:text="Button"
+            android:textAlignment="textStart"
+            android:textAllCaps="false"
+            android:textColor="@color/colorSpaceWhite" />
+
+    <Button
+            android:id="@+id/butt_ufo_negative"
+            android:layout_width="match_parent"
+            android:layout_height="32dp"
+            android:layout_margin="4dp"
+            android:background="@drawable/custom_giveup"
+            android:fontFamily="@font/coda"
+            android:paddingLeft="8dp"
+            android:text="@string/ufo_hello_negative"
+            android:textAlignment="textStart"
+            android:textAllCaps="false"
+            android:textColor="@color/colorSpaceWhite" />
+</LinearLayout>

@@ -1,20 +1,25 @@
 package com.ust.qspace
 
-import android.animation.*
+import android.animation.AnimatorSet
+import android.animation.ObjectAnimator
+import android.animation.PropertyValuesHolder
+import android.animation.ValueAnimator
 import android.annotation.TargetApi
 import android.content.Intent
 import android.graphics.drawable.AnimationDrawable
+import android.media.MediaPlayer
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
-import android.view.Gravity
-import androidx.appcompat.app.AppCompatActivity
-import android.view.Menu
-import android.view.MenuItem
-import android.view.View
-import android.view.animation.*
+import android.view.*
+import android.view.animation.AccelerateDecelerateInterpolator
+import android.view.animation.Animation
+import android.view.animation.AnimationUtils
+import android.widget.Button
 import android.widget.PopupWindow
-import android.widget.Toast.*
+import android.widget.Toast.LENGTH_LONG
+import android.widget.Toast.makeText
+import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.room.Room
 import com.google.android.gms.auth.api.signin.GoogleSignIn
@@ -27,8 +32,9 @@ import com.squareup.picasso.Picasso
 import com.ust.qspace.room.AppRoomDatabase
 import com.ust.qspace.room.AppRoomEntity
 import com.ust.qspace.trees.SettingsActivity
-
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.runBlocking
 
 private lateinit var firebaseAnalytics: FirebaseAnalytics
 private lateinit var auth: FirebaseAuth
@@ -36,6 +42,8 @@ private lateinit var database: FirebaseDatabase
 private lateinit var databaseReference: DatabaseReference
 private lateinit var commsReference: DatabaseReference
 var firstRunControl = true
+var bgMusicIsPlaying = false
+lateinit var player:MediaPlayer
 
 lateinit var email: String
 lateinit var uid: String
@@ -57,6 +65,9 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         setSupportActionBar(toolbar)
+
+        player = MediaPlayer.create(this, R.raw.qspacemain)
+        player.isLooping = true
 
         val constraintLayout = findViewById<ConstraintLayout>(R.id.layoutbg)
         val animationDrawable = constraintLayout.background as AnimationDrawable
@@ -189,14 +200,26 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun ufoClickAction(view:View?){
+        val window = PopupWindow(view, ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT)
+        val show = layoutInflater.inflate(R.layout.ufo_popup_hello, null, false)
+        val fadein = AnimationUtils.loadAnimation(this, R.anim.abc_fade_in)
+        val nickButton = show.findViewById<Button>(R.id.butt_ufo_positive)
         Log.d(TAG, "UFO CLICKED!!!")
         animSet.pause()
         ufoPauseAnimation()
         tv_ufo.visibility = View.VISIBLE
+        if (points>=5000) {
+            tv_ufo.text = getString(R.string.ufo_hello)
+            window.contentView = show
+            window.showAtLocation(layoutbg, Gravity.BOTTOM, 0, 0)
+            show.startAnimation(fadein)
+            nickButton.text = "\"$uName\""
+        }
             tv_ufo.postDelayed(Runnable {
                 tv_ufo.visibility = View.INVISIBLE
                 ufoPauseAnimSet.end()
                 animSet.resume()
+                window.dismiss()
             }, 3000)
     }
 
@@ -246,6 +269,19 @@ class MainActivity : AppCompatActivity() {
 
                 onStartAnimation()
                 synchronRoomDb()
+                runBlocking(Dispatchers.Default) {
+                    if (!bgMusicIsPlaying){
+                        player.start()
+                        bgMusicIsPlaying = true
+                    }else{
+                        if (player.isPlaying){
+
+                        }else{
+                            player.stop()
+                            player.start()
+                        }
+                    }
+                }
 
             }
         })
