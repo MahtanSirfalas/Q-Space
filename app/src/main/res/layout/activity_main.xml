@@ -81,7 +81,8 @@
                         android:visibility="invisible" android:layout_marginEnd="32dp"
                         app:layout_constraintEnd_toEndOf="parent"/>
 
-                <Button android:id="@+id/buttOyna"
+                <Button
+                        android:id="@+id/buttOyna"
                         android:text="@string/play"
                         android:textColor="@color/colorSpaceWhite"
                         android:background="@android:color/transparent"

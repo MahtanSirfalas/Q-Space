@@ -9,13 +9,12 @@ import android.view.View
 import android.widget.CompoundButton
 import androidx.appcompat.app.AppCompatActivity;
 import com.google.firebase.auth.FirebaseAuth
-import com.ust.qspace.LoginActivity
-import com.ust.qspace.MainActivity
-import com.ust.qspace.ProfileActivity
-import com.ust.qspace.R
+import com.ust.qspace.*
 import com.ust.qspace.models.SettingsPrefs
+import com.ust.qspace.models.playMusic
 import com.ust.qspace.models.simpleUi
 import com.ust.qspace.models.whiteFont
+import com.ust.qspace.services.MusicService
 
 import kotlinx.android.synthetic.main.activity_settings.*
 
@@ -34,9 +33,11 @@ class SettingsActivity : AppCompatActivity() {
         val settings = SettingsPrefs(this)
         val whiteFonts = settings.getSetting(whiteFont)
         val simpleStageUi = settings.getSetting(simpleUi)
+        val bgMusic = settings.getSetting(playMusic)
 
         sw_white_font.isChecked = whiteFonts
         sw_simple_stage.isChecked = simpleStageUi
+        sw_play_music.isChecked = bgMusic
 
 
         sw_white_font.setOnCheckedChangeListener(object:CompoundButton.OnCheckedChangeListener{
@@ -47,6 +48,18 @@ class SettingsActivity : AppCompatActivity() {
         sw_simple_stage.setOnCheckedChangeListener(object : CompoundButton.OnCheckedChangeListener{
             override fun onCheckedChanged(p0: CompoundButton?, p1: Boolean) {
                 settings.setSetting(simpleUi, p1)
+            }
+        })
+        sw_play_music.setOnCheckedChangeListener(object:CompoundButton.OnCheckedChangeListener{
+            override fun onCheckedChanged(p0: CompoundButton?, p1: Boolean) {
+                settings.setSetting(playMusic, p1)
+                bgMusicIsRunning = if (p1){
+                    startService(Intent(baseContext, MusicService::class.java))
+                    true
+                }else{
+                    stopService(Intent(baseContext, MusicService::class.java))
+                    false
+                }
             }
         })
     }

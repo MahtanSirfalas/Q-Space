@@ -7,7 +7,6 @@ import android.animation.ValueAnimator
 import android.annotation.TargetApi
 import android.content.Intent
 import android.graphics.drawable.AnimationDrawable
-import android.media.MediaPlayer
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
@@ -17,6 +16,7 @@ import android.view.animation.Animation
 import android.view.animation.AnimationUtils
 import android.widget.Button
 import android.widget.PopupWindow
+import android.widget.TextView
 import android.widget.Toast.LENGTH_LONG
 import android.widget.Toast.makeText
 import androidx.appcompat.app.AppCompatActivity
@@ -29,12 +29,13 @@ import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
 import com.squareup.picasso.Picasso
+import com.ust.qspace.models.SettingsPrefs
+import com.ust.qspace.models.playMusic
 import com.ust.qspace.room.AppRoomDatabase
 import com.ust.qspace.room.AppRoomEntity
+import com.ust.qspace.services.MusicService
 import com.ust.qspace.trees.SettingsActivity
 import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.runBlocking
 
 private lateinit var firebaseAnalytics: FirebaseAnalytics
 private lateinit var auth: FirebaseAuth
@@ -42,8 +43,7 @@ private lateinit var database: FirebaseDatabase
 private lateinit var databaseReference: DatabaseReference
 private lateinit var commsReference: DatabaseReference
 var firstRunControl = true
-var bgMusicIsPlaying = false
-lateinit var player:MediaPlayer
+var bgMusicIsRunning = false
 
 lateinit var email: String
 lateinit var uid: String
@@ -56,6 +56,7 @@ var verifiedCheck = false
 lateinit var animSet: AnimatorSet
 lateinit var ufoPauseAnimSet: AnimatorSet
 
+@Suppress("UNUSED_PARAMETER")
 @TargetApi(Build.VERSION_CODES.O)
 class MainActivity : AppCompatActivity() {
     private lateinit var googleSignInClient: GoogleSignInClient
@@ -65,9 +66,6 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         setSupportActionBar(toolbar)
-
-        player = MediaPlayer.create(this, R.raw.qspacemain)
-        player.isLooping = true
 
         val constraintLayout = findViewById<ConstraintLayout>(R.id.layoutbg)
         val animationDrawable = constraintLayout.background as AnimationDrawable
@@ -145,6 +143,19 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    override fun onStart() {
+        if (!bgMusicIsRunning){
+            val settings = SettingsPrefs(this)
+            val bgMusic = settings.getSetting(playMusic)
+            if (bgMusic){
+                startService(Intent(this, MusicService::class.java))
+                bgMusicIsRunning = true
+            }
+        }
+
+        super.onStart()
+    }
+
     fun onStartAnimation(){
         val ufo = findViewById<ConstraintLayout>(R.id.ufo_layout)
         ufo.visibility = View.VISIBLE
@@ -200,27 +211,56 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun ufoClickAction(view:View?){
-        val window = PopupWindow(view, ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT)
-        val show = layoutInflater.inflate(R.layout.ufo_popup_hello, null, false)
-        val fadein = AnimationUtils.loadAnimation(this, R.anim.abc_fade_in)
-        val nickButton = show.findViewById<Button>(R.id.butt_ufo_positive)
         Log.d(TAG, "UFO CLICKED!!!")
         animSet.pause()
         ufoPauseAnimation()
         tv_ufo.visibility = View.VISIBLE
-        if (points>=5000) {
-            tv_ufo.text = getString(R.string.ufo_hello)
-            window.contentView = show
-            window.showAtLocation(layoutbg, Gravity.BOTTOM, 0, 0)
-            show.startAnimation(fadein)
-            nickButton.text = "\"$uName\""
+        when (points){
+            in 0..4999 ->{
+                tv_ufo.postDelayed(Runnable {
+                    tv_ufo.visibility = View.INVISIBLE
+                    ufoPauseAnimSet.end()
+                    animSet.resume()
+                }, 4500)
+            }
+            in 5000..59999 ->{
+                val window = PopupWindow(view, ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT)
+                val show = layoutInflater.inflate(R.layout.ufo_popup_hello, null, false)
+                val fadein = AnimationUtils.loadAnimation(this, R.anim.abc_fade_in)
+                val nickButton = show.findViewById<Button>(R.id.butt_ufo_positive)
+                tv_ufo.text = getString(R.string.ufo_hello)
+                window.contentView = show
+                window.showAtLocation(layoutbg, Gravity.BOTTOM, 0, 0)
+                show.startAnimation(fadein)
+                nickButton.text = "\"$uName\""
+                val buttPositive = show.findViewById<Button>(R.id.butt_ufo_positive)
+                val buttNegative= show.findViewById<Button>(R.id.butt_ufo_negative)
+                val tvUfo = show.findViewById<TextView>(R.id.tv_ufo_screen)
+                buttNegative.setOnClickListener {
+                    tv_ufo.text = "\"Ok kid...\""
+                    ufoPauseAnimSet.end()
+                    animSet.resume()
+                    window.dismiss()
+                    tv_ufo.postDelayed(Runnable {
+                        tv_ufo.visibility = View.INVISIBLE
+                    }, 3000)
+                }
+                buttPositive.setOnClickListener {
+                    tv_ufo.text = "\"Well, nice to meet you,\n" +
+                            "cya around $uName\""
+                    tvUfo.text = "\"Well, nice to meet you,\n" +
+                            "cya around $uName\""
+                    buttNegative.visibility = View.GONE
+                    buttPositive.visibility = View.GONE
+                    tv_ufo.postDelayed(Runnable {
+                        tv_ufo.visibility = View.INVISIBLE
+                        ufoPauseAnimSet.end()
+                        animSet.resume()
+                        window.dismiss()
+                    }, 4500)
+                }
+            }
         }
-            tv_ufo.postDelayed(Runnable {
-                tv_ufo.visibility = View.INVISIBLE
-                ufoPauseAnimSet.end()
-                animSet.resume()
-                window.dismiss()
-            }, 3000)
     }
 
     fun levelTagClarification(){
@@ -269,20 +309,6 @@ class MainActivity : AppCompatActivity() {
 
                 onStartAnimation()
                 synchronRoomDb()
-                runBlocking(Dispatchers.Default) {
-                    if (!bgMusicIsPlaying){
-                        player.start()
-                        bgMusicIsPlaying = true
-                    }else{
-                        if (player.isPlaying){
-
-                        }else{
-                            player.stop()
-                            player.start()
-                        }
-                    }
-                }
-
             }
         })
     }
@@ -336,7 +362,7 @@ class MainActivity : AppCompatActivity() {
         val intent = Intent(this@MainActivity, ProfileActivity::class.java)
         val gfo2 = AnimationUtils.loadAnimation(this, R.anim.gfo2)
         val fo = AnimationUtils.loadAnimation(this, R.anim.abc_fade_out)
-        val profil = AnimationUtils.loadAnimation(this, R.anim.profil)
+//        val profil = AnimationUtils.loadAnimation(this, R.anim.profil)
         ivProfile.startAnimation(gfo2)
         buttProfil.startAnimation(fo)
         fo.setAnimationListener(object : Animation.AnimationListener{
@@ -446,6 +472,7 @@ class MainActivity : AppCompatActivity() {
                             val fireControl = it.child("/control").value as Boolean
                             val stageEnt = AppRoomEntity(id, fireName, firePoint, fireControl)
 
+                            @Suppress("SENSELESS_COMPARISON")
                             if (dbStage != null){
 
                                 val roomName = dbStage.db_stage_name
@@ -489,7 +516,7 @@ class MainActivity : AppCompatActivity() {
                     }
                 }else{
                     Thread{
-                        db.stageDao().getAll()?.forEach {
+                        db.stageDao().getAll().forEach {
                             val roomName = it.db_stage_name
                             val roomPoint = it.db_stage_points
                             val roomControl = it.db_stage_control

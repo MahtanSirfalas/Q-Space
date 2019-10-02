@@ -4,6 +4,7 @@ import android.content.Context
 
 const val whiteFont = "WHITE_FONTS"
 const val simpleUi = "SIMPLE_UI"
+const val playMusic = "PLAY_MUSIC"
 
 class SettingsPrefs(context: Context) {
 
@@ -12,7 +13,11 @@ class SettingsPrefs(context: Context) {
     val preference = context.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE)
 
     fun getSetting(setting:String):Boolean{
-        return preference.getBoolean(setting, false)
+        var booly = false
+        if (setting == playMusic){
+            booly = true
+        }
+        return preference.getBoolean(setting, booly)
     }
 
     fun setSetting(setting: String, eder: Boolean){

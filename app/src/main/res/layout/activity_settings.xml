@@ -75,6 +75,32 @@
                         app:layout_constraintEnd_toEndOf="parent" android:layout_marginStart="8dp"
                         app:layout_constraintStart_toStartOf="parent" android:layout_marginTop="16dp"
                         android:enabled="false"/>
+                <TextView
+                        android:text="Audio Settings"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content" android:id="@+id/audioHead"
+                        android:textColor="@color/colorPrimaryDark" android:fontFamily="@font/coda"
+                        android:textSize="24sp"
+                        android:background="@drawable/custom_ucomment" android:layout_marginEnd="8dp"
+                        app:layout_constraintEnd_toEndOf="parent" android:layout_marginStart="8dp"
+                        app:layout_constraintStart_toStartOf="parent" android:layout_marginTop="24dp"
+                        app:layout_constraintTop_toBottomOf="@id/sw_simple_stage" android:gravity="center"/>
+
+                <androidx.appcompat.widget.SwitchCompat
+                        android:id="@+id/sw_play_music"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginTop="16dp"
+                        android:fontFamily="@font/coda"
+                        android:text="Music"
+                        android:textColor="@color/colorSpaceWhite"
+                        android:textSize="18sp"
+                        android:theme="@style/ToggleSwitchTheme"
+                        android:checked="true"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/audioHead" />
             </androidx.constraintlayout.widget.ConstraintLayout>
 
         </ScrollView>
