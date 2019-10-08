@@ -30,8 +30,14 @@
     <string name="info">Info</string>
     <string name="listener_cancelled">Warning: Check if you have an active internet connection!</string>
     <string name="ufo_foreign">\"Q?!@,#$\"</string>
-    <string name="ufo_hello">\"Who are you bod-e?\"</string>
+    <string name="ufo_hello">\"Who are you passenger?\"</string>
     <string name="ufo_hello_negative">\"Mind your own business\"</string>
+    <string name="ufo_hello_negative_answer">\"Ok kid...\"</string>
+    <string name="ufo_hello_positive_answer">\"Well, nice to meet you,\n
+        but i gotta go now!\n
+        cya around \'%1$s\'\"
+    </string>
+    <string name="ufo_met_before">\"%1$s! it\'s you again!\"</string>
     <!-- Profile Activity -->
     <string name="level">"Location:"</string>
     <string name="total_points">Total Points:</string>

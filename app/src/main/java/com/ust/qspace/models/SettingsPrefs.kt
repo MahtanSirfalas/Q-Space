@@ -5,24 +5,31 @@ import android.content.Context
 const val whiteFont = "WHITE_FONTS"
 const val simpleUi = "SIMPLE_UI"
 const val playMusic = "PLAY_MUSIC"
+const val metUfo = "MET_UFO"
 
 class SettingsPrefs(context: Context) {
 
-    val PREF_NAME = "SharedSettingPref"
+    private val PREF_NAME = "SharedSettingPref"
 
-    val preference = context.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE)
+    private val preference = context.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE)
 
     fun getSetting(setting:String):Boolean{
-        var booly = false
-        if (setting == playMusic){
-            booly = true
+        return if (setting == playMusic){
+            preference.getBoolean(setting, true)
+        }else{
+            preference.getBoolean(setting, false)
         }
-        return preference.getBoolean(setting, booly)
     }
 
     fun setSetting(setting: String, eder: Boolean){
         val editor = preference.edit()
         editor.putBoolean(setting, eder)
+        editor.apply()
+    }
+
+    fun removeSetting(setting: String){
+        val editor = preference.edit()
+        editor.remove(setting)
         editor.apply()
     }
 }

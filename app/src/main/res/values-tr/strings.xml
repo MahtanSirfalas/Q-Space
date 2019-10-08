@@ -30,8 +30,15 @@
     <string name="info">Bilgi</string>
     <string name="listener_cancelled">Uyarı: Internet bağlantınızın aktif olup olmadığını kontrol edin!</string>
     <string name="ufo_foreign">\"Q?!@,#$\"</string>
-    <string name="ufo_hello">Sen de kimsin ahbap?</string>
+    <string name="ufo_hello">Sen de kimsin yolcu?</string>
     <string name="ufo_hello_negative">\"Sana ne!\"</string>
+    <string name="ufo_hello_negative_answer">\"Tamam evlat...\"</string>
+    <string name="ufo_hello_positive_answer">\"İyi o zaman,\n
+        memnun oldum \'%1$s\',\n
+        ama şimdi gitmem gerek!\n
+        görüşürü!\"
+    </string>
+    <string name="ufo_met_before">\"%1$s! ne tesadüf!\"</string>
     <!-- Profile Activity -->
     <string name="level">"Lokasyon:"</string>
     <string name="total_points">"Toplam Puan:"</string>

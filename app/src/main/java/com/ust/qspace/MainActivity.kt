@@ -11,9 +11,7 @@ import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.view.*
-import android.view.animation.AccelerateDecelerateInterpolator
-import android.view.animation.Animation
-import android.view.animation.AnimationUtils
+import android.view.animation.*
 import android.widget.Button
 import android.widget.PopupWindow
 import android.widget.TextView
@@ -21,6 +19,7 @@ import android.widget.Toast.LENGTH_LONG
 import android.widget.Toast.makeText
 import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.core.animation.doOnEnd
 import androidx.room.Room
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
@@ -30,6 +29,7 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
 import com.squareup.picasso.Picasso
 import com.ust.qspace.models.SettingsPrefs
+import com.ust.qspace.models.metUfo
 import com.ust.qspace.models.playMusic
 import com.ust.qspace.room.AppRoomDatabase
 import com.ust.qspace.room.AppRoomEntity
@@ -210,7 +210,25 @@ class MainActivity : AppCompatActivity() {
         ufoPauseAnimSet.start()
     }
 
+    fun ufoDisappearAnimation(){
+        val ufo = findViewById<ConstraintLayout>(R.id.ufo_layout)
+        val translateX = PropertyValuesHolder.ofFloat(View.TRANSLATION_X, ufo.translationX +100f)
+        val translateY = PropertyValuesHolder.ofFloat(View.TRANSLATION_Y, ufo.translationY +100f)
+        val scaleX = PropertyValuesHolder.ofFloat(View.SCALE_X, 1f, 0f)
+        val scaleY = PropertyValuesHolder.ofFloat(View.SCALE_Y, 1f, 0f)
+        val scaleUfo = ObjectAnimator.ofPropertyValuesHolder(ufo, translateX, translateY, scaleX, scaleY).apply {
+            duration = 800
+            interpolator = DecelerateInterpolator()
+            startDelay = 100
+        }
+        scaleUfo.start()
+        scaleUfo.doOnEnd {
+            ufo.visibility = View.GONE
+        }
+    }
+
     fun ufoClickAction(view:View?){
+
         Log.d(TAG, "UFO CLICKED!!!")
         animSet.pause()
         ufoPauseAnimation()
@@ -224,40 +242,46 @@ class MainActivity : AppCompatActivity() {
                 }, 4500)
             }
             in 5000..59999 ->{
-                val window = PopupWindow(view, ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT)
-                val show = layoutInflater.inflate(R.layout.ufo_popup_hello, null, false)
-                val fadein = AnimationUtils.loadAnimation(this, R.anim.abc_fade_in)
-                val nickButton = show.findViewById<Button>(R.id.butt_ufo_positive)
-                tv_ufo.text = getString(R.string.ufo_hello)
-                window.contentView = show
-                window.showAtLocation(layoutbg, Gravity.BOTTOM, 0, 0)
-                show.startAnimation(fadein)
-                nickButton.text = "\"$uName\""
-                val buttPositive = show.findViewById<Button>(R.id.butt_ufo_positive)
-                val buttNegative= show.findViewById<Button>(R.id.butt_ufo_negative)
-                val tvUfo = show.findViewById<TextView>(R.id.tv_ufo_screen)
-                buttNegative.setOnClickListener {
-                    tv_ufo.text = "\"Ok kid...\""
-                    ufoPauseAnimSet.end()
-                    animSet.resume()
-                    window.dismiss()
-                    tv_ufo.postDelayed(Runnable {
-                        tv_ufo.visibility = View.INVISIBLE
-                    }, 3000)
-                }
-                buttPositive.setOnClickListener {
-                    tv_ufo.text = "\"Well, nice to meet you,\n" +
-                            "cya around $uName\""
-                    tvUfo.text = "\"Well, nice to meet you,\n" +
-                            "cya around $uName\""
-                    buttNegative.visibility = View.GONE
-                    buttPositive.visibility = View.GONE
-                    tv_ufo.postDelayed(Runnable {
-                        tv_ufo.visibility = View.INVISIBLE
+                val settings = SettingsPrefs(this)
+                val metUfo = settings.getSetting(metUfo)
+                if (metUfo){ //check if the player gave its nick to ufo
+                    tv_ufo.text = getString(R.string.ufo_met_before, uName)
+
+                }else{
+                    val window = PopupWindow(view, ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT)
+                    val show = layoutInflater.inflate(R.layout.ufo_popup_hello, null, false)
+                    val fadein = AnimationUtils.loadAnimation(this, R.anim.abc_fade_in)
+                    val nickButton = show.findViewById<Button>(R.id.butt_ufo_positive)
+                    tv_ufo.text = getString(R.string.ufo_hello)
+                    window.contentView = show
+                    window.showAtLocation(layoutbg, Gravity.BOTTOM, 0, 0)
+                    show.startAnimation(fadein)
+                    nickButton.text = "\"$uName\""
+                    val buttPositive = show.findViewById<Button>(R.id.butt_ufo_positive)
+                    val buttNegative= show.findViewById<Button>(R.id.butt_ufo_negative)
+                    val tvUfo = show.findViewById<TextView>(R.id.tv_ufo_screen)
+                    buttNegative.setOnClickListener {
+                        tv_ufo.text = getString(R.string.ufo_hello_negative_answer)
                         ufoPauseAnimSet.end()
                         animSet.resume()
                         window.dismiss()
-                    }, 4500)
+                        tv_ufo.postDelayed(Runnable {
+                            tv_ufo.visibility = View.INVISIBLE
+                        }, 3000)
+                    }
+                    buttPositive.setOnClickListener {
+                        tv_ufo.text = getString(R.string.ufo_hello_positive_answer, uName)
+                        tvUfo.text = getString(R.string.ufo_hello_positive_answer, uName)
+                        buttNegative.visibility = View.GONE
+                        buttPositive.visibility = View.GONE
+                        tv_ufo.postDelayed(Runnable {
+                            tv_ufo.visibility = View.INVISIBLE
+                            ufoPauseAnimSet.end()
+//                            animSet.resume()
+                            window.dismiss()
+                            ufoDisappearAnimation()
+                        }, 4500)
+                    }
                 }
             }
         }
