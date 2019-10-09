@@ -5,6 +5,7 @@ import android.animation.ObjectAnimator
 import android.animation.PropertyValuesHolder
 import android.animation.ValueAnimator
 import android.annotation.TargetApi
+import android.content.Context
 import android.content.Intent
 import android.graphics.drawable.AnimationDrawable
 import android.os.Build
@@ -34,7 +35,9 @@ import com.ust.qspace.models.playMusic
 import com.ust.qspace.room.AppRoomDatabase
 import com.ust.qspace.room.AppRoomEntity
 import com.ust.qspace.services.MusicService
+import com.ust.qspace.trees.PrivacyActivity
 import com.ust.qspace.trees.SettingsActivity
+import com.ust.qspace.trees.TermsActivity
 import kotlinx.android.synthetic.main.activity_main.*
 
 private lateinit var firebaseAnalytics: FirebaseAnalytics
@@ -246,6 +249,15 @@ class MainActivity : AppCompatActivity() {
                 val metUfo = settings.getSetting(metUfo)
                 if (metUfo){ //check if the player gave its nick to ufo
                     tv_ufo.text = getString(R.string.ufo_met_before, uName)
+                    if (points in 5000..14999){
+                        tv_ufo.postDelayed({
+                            tv_ufo.text = getString(R.string.ufo_met_before_low_points)
+                        }, 4500)
+                    }else if (points in 15000..59999){//hidden stage entrance
+                        tv_ufo.postDelayed({
+                            tv_ufo.text = getString(R.string.ufo_met_before_high_points)
+                        },4500)
+                    }
 
                 }else{
                     val window = PopupWindow(view, ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT)
@@ -267,6 +279,7 @@ class MainActivity : AppCompatActivity() {
                         window.dismiss()
                         tv_ufo.postDelayed(Runnable {
                             tv_ufo.visibility = View.INVISIBLE
+                            ufoDisappearAnimation()
                         }, 3000)
                     }
                     buttPositive.setOnClickListener {
@@ -465,6 +478,18 @@ class MainActivity : AppCompatActivity() {
         startActivity(intent)
     }
 
+    private fun privacyPolicy(){
+        Log.d(TAG, "privacyPolicy pressed..")
+        val intent = Intent(this, PrivacyActivity::class.java)
+        startActivity(intent)
+    }
+
+    private fun termsConditions(){
+        Log.d(TAG, "privacyPolicy pressed..")
+        val intent = Intent(this, TermsActivity::class.java)
+        startActivity(intent)
+    }
+
     fun signOut(view:View?){
         auth.signOut()
         startActivity(Intent(this@MainActivity, LoginActivity::class.java))
@@ -571,6 +596,8 @@ class MainActivity : AppCompatActivity() {
             item.itemId == R.id.action_out -> signOut(null)
             item.itemId == R.id.action_home -> mainMenu(null)
             item.itemId == R.id.action_settings -> showSettings(null)
+            item.itemId == R.id.pivacy_policy -> privacyPolicy()
+            item.itemId == R.id.terms_condition -> termsConditions()
             else -> {
 
             }

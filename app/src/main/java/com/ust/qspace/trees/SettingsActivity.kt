@@ -18,10 +18,10 @@ import com.ust.qspace.services.MusicService
 
 import kotlinx.android.synthetic.main.activity_settings.*
 
-private lateinit var auth: FirebaseAuth
 
 class SettingsActivity : AppCompatActivity() {
     val TAG = "SettingsActivity"
+    private lateinit var auth: FirebaseAuth
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -76,6 +76,12 @@ class SettingsActivity : AppCompatActivity() {
         startActivity(intent)
     }
 
+    private fun privacyPolicy(){
+        Log.d(TAG, "privacyPolicy pressed..")
+        val intent = Intent(this, PrivacyActivity::class.java)
+        startActivity(intent)
+    }
+
     fun signOut(view: View?){
         Log.d(TAG, "signOut pressed..")
         auth.signOut()
@@ -102,6 +108,7 @@ class SettingsActivity : AppCompatActivity() {
             item.itemId == R.id.action_out -> signOut(null)
             item.itemId == R.id.action_profile -> showProfile(null)
             item.itemId == R.id.action_home -> mainMenu(null)
+            item.itemId == R.id.pivacy_policy -> privacyPolicy()
             else -> {
 
             }

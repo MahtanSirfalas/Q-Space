@@ -14,31 +14,39 @@
             android:supportsRtl="true"
             android:theme="@style/AppTheme">
         <activity
+                android:name=".trees.TermsActivity"
+                android:label="@string/title_activity_terms"
+                android:theme="@style/AppTheme.NoActionBar"></activity>
+        <activity
+                android:name=".trees.PrivacyActivity"
+                android:label="@string/title_activity_privacy"
+                android:theme="@style/AppTheme.NoActionBar" />
+        <activity
                 android:name=".InfoActivity"
                 android:label="@string/title_activity_info"
-                android:theme="@style/AppTheme.NoActionBar"></activity>
+                android:theme="@style/AppTheme.NoActionBar" />
         <activity
                 android:name=".trees.SettingsActivity"
                 android:label="@string/title_activity_settings"
-                android:theme="@style/AppTheme.NoActionBar"></activity>
+                android:theme="@style/AppTheme.NoActionBar" />
         <activity
                 android:name=".stages.RandomActivity"
                 android:label="@string/title_activity_random"
-                android:theme="@style/AppTheme.NoActionBar"></activity>
+                android:theme="@style/AppTheme.NoActionBar" />
         <activity
                 android:name=".SuggestActivity"
                 android:label="@string/title_activity_suggest"
-                android:theme="@style/AppTheme.NoActionBar"></activity>
+                android:theme="@style/AppTheme.NoActionBar" />
         <activity
                 android:name=".stages.OrderedActivity"
                 android:label="@string/title_activity_ordered"
-                android:theme="@style/AppTheme.NoActionBar"></activity>
+                android:theme="@style/AppTheme.NoActionBar" />
         <activity
                 android:name=".LvlActivity"
                 android:label="@string/title_activity_lvl"
-                android:theme="@style/AppTheme.NoActionBar"></activity>
-        <activity android:name=".ProfileActivity"></activity>
-        <activity android:name=".CommentActivity"></activity>
+                android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".ProfileActivity" />
+        <activity android:name=".CommentActivity" />
         <activity android:name=".LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -49,14 +57,15 @@
         <activity
                 android:name=".MainActivity"
                 android:label="@string/app_name"
-                android:theme="@style/AppTheme.NoActionBar"></activity>
+                android:theme="@style/AppTheme.NoActionBar" />
 
         <meta-data
                 android:name="preloaded_fonts"
                 android:resource="@array/preloaded_fonts" />
+
         <service
-                android:enabled="true"
-                android:name=".services.MusicService"/>
+                android:name=".services.MusicService"
+                android:enabled="true" />
     </application>
 
 </manifest>
