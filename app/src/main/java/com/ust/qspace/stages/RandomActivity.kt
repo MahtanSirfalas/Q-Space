@@ -4,6 +4,7 @@ import android.animation.*
 import android.app.Activity
 import android.content.Intent
 import android.graphics.drawable.AnimationDrawable
+import android.media.MediaPlayer
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
@@ -24,7 +25,9 @@ import com.google.firebase.database.*
 import com.ust.qspace.*
 import com.ust.qspace.R
 import com.ust.qspace.room.AppRoomEntity
+import com.ust.qspace.trees.PrivacyActivity
 import com.ust.qspace.trees.SettingsActivity
+import com.ust.qspace.trees.TermsActivity
 
 import kotlinx.android.synthetic.main.activity_random.*
 import kotlinx.android.synthetic.main.activity_random.ibComment
@@ -59,6 +62,8 @@ class RandomActivity : AppCompatActivity() {
     var objList = mutableListOf("1","2","3","4","5","6","7","8","9","A","C","D","Q","W","E","X","F","J")
 
     private var mValueEventListener: ValueEventListener? = null
+
+    private lateinit var mediaPlayer: MediaPlayer
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -167,6 +172,10 @@ class RandomActivity : AppCompatActivity() {
                 }
             }.start()
         }
+
+        mediaPlayer = MediaPlayer.create(this, R.raw.win)
+        mediaPlayer.isLooping = false
+        mediaPlayer.setVolume(50f, 50f)
 
         buttAnswer.setOnClickListener {
             Log.d(TAG, "Slay button pressed")
@@ -550,6 +559,7 @@ class RandomActivity : AppCompatActivity() {
         }
         buttAnswer.visibility = View.INVISIBLE
         etAnswer.isFocusable = false
+        mediaPlayer.start()
     }
 
     private fun levelAdapt(level:String){
@@ -867,6 +877,18 @@ class RandomActivity : AppCompatActivity() {
         startActivity(intent)
     }
 
+    private fun privacyPolicy(){
+        Log.d(TAG, "privacyPolicy pressed..")
+        val intent = Intent(this, PrivacyActivity::class.java)
+        startActivity(intent)
+    }
+
+    private fun termsConditions(){
+        Log.d(TAG, "privacyPolicy pressed..")
+        val intent = Intent(this, TermsActivity::class.java)
+        startActivity(intent)
+    }
+
     fun signOut(view: View?) {
         if (isRunning){
             mainHandler.removeCallbacks(updatePointTask)
@@ -906,6 +928,8 @@ class RandomActivity : AppCompatActivity() {
             item.itemId == R.id.action_profile -> showProfile(null)
             item.itemId == R.id.action_home -> mainMenu(null)
             item.itemId == R.id.action_settings -> showSettings(null)
+            item.itemId == R.id.pivacy_policy -> privacyPolicy()
+            item.itemId == R.id.terms_condition -> termsConditions()
             else -> {
             }
         }

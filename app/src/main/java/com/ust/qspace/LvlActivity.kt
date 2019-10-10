@@ -14,7 +14,9 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
 import com.ust.qspace.stages.OrderedActivity
 import com.ust.qspace.stages.RandomActivity
+import com.ust.qspace.trees.PrivacyActivity
 import com.ust.qspace.trees.SettingsActivity
+import com.ust.qspace.trees.TermsActivity
 
 import kotlinx.android.synthetic.main.activity_lvl.*
 
@@ -237,6 +239,18 @@ class LvlActivity : AppCompatActivity() {
         startActivity(intent)
     }
 
+    private fun privacyPolicy(){
+        Log.d(TAG, "privacyPolicy pressed..")
+        val intent = Intent(this, PrivacyActivity::class.java)
+        startActivity(intent)
+    }
+
+    private fun termsConditions(){
+        Log.d(TAG, "privacyPolicy pressed..")
+        val intent = Intent(this, TermsActivity::class.java)
+        startActivity(intent)
+    }
+
     fun signOut(view: View?){
         Log.d(TAG, "signOut pressed..")
         auth.signOut()
@@ -264,6 +278,8 @@ class LvlActivity : AppCompatActivity() {
             item.itemId == R.id.action_profile -> showProfile(null)
             item.itemId == R.id.action_home -> mainMenu(null)
             item.itemId == R.id.action_settings -> showSettings(null)
+            item.itemId == R.id.pivacy_policy -> privacyPolicy()
+            item.itemId == R.id.terms_condition -> termsConditions()
             else -> {
             }
         }

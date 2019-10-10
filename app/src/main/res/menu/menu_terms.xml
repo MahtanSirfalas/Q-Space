@@ -1,0 +1,20 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+      xmlns:app="http://schemas.android.com/apk/res-auto"
+      xmlns:tools="http://schemas.android.com/tools"
+      tools:context="com.ust.qspace.MainActivity">
+    <item android:icon="@android:drawable/ic_dialog_dialer"
+          app:showAsAction="ifRoom"
+          android:id="@+id/action_home" android:title="Home"/>
+    <item android:id="@+id/pivacy_policy"
+          android:title="@string/privacy_policy"
+          android:orderInCategory="100"
+          app:showAsAction="never"/>
+    <item android:id="@+id/action_settings"
+          android:title="@string/settings"
+          android:orderInCategory="100"
+          app:showAsAction="never"/>
+    <item android:id="@+id/action_out"
+          android:title="@string/action_out"
+          android:orderInCategory="100"
+          android:icon="@drawable/ic_signout_black" app:showAsAction="never"/>
+</menu>

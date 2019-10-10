@@ -9,7 +9,9 @@ import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
 import com.google.firebase.auth.FirebaseAuth
+import com.ust.qspace.trees.PrivacyActivity
 import com.ust.qspace.trees.SettingsActivity
+import com.ust.qspace.trees.TermsActivity
 import kotlinx.android.synthetic.main.activity_info.*
 
 class InfoActivity : AppCompatActivity() {
@@ -143,6 +145,18 @@ class InfoActivity : AppCompatActivity() {
         startActivity(intent)
     }
 
+    private fun privacyPolicy(){
+        Log.d(TAG, "privacyPolicy pressed..")
+        val intent = Intent(this, PrivacyActivity::class.java)
+        startActivity(intent)
+    }
+
+    private fun termsConditions(){
+        Log.d(TAG, "privacyPolicy pressed..")
+        val intent = Intent(this, TermsActivity::class.java)
+        startActivity(intent)
+    }
+
     fun signOut(view: View?){
         Log.d(TAG, "signOut pressed..")
         auth.signOut()
@@ -161,6 +175,8 @@ class InfoActivity : AppCompatActivity() {
             R.id.action_profile -> showProfile(null)
             R.id.action_home -> mainMenu(null)
             R.id.action_settings -> showSettings(null)
+            R.id.pivacy_policy -> privacyPolicy()
+            R.id.terms_condition -> termsConditions()
             else -> {
 
             }

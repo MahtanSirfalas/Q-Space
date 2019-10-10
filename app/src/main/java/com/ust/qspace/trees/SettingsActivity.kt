@@ -82,6 +82,12 @@ class SettingsActivity : AppCompatActivity() {
         startActivity(intent)
     }
 
+    private fun termsConditions(){
+        Log.d(TAG, "privacyPolicy pressed..")
+        val intent = Intent(this, TermsActivity::class.java)
+        startActivity(intent)
+    }
+
     fun signOut(view: View?){
         Log.d(TAG, "signOut pressed..")
         auth.signOut()
@@ -109,6 +115,7 @@ class SettingsActivity : AppCompatActivity() {
             item.itemId == R.id.action_profile -> showProfile(null)
             item.itemId == R.id.action_home -> mainMenu(null)
             item.itemId == R.id.pivacy_policy -> privacyPolicy()
+            item.itemId == R.id.terms_condition -> termsConditions()
             else -> {
 
             }

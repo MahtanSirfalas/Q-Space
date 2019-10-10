@@ -7,6 +7,7 @@ import android.app.Activity
 import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.AnimationDrawable
+import android.media.MediaPlayer
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
@@ -33,7 +34,9 @@ import com.ust.qspace.R
 import com.ust.qspace.models.SettingsPrefs
 import com.ust.qspace.models.whiteFont
 import com.ust.qspace.room.AppRoomEntity
+import com.ust.qspace.trees.PrivacyActivity
 import com.ust.qspace.trees.SettingsActivity
+import com.ust.qspace.trees.TermsActivity
 import kotlinx.android.synthetic.main.activity_ordered.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
@@ -57,6 +60,8 @@ class OrderedActivity : AppCompatActivity() {
     lateinit var mainHandler:Handler
     lateinit var updatePointTask: Runnable
     var isRunning = false
+
+    private lateinit var mediaPlayer: MediaPlayer
 
     private var mValueEventListener: ValueEventListener? = null
 
@@ -145,6 +150,10 @@ class OrderedActivity : AppCompatActivity() {
             val inputMethodManager = getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
             inputMethodManager.toggleSoftInput(InputMethodManager.SHOW_FORCED, InputMethodManager.HIDE_IMPLICIT_ONLY)
         }*/
+
+        mediaPlayer = MediaPlayer.create(this, R.raw.win)
+        mediaPlayer.isLooping = false
+        mediaPlayer.setVolume(50f, 50f)
     }
 
     fun stagePointControlUpdate(point: Int, control: Boolean){
@@ -252,6 +261,8 @@ class OrderedActivity : AppCompatActivity() {
                                     mainHandler.removeCallbacks(updatePointTask)
                                 }catch (ex:Exception){ex.message}
 
+                                mediaPlayer.start()
+
                                 Thread{//update roomDB the answer is accepted
                                     val lastInd = levelKey.length
                                     val id = levelKey.substring(6, lastInd).toInt()
@@ -327,6 +338,7 @@ class OrderedActivity : AppCompatActivity() {
                         }else{
                             if(uAnswer == answer){
                                 starAnimation()
+                                mediaPlayer.start()
 
                                 Log.d(TAG, "$levelKey: Answer ($uAnswer) is equal to $answer; " +
                                         "But no points added to the database")
@@ -1517,6 +1529,18 @@ class OrderedActivity : AppCompatActivity() {
         startActivity(intent)
     }
 
+    private fun privacyPolicy(){
+        Log.d(TAG, "privacyPolicy pressed..")
+        val intent = Intent(this, PrivacyActivity::class.java)
+        startActivity(intent)
+    }
+
+    private fun termsConditions(){
+        Log.d(TAG, "privacyPolicy pressed..")
+        val intent = Intent(this, TermsActivity::class.java)
+        startActivity(intent)
+    }
+
     fun signOut(view: View?) {
         if (isRunning){
             mainHandler.removeCallbacks(updatePointTask)
@@ -1556,6 +1580,8 @@ class OrderedActivity : AppCompatActivity() {
             item.itemId == R.id.action_profile -> showProfile(null)
             item.itemId == R.id.action_home -> mainMenu(null)
             item.itemId == R.id.action_settings -> showSettings(null)
+            item.itemId == R.id.pivacy_policy -> privacyPolicy()
+            item.itemId == R.id.terms_condition -> termsConditions()
             else -> {
 
             }

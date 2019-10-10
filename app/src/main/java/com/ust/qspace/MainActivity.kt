@@ -8,6 +8,7 @@ import android.annotation.TargetApi
 import android.content.Context
 import android.content.Intent
 import android.graphics.drawable.AnimationDrawable
+import android.media.MediaPlayer
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
@@ -62,7 +63,11 @@ lateinit var ufoPauseAnimSet: AnimatorSet
 @Suppress("UNUSED_PARAMETER")
 @TargetApi(Build.VERSION_CODES.O)
 class MainActivity : AppCompatActivity() {
+
     private lateinit var googleSignInClient: GoogleSignInClient
+
+    private lateinit var mediaPlayer: MediaPlayer
+
     val TAG = "MainActivity"
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -144,6 +149,10 @@ class MainActivity : AppCompatActivity() {
             Log.d(TAG, "verifiedCheck = ${user.isEmailVerified}")
             groupWarn.visibility = View.VISIBLE
         }
+
+        mediaPlayer = MediaPlayer.create(this, R.raw.ufo)
+        mediaPlayer.isLooping = false
+
     }
 
     override fun onStart() {
@@ -235,6 +244,7 @@ class MainActivity : AppCompatActivity() {
         Log.d(TAG, "UFO CLICKED!!!")
         animSet.pause()
         ufoPauseAnimation()
+        mediaPlayer.start()
         tv_ufo.visibility = View.VISIBLE
         when (points){
             in 0..4999 ->{
