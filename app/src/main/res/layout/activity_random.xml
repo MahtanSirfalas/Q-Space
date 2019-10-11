@@ -41,6 +41,36 @@
                                                                android:focusableInTouchMode="true"
                                                                android:focusable="true">
 
+                <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/ufo_q_human"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:visibility="gone"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent">
+
+                    <ImageView
+                            android:id="@+id/ucgenSah"
+                            android:layout_width="50dp"
+                            android:layout_height="50dp"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            android:tint="@color/colorSpaceWhite"
+                            app:srcCompat="@drawable/ic_ucdolu" />
+
+                    <ImageView
+                            android:id="@+id/dairePet"
+                            android:layout_width="30dp"
+                            android:layout_height="30dp"
+                            app:layout_constraintStart_toEndOf="@id/ucgenSah"
+                            app:layout_constraintBottom_toBottomOf="@id/ucgenSah"
+                            android:tint="@color/colorGreyLight"
+                            app:srcCompat="@drawable/ic_cemberdolu" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
                 <LinearLayout
                         android:orientation="vertical"
                         android:layout_width="0dp"

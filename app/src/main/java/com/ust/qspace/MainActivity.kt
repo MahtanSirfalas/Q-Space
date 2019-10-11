@@ -5,7 +5,6 @@ import android.animation.ObjectAnimator
 import android.animation.PropertyValuesHolder
 import android.animation.ValueAnimator
 import android.annotation.TargetApi
-import android.content.Context
 import android.content.Intent
 import android.graphics.drawable.AnimationDrawable
 import android.media.MediaPlayer
@@ -36,6 +35,7 @@ import com.ust.qspace.models.playMusic
 import com.ust.qspace.room.AppRoomDatabase
 import com.ust.qspace.room.AppRoomEntity
 import com.ust.qspace.services.MusicService
+import com.ust.qspace.stages.RandomActivity
 import com.ust.qspace.trees.PrivacyActivity
 import com.ust.qspace.trees.SettingsActivity
 import com.ust.qspace.trees.TermsActivity
@@ -256,32 +256,64 @@ class MainActivity : AppCompatActivity() {
             }
             in 5000..59999 ->{
                 val settings = SettingsPrefs(this)
-                val metUfo = settings.getSetting(metUfo)
-                if (metUfo){ //check if the player gave its nick to ufo
+                val metUfoBefore = settings.getSetting(metUfo)
+                val window = PopupWindow(view, ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT)
+                val show = layoutInflater.inflate(R.layout.ufo_popup_hello, null, false)
+                val fadein = AnimationUtils.loadAnimation(this, R.anim.abc_fade_in)
+                val buttPositive = show.findViewById<Button>(R.id.butt_ufo_positive)
+                val buttNegative= show.findViewById<Button>(R.id.butt_ufo_negative)
+                val tvUfo = show.findViewById<TextView>(R.id.tv_ufo_screen)
+                if (metUfoBefore){ //check if the player gave its nick to ufo
                     tv_ufo.text = getString(R.string.ufo_met_before, uName)
                     if (points in 5000..14999){
                         tv_ufo.postDelayed({
+                            mediaPlayer.start()
                             tv_ufo.text = getString(R.string.ufo_met_before_low_points)
+                            ufoPauseAnimSet.end()
+                            animSet.resume()
+                            tv_ufo.postDelayed({
+                                tv_ufo.visibility = View.INVISIBLE
+                                ufoDisappearAnimation()
+                            }, 6000)
                         }, 4500)
                     }else if (points in 15000..59999){//hidden stage entrance
                         tv_ufo.postDelayed({
                             tv_ufo.text = getString(R.string.ufo_met_before_high_points)
+                            window.contentView = show
+                            window.showAtLocation(layoutbg, Gravity.BOTTOM, 0, 0)
+                            show.startAnimation(fadein)
+                            tvUfo.text = getString(R.string.ufo_met_before_high_points)
+                            buttPositive.text = getString(R.string.ufo_high_point_positive)
+                            buttNegative.text = getString(R.string.ufo_high_point_negative)
+                            buttPositive.setOnClickListener {
+                                Log.d(TAG, "stage ufo positive")
+                                window.dismiss()
+                                val levelKey = "Stage Ufo"
+                                val intent = Intent(this, RandomActivity::class.java)
+                                intent.putExtra("levelKey", levelKey)
+                                intent.putExtra("tvName", uName)
+                                startActivity(intent)
+                            }
+                            buttNegative.setOnClickListener {
+                                Log.d(TAG, "stage ufo negative")
+                                tv_ufo.text = getString(R.string.ufo_hello_negative_answer)
+                                ufoPauseAnimSet.end()
+                                animSet.resume()
+                                window.dismiss()
+                                tv_ufo.postDelayed(Runnable {
+                                    tv_ufo.visibility = View.INVISIBLE
+                                    ufoDisappearAnimation()
+                                }, 3000)
+                            }
                         },4500)
                     }
 
                 }else{
-                    val window = PopupWindow(view, ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT)
-                    val show = layoutInflater.inflate(R.layout.ufo_popup_hello, null, false)
-                    val fadein = AnimationUtils.loadAnimation(this, R.anim.abc_fade_in)
-                    val nickButton = show.findViewById<Button>(R.id.butt_ufo_positive)
                     tv_ufo.text = getString(R.string.ufo_hello)
                     window.contentView = show
                     window.showAtLocation(layoutbg, Gravity.BOTTOM, 0, 0)
                     show.startAnimation(fadein)
-                    nickButton.text = "\"$uName\""
-                    val buttPositive = show.findViewById<Button>(R.id.butt_ufo_positive)
-                    val buttNegative= show.findViewById<Button>(R.id.butt_ufo_negative)
-                    val tvUfo = show.findViewById<TextView>(R.id.tv_ufo_screen)
+                    buttPositive.text = "\"$uName\""
                     buttNegative.setOnClickListener {
                         tv_ufo.text = getString(R.string.ufo_hello_negative_answer)
                         ufoPauseAnimSet.end()
@@ -297,6 +329,7 @@ class MainActivity : AppCompatActivity() {
                         tvUfo.text = getString(R.string.ufo_hello_positive_answer, uName)
                         buttNegative.visibility = View.GONE
                         buttPositive.visibility = View.GONE
+                        settings.setSetting(metUfo, true) //met ufo before setting updated
                         tv_ufo.postDelayed(Runnable {
                             tv_ufo.visibility = View.INVISIBLE
                             ufoPauseAnimSet.end()
@@ -524,7 +557,12 @@ class MainActivity : AppCompatActivity() {
 
                             val dbStage = db.stageDao().getOne(it.key.toString())
                             val lastInd = it.key.toString().length
-                            val id = it.key.toString().substring(6, lastInd).toInt()
+                            val id =
+                                if (it.key.toString() == "Stage Ufo"){
+                                    1000
+                                }else{
+                                    it.key.toString().substring(6, lastInd).toInt()
+                                }
                             val fireName = it.key.toString()
                             val sPoint = it.child("/point").value
                             val firePoint = sPoint.toString().toInt()

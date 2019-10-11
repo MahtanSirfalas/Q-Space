@@ -32,7 +32,7 @@
     <string name="ufo_foreign">\"Q?!@,#$\"</string>
     <string name="ufo_hello">Sen de kimsin yolcu?</string>
     <string name="ufo_hello_negative">\"Sana ne!\"</string>
-    <string name="ufo_hello_negative_answer">\"Tamam evlat...\"</string>
+    <string name="ufo_hello_negative_answer">\"Tamam evlat, sonra…\"</string>
     <string name="ufo_hello_positive_answer">\"İyi o zaman,\n
         memnun oldum \'%1$s\',\n
         ama şimdi gitmem gerek!\n
@@ -47,6 +47,8 @@
         artık ekstra bir\n
         soruya hazırsın!\"
     </string>
+    <string name="ufo_high_point_positive">\"Evet! Hazırım hadi gidelim! \"</string>
+    <string name="ufo_high_point_negative">\"Hayır!, Hiç havamda değilim!\"</string>
     <!-- Profile Activity -->
     <string name="level">"Lokasyon:"</string>
     <string name="total_points">"Toplam Puan:"</string>

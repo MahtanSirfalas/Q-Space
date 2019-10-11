@@ -32,7 +32,7 @@
     <string name="ufo_foreign">\"Q?!@,#$\"</string>
     <string name="ufo_hello">\"Who are you passenger?\"</string>
     <string name="ufo_hello_negative">\"Mind your own business\"</string>
-    <string name="ufo_hello_negative_answer">\"Ok kid...\"</string>
+    <string name="ufo_hello_negative_answer">\"Ok kid, later…\"</string>
     <string name="ufo_hello_positive_answer">\"Well, nice to meet you,\n
         but i gotta go now!\n
         cya around \'%1$s\'\"
@@ -46,6 +46,8 @@
         you are ready\n
         for an extra game\"
     </string>
+    <string name="ufo_high_point_positive">\"Yeah!, I\'m ready! Let\'s go!\"</string>
+    <string name="ufo_high_point_negative">\"Nah!, I am not in the mood!\"</string>
     <!-- Profile Activity -->
     <string name="level">"Location:"</string>
     <string name="total_points">Total Points:</string>

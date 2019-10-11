@@ -8,6 +8,7 @@ import android.media.MediaPlayer
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
+import android.support.v4.media.session.PlaybackStateCompat
 import android.util.Log
 import android.view.Gravity
 import android.view.Menu
@@ -35,6 +36,7 @@ import kotlinx.android.synthetic.main.activity_random.toolbar
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.runBlocking
+import java.time.Duration
 
 private lateinit var firebaseAnalytics: FirebaseAnalytics
 private lateinit var auth: FirebaseAuth
@@ -64,6 +66,7 @@ class RandomActivity : AppCompatActivity() {
     private var mValueEventListener: ValueEventListener? = null
 
     private lateinit var mediaPlayer: MediaPlayer
+    private lateinit var duoUpAnimSet: AnimatorSet
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -162,7 +165,13 @@ class RandomActivity : AppCompatActivity() {
 
                 }else{
                     val lastInd = levelKey.length
-                    val id = levelKey.substring(6, lastInd).toInt()
+                    val id =
+                        if (levelKey == "Stage Ufo"){
+                            1000
+                        }else{
+                           levelKey.substring(6, lastInd).toInt()
+                        }
+
                     var stageEnt = AppRoomEntity(id, levelKey, 1004, true)
                     db.stageDao().insert(stageEnt)
                     stageRef.child("point").setValue(1000)
@@ -300,11 +309,41 @@ class RandomActivity : AppCompatActivity() {
         }
         if (levelKey == "Stage 23"){
             ninePackQuestion()
-        }else{
+        }
+        else if(levelKey == "Stage Ufo"){
+            ufoHumanityQuestion()
+        }
+        else{
             startQuestion()
         }
 
         startcheck()
+    }
+
+    private fun ufoQuestDuoUpAnimation(imageThing:ImageView){
+        val yMove = PropertyValuesHolder.ofFloat(View.TRANSLATION_Y,
+            imageThing.translationY + 200f)
+        val xMove = PropertyValuesHolder.ofFloat(View.TRANSLATION_X,
+            imageThing.translationX + 200f)
+        val upMove = ObjectAnimator.ofPropertyValuesHolder(imageThing, xMove, yMove).apply {
+            duration = 2000
+        }
+        val rotationRightMove = ObjectAnimator.ofFloat(imageThing, View.ROTATION,
+            imageThing.rotation + 15f).apply {
+            duration = 200
+            repeatMode = ValueAnimator.REVERSE
+            repeatCount = ValueAnimator.INFINITE
+        }
+        duoUpAnimSet = AnimatorSet().apply {
+            play(upMove).with(rotationRightMove)
+            duration = 2000
+        }
+    }
+
+    private fun ufoHumanityQuestion(){
+        ufo_q_human.visibility = View.VISIBLE
+        ufoQuestDuoUpAnimation(ucgenSah)
+        ufoQuestDuoUpAnimation(dairePet)
     }
 
     private fun ninePackQuestion(){
@@ -605,7 +644,12 @@ class RandomActivity : AppCompatActivity() {
 
     fun stagePointControlUpdate(point: Int, control: Boolean){
         val lastInd = levelKey.length
-        val id = levelKey.substring(6, lastInd).toInt()
+        val id =
+            if (levelKey == "Stage Ufo"){
+                1000
+            }else{
+                levelKey.substring(6, lastInd).toInt()
+            }
         val stageEnt = AppRoomEntity(id, levelKey, point, control)
         Thread{
             db.stageDao().update(stageEnt)
@@ -628,6 +672,13 @@ class RandomActivity : AppCompatActivity() {
 
     fun synchDBsBlock(roomControl:Boolean, fireControl:Boolean, roomPoint:Long, firePoint:String){
         runBlocking (Dispatchers.Default){
+            val lastInd = levelKey.length
+            val id =
+                if (levelKey == "Stage Ufo"){
+                    1000
+                }else{
+                    levelKey.substring(6, lastInd).toInt()
+                }
             if (roomControl && fireControl) {
                 stageRef.child("point").setValue(roomPoint)
                 Log.d(TAG, "roomDB control = $roomControl => fireDB point updated")
@@ -639,15 +690,12 @@ class RandomActivity : AppCompatActivity() {
                     "roomDB control = $roomControl => fireDB point+control updated"
                 )
             } else if (roomControl && !fireControl) {
-                val lastInd = levelKey.length
-                val id = levelKey.substring(6, lastInd).toInt()
+
                 val stageEnt =
                     AppRoomEntity(id, levelKey, firePoint.toInt(), fireControl)
                 db.stageDao().update(stageEnt)
                 Log.d(TAG, "fireDB control = $fireControl => roomDB updated")
             } else if (!roomControl && !fireControl) {
-                val lastInd = levelKey.length
-                val id = levelKey.substring(6, lastInd).toInt()
                 val stageEnt =
                     AppRoomEntity(id, levelKey, firePoint.toInt(), fireControl)
                 db.stageDao().update(stageEnt)
@@ -754,7 +802,12 @@ class RandomActivity : AppCompatActivity() {
                         stageRef.child("control").setValue(false)
                         Thread{
                             val lastInd = levelKey.length
-                            val id = levelKey.substring(6, lastInd).toInt()
+                            val id =
+                                if (levelKey == "Stage Ufo"){
+                                    1000
+                                }else{
+                                    levelKey.substring(6, lastInd).toInt()
+                                }
                             val stageEnt = AppRoomEntity(id, levelKey, 0, false)
                             db.stageDao().update(stageEnt)
                             Log.d(TAG, "roomDB UPDATED: answer is wrong; -10 points")
