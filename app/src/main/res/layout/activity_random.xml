@@ -47,27 +47,81 @@
                         android:layout_height="match_parent"
                         android:visibility="gone"
                         app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent">
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent">
+
+                    <ImageView
+                            android:id="@+id/areaPark"
+                            android:layout_width="200dp"
+                            android:layout_height="240dp"
+                            android:scaleType="fitXY"
+                            android:tint="#EEFBFAF6"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:srcCompat="@drawable/ic_dortbos" />
+
+                    <ImageView
+                            android:id="@+id/pet1"
+                            android:layout_width="30dp"
+                            android:layout_height="30dp"
+                            android:layout_marginTop="24dp"
+                            android:layout_marginEnd="16dp"
+                            android:tint="@color/yellowDark"
+                            app:layout_constraintEnd_toEndOf="@id/areaPark"
+                            app:layout_constraintTop_toTopOf="@+id/areaPark"
+                            app:srcCompat="@drawable/ic_dortdolu" />
+
+                    <ImageView
+                            android:id="@+id/pet2"
+                            android:layout_width="30dp"
+                            android:layout_height="30dp"
+                            android:layout_marginEnd="16dp"
+                            android:layout_marginBottom="24dp"
+                            android:tint="#554835"
+                            app:layout_constraintBottom_toBottomOf="@+id/areaPark"
+                            app:layout_constraintEnd_toEndOf="@id/areaPark"
+                            app:srcCompat="@drawable/ic_dortdolu" />
+
+                    <ImageView
+                            android:id="@+id/pet3"
+                            android:layout_width="30dp"
+                            android:layout_height="30dp"
+                            android:layout_marginStart="16dp"
+                            android:layout_marginTop="24dp"
+                            android:tint="#503227"
+                            app:layout_constraintStart_toStartOf="@id/areaPark"
+                            app:layout_constraintTop_toTopOf="@+id/areaPark"
+                            app:srcCompat="@drawable/ic_dortdolu" />
+
+                    <ImageView
+                            android:id="@+id/pet4"
+                            android:layout_width="30dp"
+                            android:layout_height="30dp"
+                            android:tint="#EDFBFAF6"
+                            app:layout_constraintBottom_toBottomOf="@id/areaPark"
+                            app:layout_constraintEnd_toEndOf="@id/areaPark"
+                            app:layout_constraintStart_toStartOf="@+id/areaPark"
+                            app:layout_constraintTop_toTopOf="@+id/areaPark"
+                            app:srcCompat="@drawable/ic_dortdolu" />
 
                     <ImageView
                             android:id="@+id/ucgenSah"
                             android:layout_width="50dp"
                             android:layout_height="50dp"
+                            android:tint="#F0FBFAF6"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
-                            android:tint="@color/colorSpaceWhite"
                             app:srcCompat="@drawable/ic_ucdolu" />
 
                     <ImageView
-                            android:id="@+id/dairePet"
+                            android:id="@+id/karePet"
                             android:layout_width="30dp"
                             android:layout_height="30dp"
-                            app:layout_constraintStart_toEndOf="@id/ucgenSah"
-                            app:layout_constraintBottom_toBottomOf="@id/ucgenSah"
                             android:tint="@color/colorGreyLight"
-                            app:srcCompat="@drawable/ic_cemberdolu" />
+                            app:layout_constraintBottom_toBottomOf="@id/ucgenSah"
+                            app:layout_constraintStart_toEndOf="@id/ucgenSah"
+                            app:srcCompat="@drawable/ic_dortdolu" />
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 

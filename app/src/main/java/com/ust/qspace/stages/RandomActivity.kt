@@ -8,7 +8,6 @@ import android.media.MediaPlayer
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
-import android.support.v4.media.session.PlaybackStateCompat
 import android.util.Log
 import android.view.Gravity
 import android.view.Menu
@@ -20,6 +19,7 @@ import android.widget.*
 import android.widget.Toast.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.core.animation.doOnEnd
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
@@ -36,7 +36,6 @@ import kotlinx.android.synthetic.main.activity_random.toolbar
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.runBlocking
-import java.time.Duration
 
 private lateinit var firebaseAnalytics: FirebaseAnalytics
 private lateinit var auth: FirebaseAuth
@@ -67,6 +66,10 @@ class RandomActivity : AppCompatActivity() {
 
     private lateinit var mediaPlayer: MediaPlayer
     private lateinit var duoUpAnimSet: AnimatorSet
+    var ucgenSahX = 0
+    var ucgenSahY = 0
+    var areaParkX = 0
+    var areaParkY = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -311,7 +314,7 @@ class RandomActivity : AppCompatActivity() {
             ninePackQuestion()
         }
         else if(levelKey == "Stage Ufo"){
-            ufoHumanityQuestion()
+            ufo_q_human.visibility = View.VISIBLE
         }
         else{
             startQuestion()
@@ -320,31 +323,67 @@ class RandomActivity : AppCompatActivity() {
         startcheck()
     }
 
-    private fun ufoQuestDuoUpAnimation(imageThing:ImageView){
+    override fun onWindowFocusChanged(hasFocus: Boolean) {
+
+        ucgenSahX = ucgenSah.right
+        ucgenSahY = ucgenSah.top
+        areaParkX = areaPark.left
+        areaParkY = areaPark.bottom
+
+        if(levelKey == "Stage Ufo"){
+            ufoHumanityQuestion()
+        }
+    }
+
+    fun View.absX(): Int
+    {
+        val location = IntArray(2)
+        this.getLocationOnScreen(location)
+        return location[0]
+    }
+
+    fun View.absY(): Int
+    {
+        val location = IntArray(2)
+        this.getLocationOnScreen(location)
+        return location[1]
+    }
+
+    fun ufoQuestDuoUpAnimation(imageThing:ImageView){
+
+        Log.d(TAG, " ucgenSahX = $ucgenSahX // ucgenSahY = $ucgenSahY // areaParkX = $areaParkX // areaParkY = $areaParkY")
+        val xDistance = (areaPark.left - imageThing.right).toFloat()
+        val yDistance = (areaPark.bottom - imageThing.top).toFloat()
         val yMove = PropertyValuesHolder.ofFloat(View.TRANSLATION_Y,
-            imageThing.translationY + 200f)
+            yDistance)
         val xMove = PropertyValuesHolder.ofFloat(View.TRANSLATION_X,
-            imageThing.translationX + 200f)
+            xDistance)
         val upMove = ObjectAnimator.ofPropertyValuesHolder(imageThing, xMove, yMove).apply {
-            duration = 2000
+            duration = 10000
         }
         val rotationRightMove = ObjectAnimator.ofFloat(imageThing, View.ROTATION,
-            imageThing.rotation + 15f).apply {
+            imageThing.rotation + 10f).apply {
             duration = 200
             repeatMode = ValueAnimator.REVERSE
             repeatCount = ValueAnimator.INFINITE
         }
         duoUpAnimSet = AnimatorSet().apply {
             play(upMove).with(rotationRightMove)
-            duration = 2000
+        }
+
+        duoUpAnimSet.start()
+
+        upMove.doOnEnd {
+            rotationRightMove.cancel()
         }
     }
 
-    private fun ufoHumanityQuestion(){
-        ufo_q_human.visibility = View.VISIBLE
+    fun ufoHumanityQuestion(){
         ufoQuestDuoUpAnimation(ucgenSah)
-        ufoQuestDuoUpAnimation(dairePet)
+        ufoQuestDuoUpAnimation(karePet)
     }
+
+
 
     private fun ninePackQuestion(){
         val ninepackrandom = AnimationUtils.loadAnimation(this, R.anim.nine_pack_random)
