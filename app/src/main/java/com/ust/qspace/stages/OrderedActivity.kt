@@ -19,13 +19,15 @@ import android.view.View
 import android.view.animation.AnimationUtils
 import android.view.animation.OvershootInterpolator
 import android.view.inputmethod.InputMethodManager
-import android.widget.*
+import android.widget.Button
+import android.widget.ImageView
+import android.widget.PopupWindow
+import android.widget.RadioButton
 import android.widget.Toast.LENGTH_SHORT
 import android.widget.Toast.makeText
 import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.constraintlayout.widget.ConstraintSet
-import com.google.firebase.FirebaseError
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
@@ -39,7 +41,6 @@ import com.ust.qspace.trees.SettingsActivity
 import com.ust.qspace.trees.TermsActivity
 import kotlinx.android.synthetic.main.activity_ordered.*
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.runBlocking
 

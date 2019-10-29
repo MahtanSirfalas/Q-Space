@@ -170,6 +170,11 @@
     <string name="info_faq_suggest_approve_answer">We will send e-mail to you to inform.</string>
     <string name="info_faq_score_procedure">\"Stage scoring procedure?\"</string>
     <string name="info_faq_score_procedure_answer">Answer as fast as you can.</string>
+    <string name="reminds_of">Animation reminds you of …?</string>
+    <string name="school">School</string>
+    <string name="trash">Trash</string>
+    <string name="camp">Camp</string>
+    <string name="dog_park">Dog Park</string>
 
     <string name="faq">--FAQs--</string>
     <!-- PRIVACY POLICY -->

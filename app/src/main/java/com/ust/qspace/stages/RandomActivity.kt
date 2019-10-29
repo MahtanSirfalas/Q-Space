@@ -66,10 +66,7 @@ class RandomActivity : AppCompatActivity() {
 
     private lateinit var mediaPlayer: MediaPlayer
     private lateinit var duoUpAnimSet: AnimatorSet
-    var ucgenSahX = 0
-    var ucgenSahY = 0
-    var areaParkX = 0
-    var areaParkY = 0
+    private lateinit var petAnimSet: AnimatorSet
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -325,12 +322,7 @@ class RandomActivity : AppCompatActivity() {
 
     override fun onWindowFocusChanged(hasFocus: Boolean) {
 
-        ucgenSahX = ucgenSah.right
-        ucgenSahY = ucgenSah.top
-        areaParkX = areaPark.left
-        areaParkY = areaPark.bottom
-
-        if(levelKey == "Stage Ufo"){
+        if(levelKey == "Stage Ufo"){ //That's because onCreate may be early to calc. views' positions etc.
             ufoHumanityQuestion()
         }
     }
@@ -349,11 +341,10 @@ class RandomActivity : AppCompatActivity() {
         return location[1]
     }
 
-    fun ufoQuestDuoUpAnimation(imageThing:ImageView){
+    fun ufoQuestDuoUpAnimation(imageThing:ImageView, xFloat:Float, yFloaf:Float){
 
-        Log.d(TAG, " ucgenSahX = $ucgenSahX // ucgenSahY = $ucgenSahY // areaParkX = $areaParkX // areaParkY = $areaParkY")
-        val xDistance = (areaPark.left - imageThing.right).toFloat()
-        val yDistance = (areaPark.bottom - imageThing.top).toFloat()
+        val xDistance = (areaPark.left - imageThing.right + xFloat)
+        val yDistance = (areaPark.bottom - imageThing.top + yFloaf)
         val yMove = PropertyValuesHolder.ofFloat(View.TRANSLATION_Y,
             yDistance)
         val xMove = PropertyValuesHolder.ofFloat(View.TRANSLATION_X,
@@ -378,9 +369,96 @@ class RandomActivity : AppCompatActivity() {
         }
     }
 
+    fun ufoQuePetAnim(imageThing: ImageView){//Other pets animation
+        var transX = 0f
+        var transY = 0f
+        when(imageThing){
+            pet1 -> {
+                transX = -20f
+                transY = 20f
+            }
+            pet2 -> {
+                transX = -20f
+                transY = -20f
+            }
+            pet3 -> {
+                transX = 24f
+                transY = 24f
+            }
+            pet4 ->{
+                transX = -24f
+                transY = 24f
+            }
+        }
+        val rotateMove = ObjectAnimator.ofFloat(imageThing, View.ROTATION,
+            imageThing.rotation+5f).apply {
+            duration = 150
+            repeatMode = ValueAnimator.REVERSE
+            repeatCount = ValueAnimator.INFINITE
+        }
+        val xMove = PropertyValuesHolder.ofFloat(View.TRANSLATION_X, transX)
+        val yMove = PropertyValuesHolder.ofFloat(View.TRANSLATION_Y, transY)
+        val petAnim = ObjectAnimator.ofPropertyValuesHolder(imageThing, xMove, yMove).apply {
+            duration = 1000
+            repeatMode = ValueAnimator.REVERSE
+            repeatCount = ValueAnimator.INFINITE
+            interpolator = AccelerateInterpolator()
+        }
+        petAnimSet = AnimatorSet().apply {
+            play(rotateMove).with(petAnim)
+        }
+        petAnimSet.start()
+    }
+
     fun ufoHumanityQuestion(){
-        ufoQuestDuoUpAnimation(ucgenSah)
-        ufoQuestDuoUpAnimation(karePet)
+        Log.d(TAG, "Ufo Q triggered!")
+        ufoQuestDuoUpAnimation(ucgenSah, -60f,-30f)
+        ufoQuestDuoUpAnimation(karePet, 0f, 0f)
+        ufoQuePetAnim(pet1)
+        ufoQuePetAnim(pet2)
+        ufoQuePetAnim(pet3)
+        ufoQuePetAnim(pet4)
+        duoUpAnimSet.doOnEnd {
+            val xMove = PropertyValuesHolder.ofFloat(View.TRANSLATION_X, karePet.translationX + 100f)
+            val yMove = PropertyValuesHolder.ofFloat(View.TRANSLATION_Y, karePet.translationY - 116f)
+            val petMove = ObjectAnimator.ofPropertyValuesHolder(karePet, xMove, yMove).apply {
+                duration = 800
+            }
+            petMove.start()
+            petAnimSet.cancel()
+            petAnimSet.cancel()
+            petAnimSet.cancel()
+            petMove.doOnEnd {
+                val fadeOut = AnimationUtils.loadAnimation(baseContext, R.anim.abc_fade_out)
+                ufo_q_human.startAnimation(fadeOut)
+                fadeOut.setAnimationListener(object : Animation.AnimationListener{
+                    override fun onAnimationStart(p0: Animation?) {}
+                    override fun onAnimationRepeat(p0: Animation?) {}
+                    override fun onAnimationEnd(p0: Animation?) {
+                        ufo_q_human.visibility = View.GONE
+                        val fadein = AnimationUtils.loadAnimation(baseContext, R.anim.abc_fade_in)
+                        val slidein = AnimationUtils.loadAnimation(baseContext,R.anim.abc_slide_in_bottom)
+                        tv_obj_1.text = getString(R.string.school)
+                        tv_obj_2.text = getString(R.string.camp)
+                        tv_obj_3.text = getString(R.string.trash)
+                        tv_obj_4.text = getString(R.string.dog_park)
+                        tv_obj_1.textSize = 16f
+                        tv_obj_2.textSize = 16f
+                        tv_obj_3.textSize = 16f
+                        tv_obj_4.textSize = 16f
+                        answer = 4
+                        tv_nineQ.text = getString(R.string.reminds_of)
+                        ninePackOptionLayout.visibility = View.VISIBLE
+                        etAnswer.visibility = View.VISIBLE
+                        buttAnswer.visibility = View.VISIBLE
+                        etAnswer.startAnimation(fadein)
+                        buttAnswer.startAnimation(slidein)
+                        etAnswer.isFocusable = false
+                        commentAnimation()
+                    }
+                })
+            }
+        }
     }
 
 
