@@ -36,6 +36,7 @@ import kotlinx.android.synthetic.main.activity_random.toolbar
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.runBlocking
+import kotlin.concurrent.thread
 
 private lateinit var firebaseAnalytics: FirebaseAnalytics
 private lateinit var auth: FirebaseAuth
@@ -250,12 +251,12 @@ class RandomActivity : AppCompatActivity() {
                                         }
                                     }
                                 })
-                                starAnimation()
 
                                 Log.d(TAG, "$levelKey: Answer ($uAnswer) is equal to $answer; Accepted!")
                                 val toast = makeText(baseContext, getString(R.string.bravo), LENGTH_SHORT)
                                 toast.setGravity(Gravity.CENTER, 0, -200)
                                 toast.show()
+                                starAnimation()
                             }else{
                                 Thread{//Wrong answer => -10 points to roomDB
                                     val lastInd = levelKey.length
@@ -277,7 +278,6 @@ class RandomActivity : AppCompatActivity() {
                             }
                         }else{
                             if (answer == uAnswer){
-                                starAnimation()
                                 Log.d(TAG, "$levelKey: Answer ($uAnswer) is equal to $answer; " +
                                         "But no points added to the database")
                                 val toast = makeText(baseContext, getString(R.string.bravo), LENGTH_SHORT)
@@ -287,6 +287,7 @@ class RandomActivity : AppCompatActivity() {
                                     stageRef.removeEventListener(kopek)
                                     Log.d(TAG, "stageRef EventListener Removed!")
                                 }
+                                starAnimation()
                             }else{
                                 Log.d(TAG, "Something's Wrong; $uAnswer != $answer!")
                                 val toast = makeText(baseContext, getString(R.string.come_on), LENGTH_SHORT)
@@ -429,6 +430,7 @@ class RandomActivity : AppCompatActivity() {
             petAnimSet.cancel()
             petAnimSet.cancel()
             petMove.doOnEnd {
+                Thread.sleep(400)
                 val fadeOut = AnimationUtils.loadAnimation(baseContext, R.anim.abc_fade_out)
                 ufo_q_human.startAnimation(fadeOut)
                 fadeOut.setAnimationListener(object : Animation.AnimationListener{
@@ -460,8 +462,6 @@ class RandomActivity : AppCompatActivity() {
             }
         }
     }
-
-
 
     private fun ninePackQuestion(){
         val ninepackrandom = AnimationUtils.loadAnimation(this, R.anim.nine_pack_random)
@@ -695,24 +695,28 @@ class RandomActivity : AppCompatActivity() {
     }
 
     private fun starAnimation(){
-        val window = PopupWindow(this)
-        val show = layoutInflater.inflate(R.layout.layout_popup, null)
+        if(levelKey == "Stage Ufo"){
+        }else{
+            val window = PopupWindow(this)
+            val show = layoutInflater.inflate(R.layout.layout_popup, null)
 //        window.isOutsideTouchable = true
 
-        //                Pop up window
-        val imageShow = show.findViewById<ImageView>(R.id.iv_spaceMedal)
-        window.contentView = show
-        window.showAtLocation(buttAnswer,1,0,100)
-        val scaleX = PropertyValuesHolder.ofFloat(View.SCALE_X, 0.5f,1f)
-        val scaleY = PropertyValuesHolder.ofFloat(View.SCALE_Y, 0.5f,1f)
-        val alpha = PropertyValuesHolder.ofFloat(View.ALPHA,0f,1f)
-        ObjectAnimator.ofPropertyValuesHolder(show, scaleX,scaleY,alpha).apply {
-            interpolator = OvershootInterpolator()
-            duration = 600
-        }.start()
-        imageShow.setOnClickListener{
-            window.dismiss()
+            //                Pop up window
+            val imageShow = show.findViewById<ImageView>(R.id.iv_spaceMedal)
+            window.contentView = show
+            window.showAtLocation(buttAnswer,1,0,100)
+            val scaleX = PropertyValuesHolder.ofFloat(View.SCALE_X, 0.5f,1f)
+            val scaleY = PropertyValuesHolder.ofFloat(View.SCALE_Y, 0.5f,1f)
+            val alpha = PropertyValuesHolder.ofFloat(View.ALPHA,0f,1f)
+            ObjectAnimator.ofPropertyValuesHolder(show, scaleX,scaleY,alpha).apply {
+                interpolator = OvershootInterpolator()
+                duration = 600
+            }.start()
+            imageShow.setOnClickListener{
+                window.dismiss()
+            }
         }
+
         buttAnswer.visibility = View.INVISIBLE
         etAnswer.isFocusable = false
         mediaPlayer.start()

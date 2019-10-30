@@ -240,7 +240,6 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun ufoClickAction(view:View?){
-
         Log.d(TAG, "UFO CLICKED!!!")
         animSet.pause()
         ufoPauseAnimation()
@@ -265,10 +264,17 @@ class MainActivity : AppCompatActivity() {
                 val tvUfo = show.findViewById<TextView>(R.id.tv_ufo_screen)
                 if (metUfoBefore){ //check if the player gave its nick to ufo
                     tv_ufo.text = getString(R.string.ufo_met_before, uName)
+                    window.contentView = show
+                    window.showAtLocation(layoutbg, Gravity.BOTTOM, 0, 0)
+                    show.startAnimation(fadein)
+                    tvUfo.text = getString(R.string.ufo_met_before, uName)
+                    buttPositive.visibility = View.GONE
+                    buttNegative.visibility = View.GONE
                     if (points in 5000..14999){
                         tv_ufo.postDelayed({
                             mediaPlayer.start()
                             tv_ufo.text = getString(R.string.ufo_met_before_low_points)
+                            tvUfo.text = getString(R.string.ufo_met_before_low_points)
                             ufoPauseAnimSet.end()
                             animSet.resume()
                             tv_ufo.postDelayed({
@@ -279,10 +285,9 @@ class MainActivity : AppCompatActivity() {
                     }else if (points in 15000..59999){//hidden stage entrance
                         tv_ufo.postDelayed({
                             tv_ufo.text = getString(R.string.ufo_met_before_high_points)
-                            window.contentView = show
-                            window.showAtLocation(layoutbg, Gravity.BOTTOM, 0, 0)
-                            show.startAnimation(fadein)
                             tvUfo.text = getString(R.string.ufo_met_before_high_points)
+                            buttPositive.visibility = View.VISIBLE
+                            buttNegative.visibility = View.VISIBLE
                             buttPositive.text = getString(R.string.ufo_high_point_positive)
                             buttNegative.text = getString(R.string.ufo_high_point_negative)
                             buttPositive.setOnClickListener {
@@ -297,12 +302,15 @@ class MainActivity : AppCompatActivity() {
                             buttNegative.setOnClickListener {
                                 Log.d(TAG, "stage ufo negative")
                                 tv_ufo.text = getString(R.string.ufo_hello_negative_answer)
+                                tvUfo.text = getString(R.string.ufo_hello_negative_answer)
+                                buttPositive.visibility = View.GONE
+                                buttNegative.visibility = View.GONE
                                 ufoPauseAnimSet.end()
                                 animSet.resume()
-                                window.dismiss()
                                 tv_ufo.postDelayed(Runnable {
                                     tv_ufo.visibility = View.INVISIBLE
                                     ufoDisappearAnimation()
+                                    window.dismiss()
                                 }, 3000)
                             }
                         },4500)
@@ -316,12 +324,15 @@ class MainActivity : AppCompatActivity() {
                     buttPositive.text = "\"$uName\""
                     buttNegative.setOnClickListener {
                         tv_ufo.text = getString(R.string.ufo_hello_negative_answer)
+                        tvUfo.text = getString(R.string.ufo_hello_negative_answer)
+                        buttPositive.visibility = View.GONE
+                        buttNegative.visibility = View.GONE
                         ufoPauseAnimSet.end()
                         animSet.resume()
-                        window.dismiss()
                         tv_ufo.postDelayed(Runnable {
                             tv_ufo.visibility = View.INVISIBLE
                             ufoDisappearAnimation()
+                            window.dismiss()
                         }, 3000)
                     }
                     buttPositive.setOnClickListener {
@@ -628,6 +639,12 @@ class MainActivity : AppCompatActivity() {
 
     override fun onBackPressed() {
         mainMenu(null)
+    }
+
+    override fun onDestroy() {
+        val intent = Intent(this, MusicService::class.java)
+        stopService(intent)
+        super.onDestroy()
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {

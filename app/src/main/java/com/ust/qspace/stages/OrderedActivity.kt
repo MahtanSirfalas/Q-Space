@@ -200,7 +200,7 @@ class OrderedActivity : AppCompatActivity() {
         imageShow.setOnClickListener{
             window.dismiss()
         }
-
+        mediaPlayer.start()
         tv_answer1.isFocusable = false
         buttAnswer1.visibility = View.INVISIBLE
     }
@@ -261,8 +261,6 @@ class OrderedActivity : AppCompatActivity() {
                                 try {
                                     mainHandler.removeCallbacks(updatePointTask)
                                 }catch (ex:Exception){ex.message}
-
-                                mediaPlayer.start()
 
                                 Thread{//update roomDB the answer is accepted
                                     val lastInd = levelKey.length
@@ -339,7 +337,6 @@ class OrderedActivity : AppCompatActivity() {
                         }else{
                             if(uAnswer == answer){
                                 starAnimation()
-                                mediaPlayer.start()
 
                                 Log.d(TAG, "$levelKey: Answer ($uAnswer) is equal to $answer; " +
                                         "But no points added to the database")
