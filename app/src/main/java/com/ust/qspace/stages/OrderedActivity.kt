@@ -61,6 +61,7 @@ class OrderedActivity : AppCompatActivity() {
     lateinit var mainHandler:Handler
     lateinit var updatePointTask: Runnable
     var isRunning = false
+    lateinit var window:PopupWindow
 
     private lateinit var mediaPlayer: MediaPlayer
 
@@ -155,6 +156,8 @@ class OrderedActivity : AppCompatActivity() {
         mediaPlayer = MediaPlayer.create(this, R.raw.win)
         mediaPlayer.isLooping = false
         mediaPlayer.setVolume(50f, 50f)
+
+        window = PopupWindow(this)
     }
 
     fun stagePointControlUpdate(point: Int, control: Boolean){
@@ -181,7 +184,6 @@ class OrderedActivity : AppCompatActivity() {
     }
 
     private fun starAnimation(){
-        val window = PopupWindow(this)
         val show = layoutInflater.inflate(R.layout.layout_popup, null)
 //        window.isOutsideTouchable = true
 
@@ -1552,6 +1554,7 @@ class OrderedActivity : AppCompatActivity() {
     }
 
     override fun onBackPressed() {
+        window.dismiss()
         if (isRunning){
             mainHandler.removeCallbacks(updatePointTask)
         }else{

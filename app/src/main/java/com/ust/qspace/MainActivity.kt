@@ -22,6 +22,10 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.animation.doOnEnd
 import androidx.room.Room
+import com.google.android.gms.ads.AdListener
+import com.google.android.gms.ads.AdRequest
+import com.google.android.gms.ads.InterstitialAd
+import com.google.android.gms.ads.MobileAds
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
@@ -64,16 +68,22 @@ lateinit var ufoPauseAnimSet: AnimatorSet
 @TargetApi(Build.VERSION_CODES.O)
 class MainActivity : AppCompatActivity() {
 
-    private lateinit var googleSignInClient: GoogleSignInClient
-
-    private lateinit var mediaPlayer: MediaPlayer
-
     val TAG = "MainActivity"
+    private lateinit var googleSignInClient: GoogleSignInClient
+    private lateinit var mediaPlayer: MediaPlayer
+    private lateinit var mInterstitialAd: InterstitialAd
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         setSupportActionBar(toolbar)
+
+        MobileAds.initialize(this) {}//adMob initialize
+        //InterstitialAd part
+        mInterstitialAd = InterstitialAd(this)
+        mInterstitialAd.adUnitId = "ca-app-pub-3940256099942544/1033173712"
+        mInterstitialAd.loadAd(AdRequest.Builder().build())
+        //
 
         val constraintLayout = findViewById<ConstraintLayout>(R.id.layoutbg)
         val animationDrawable = constraintLayout.background as AnimationDrawable
@@ -442,8 +452,20 @@ class MainActivity : AppCompatActivity() {
             }
             override fun onAnimationRepeat(arg0: Animation) {}
             override fun onAnimationEnd(arg0: Animation) {
-                startActivity(intent)
                 ivPlay.visibility = View.INVISIBLE
+                if (mInterstitialAd.isLoaded) {
+                    Log.d(TAG, "Ad Must be showed!!!")
+                    mInterstitialAd.show()
+                    mInterstitialAd.adListener = object : AdListener() {
+                        override fun onAdClosed() {
+                            mInterstitialAd.loadAd(AdRequest.Builder().build())
+                            startActivity(intent)
+                        }
+                    }
+                } else {
+                    Log.d(TAG, "The interstitial wasn't loaded yet.")
+                    startActivity(intent)
+                }
             }
         })
     }
