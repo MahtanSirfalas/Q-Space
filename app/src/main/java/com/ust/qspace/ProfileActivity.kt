@@ -21,6 +21,9 @@ import android.view.inputmethod.InputMethodManager
 import android.widget.*
 import android.widget.Toast.LENGTH_LONG
 import androidx.constraintlayout.widget.ConstraintLayout
+import com.google.android.gms.ads.AdRequest
+import com.google.android.gms.ads.AdView
+import com.google.android.gms.ads.MobileAds
 import com.google.firebase.database.*
 import com.google.firebase.storage.FirebaseStorage
 import com.squareup.picasso.Picasso
@@ -33,6 +36,7 @@ private lateinit var userRef: DatabaseReference
 
 class ProfileActivity : AppCompatActivity() {
     val TAG = "ProfileActivity"
+    lateinit var mAdView : AdView
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_profile)
@@ -49,6 +53,11 @@ class ProfileActivity : AppCompatActivity() {
         animationDrawable.setEnterFadeDuration(2000)
         animationDrawable.setExitFadeDuration(4000)
         animationDrawable.start()
+
+        MobileAds.initialize(this) {}
+        mAdView = findViewById(R.id.adView)
+        val adRequest = AdRequest.Builder().build()
+        mAdView.loadAd(adRequest)
 
         database = FirebaseDatabase.getInstance()
         commsReference = database.reference.child("Posts")

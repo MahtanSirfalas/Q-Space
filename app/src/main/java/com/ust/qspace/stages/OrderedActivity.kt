@@ -28,6 +28,9 @@ import android.widget.Toast.makeText
 import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.constraintlayout.widget.ConstraintSet
+import com.google.android.gms.ads.AdListener
+import com.google.android.gms.ads.AdRequest
+import com.google.android.gms.ads.InterstitialAd
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
@@ -57,14 +60,15 @@ private lateinit var stageRef : DatabaseReference
 
 @Suppress("RECEIVER_NULLABILITY_MISMATCH_BASED_ON_JAVA_ANNOTATIONS")
 class OrderedActivity : AppCompatActivity() {
+
     val TAG = "OrderedActivity"
+    var isRunning = false
     lateinit var mainHandler:Handler
     lateinit var updatePointTask: Runnable
-    var isRunning = false
     lateinit var window:PopupWindow
 
+    private lateinit var mInterstitialAd: InterstitialAd
     private lateinit var mediaPlayer: MediaPlayer
-
     private var mValueEventListener: ValueEventListener? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -79,6 +83,12 @@ class OrderedActivity : AppCompatActivity() {
         animationDrawable.setEnterFadeDuration(2000)
         animationDrawable.setExitFadeDuration(4000)
         animationDrawable.start()
+
+        //InterstitialAd part
+        mInterstitialAd = InterstitialAd(this)
+        mInterstitialAd.adUnitId = "ca-app-pub-3940256099942544/1033173712"
+        mInterstitialAd.loadAd(AdRequest.Builder().build())
+        //
 
         qAnswer = mapOf("Stage 1" to 95, "Stage 2" to 12, "Stage 4" to 116, "Stage 5" to 119, "Stage 6" to 8,
             "Stage 7" to 99,"Stage 9" to 16, "Stage 10" to 6, "Stage 11" to 215674, "Stage 12" to 80, "Stage 13" to 63,
@@ -101,47 +111,6 @@ class OrderedActivity : AppCompatActivity() {
 
         Log.d(TAG, "levelKey=$levelKey, answer=$answer")
 
-        fun startcheck() {
-            Thread{
-                var dbStage = db.stageDao().getOne(levelKey)
-
-                if (dbStage != null){
-                    var point = dbStage.db_stage_points
-                    var control = dbStage.db_stage_control
-                    stageStartFireDBCheck(point, control)
-                    if (control) {
-                        point -= 2
-                        stagePointControlUpdate(point, control)
-                        updatePointTask = object : Runnable{
-                            override fun run() {
-                                isRunning = true
-                                point -= 2
-                                stagePointControlUpdate(point, control)
-                                Log.d(TAG, "$levelKey point updated to $point")
-                                mainHandler.postDelayed(this, 10000)
-                            }
-                        }
-                        mainHandler.post(updatePointTask)
-                    }else{
-
-                        Log.d(TAG, "Stage passed before.")
-                    }
-
-                }else{
-                    val lastInd = levelKey.length
-                    val id = levelKey.substring(6, lastInd).toInt()
-                    var stageEnt = AppRoomEntity(id, levelKey, 1004, true)
-                    db.stageDao().insert(stageEnt)
-                    stageRef.child("point").setValue(1000)
-                    stageRef.child("control").setValue(true)
-                    Log.d(TAG, "First run on $levelKey, adaptation DONE!")
-                    startcheck()
-                }
-            }.start()
-        }
-        Thread{
-            startcheck()
-        }.start()
         commentAnimation()
 //        chrono.base = SystemClock.elapsedRealtime()
 //        chrono.start()
@@ -158,6 +127,53 @@ class OrderedActivity : AppCompatActivity() {
         mediaPlayer.setVolume(50f, 50f)
 
         window = PopupWindow(this)
+    }
+
+    fun startcheck() {
+        Thread{
+            var dbStage = db.stageDao().getOne(levelKey)
+
+            if (dbStage != null){
+                var point = dbStage.db_stage_points
+                var control = dbStage.db_stage_control
+                stageStartFireDBCheck(point, control)
+                if (control) {
+                    point -= 2
+                    stagePointControlUpdate(point, control)
+                    updatePointTask = object : Runnable{
+                        override fun run() {
+                            isRunning = true
+                            point -= 2
+                            stagePointControlUpdate(point, control)
+                            Log.d(TAG, "$levelKey point updated to $point")
+                            mainHandler.postDelayed(this, 10000)
+                        }
+                    }
+                    mainHandler.post(updatePointTask)
+                }else{
+
+                    Log.d(TAG, "Stage passed before.")
+                }
+
+            }else{
+                val lastInd = levelKey.length
+                val id = levelKey.substring(6, lastInd).toInt()
+                var stageEnt = AppRoomEntity(id, levelKey, 1004, true)
+                db.stageDao().insert(stageEnt)
+                stageRef.child("point").setValue(1000)
+                stageRef.child("control").setValue(true)
+                Log.d(TAG, "First run on $levelKey, adaptation DONE!")
+                startcheck()
+            }
+        }.start()
+    }
+
+    override fun onStart() {
+        Thread{
+            startcheck()
+        }.start()
+
+        super.onStart()
     }
 
     fun stagePointControlUpdate(point: Int, control: Boolean){
@@ -884,13 +900,7 @@ class OrderedActivity : AppCompatActivity() {
         }
     }
 
-    fun showNext(view: View?){
-        if (isRunning){
-            mainHandler.removeCallbacks(updatePointTask)
-        }else{
-            Log.d(TAG, "isRunning false")
-        }
-        ib_next.setColorFilter(resources.getColor(R.color.colorPurple))
+    fun showNextStageGrid(){
         when (levelKey){
             "Stage 1" -> {
                 levelKey = "Stage 2"
@@ -1078,13 +1088,29 @@ class OrderedActivity : AppCompatActivity() {
         }
     }
 
-    fun showBack(view:View?){
+    fun showNext(view: View?){
         if (isRunning){
             mainHandler.removeCallbacks(updatePointTask)
         }else{
             Log.d(TAG, "isRunning false")
         }
-        ib_back.setColorFilter(resources.getColor(R.color.colorPurple))
+        ib_next.setColorFilter(resources.getColor(R.color.colorPurple))
+        if (mInterstitialAd.isLoaded) {
+            Log.d(TAG, "Ad Must be showed!!!")
+            mInterstitialAd.show()
+            mInterstitialAd.adListener = object : AdListener() {
+                override fun onAdClosed() {
+                    mInterstitialAd.loadAd(AdRequest.Builder().build())
+                    showNextStageGrid()
+                }
+            }
+        } else {
+            Log.d(TAG, "The interstitial wasn't loaded yet.")
+            showNextStageGrid()
+        }
+    }
+
+    fun showBackStageGrid(){
         when(levelKey){
             "Stage 2" -> {
                 levelKey = "Stage 1"
@@ -1269,6 +1295,28 @@ class OrderedActivity : AppCompatActivity() {
                 startActivity(intent)
             }
             else -> {}
+        }
+    }
+
+    fun showBack(view:View?){
+        if (isRunning){
+            mainHandler.removeCallbacks(updatePointTask)
+        }else{
+            Log.d(TAG, "isRunning false")
+        }
+        ib_back.setColorFilter(resources.getColor(R.color.colorPurple))
+        if (mInterstitialAd.isLoaded) {
+            Log.d(TAG, "Ad Must be showed!!!")
+            mInterstitialAd.show()
+            mInterstitialAd.adListener = object : AdListener() {
+                override fun onAdClosed() {
+                    mInterstitialAd.loadAd(AdRequest.Builder().build())
+                    showBackStageGrid()
+                }
+            }
+        } else {
+            Log.d(TAG, "The interstitial wasn't loaded yet.")
+            showBackStageGrid()
         }
     }
 

@@ -16,6 +16,9 @@ import android.view.inputmethod.InputMethodManager
 import android.widget.Toast.*
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout
+import com.google.android.gms.ads.AdRequest
+import com.google.android.gms.ads.AdView
+import com.google.android.gms.ads.MobileAds
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
 import com.ust.qspace.models.Suggests
@@ -41,6 +44,7 @@ class SuggestActivity : AppCompatActivity() {
     val now = LocalDateTime.now()
     var date = DateTimeFormatter.ofPattern("yyyy:MM:dd")
     var time = DateTimeFormatter.ofPattern("HH:mm:ss")
+    lateinit var mAdView : AdView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -52,6 +56,11 @@ class SuggestActivity : AppCompatActivity() {
         animationDrawable.setEnterFadeDuration(2000)
         animationDrawable.setExitFadeDuration(4000)
         animationDrawable.start()
+
+        MobileAds.initialize(this) {}
+        mAdView = findViewById(R.id.adView)
+        val adRequest = AdRequest.Builder().build()
+        mAdView.loadAd(adRequest)
 
         auth = FirebaseAuth.getInstance()
         database = FirebaseDatabase.getInstance()

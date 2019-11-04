@@ -8,6 +8,9 @@ import android.view.MenuItem
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
+import com.google.android.gms.ads.AdRequest
+import com.google.android.gms.ads.AdView
+import com.google.android.gms.ads.MobileAds
 import com.google.firebase.auth.FirebaseAuth
 import com.ust.qspace.trees.PrivacyActivity
 import com.ust.qspace.trees.SettingsActivity
@@ -18,17 +21,23 @@ class InfoActivity : AppCompatActivity() {
     private lateinit var auth: FirebaseAuth
     val TAG = "InfoActivity"
 
+    lateinit var mAdView : AdView
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_info)
         setSupportActionBar(toolbar)
+
+        MobileAds.initialize(this) {}
+        mAdView = findViewById(R.id.adView)
+        val adRequest = AdRequest.Builder().build()
+        mAdView.loadAd(adRequest)
 
         auth = FirebaseAuth.getInstance()
 
         tv_info_intro.text = getString(R.string.info_intro, uName)
         tv_info_misvis.text = getString(R.string.info_mission) + "\n" + getString(R.string.info_vision)+
                 "\n\n" + getString(R.string.info_how)
-
     }
 
     fun faqQuestionClick(view:View){

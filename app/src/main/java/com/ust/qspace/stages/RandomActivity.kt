@@ -20,6 +20,9 @@ import android.widget.Toast.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.animation.doOnEnd
+import com.google.android.gms.ads.AdListener
+import com.google.android.gms.ads.AdRequest
+import com.google.android.gms.ads.InterstitialAd
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
@@ -68,6 +71,7 @@ class RandomActivity : AppCompatActivity() {
     private lateinit var mediaPlayer: MediaPlayer
     private lateinit var duoUpAnimSet: AnimatorSet
     private lateinit var petAnimSet: AnimatorSet
+    private lateinit var mInterstitialAd: InterstitialAd
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -81,6 +85,12 @@ class RandomActivity : AppCompatActivity() {
         animationDrawable.setEnterFadeDuration(2000)
         animationDrawable.setExitFadeDuration(4000)
         animationDrawable.start()
+
+        //InterstitialAd part
+        mInterstitialAd = InterstitialAd(this)
+        mInterstitialAd.adUnitId = "ca-app-pub-3940256099942544/1033173712"
+        mInterstitialAd.loadAd(AdRequest.Builder().build())
+        //
 
         firebaseAnalytics = FirebaseAnalytics.getInstance(this)
         auth = FirebaseAuth.getInstance()
@@ -328,15 +338,13 @@ class RandomActivity : AppCompatActivity() {
         }
     }
 
-    fun View.absX(): Int
-    {
+    fun View.absX(): Int {
         val location = IntArray(2)
         this.getLocationOnScreen(location)
         return location[0]
     }
 
-    fun View.absY(): Int
-    {
+    fun View.absY(): Int {
         val location = IntArray(2)
         this.getLocationOnScreen(location)
         return location[1]
@@ -961,8 +969,7 @@ class RandomActivity : AppCompatActivity() {
         })
     }
 
-    fun showNext(view:View?){
-        ib_next.setColorFilter(resources.getColor(R.color.colorPurple))
+    fun showNextStageGrid(){
         when(levelKey){
             "Stage 3" -> {
                 levelKey = "Stage 4"
@@ -989,8 +996,24 @@ class RandomActivity : AppCompatActivity() {
         }
     }
 
-    fun showBack(view:View?){
-        ib_back.setColorFilter(resources.getColor(R.color.colorPurple))
+    fun showNext(view:View?){
+        ib_next.setColorFilter(resources.getColor(R.color.colorPurple))
+        if (mInterstitialAd.isLoaded) {
+            Log.d(TAG, "Ad Must be showed!!!")
+            mInterstitialAd.show()
+            mInterstitialAd.adListener = object : AdListener() {
+                override fun onAdClosed() {
+                    mInterstitialAd.loadAd(AdRequest.Builder().build())
+                    showNextStageGrid()
+                }
+            }
+        } else {
+            Log.d(TAG, "The interstitial wasn't loaded yet.")
+            showNextStageGrid()
+        }
+    }
+
+    fun showBackStageGrid(){
         when(levelKey){
             "Stage 3" -> {
                 levelKey = "Stage 2"
@@ -1014,6 +1037,23 @@ class RandomActivity : AppCompatActivity() {
                 startActivity(intent)
             }
             else -> {}
+        }
+    }
+
+    fun showBack(view:View?){
+        ib_back.setColorFilter(resources.getColor(R.color.colorPurple))
+        if (mInterstitialAd.isLoaded) {
+            Log.d(TAG, "Ad Must be showed!!!")
+            mInterstitialAd.show()
+            mInterstitialAd.adListener = object : AdListener() {
+                override fun onAdClosed() {
+                    mInterstitialAd.loadAd(AdRequest.Builder().build())
+                    showBackStageGrid()
+                }
+            }
+        } else {
+            Log.d(TAG, "The interstitial wasn't loaded yet.")
+            showBackStageGrid()
         }
     }
 

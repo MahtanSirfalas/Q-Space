@@ -120,10 +120,7 @@ class CommentActivity : AppCompatActivity() {
                 val ref  = database.getReference("/Posts/$levelKey")
 
                 ref.addListenerForSingleValueEvent(object : ValueEventListener{
-                    override fun onCancelled(p0: DatabaseError) {
-                        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-                    }
-
+                    override fun onCancelled(p0: DatabaseError) {}
                     override fun onDataChange(p0: DataSnapshot) {
                         p0.children.forEach {
                             val comms = it.child("post").value as String
@@ -135,8 +132,7 @@ class CommentActivity : AppCompatActivity() {
                                 var upvoteCount = it.child("upvoteCount").value as Long
                                 var ordernum = it.child("order").value as Long
                                 val postUid = it.child("uid").value as String
-                                val upvotedId = it.child("uid").value as String
-                                val votedRef = database.getReference("Users/$upvotedId")
+                                val votedRef = database.getReference("Users/$postUid")
 
                                 if (found){
                                     //Removing Comment
@@ -172,15 +168,18 @@ class CommentActivity : AppCompatActivity() {
                                         val toast = makeText(baseContext, getString(R.string.upvote_back), LENGTH_SHORT)
                                         toast.setGravity(Gravity.CENTER, 0, 0)
                                         toast.show()
-                                        //Mirroring upvote to the other side
+                                        //Mirroring remove upvote to the other side
                                         votedRef.addListenerForSingleValueEvent(object:ValueEventListener{
                                             override fun onCancelled(p0: DatabaseError) {}
                                             override fun onDataChange(p0: DataSnapshot) {
                                                 if(p0.child("upCount").exists()){
                                                     var uvCount = p0.child("upCount").value as Long
-                                                    Log.d(TAG, "$upvotedId UpVote points= $uvCount")
+                                                    Log.d(TAG, "$postUid UpVote points= $uvCount")
                                                     votedRef.child("upCount").setValue(uvCount-1)
-                                                }else{}
+                                                    val prePoints = p0.child("points").value as Long
+                                                    val postPoints = prePoints - 10
+                                                    votedRef.child("points").setValue(postPoints)
+                                                }
                                             }
                                         })
                                     }
@@ -204,11 +203,14 @@ class CommentActivity : AppCompatActivity() {
                                         override fun onDataChange(p0: DataSnapshot) {
                                             if(p0.child("upCount").exists()){
                                                 var uvCount = p0.child("upCount").value as Long
-                                                Log.d(TAG, "$upvotedId UpVote points= $uvCount")
+                                                Log.d(TAG, "$postUid UpVote points= $uvCount")
                                                 votedRef.child("upCount").setValue(uvCount+1)
                                             }else{
                                                 votedRef.child("upCount").setValue(1)
                                             }
+                                            val prePoints = p0.child("points").value as Long
+                                            val postPoints = prePoints + 10
+                                            votedRef.child("points").setValue(postPoints)
                                         }
                                     })
                                 }
