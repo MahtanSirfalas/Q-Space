@@ -1,14 +1,17 @@
 package com.ust.qspace
 
+import android.animation.*
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
+import android.view.animation.Animation
 import android.view.animation.AnimationUtils
 import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.ViewCompat
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
@@ -19,6 +22,8 @@ import com.ust.qspace.trees.SettingsActivity
 import com.ust.qspace.trees.TermsActivity
 
 import kotlinx.android.synthetic.main.activity_lvl.*
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.runBlocking
 
 private lateinit var firebaseAnalytics: FirebaseAnalytics
 private lateinit var auth: FirebaseAuth
@@ -53,43 +58,8 @@ class LvlActivity : AppCompatActivity() {
         database = FirebaseDatabase.getInstance()
         databaseReference = database.reference.child("Users")
         nick = intent.getStringExtra("tvName")
-        /*val userRef = database.reference.child("Users/$uid")
-        userRef.addListenerForSingleValueEvent(object: ValueEventListener{
-            override fun onCancelled(p0: DatabaseError) {Log.d(TAG, "userRef data couldn't read!")}
-            override fun onDataChange(p0: DataSnapshot) {
-                if (p0.child("stages").exists()){
-                    val stages = p0.child("stages").value as HashMap<*, *>
-                    val stage = stages.keys
-                    animations()
-                    Log.d(TAG, "STAGES; $stages STAGE= $stage")
-                    for (item in stageList.keys){
-                        if (stage.contains(item)){
-                            val control = p0.child("stages/$item/control").value as Boolean
-                            val point = p0.child("stages/$item/point").value as Long
-                            val buton = stageList[item]
 
-                            if (control){
-                                Log.d(TAG, "$item: Pass")
-                            }else{
-                                if (point.toInt() == 0){
-                                    buton?.setBackgroundResource(R.drawable.custom_butt_lvl)
-                                    Log.d(TAG, "$item: Given Up")
-                                }else{
-                                    buton?.setBackgroundResource(R.drawable.custom_butt_stagewon)
-                                    Log.d(TAG, "$item: Finished")
-                                }
-                            }
-                            Log.d(TAG, "stageList: $item applied")
-                        }else{}
-                    }
-                }else{
-                    animations()
-                    Log.d(TAG, "stages doesn't exist yet!")
-                }
-            }
-        })*/
-
-        Thread{
+        runBlocking(Dispatchers.Default) {
             val checkRoomDb = db.stageDao().getAll()
             if (checkRoomDb != null){
                 for (item in stageList.keys){
@@ -115,86 +85,127 @@ class LvlActivity : AppCompatActivity() {
             }else{
                 Log.d(TAG, "stages doesn't exist yet!")
             }
-        }.start()
+        }
+    }
+
+    override fun onStart() {
         animations()
+        super.onStart()
     }
 
     private fun animations(){
+
+
         val ltr = AnimationUtils.loadAnimation(this, R.anim.ltr)
         val ltr1 = AnimationUtils.loadAnimation(this, R.anim.ltr1)
         val ltr2 = AnimationUtils.loadAnimation(this, R.anim.ltr2)
         val ltr3 = AnimationUtils.loadAnimation(this, R.anim.ltr3)
         val ltr4 = AnimationUtils.loadAnimation(this, R.anim.ltr4)
         val ltr5 = AnimationUtils.loadAnimation(this, R.anim.ltr5)
-        val ltr6 = AnimationUtils.loadAnimation(this, R.anim.ltr6)
-        val atf = AnimationUtils.loadAnimation(this, R.anim.abc_fade_in)
-        ivBack.visibility = View.VISIBLE
-        ivBack.startAnimation(atf)
-        buttL1.visibility = View.VISIBLE
-        buttL2.visibility = View.VISIBLE
-        buttL3.visibility = View.VISIBLE
-        buttL4.visibility = View.VISIBLE
-        buttL5.visibility = View.VISIBLE
-        buttL6.visibility = View.VISIBLE
-        buttL7.visibility = View.VISIBLE
-        buttL8.visibility = View.VISIBLE
-        buttL9.visibility = View.VISIBLE
-        buttL10.visibility = View.VISIBLE
-        buttL11.visibility = View.VISIBLE
-        buttL12.visibility = View.VISIBLE
-        buttL13.visibility = View.VISIBLE
-        buttL14.visibility = View.VISIBLE
-        buttL15.visibility = View.VISIBLE
-        buttL16.visibility = View.VISIBLE
-        buttL17.visibility = View.VISIBLE
-        buttL18.visibility = View.VISIBLE
-        buttL19.visibility = View.VISIBLE
-        buttL20.visibility = View.VISIBLE
-        buttL21.visibility = View.VISIBLE
-        buttL22.visibility = View.VISIBLE
-        buttL23.visibility = View.VISIBLE
-        buttL24.visibility = View.VISIBLE
-        buttL25.visibility = View.VISIBLE
-        buttL26.visibility = View.VISIBLE
-        buttL27.visibility = View.VISIBLE
-        buttL28.visibility = View.VISIBLE
-        buttL29.visibility = View.VISIBLE
-        buttL30.visibility = View.VISIBLE
-        /*buttL31.visibility = View.VISIBLE
-        buttL32.visibility = View.VISIBLE
-        buttL33.visibility = View.VISIBLE
-        buttL34.visibility = View.VISIBLE
-        buttL35.visibility = View.VISIBLE*/
-        buttL1.startAnimation(ltr)
-        buttL2.startAnimation(ltr)
-        buttL3.startAnimation(ltr)
-        buttL4.startAnimation(ltr)
-        buttL5.startAnimation(ltr)
-        buttL6.startAnimation(ltr1)
-        buttL7.startAnimation(ltr1)
-        buttL8.startAnimation(ltr1)
-        buttL9.startAnimation(ltr1)
-        buttL10.startAnimation(ltr1)
-        buttL11.startAnimation(ltr2)
-        buttL12.startAnimation(ltr2)
-        buttL13.startAnimation(ltr2)
-        buttL14.startAnimation(ltr2)
-        buttL15.startAnimation(ltr2)
-        buttL16.startAnimation(ltr3)
-        buttL17.startAnimation(ltr3)
-        buttL18.startAnimation(ltr3)
-        buttL19.startAnimation(ltr3)
-        buttL20.startAnimation(ltr3)
-        buttL21.startAnimation(ltr4)
-        buttL22.startAnimation(ltr4)
-        buttL23.startAnimation(ltr4)
-        buttL24.startAnimation(ltr4)
-        buttL25.startAnimation(ltr4)
-        buttL26.startAnimation(ltr5)
-        buttL27.startAnimation(ltr5)
-        buttL28.startAnimation(ltr5)
-        buttL29.startAnimation(ltr5)
-        buttL30.startAnimation(ltr5)
+//        val ltr6 = AnimationUtils.loadAnimation(this, R.anim.ltr6)
+//        val atf = AnimationUtils.loadAnimation(this, R.anim.abc_fade_in)
+//        ivBack.visibility = View.VISIBLE
+//        ivBack.startAnimation(atf)
+
+
+
+//        /*buttL31.visibility = View.VISIBLE
+//        buttL32.visibility = View.VISIBLE
+//        buttL33.visibility = View.VISIBLE
+//        buttL34.visibility = View.VISIBLE
+//        buttL35.visibility = View.VISIBLE*/
+        runBlocking(Dispatchers.Default) {
+            buttL1.visibility = View.VISIBLE
+            buttL2.visibility = View.VISIBLE
+            buttL3.visibility = View.VISIBLE
+            buttL4.visibility = View.VISIBLE
+            buttL5.visibility = View.VISIBLE
+            buttL1.startAnimation(ltr)
+            buttL2.startAnimation(ltr)
+            buttL3.startAnimation(ltr)
+            buttL4.startAnimation(ltr)
+            buttL5.startAnimation(ltr)
+            ltr.setAnimationListener(object: Animation.AnimationListener{
+                override fun onAnimationRepeat(p0: Animation?) {}
+                override fun onAnimationStart(p0: Animation?) {}
+                override fun onAnimationEnd(p0: Animation?) {
+                    buttL6.visibility = View.VISIBLE
+                    buttL7.visibility = View.VISIBLE
+                    buttL8.visibility = View.VISIBLE
+                    buttL9.visibility = View.VISIBLE
+                    buttL10.visibility = View.VISIBLE
+                    buttL6.startAnimation(ltr1)
+                    buttL7.startAnimation(ltr1)
+                    buttL8.startAnimation(ltr1)
+                    buttL9.startAnimation(ltr1)
+                    buttL10.startAnimation(ltr1)
+                    ltr1.setAnimationListener(object: Animation.AnimationListener{
+                        override fun onAnimationRepeat(p0: Animation?) {}
+                        override fun onAnimationStart(p0: Animation?) {}
+                        override fun onAnimationEnd(p0: Animation?) {
+                            buttL11.visibility = View.VISIBLE
+                            buttL12.visibility = View.VISIBLE
+                            buttL13.visibility = View.VISIBLE
+                            buttL14.visibility = View.VISIBLE
+                            buttL15.visibility = View.VISIBLE
+                            buttL11.startAnimation(ltr2)
+                            buttL12.startAnimation(ltr2)
+                            buttL13.startAnimation(ltr2)
+                            buttL14.startAnimation(ltr2)
+                            buttL15.startAnimation(ltr2)
+                            ltr2.setAnimationListener(object: Animation.AnimationListener{
+                                override fun onAnimationRepeat(p0: Animation?) {}
+                                override fun onAnimationStart(p0: Animation?) {}
+                                override fun onAnimationEnd(p0: Animation?) {
+                                    buttL16.visibility = View.VISIBLE
+                                    buttL17.visibility = View.VISIBLE
+                                    buttL18.visibility = View.VISIBLE
+                                    buttL19.visibility = View.VISIBLE
+                                    buttL20.visibility = View.VISIBLE
+                                    buttL16.startAnimation(ltr3)
+                                    buttL17.startAnimation(ltr3)
+                                    buttL18.startAnimation(ltr3)
+                                    buttL19.startAnimation(ltr3)
+                                    buttL20.startAnimation(ltr3)
+                                    ltr3.setAnimationListener(object: Animation.AnimationListener{
+                                        override fun onAnimationRepeat(p0: Animation?) {}
+                                        override fun onAnimationStart(p0: Animation?) {}
+                                        override fun onAnimationEnd(p0: Animation?) {
+                                            buttL21.visibility = View.VISIBLE
+                                            buttL22.visibility = View.VISIBLE
+                                            buttL23.visibility = View.VISIBLE
+                                            buttL24.visibility = View.VISIBLE
+                                            buttL25.visibility = View.VISIBLE
+                                            buttL21.startAnimation(ltr4)
+                                            buttL22.startAnimation(ltr4)
+                                            buttL23.startAnimation(ltr4)
+                                            buttL24.startAnimation(ltr4)
+                                            buttL25.startAnimation(ltr4)
+                                            ltr4.setAnimationListener(object: Animation.AnimationListener{
+                                                override fun onAnimationRepeat(p0: Animation?) {}
+                                                override fun onAnimationStart(p0: Animation?) {}
+                                                override fun onAnimationEnd(p0: Animation?) {
+                                                    buttL26.visibility = View.VISIBLE
+                                                    buttL27.visibility = View.VISIBLE
+                                                    buttL28.visibility = View.VISIBLE
+                                                    buttL29.visibility = View.VISIBLE
+                                                    buttL30.visibility = View.VISIBLE
+                                                    buttL26.startAnimation(ltr5)
+                                                    buttL27.startAnimation(ltr5)
+                                                    buttL28.startAnimation(ltr5)
+                                                    buttL29.startAnimation(ltr5)
+                                                    buttL30.startAnimation(ltr5)
+                                                }
+                                            })
+                                        }
+                                    })
+                                }
+                            })
+                        }
+                    })
+                }
+            })
+        }
         /*buttL31.startAnimation(ltr6)
         buttL32.startAnimation(ltr6)
         buttL33.startAnimation(ltr6)

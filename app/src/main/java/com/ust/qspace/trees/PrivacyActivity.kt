@@ -58,6 +58,12 @@ class PrivacyActivity : AppCompatActivity() {
         startActivity(intent)
     }
 
+    private fun showSettings(view:View?){
+        Log.d(TAG, "action_settings pressed!")
+        val intent = Intent(this@PrivacyActivity, SettingsActivity::class.java)
+        startActivity(intent)
+    }
+
     fun signOut(view: View?){
         Log.d(TAG, "signOut pressed..")
         auth.signOut()
@@ -79,6 +85,7 @@ class PrivacyActivity : AppCompatActivity() {
             item.itemId == R.id.action_out -> signOut(null)
             item.itemId == R.id.action_profile -> showProfile(null)
             item.itemId == R.id.action_home -> mainMenu(null)
+            item.itemId == R.id.action_settings -> showSettings(null)
             item.itemId == R.id.terms_condition -> termsConditions()
             else -> {
 

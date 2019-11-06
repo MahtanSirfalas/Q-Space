@@ -81,7 +81,7 @@ class MainActivity : AppCompatActivity() {
         MobileAds.initialize(this) {}//adMob initialize
         //InterstitialAd part
         mInterstitialAd = InterstitialAd(this)
-        mInterstitialAd.adUnitId = "ca-app-pub-3940256099942544/1033173712"
+        mInterstitialAd.adUnitId = "ca-app-pub-7262139641436003/2457796701"
         mInterstitialAd.loadAd(AdRequest.Builder().build())
         //
 
@@ -256,14 +256,14 @@ class MainActivity : AppCompatActivity() {
         mediaPlayer.start()
         tv_ufo.visibility = View.VISIBLE
         when (points){
-            in 0..4999 ->{
+            in 0..49999 ->{
                 tv_ufo.postDelayed(Runnable {
                     tv_ufo.visibility = View.INVISIBLE
                     ufoPauseAnimSet.end()
                     animSet.resume()
                 }, 4500)
             }
-            in 5000..59999 ->{
+            in 50000..599999 ->{
                 val settings = SettingsPrefs(this)
                 val metUfoBefore = settings.getSetting(metUfo)
                 val window = PopupWindow(view, ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT)
@@ -280,7 +280,7 @@ class MainActivity : AppCompatActivity() {
                     tvUfo.text = getString(R.string.ufo_met_before, uName)
                     buttPositive.visibility = View.GONE
                     buttNegative.visibility = View.GONE
-                    if (points in 5000..14999){
+                    if (points in 50000..149999){
                         tv_ufo.postDelayed({
                             mediaPlayer.start()
                             tv_ufo.text = getString(R.string.ufo_met_before_low_points)
@@ -292,7 +292,7 @@ class MainActivity : AppCompatActivity() {
                                 ufoDisappearAnimation()
                             }, 6000)
                         }, 4500)
-                    }else if (points in 15000..59999){//hidden stage entrance
+                    }else if (points in 150000..599999){//hidden stage entrance
                         tv_ufo.postDelayed({
                             tv_ufo.text = getString(R.string.ufo_met_before_high_points)
                             tvUfo.text = getString(R.string.ufo_met_before_high_points)
@@ -367,20 +367,20 @@ class MainActivity : AppCompatActivity() {
     fun levelTagClarification(){
         val userReference = databaseReference.child(uid)
         when (points) {
-            in 1..1999 -> {userReference.child("level").setValue("Epimetheus")}
-            in 2000..3999 -> {userReference.child("level").setValue("Atlas")}
-            in 4000..5999 -> {userReference.child("level").setValue("Hyperion")}
-            in 6000..8499 -> {userReference.child("level").setValue("Charon")}
-            in 8500..10999 -> {userReference.child("level").setValue("Mimas")}
-            in 11000..13999 -> {userReference.child("level").setValue("Triton")}
-            in 14000..18999 -> {userReference.child("level").setValue("Callisto")}
-            in 17000..20499 -> {userReference.child("level").setValue("Ganymede")}
-            in 20500..23999 -> {userReference.child("level").setValue("Europa")}
-            in 24000..27999 -> {userReference.child("level").setValue("Titan")}
-            in 28000..32499 -> {userReference.child("level").setValue("Moon")}
-            in 32500..37499 -> {userReference.child("level").setValue("Enceladus")}
-            in 37500..42999 -> {userReference.child("level").setValue("Pluto")}
-            in 43000..59999 -> {userReference.child("level").setValue("Mars")}
+            in 1..19999 -> {userReference.child("level").setValue("Epimetheus")}
+            in 20000..39999 -> {userReference.child("level").setValue("Atlas")}
+            in 40000..59999 -> {userReference.child("level").setValue("Hyperion")}
+            in 60000..84999 -> {userReference.child("level").setValue("Charon")}
+            in 85000..109999 -> {userReference.child("level").setValue("Mimas")}
+            in 110000..139999 -> {userReference.child("level").setValue("Triton")}
+            in 140000..189999 -> {userReference.child("level").setValue("Callisto")}
+            in 170000..204999 -> {userReference.child("level").setValue("Ganymede")}
+            in 205000..239999 -> {userReference.child("level").setValue("Europa")}
+            in 240000..279999 -> {userReference.child("level").setValue("Titan")}
+            in 280000..324999 -> {userReference.child("level").setValue("Moon")}
+            in 325000..374999 -> {userReference.child("level").setValue("Enceladus")}
+            in 375000..429999 -> {userReference.child("level").setValue("Pluto")}
+            in 430000..599999 -> {userReference.child("level").setValue("Mars")}
             else -> {}
         }
     }

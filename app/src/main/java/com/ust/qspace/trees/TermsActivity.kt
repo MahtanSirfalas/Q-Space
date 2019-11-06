@@ -50,6 +50,12 @@ class TermsActivity : AppCompatActivity() {
         startActivity(intent)
     }
 
+    private fun showSettings(view:View?){
+        Log.d(TAG, "action_settings pressed!")
+        val intent = Intent(this@TermsActivity, SettingsActivity::class.java)
+        startActivity(intent)
+    }
+
     private fun privacyPolicy(){
         Log.d(TAG, "privacyPolicy pressed..")
         val intent = Intent(this, PrivacyActivity::class.java)
@@ -77,6 +83,7 @@ class TermsActivity : AppCompatActivity() {
             item.itemId == R.id.action_out -> signOut(null)
             item.itemId == R.id.action_profile -> showProfile(null)
             item.itemId == R.id.action_home -> mainMenu(null)
+            item.itemId == R.id.action_settings -> showSettings(null)
             item.itemId == R.id.pivacy_policy -> privacyPolicy()
             else -> {
 

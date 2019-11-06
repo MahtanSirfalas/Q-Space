@@ -166,13 +166,16 @@
     <string name="info_faq_suggest_approve_answer">Sizi bilgilendirmek için mail yollarız.</string>
     <string name="info_faq_score_procedure">\"Soru puanlama prosedürü?\"</string>
     <string name="info_faq_score_procedure_answer">Cevaplayabildiğiniz kadar çabuk cevaplamaya bakın.</string>
-    <string name="reminds_of">Animasyon ne çağrıştırıyor?</string>
-    <string name="school">School</string>
-    <string name="trash">Trash</string>
-    <string name="camp">Camp</string>
-    <string name="dog_park">Dog Park</string>
 
     <string name="faq">--SSS--</string>
+
+
+    <string name="reminds_of">Animasyon size ne çağrıştırıyor?</string>
+    <string name="school">Okul Bahçesi</string>
+    <string name="trash">Çöplük</string>
+    <string name="camp">Kamp</string>
+    <string name="dog_park">Köpek Parkı</string>
+
     <!-- PRIVACY POLICY -->
     <string name="title_activity_privacy">Gizlilik Politikası</string>
     <string name="privacy_policy_body">

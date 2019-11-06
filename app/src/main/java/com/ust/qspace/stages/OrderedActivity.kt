@@ -86,7 +86,7 @@ class OrderedActivity : AppCompatActivity() {
 
         //InterstitialAd part
         mInterstitialAd = InterstitialAd(this)
-        mInterstitialAd.adUnitId = "ca-app-pub-3940256099942544/1033173712"
+        mInterstitialAd.adUnitId = "ca-app-pub-7262139641436003/7225179289"
         mInterstitialAd.loadAd(AdRequest.Builder().build())
         //
 
@@ -138,7 +138,7 @@ class OrderedActivity : AppCompatActivity() {
                 var control = dbStage.db_stage_control
                 stageStartFireDBCheck(point, control)
                 if (control) {
-                    point -= 2
+                    point -= 10
                     stagePointControlUpdate(point, control)
                     updatePointTask = object : Runnable{
                         override fun run() {
@@ -158,9 +158,9 @@ class OrderedActivity : AppCompatActivity() {
             }else{
                 val lastInd = levelKey.length
                 val id = levelKey.substring(6, lastInd).toInt()
-                var stageEnt = AppRoomEntity(id, levelKey, 1004, true)
+                var stageEnt = AppRoomEntity(id, levelKey, 10004, true)
                 db.stageDao().insert(stageEnt)
-                stageRef.child("point").setValue(1000)
+                stageRef.child("point").setValue(10000)
                 stageRef.child("control").setValue(true)
                 Log.d(TAG, "First run on $levelKey, adaptation DONE!")
                 startcheck()
@@ -292,7 +292,6 @@ class OrderedActivity : AppCompatActivity() {
                                     override fun onCancelled(p0s: DatabaseError) {
                                         Log.d(TAG, "userRef Data couldn't read; No Internet Connection/No Response from database/Wrong datapath")
                                     }
-
                                     override fun onDataChange(p0s: DataSnapshot) {
                                         var levelP = p0s.child("level").value as String
                                         var points = p0s.child("points").value as Long
@@ -337,7 +336,7 @@ class OrderedActivity : AppCompatActivity() {
                                 Thread{//Wrong answer => -10 points to roomDB
                                     val lastInd = levelKey.length
                                     val id = levelKey.substring(6, lastInd).toInt()
-                                    point -= 10
+                                    point -= 100
                                     val stageEnt = AppRoomEntity(id, levelKey, point.toInt(), false)
                                     db.stageDao().update(stageEnt)
                                     stageRef.child("point").setValue(point)

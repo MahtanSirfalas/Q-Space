@@ -88,7 +88,7 @@ class RandomActivity : AppCompatActivity() {
 
         //InterstitialAd part
         mInterstitialAd = InterstitialAd(this)
-        mInterstitialAd.adUnitId = "ca-app-pub-3940256099942544/1033173712"
+        mInterstitialAd.adUnitId = "ca-app-pub-7262139641436003/7403813696"
         mInterstitialAd.loadAd(AdRequest.Builder().build())
         //
 
@@ -157,7 +157,7 @@ class RandomActivity : AppCompatActivity() {
                     var control = dbStage.db_stage_control
                     stageStartFireDBCheck(point, control)
                     if (control) {
-                        point -= 2
+                        point -= 10
                         stagePointControlUpdate(point, control)
                         updatePointTask = object : Runnable{
                             override fun run() {
@@ -183,9 +183,9 @@ class RandomActivity : AppCompatActivity() {
                            levelKey.substring(6, lastInd).toInt()
                         }
 
-                    var stageEnt = AppRoomEntity(id, levelKey, 1004, true)
+                    var stageEnt = AppRoomEntity(id, levelKey, 10004, true)
                     db.stageDao().insert(stageEnt)
-                    stageRef.child("point").setValue(1000)
+                    stageRef.child("point").setValue(10000)
                     stageRef.child("control").setValue(true)
                     Log.d(TAG, "First run on $levelKey, adaptation DONE!")
                     startcheck()
@@ -271,7 +271,7 @@ class RandomActivity : AppCompatActivity() {
                                 Thread{//Wrong answer => -10 points to roomDB
                                     val lastInd = levelKey.length
                                     val id = levelKey.substring(6, lastInd).toInt()
-                                    point -= 10
+                                    point -= 100
                                     val stageEnt = AppRoomEntity(id, levelKey, point.toInt(), false)
                                     db.stageDao().update(stageEnt)
                                     stageRef.child("point").setValue(point)
@@ -490,7 +490,6 @@ class RandomActivity : AppCompatActivity() {
                         override fun onAnimationStart(p0: Animation?) {
                             mainHandler.post(random9packTask)
                         }
-
                         override fun onAnimationEnd(p0: Animation?) {
                             mainHandler.removeCallbacks(random9packTask)
                             val alpha = ObjectAnimator.ofFloat(ninePackLayout, View.ALPHA, 1f, 0f).apply {
@@ -558,142 +557,155 @@ class RandomActivity : AppCompatActivity() {
     private fun startQuestion(){
         val atf2 = AnimationUtils.loadAnimation(this, R.anim.atf2)
         val gfo1 = AnimationUtils.loadAnimation(this, R.anim.gfo1)
-        //Number 1 action
+
         tvLabel.visibility = View.VISIBLE
-        tvRandom.visibility = View.VISIBLE
-        tvRandom.startAnimation(atf2)
-        atf2.setAnimationListener(object : Animation.AnimationListener {
-            override fun onAnimationStart(p0: Animation?) {
-                Log.d(TAG, "tvRandom 1: START")
-                when(levelKey){
-                    "Stage 3"->{
-                        mainHandler.post(randomNumberTask)
-                    }
-                    "Stage 8"->{
-                        mainHandler.post(randomNumberTask1)
-                    }
-                }
-            }
-            override fun onAnimationRepeat(p0: Animation?) {}
-            override fun onAnimationEnd(p0: Animation?) {
-                Log.d(TAG, "tvRandom 1: END")
-                when(levelKey){
-                    "Stage 3"->{
-                        mainHandler.removeCallbacks(randomNumberTask)
-                    }
-                    "Stage 8"->{
-                        mainHandler.removeCallbacks(randomNumberTask1)
-                    }
-                }
-                tvRandom.startAnimation(gfo1)
-                gfo1.setAnimationListener(object : Animation.AnimationListener {
-                    override fun onAnimationStart(p0: Animation?) {
-                        num1 = tvRandom.text.toString().toInt()
-                        Log.d(TAG, "num1=$num1")
-                    }
-                    override fun onAnimationRepeat(p0: Animation?) {}
-                    override fun onAnimationEnd(p0: Animation?) {
-                        tvRandom.visibility = View.INVISIBLE
-                        //Number 2 action
-                        tvRandom.startAnimation(atf2)
-                        atf2.setAnimationListener(object : Animation.AnimationListener {
-                            override fun onAnimationStart(p0: Animation?) {
-                                tvLabel.text = getString(R.string.num2)
-                                Log.d(TAG, "tvRandom 2: START")
-                                tvRandom.visibility = View.VISIBLE
-                                when(levelKey){
-                                    "Stage 3"->{
-                                        mainHandler.post(randomNumberTask)
-                                    }
-                                    "Stage 8"->{
-                                        mainHandler.post(randomNumberTask2)
-                                    }
+        tvLabel.text = getString(R.string.keep_in_mind)
+        ObjectAnimator.ofFloat(tvLabel, View.ALPHA, 1f, 0f).apply {
+            duration = 800
+            startDelay = 800
+            interpolator = AccelerateInterpolator()
+            addListener(object : AnimatorListenerAdapter(){
+                override fun onAnimationEnd(animation: Animator?) {
+                    //Number 1 action
+                    tvLabel.text = getString(R.string.num1)
+                    tvLabel.alpha = 1f
+                    tvRandom.visibility = View.VISIBLE
+                    tvRandom.startAnimation(atf2)
+                    atf2.setAnimationListener(object : Animation.AnimationListener {
+                        override fun onAnimationStart(p0: Animation?) {
+                            Log.d(TAG, "tvRandom 1: START")
+                            when(levelKey){
+                                "Stage 3"->{
+                                    mainHandler.post(randomNumberTask)
+                                }
+                                "Stage 8"->{
+                                    mainHandler.post(randomNumberTask1)
                                 }
                             }
-                            override fun onAnimationRepeat(p0: Animation?) {}
-                            override fun onAnimationEnd(p0: Animation?) {
-                                Log.d(TAG, "tvRandom 2: END")
-                                when(levelKey){
-                                    "Stage 3"->{
-                                        mainHandler.removeCallbacks(randomNumberTask)
-                                    }
-                                    "Stage 8"->{
-                                        mainHandler.removeCallbacks(randomNumberTask2)
-                                    }
+                        }
+                        override fun onAnimationRepeat(p0: Animation?) {}
+                        override fun onAnimationEnd(p0: Animation?) {
+                            Log.d(TAG, "tvRandom 1: END")
+                            when(levelKey){
+                                "Stage 3"->{
+                                    mainHandler.removeCallbacks(randomNumberTask)
                                 }
-
-                                tvRandom.startAnimation(gfo1)
-                                gfo1.setAnimationListener(object : Animation.AnimationListener {
-                                    override fun onAnimationStart(p0: Animation?) {
-                                        num2 = tvRandom.text.toString().toInt()
-                                        Log.d(TAG, "num2=$num2")
-                                    }
-                                    override fun onAnimationRepeat(p0: Animation?) {}
-                                    override fun onAnimationEnd(p0: Animation?) {
-                                        tvRandom.visibility = View.INVISIBLE
-                                        //Number 3 action
-                                        tvRandom.startAnimation(atf2)
-                                        atf2.setAnimationListener(object : Animation.AnimationListener {
-                                            override fun onAnimationStart(p0: Animation?) {
-                                                Log.d(TAG, "tvRandom 3: START")
-                                                tvLabel.text = getString(R.string.num3)
-                                                tvRandom.visibility = View.VISIBLE
-                                                when(levelKey){
-                                                    "Stage 3"->{
-                                                        mainHandler.post(randomNumberTask)
-                                                    }
-                                                    "Stage 8"->{
-                                                        mainHandler.post(randomNumberTask)
-                                                    }
-                                                }
-                                            }
-                                            override fun onAnimationRepeat(p0: Animation?) {}
-                                            override fun onAnimationEnd(p0: Animation?) {
-                                                Log.d(TAG, "tvRandom 3: END")
-                                                when(levelKey){
-                                                    "Stage 3"->{
-                                                        mainHandler.removeCallbacks(randomNumberTask)
-                                                    }
-                                                    "Stage 8"->{
-                                                        mainHandler.removeCallbacks(randomNumberTask)
-                                                    }
-                                                }
-
-                                                tvRandom.startAnimation(gfo1)
-                                                gfo1.setAnimationListener(object : Animation.AnimationListener {
-                                                    override fun onAnimationStart(p0: Animation?) {
-                                                        num3 = tvRandom.text.toString().toInt()
-                                                        Log.d(TAG, "num3=$num3")
-                                                    }
-                                                    override fun onAnimationRepeat(p0: Animation?) {}
-                                                    override fun onAnimationEnd(p0: Animation?) {
-                                                        tvRandom.visibility = View.INVISIBLE
-
-                                                        levelAdapt(levelKey)
-
-                                                        val fadein = AnimationUtils.loadAnimation(baseContext,
-                                                            R.anim.abc_fade_in
-                                                        )
-                                                        val slidein = AnimationUtils.loadAnimation(baseContext,
-                                                            R.anim.abc_slide_in_bottom
-                                                        )
-                                                        etAnswer.visibility = View.VISIBLE
-                                                        buttAnswer.visibility = View.VISIBLE
-                                                        etAnswer.startAnimation(fadein)
-                                                        buttAnswer.startAnimation(slidein)
-                                                        commentAnimation()
-                                                    }
-                                                })
-                                            }
-                                        })
-                                    }
-                                })
+                                "Stage 8"->{
+                                    mainHandler.removeCallbacks(randomNumberTask1)
+                                }
                             }
-                        })
-                    }
-                })
-            }
-        })
+                            tvRandom.startAnimation(gfo1)
+                            gfo1.setAnimationListener(object : Animation.AnimationListener {
+                                override fun onAnimationStart(p0: Animation?) {
+                                    num1 = tvRandom.text.toString().toInt()
+                                    Log.d(TAG, "num1=$num1")
+                                }
+                                override fun onAnimationRepeat(p0: Animation?) {}
+                                override fun onAnimationEnd(p0: Animation?) {
+                                    tvRandom.visibility = View.INVISIBLE
+                                    //Number 2 action
+                                    tvRandom.startAnimation(atf2)
+                                    atf2.setAnimationListener(object : Animation.AnimationListener {
+                                        override fun onAnimationStart(p0: Animation?) {
+                                            tvLabel.text = getString(R.string.num2)
+                                            Log.d(TAG, "tvRandom 2: START")
+                                            tvRandom.visibility = View.VISIBLE
+                                            when(levelKey){
+                                                "Stage 3"->{
+                                                    mainHandler.post(randomNumberTask)
+                                                }
+                                                "Stage 8"->{
+                                                    mainHandler.post(randomNumberTask2)
+                                                }
+                                            }
+                                        }
+                                        override fun onAnimationRepeat(p0: Animation?) {}
+                                        override fun onAnimationEnd(p0: Animation?) {
+                                            Log.d(TAG, "tvRandom 2: END")
+                                            when(levelKey){
+                                                "Stage 3"->{
+                                                    mainHandler.removeCallbacks(randomNumberTask)
+                                                }
+                                                "Stage 8"->{
+                                                    mainHandler.removeCallbacks(randomNumberTask2)
+                                                }
+                                            }
+
+                                            tvRandom.startAnimation(gfo1)
+                                            gfo1.setAnimationListener(object : Animation.AnimationListener {
+                                                override fun onAnimationStart(p0: Animation?) {
+                                                    num2 = tvRandom.text.toString().toInt()
+                                                    Log.d(TAG, "num2=$num2")
+                                                }
+                                                override fun onAnimationRepeat(p0: Animation?) {}
+                                                override fun onAnimationEnd(p0: Animation?) {
+                                                    tvRandom.visibility = View.INVISIBLE
+                                                    //Number 3 action
+                                                    tvRandom.startAnimation(atf2)
+                                                    atf2.setAnimationListener(object : Animation.AnimationListener {
+                                                        override fun onAnimationStart(p0: Animation?) {
+                                                            Log.d(TAG, "tvRandom 3: START")
+                                                            tvLabel.text = getString(R.string.num3)
+                                                            tvRandom.visibility = View.VISIBLE
+                                                            when(levelKey){
+                                                                "Stage 3"->{
+                                                                    mainHandler.post(randomNumberTask)
+                                                                }
+                                                                "Stage 8"->{
+                                                                    mainHandler.post(randomNumberTask)
+                                                                }
+                                                            }
+                                                        }
+                                                        override fun onAnimationRepeat(p0: Animation?) {}
+                                                        override fun onAnimationEnd(p0: Animation?) {
+                                                            Log.d(TAG, "tvRandom 3: END")
+                                                            when(levelKey){
+                                                                "Stage 3"->{
+                                                                    mainHandler.removeCallbacks(randomNumberTask)
+                                                                }
+                                                                "Stage 8"->{
+                                                                    mainHandler.removeCallbacks(randomNumberTask)
+                                                                }
+                                                            }
+
+                                                            tvRandom.startAnimation(gfo1)
+                                                            gfo1.setAnimationListener(object : Animation.AnimationListener {
+                                                                override fun onAnimationStart(p0: Animation?) {
+                                                                    num3 = tvRandom.text.toString().toInt()
+                                                                    Log.d(TAG, "num3=$num3")
+                                                                }
+                                                                override fun onAnimationRepeat(p0: Animation?) {}
+                                                                override fun onAnimationEnd(p0: Animation?) {
+                                                                    tvRandom.visibility = View.INVISIBLE
+
+                                                                    levelAdapt(levelKey)
+
+                                                                    val fadein = AnimationUtils.loadAnimation(baseContext,
+                                                                        R.anim.abc_fade_in
+                                                                    )
+                                                                    val slidein = AnimationUtils.loadAnimation(baseContext,
+                                                                        R.anim.abc_slide_in_bottom
+                                                                    )
+                                                                    etAnswer.visibility = View.VISIBLE
+                                                                    buttAnswer.visibility = View.VISIBLE
+                                                                    etAnswer.startAnimation(fadein)
+                                                                    buttAnswer.startAnimation(slidein)
+                                                                    commentAnimation()
+                                                                }
+                                                            })
+                                                        }
+                                                    })
+                                                }
+                                            })
+                                        }
+                                    })
+                                }
+                            })
+                        }
+                    })
+                }
+            })
+        }.start()
     }
 
     private fun commentAnimation(){
@@ -728,6 +740,11 @@ class RandomActivity : AppCompatActivity() {
         buttAnswer.visibility = View.INVISIBLE
         etAnswer.isFocusable = false
         mediaPlayer.start()
+        mediaPlayer.setOnCompletionListener(object: MediaPlayer.OnCompletionListener{
+            override fun onCompletion(p0: MediaPlayer?) {
+                mainMenu(null)
+            }
+        })
     }
 
     private fun levelAdapt(level:String){

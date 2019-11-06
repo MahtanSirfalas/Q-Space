@@ -134,7 +134,7 @@
     <string name="info_how">
         \"What can i do?\"\n
         - First; you can enjoy the stages.\n
-        - You can comment to the stages to share your perspective. So some questions may have different solutions to the same answer.\n
+        - You can comment to the stages to share your perspective. So some questions may have different solutions for the answer.\n
         - You can upvote the useful comments\n
         - You can suggest a question to the Q Space!\n
         - With the steps above, you can get points \n
@@ -155,11 +155,11 @@
     <string name="info_faq_delete_comment">\"How to delete my comment?\"</string>
     <string name="info_faq_delete_comment_answer">By long pressing(touching) to your own comment.</string>
     <string name="info_faq_edit_comment">\"How to edit my comment?\"</string>
-    <string name="info_faq_edit_comment_answer">If you wrote a comment to any stage\'s comment page but didn\'t leave the current page, writing a new comment will replace your last comment. But if you left that page before you can\'t edit your comment.</string>
+    <string name="info_faq_edit_comment_answer">If you wrote a comment to any stage\'s comment page but didn\'t leave yet, writing a new comment will replace your last comment. But Once you left that page, you can\'t edit your comment.(Yes you can still delete!)</string>
     <string name="info_faq_should_comment">\"Why should i comment?\"</string>
-    <string name="info_faq_should_comment_answer">If your comment gets an upvote you will gain some points.</string>
+    <string name="info_faq_should_comment_answer">If your comment gets an upvote you will gain some points. Besides isn\'t sharing enough?</string>
     <string name="info_faq_for_kids">\"Is the game ok for kids?\"</string>
-    <string name="info_faq_for_kids_answer">Sure, therefore; we didn\'t add P.M. and subcomment functions to the game?</string>
+    <string name="info_faq_for_kids_answer">Sure, therefore; we didn\'t add P.M. and subcomment functions to the game.</string>
     <string name="info_faq_ufo"> \"What is that ufo in the main menu?\"</string>
     <string name="info_faq_ufo_answer">Ask yourself!</string>
     <string name="info_faq_suggest_review">\"How may i know if my question suggest reviewed?\</string>
@@ -170,13 +170,16 @@
     <string name="info_faq_suggest_approve_answer">We will send e-mail to you to inform.</string>
     <string name="info_faq_score_procedure">\"Stage scoring procedure?\"</string>
     <string name="info_faq_score_procedure_answer">Answer as fast as you can.</string>
+
+    <string name="faq">--FAQs--</string>
+
+
     <string name="reminds_of">Animation reminds you of …?</string>
     <string name="school">School</string>
-    <string name="trash">Trash</string>
+    <string name="trash">Trash Yard</string>
     <string name="camp">Camp</string>
     <string name="dog_park">Dog Park</string>
 
-    <string name="faq">--FAQs--</string>
     <!-- PRIVACY POLICY -->
     <string name="title_activity_privacy">Privacy Policy</string>
     <string name="privacy_policy_body">

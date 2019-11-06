@@ -247,7 +247,7 @@
             ads:layout_constraintEnd_toEndOf="parent"
             android:layout_marginBottom="8dp"
             ads:adSize="BANNER"
-            ads:adUnitId="ca-app-pub-3940256099942544/6300978111">
+            ads:adUnitId="ca-app-pub-7262139641436003/2123566858">
     </com.google.android.gms.ads.AdView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
