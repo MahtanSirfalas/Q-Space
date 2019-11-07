@@ -68,7 +68,7 @@
     </string>
     <string name="tv_earned_upvote5">You didn\'t gain any Upvotes for your comments until now. Keep up the good work!
     </string>
-    <string name="after_points_quote">After 5000 points you can add a quote here!</string>
+    <string name="after_points_quote">After 40000 points you can add a quote here!</string>
     <string name="select_avatar">Select Avatar</string>
     <!-- Suggest Activity -->
     <string name="suggest_intro">You can suggest a question to us. We will review it in time. Until that; the suggestion
@@ -121,7 +121,7 @@
     <string name="terms_conditions"><![CDATA[Terms&Conditions]]></string>
     <string name="privacy_policy">Privacy Policy</string>
     <!-- Info Activity -->
-    <string name="title_activity_info">Info &amp; FAQs</string>
+    <string name="title_activity_info">Info &amp; FAQ</string>
     <string name="info_intro">Hello %1$s. \n
         Q Space is a math based game which inspired from iq tests.\n
     </string>
@@ -171,7 +171,7 @@
     <string name="info_faq_score_procedure">\"Stage scoring procedure?\"</string>
     <string name="info_faq_score_procedure_answer">Answer as fast as you can.</string>
 
-    <string name="faq">--FAQs--</string>
+    <string name="faq">--FAQ--</string>
 
 
     <string name="reminds_of">Animation reminds you of …?</string>

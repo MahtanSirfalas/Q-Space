@@ -83,7 +83,7 @@ class ProfileActivity : AppCompatActivity() {
                 textPoints.text = userPoints.toString()
                 Picasso.get().load(avatar).into(ivAvatar_circle)
 
-                if (userPoints>=5000){
+                if (userPoints>=40000){
                     etQuote.isFocusable = true
                     etQuote.isFocusableInTouchMode = true
                     if(p0.child("userQuote").exists()){
@@ -204,6 +204,7 @@ class ProfileActivity : AppCompatActivity() {
             layoutbg.requestFocus()
         }
     }
+
     var selectedPhotoUri: Uri? = null
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {

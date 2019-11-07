@@ -64,6 +64,8 @@
     <string name="tv_earned_upvote4">
         \nEn popüler birkaç kullanıcı arasına girdin, Q Space topluluğunda seni tanımayan yok.</string>
     <string name="tv_earned_upvote5">Henüz yorumlarına destek oyu gelmedi. Pes etme!</string>
+    <string name="after_points_quote">40000 puana ulaştıktan sonra alıntı paylaşabilirsiniz!</string>
+    <string name="select_avatar">Avatar Seçin</string>
     <!-- Suggest Activity -->
     <string name="suggest_intro">Burada bize bir soru önerebilirsin. Uygun bir zamanda inceleyeceğiz. O zamana kadar yine buradan düzenleyip gönderebilir ya da silebilirsin.
         Sorunuz kabul edilirse e-posta ile iletişime geçeceğiz.
@@ -110,8 +112,6 @@
     <string name="keep_in_mind">Aklında Tut!</string>
     <string name="the_next_number">Sıradaki numara nedir?</string>
     <string name="enter_answer">Cevap girin!</string>
-    <string name="after_points_quote">5000 puana ulaştıktan sonra alıntı paylaşabilirsiniz!</string>
-    <string name="select_avatar">Avatar Seçin</string>
     <string name="privacy_policy">Gizlilik Politikası</string>
     <string name="settings">Ayarlar</string>
     <string name="terms_conditions"><![CDATA[Hükümler&Koşullar]]></string>

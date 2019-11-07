@@ -233,6 +233,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun ufoDisappearAnimation(){
+        mediaPlayer = MediaPlayer.create(this, R.raw.ufodisappear)
         val ufo = findViewById<ConstraintLayout>(R.id.ufo_layout)
         val translateX = PropertyValuesHolder.ofFloat(View.TRANSLATION_X, ufo.translationX +100f)
         val translateY = PropertyValuesHolder.ofFloat(View.TRANSLATION_Y, ufo.translationY +100f)
@@ -244,8 +245,10 @@ class MainActivity : AppCompatActivity() {
             startDelay = 100
         }
         scaleUfo.start()
+        mediaPlayer.start()
         scaleUfo.doOnEnd {
             ufo.visibility = View.GONE
+            mediaPlayer = MediaPlayer.create(this, R.raw.ufo)
         }
     }
 
@@ -282,13 +285,13 @@ class MainActivity : AppCompatActivity() {
                     buttNegative.visibility = View.GONE
                     if (points in 50000..149999){
                         tv_ufo.postDelayed({
-                            mediaPlayer.start()
                             tv_ufo.text = getString(R.string.ufo_met_before_low_points)
                             tvUfo.text = getString(R.string.ufo_met_before_low_points)
                             ufoPauseAnimSet.end()
                             animSet.resume()
                             tv_ufo.postDelayed({
                                 tv_ufo.visibility = View.INVISIBLE
+                                window.dismiss()
                                 ufoDisappearAnimation()
                             }, 6000)
                         }, 4500)

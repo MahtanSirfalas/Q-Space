@@ -55,7 +55,7 @@ class LoginActivity : AppCompatActivity() {
         animationDrawable.setExitFadeDuration(2000)
         animationDrawable.start()
 
-        defaultAvatar = "https://firebasestorage.googleapis.com/v0/b/mathslayer-2771e.appspot.com/o/Images%2FLumiAvatarStorageVersionForUsers.jpg?alt=media&token=6ff8fd0a-f948-4f7f-b4e4-a1285c273e18"
+        defaultAvatar = "https://firebasestorage.googleapis.com/v0/b/mathslayer-2771e.appspot.com/o/Images%2FplutoAvatarForUsers.jpg?alt=media&token=c4bccc9a-a11e-4c16-b20c-e076efca6aec"
 
 //        context = this.applicationContext!!
 //
