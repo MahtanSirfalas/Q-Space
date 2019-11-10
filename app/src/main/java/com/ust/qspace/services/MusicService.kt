@@ -18,6 +18,7 @@ class MusicService: Service() {
 
         player = MediaPlayer.create(this, R.raw.qspacemain)
         player.isLooping = true
+        player.setVolume(80f, 80f)
         player.start()
 
         return super.onStartCommand(intent, flags, startId)

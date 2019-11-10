@@ -18,6 +18,7 @@
     <string name="nick_error">Username is Already Taken!</string>
     <string name="nick_error_toast">Change username and try again..</string>
     <string name="auth_fail">Registration failed, check internet connection.</string>
+    <string name="auth_fail_google">Registration failed; service might not be responding, try again later.</string>
     <string name="failed_verify_email">Failed to send verification email</string>
     <string name="verify_email_sent">Verification e-mail is sent</string>
     <string name="reset_email_sent">Reset password e-mail sent to %1$s</string>
@@ -123,10 +124,10 @@
     <!-- Info Activity -->
     <string name="title_activity_info">Info &amp; FAQ</string>
     <string name="info_intro">Hello %1$s. \n
-        Q Space is a math based game which inspired from iq tests.\n
+        Q Space is a math based game which inspired from IQ tests.\n
     </string>
     <string name="info_mission">
-        Mission: Q Space aims to entertain people while solving some math based iq tests.\n
+        Mission: Q Space aims to entertain people while solving some math based IQ tests.\n
     </string>
     <string name="info_vision">
         Vision: Q Space; in the long run, as an interactive game, targets drawing attention to the abstract thought basics with a wide profile community, step by step.\n

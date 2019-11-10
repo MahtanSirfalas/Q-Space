@@ -162,6 +162,7 @@ class MainActivity : AppCompatActivity() {
 
         mediaPlayer = MediaPlayer.create(this, R.raw.ufo)
         mediaPlayer.isLooping = false
+        mediaPlayer.setVolume(60f, 60f)
 
     }
 
@@ -234,6 +235,7 @@ class MainActivity : AppCompatActivity() {
 
     fun ufoDisappearAnimation(){
         mediaPlayer = MediaPlayer.create(this, R.raw.ufodisappear)
+        mediaPlayer.setVolume(100f, 100f)
         val ufo = findViewById<ConstraintLayout>(R.id.ufo_layout)
         val translateX = PropertyValuesHolder.ofFloat(View.TRANSLATION_X, ufo.translationX +100f)
         val translateY = PropertyValuesHolder.ofFloat(View.TRANSLATION_Y, ufo.translationY +100f)
@@ -249,6 +251,7 @@ class MainActivity : AppCompatActivity() {
         scaleUfo.doOnEnd {
             ufo.visibility = View.GONE
             mediaPlayer = MediaPlayer.create(this, R.raw.ufo)
+            mediaPlayer.setVolume(60f, 60f)
         }
     }
 

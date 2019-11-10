@@ -18,6 +18,8 @@
     <string name="need_account">Hesabım yok</string>
     <string name="nick_error">Kullanıcı adı alınmış!</string>
     <string name="nick_error_toast">Kullanıcı adını değiştirip tekrar deneyin..</string>
+    <string name="auth_fail">Kayıt tamamlanamadı; bağlantınızı kontrol edin.</string>
+    <string name="auth_fail_google">Kayıt tamamlanamadı; cevap alınamıyor olabilir, daha sonra tekrar deneyin.</string>
     <string name="failed_verify_email">Doğrulama postası gönderirken bir sorun oluştu</string>
     <string name="verify_email_sent">Doğrulama e-postası gönderildi</string>
     <string name="reset_email_sent">Şifre resetleme postası %1$s adresine gönderildi!</string>
@@ -95,7 +97,6 @@
     <string name="missing_number">Eksik sayı nedir?</string>
 
     <string name="pw">get the obvious stuff out of the way</string>
-    <string name="auth_fail">Kayıt tamamlanamadı; bağlantınızı kontrol edin.</string>
     <string name="congratulations">Tebrikler!!!</string>
     <string name="show_comments">Yorumlar</string>
     <string name="give_up_read_comments">Yorumları şu an okumak isterseniz, bu sorudan kazanacağınız puanları feda
@@ -125,7 +126,7 @@
         Misyon: Q Space, matematik temelli IQ testi çözerken eğlendirmeyi amaçlar.\n
     </string>
     <string name="info_vision">
-        Vizyon: Q Space; uzun vadede, etkileşimli bir oyun olarak, geniş profil kullanıcı kitlesiyle, adım adım soyut düşünce temellerini vurgulamak hedefler.\n
+        Vizyon: Q Space; uzun vadede, etkileşimli bir oyun olarak, geniş profil kullanıcı kitlesiyle, adım adım soyut düşünce temellerini vurgulamayı hedefler.\n
     </string>
     <string name="info_how">
         \"Ne yapabilirim?\"\n
@@ -155,7 +156,7 @@
     <string name="info_faq_should_comment">\"Neden yorum yapmalıyım?\"</string>
     <string name="info_faq_should_comment_answer">Paylaşmanın mutluluğu dışında mı? Yorumunuz ne kadar destek oyu toplarsa o kadar puan kazanırsınız.</string>
     <string name="info_faq_for_kids">\"Oyun çocuklar için uygun mudur?\"</string>
-    <string name="info_faq_for_kids_answer">Tabi ki uygundur hatta bu sebeple kullancılar arası özel mesaj ve alt yorum etkileşimi hiç bir zaman eklenmeyecektir?</string>
+    <string name="info_faq_for_kids_answer">Tabii ki uygundur hatta bu sebeple kullancılar arası özel mesaj ve alt yorum etkileşimi hiç bir zaman eklenmeyecektir?</string>
     <string name="info_faq_ufo">\"Ana menüdeki ufoda neyin nesi?\"</string>
     <string name="info_faq_ufo_answer">Kendiniz sorun!</string>
     <string name="info_faq_suggest_review">\"Soru önerimin incelendiğini nasıl anlarım?\"</string>

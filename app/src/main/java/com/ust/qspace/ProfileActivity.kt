@@ -63,6 +63,8 @@ class ProfileActivity : AppCompatActivity() {
         commsReference = database.reference.child("Posts")
         userRef = database.reference.child("Users/$uid")
 
+        progressBarProfile.visibility = View.VISIBLE
+
         userRef.addListenerForSingleValueEvent(object:ValueEventListener{
             override fun onCancelled(p0: DatabaseError) {
                 Log.d(TAG, "Something's Wrong: User information get FAILED")
@@ -263,6 +265,7 @@ class ProfileActivity : AppCompatActivity() {
     }
 
     private fun animations(){
+        progressBarProfile.visibility = View.GONE
         val fadein = AnimationUtils.loadAnimation(this, R.anim.abc_fade_in)
         profile_card.visibility = View.VISIBLE
         profile_card.startAnimation(fadein)

@@ -1,5 +1,6 @@
 package com.ust.qspace
 
+import android.app.Activity
 import android.content.Intent
 import android.graphics.drawable.AnimationDrawable
 import androidx.appcompat.app.AppCompatActivity
@@ -10,10 +11,12 @@ import android.text.TextWatcher
 import android.util.Log
 import android.view.Gravity
 import android.view.View
+import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
 import android.widget.ScrollView
 import android.widget.Toast
 import android.widget.Toast.*
+import androidx.annotation.ContentView
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
@@ -24,6 +27,7 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.GoogleAuthProvider
 import com.google.firebase.database.*
+import com.ust.qspace.models.ProgressActivity
 import kotlinx.android.synthetic.main.activity_login.*
 import java.lang.Exception
 import android.widget.Button as Button
@@ -158,6 +162,11 @@ class LoginActivity : AppCompatActivity() {
 
     fun buttLoginEvent(view:View){
         Log.d(TAG, "Login button pressed!")
+        progressBarLogin.visibility = View.VISIBLE
+        val inputMethodManager = getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
+        if(view != null){
+            inputMethodManager.hideSoftInputFromWindow(view.windowToken, 0)
+        }
         val username = etNick.text.toString()
         var checkNick:Boolean = true
 
@@ -184,6 +193,7 @@ class LoginActivity : AppCompatActivity() {
                     LoginToSystem(etEmail.text.toString(), etPassword.text.toString())
                 }else{
                     Log.d(TAG, "usernameError; username is already taken $checkNick")
+                    progressBarLogin.visibility = View.GONE
                     tvNickError.text = getString(R.string.nick_error)
                     tvNickError.visibility = View.VISIBLE
                     val toast = makeText(baseContext, getString(R.string.nick_error_toast), LENGTH_LONG)
@@ -205,6 +215,7 @@ class LoginActivity : AppCompatActivity() {
             if (task.isSuccessful){
                 //Success sign in -> update UI
                 Log.d(TAG, "createUserWithEmail:Success")
+                progressBarLogin.visibility = View.GONE
                 val user = auth.currentUser
 
                 val userId = user!!.uid
@@ -225,6 +236,7 @@ class LoginActivity : AppCompatActivity() {
             }else{
                 //Fail -> display message below
                 Log.w(TAG, "createUserWithEmail:failure", task.exception)
+                progressBarLogin.visibility = View.GONE
                 val toast = makeText(baseContext, getString(R.string.auth_fail), LENGTH_SHORT)
                 toast.setGravity(Gravity.CENTER, 0, 0)
                 toast.show()
@@ -234,6 +246,11 @@ class LoginActivity : AppCompatActivity() {
     }
 
     fun buttSigninEvent(view: View){
+        progressBarLogin.visibility = View.VISIBLE
+        val inputMethodManager = getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
+        if(view != null){
+            inputMethodManager.hideSoftInputFromWindow(view.windowToken, 0)
+        }
         SignInToSystem(etEmail.text.toString(), etPassword.text.toString())
     }
 
@@ -243,10 +260,12 @@ class LoginActivity : AppCompatActivity() {
         auth.signInWithEmailAndPassword(email, password).addOnCompleteListener(this){task->
             if (task.isSuccessful){
                 Log.d(TAG, "signInWithEmail:success")
+                progressBarLogin.visibility = View.GONE
                 val user = auth.currentUser
                 updateUI(user)
             }else{
                 Log.w(TAG, "signInWithEmail:failure!",task.exception)
+                progressBarLogin.visibility = View.GONE
                 val toast = makeText(baseContext, getString(R.string.auth_fail), LENGTH_SHORT)
                 toast.setGravity(Gravity.CENTER, 0, 0)
                 toast.show()
@@ -307,7 +326,7 @@ class LoginActivity : AppCompatActivity() {
     }
 
     fun updateUI(user: FirebaseUser?){
-//        hideProgressDialog()  i don't know wth is that?
+//        hideProgressDialog()
         if (user != null) {
 
             val intent = Intent(this, MainActivity::class.java)
@@ -328,6 +347,7 @@ class LoginActivity : AppCompatActivity() {
 
     //GOOGLE
     private fun signIn() {
+        progressBarLogin.visibility = View.VISIBLE
         val signInIntent = googleSignInClient.signInIntent
         startActivityForResult(signInIntent, RC_SIGN_IN)
     }
@@ -337,6 +357,7 @@ class LoginActivity : AppCompatActivity() {
 
         // Result returned from launching the Intent from GoogleSignInApi.getSignInIntent(...);
         if (requestCode == RC_SIGN_IN) {
+            progressBarLogin.visibility = View.GONE
             val task = GoogleSignIn.getSignedInAccountFromIntent(data)
             try {
                 // Google Sign In was successful, authenticate with Firebase
@@ -346,6 +367,7 @@ class LoginActivity : AppCompatActivity() {
                 // Google Sign In failed, update UI appropriately
                 Log.w(TAG, "Google sign in failed", e)
                 Log.d(TAG, "requestCode = $requestCode ///// RC_SIGN_IN = $RC_SIGN_IN")
+                Snackbar.make(layoutbg, getString(R.string.auth_fail), Snackbar.LENGTH_LONG).show()
                 // ...
             }
         }
@@ -360,6 +382,7 @@ class LoginActivity : AppCompatActivity() {
                 if (task.isSuccessful) {
                     // Sign in success, update UI with the signed-in user's information
                     Log.d(TAG, "signInWithCredential:success")
+                    progressBarLogin.visibility = View.GONE
                     val user = auth.currentUser
 
                     val userId = user!!.uid
@@ -385,7 +408,8 @@ class LoginActivity : AppCompatActivity() {
                 } else {
                     // If sign in fails, display a message to the user.
                     Log.w(TAG, "signInWithCredential:failure", task.exception)
-                    Snackbar.make(layoutbg, getString(R.string.auth_fail), Snackbar.LENGTH_SHORT).show()
+                    progressBarLogin.visibility = View.GONE
+                    Snackbar.make(layoutbg, getString(R.string.auth_fail), Snackbar.LENGTH_LONG).show()
                     updateUI(null)
                 }
                 // ...
