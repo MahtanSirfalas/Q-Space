@@ -97,18 +97,7 @@ class LvlActivity : AppCompatActivity() {
 
 
         val ltr = AnimationUtils.loadAnimation(this, R.anim.ltr)
-        val ltr1 = AnimationUtils.loadAnimation(this, R.anim.ltr1)
-        val ltr2 = AnimationUtils.loadAnimation(this, R.anim.ltr2)
-        val ltr3 = AnimationUtils.loadAnimation(this, R.anim.ltr3)
-        val ltr4 = AnimationUtils.loadAnimation(this, R.anim.ltr4)
-        val ltr5 = AnimationUtils.loadAnimation(this, R.anim.ltr5)
 //        val ltr6 = AnimationUtils.loadAnimation(this, R.anim.ltr6)
-//        val atf = AnimationUtils.loadAnimation(this, R.anim.abc_fade_in)
-//        ivBack.visibility = View.VISIBLE
-//        ivBack.startAnimation(atf)
-
-
-
 //        /*buttL31.visibility = View.VISIBLE
 //        buttL32.visibility = View.VISIBLE
 //        buttL33.visibility = View.VISIBLE
@@ -129,80 +118,95 @@ class LvlActivity : AppCompatActivity() {
                 override fun onAnimationRepeat(p0: Animation?) {}
                 override fun onAnimationStart(p0: Animation?) {}
                 override fun onAnimationEnd(p0: Animation?) {
-                    buttL6.visibility = View.VISIBLE
-                    buttL7.visibility = View.VISIBLE
-                    buttL8.visibility = View.VISIBLE
-                    buttL9.visibility = View.VISIBLE
-                    buttL10.visibility = View.VISIBLE
-                    buttL6.startAnimation(ltr1)
-                    buttL7.startAnimation(ltr1)
-                    buttL8.startAnimation(ltr1)
-                    buttL9.startAnimation(ltr1)
-                    buttL10.startAnimation(ltr1)
-                    ltr1.setAnimationListener(object: Animation.AnimationListener{
-                        override fun onAnimationRepeat(p0: Animation?) {}
-                        override fun onAnimationStart(p0: Animation?) {}
-                        override fun onAnimationEnd(p0: Animation?) {
-                            buttL11.visibility = View.VISIBLE
-                            buttL12.visibility = View.VISIBLE
-                            buttL13.visibility = View.VISIBLE
-                            buttL14.visibility = View.VISIBLE
-                            buttL15.visibility = View.VISIBLE
-                            buttL11.startAnimation(ltr2)
-                            buttL12.startAnimation(ltr2)
-                            buttL13.startAnimation(ltr2)
-                            buttL14.startAnimation(ltr2)
-                            buttL15.startAnimation(ltr2)
-                            ltr2.setAnimationListener(object: Animation.AnimationListener{
-                                override fun onAnimationRepeat(p0: Animation?) {}
-                                override fun onAnimationStart(p0: Animation?) {}
-                                override fun onAnimationEnd(p0: Animation?) {
-                                    buttL16.visibility = View.VISIBLE
-                                    buttL17.visibility = View.VISIBLE
-                                    buttL18.visibility = View.VISIBLE
-                                    buttL19.visibility = View.VISIBLE
-                                    buttL20.visibility = View.VISIBLE
-                                    buttL16.startAnimation(ltr3)
-                                    buttL17.startAnimation(ltr3)
-                                    buttL18.startAnimation(ltr3)
-                                    buttL19.startAnimation(ltr3)
-                                    buttL20.startAnimation(ltr3)
-                                    ltr3.setAnimationListener(object: Animation.AnimationListener{
+                    if(points >= 20000){
+                        val ltr1 = AnimationUtils.loadAnimation(baseContext, R.anim.ltr1)
+                        buttL6.visibility = View.VISIBLE
+                        buttL7.visibility = View.VISIBLE
+                        buttL8.visibility = View.VISIBLE
+                        buttL9.visibility = View.VISIBLE
+                        buttL10.visibility = View.VISIBLE
+                        buttL6.startAnimation(ltr1)
+                        buttL7.startAnimation(ltr1)
+                        buttL8.startAnimation(ltr1)
+                        buttL9.startAnimation(ltr1)
+                        buttL10.startAnimation(ltr1)
+                        ltr1.setAnimationListener(object: Animation.AnimationListener{
+                            override fun onAnimationRepeat(p0: Animation?) {}
+                            override fun onAnimationStart(p0: Animation?) {}
+                            override fun onAnimationEnd(p0: Animation?) {
+                                if(points >= 40000){
+                                    val ltr2 = AnimationUtils.loadAnimation(baseContext, R.anim.ltr2)
+                                    buttL11.visibility = View.VISIBLE
+                                    buttL12.visibility = View.VISIBLE
+                                    buttL13.visibility = View.VISIBLE
+                                    buttL14.visibility = View.VISIBLE
+                                    buttL15.visibility = View.VISIBLE
+                                    buttL11.startAnimation(ltr2)
+                                    buttL12.startAnimation(ltr2)
+                                    buttL13.startAnimation(ltr2)
+                                    buttL14.startAnimation(ltr2)
+                                    buttL15.startAnimation(ltr2)
+                                    ltr2.setAnimationListener(object: Animation.AnimationListener{
                                         override fun onAnimationRepeat(p0: Animation?) {}
                                         override fun onAnimationStart(p0: Animation?) {}
                                         override fun onAnimationEnd(p0: Animation?) {
-                                            buttL21.visibility = View.VISIBLE
-                                            buttL22.visibility = View.VISIBLE
-                                            buttL23.visibility = View.VISIBLE
-                                            buttL24.visibility = View.VISIBLE
-                                            buttL25.visibility = View.VISIBLE
-                                            buttL21.startAnimation(ltr4)
-                                            buttL22.startAnimation(ltr4)
-                                            buttL23.startAnimation(ltr4)
-                                            buttL24.startAnimation(ltr4)
-                                            buttL25.startAnimation(ltr4)
-                                            ltr4.setAnimationListener(object: Animation.AnimationListener{
-                                                override fun onAnimationRepeat(p0: Animation?) {}
-                                                override fun onAnimationStart(p0: Animation?) {}
-                                                override fun onAnimationEnd(p0: Animation?) {
-                                                    buttL26.visibility = View.VISIBLE
-                                                    buttL27.visibility = View.VISIBLE
-                                                    buttL28.visibility = View.VISIBLE
-                                                    buttL29.visibility = View.VISIBLE
-                                                    buttL30.visibility = View.VISIBLE
-                                                    buttL26.startAnimation(ltr5)
-                                                    buttL27.startAnimation(ltr5)
-                                                    buttL28.startAnimation(ltr5)
-                                                    buttL29.startAnimation(ltr5)
-                                                    buttL30.startAnimation(ltr5)
-                                                }
-                                            })
+                                            if (points >= 60000){
+                                                val ltr3 = AnimationUtils.loadAnimation(baseContext, R.anim.ltr3)
+                                                buttL16.visibility = View.VISIBLE
+                                                buttL17.visibility = View.VISIBLE
+                                                buttL18.visibility = View.VISIBLE
+                                                buttL19.visibility = View.VISIBLE
+                                                buttL20.visibility = View.VISIBLE
+                                                buttL16.startAnimation(ltr3)
+                                                buttL17.startAnimation(ltr3)
+                                                buttL18.startAnimation(ltr3)
+                                                buttL19.startAnimation(ltr3)
+                                                buttL20.startAnimation(ltr3)
+                                                ltr3.setAnimationListener(object: Animation.AnimationListener{
+                                                    override fun onAnimationRepeat(p0: Animation?) {}
+                                                    override fun onAnimationStart(p0: Animation?) {}
+                                                    override fun onAnimationEnd(p0: Animation?) {
+                                                        if (points >= 85000){
+                                                            val ltr4 = AnimationUtils.loadAnimation(baseContext, R.anim.ltr4)
+                                                            buttL21.visibility = View.VISIBLE
+                                                            buttL22.visibility = View.VISIBLE
+                                                            buttL23.visibility = View.VISIBLE
+                                                            buttL24.visibility = View.VISIBLE
+                                                            buttL25.visibility = View.VISIBLE
+                                                            buttL21.startAnimation(ltr4)
+                                                            buttL22.startAnimation(ltr4)
+                                                            buttL23.startAnimation(ltr4)
+                                                            buttL24.startAnimation(ltr4)
+                                                            buttL25.startAnimation(ltr4)
+                                                            ltr4.setAnimationListener(object: Animation.AnimationListener{
+                                                                override fun onAnimationRepeat(p0: Animation?) {}
+                                                                override fun onAnimationStart(p0: Animation?) {}
+                                                                override fun onAnimationEnd(p0: Animation?) {
+                                                                    if (points >= 120000){
+                                                                        val ltr5 = AnimationUtils.loadAnimation(baseContext, R.anim.ltr5)
+                                                                        buttL26.visibility = View.VISIBLE
+                                                                        buttL27.visibility = View.VISIBLE
+                                                                        buttL28.visibility = View.VISIBLE
+                                                                        buttL29.visibility = View.VISIBLE
+                                                                        buttL30.visibility = View.VISIBLE
+                                                                        buttL26.startAnimation(ltr5)
+                                                                        buttL27.startAnimation(ltr5)
+                                                                        buttL28.startAnimation(ltr5)
+                                                                        buttL29.startAnimation(ltr5)
+                                                                        buttL30.startAnimation(ltr5)
+                                                                    }
+                                                                }
+                                                            })
+                                                        }
+                                                    }
+                                                })
+                                            }
                                         }
                                     })
                                 }
-                            })
-                        }
-                    })
+                            }
+                        })
+                    }
                 }
             })
         }

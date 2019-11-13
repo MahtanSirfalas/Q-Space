@@ -113,6 +113,7 @@
         and status simultaneously.
     </string>
     <string name="next_stage">Next Stage</string>
+    <string name="congratz_you_achieved_enough_points">Congratz! You achieved enough points to activate new stages!</string>
     <string name="main_menu">Main Menu</string>
     <string name="choose_not_included">Choose the one not included!</string>
     <string name="keep_in_mind">Keep in mind!</string>

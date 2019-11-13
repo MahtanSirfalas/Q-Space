@@ -29,6 +29,7 @@ import com.google.android.gms.ads.MobileAds
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
+import com.google.android.gms.tasks.Task
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
@@ -97,6 +98,12 @@ class MainActivity : AppCompatActivity() {
         auth = FirebaseAuth.getInstance()
         database = FirebaseDatabase.getInstance()
         databaseReference = database.reference.child("Users")
+
+        val user = auth.currentUser
+        uid = user!!.uid
+        email = user.email.toString()
+        user.reload()
+
         Thread{
             db=
                 Room.databaseBuilder(
@@ -105,11 +112,6 @@ class MainActivity : AppCompatActivity() {
                     "RoomDB:$uid"
                 ).build()
         }.start()
-
-        val user = auth.currentUser
-        uid = user!!.uid
-        email = user.email.toString()
-        user.reload()
 
         val userReference = databaseReference.child(uid)
 
@@ -592,63 +594,66 @@ class MainActivity : AppCompatActivity() {
             override fun onDataChange(p0: DataSnapshot) {
                 if (p0.hasChildren()){
                     p0.children.forEach {
-                        Thread{
+                        if (!it.child("/control").exists() && it.child("/point").exists()){
+                            it.ref.child("/control").setValue(true).addOnSuccessListener { kopek ->
+                                Thread{
+                                    val dbStage = db.stageDao().getOne(it.key.toString())
+                                    val lastInd = it.key.toString().length
+                                    val id =
+                                        if (it.key.toString() == "Stage Ufo"){
+                                            1000
+                                        }else{
+                                            it.key.toString().substring(6, lastInd).toInt()
+                                        }
+                                    val fireName = it.key.toString()
+                                    val sPoint = it.child("/point").value
+                                    val firePoint = sPoint.toString().toInt()
+                                    var fireControl = it.child("/control").value as Boolean
+                                    val stageEnt = AppRoomEntity(id, fireName, firePoint, fireControl)
 
-                            val dbStage = db.stageDao().getOne(it.key.toString())
-                            val lastInd = it.key.toString().length
-                            val id =
-                                if (it.key.toString() == "Stage Ufo"){
-                                    1000
-                                }else{
-                                    it.key.toString().substring(6, lastInd).toInt()
-                                }
-                            val fireName = it.key.toString()
-                            val sPoint = it.child("/point").value
-                            val firePoint = sPoint.toString().toInt()
-                            val fireControl = it.child("/control").value as Boolean
-                            val stageEnt = AppRoomEntity(id, fireName, firePoint, fireControl)
+                                    @Suppress("SENSELESS_COMPARISON")
+                                    if (dbStage != null){
 
-                            @Suppress("SENSELESS_COMPARISON")
-                            if (dbStage != null){
+                                        val roomName = dbStage.db_stage_name
+                                        val roomPoint = dbStage.db_stage_points
+                                        val roomControl = dbStage.db_stage_control
 
-                                val roomName = dbStage.db_stage_name
-                                val roomPoint = dbStage.db_stage_points
-                                val roomControl = dbStage.db_stage_control
-
-                                if (roomName == fireName){
-                                    if (fireControl && roomControl && firePoint>roomPoint){
-                                        stagesReference.child("/$fireName/point").setValue(roomPoint)
-                                        Log.d(TAG, "$fireName: Points updated in fireDB")
+                                        if (roomName == fireName){
+                                            if (fireControl && roomControl && firePoint>roomPoint){
+                                                stagesReference.child("/$fireName/point").setValue(roomPoint)
+                                                Log.d(TAG, "$fireName: Points updated in fireDB")
+                                            }
+                                            else if (fireControl && roomControl && firePoint<roomPoint){
+                                                db.stageDao().update(stageEnt)
+                                                Log.d(TAG, "$fireName: Points updated in RoomDB")
+                                            }
+                                            else if (fireControl && !roomControl){
+                                                stagesReference.child("/$fireName/point").setValue(roomPoint)
+                                                stagesReference.child("/$fireName/control").setValue(roomControl)
+                                                Log.d(TAG, "$fireName: Points + Control updated in fireDB")
+                                            }
+                                            else if (!fireControl && roomControl){
+                                                db.stageDao().update(stageEnt)
+                                                Log.d(TAG, "$fireName: Points + Control updated in RoomDB")
+                                            }
+                                            else if (!fireControl && !roomControl){
+                                                db.stageDao().update(stageEnt)
+                                                Log.d(TAG, "$fireName: Points + Control updated in RoomDB")
+                                            }
+                                            else{
+                                                Log.d(TAG, "No need to update $fireName! $fireControl")
+                                            }
+                                        }
+                                        else{
+                                            Log.d(TAG, "$fireName couldn't found in RoomDB = $roomName")
+                                        }
+                                    }else{
+                                        db.stageDao().insert(stageEnt)
+                                        Log.d(TAG, "$fireName: $fireControl")
                                     }
-                                    else if (fireControl && roomControl && firePoint<roomPoint){
-                                        db.stageDao().update(stageEnt)
-                                        Log.d(TAG, "$fireName: Points updated in RoomDB")
-                                    }
-                                    else if (fireControl && !roomControl){
-                                        stagesReference.child("/$fireName/point").setValue(roomPoint)
-                                        stagesReference.child("/$fireName/control").setValue(roomControl)
-                                        Log.d(TAG, "$fireName: Points + Control updated in fireDB")
-                                    }
-                                    else if (!fireControl && roomControl){
-                                        db.stageDao().update(stageEnt)
-                                        Log.d(TAG, "$fireName: Points + Control updated in RoomDB")
-                                    }
-                                    else if (!fireControl && !roomControl){
-                                        db.stageDao().update(stageEnt)
-                                        Log.d(TAG, "$fireName: Points + Control updated in RoomDB")
-                                    }
-                                    else{
-                                        Log.d(TAG, "No need to update $fireName! $fireControl")
-                                    }
-                                }
-                                else{
-                                    Log.d(TAG, "$fireName couldn't found in RoomDB = $roomName")
-                                }
-                            }else{
-                                db.stageDao().insert(stageEnt)
-                                Log.d(TAG, "$fireName: $fireControl")
+                                }.start()
                             }
-                        }.start()
+                        }
                     }
                 }else{
                     Thread{

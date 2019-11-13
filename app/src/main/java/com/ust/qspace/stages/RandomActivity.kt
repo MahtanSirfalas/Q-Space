@@ -147,51 +147,7 @@ class RandomActivity : AppCompatActivity() {
             }
         }
 
-        fun startcheck() {
 
-            Thread{
-                var dbStage = db.stageDao().getOne(levelKey)
-
-                if (dbStage != null){
-                    var point = dbStage.db_stage_points
-                    var control = dbStage.db_stage_control
-                    stageStartFireDBCheck(point, control)
-                    if (control) {
-                        point -= 10
-                        stagePointControlUpdate(point, control)
-                        updatePointTask = object : Runnable{
-                            override fun run() {
-                                isRunning = true
-                                point -= 2
-                                stagePointControlUpdate(point, control)
-                                Log.d(TAG, "$levelKey point updated to $point")
-                                mainHandler.postDelayed(this, 10000)
-                            }
-                        }
-                        mainHandler.post(updatePointTask)
-                    }else{
-
-                        Log.d(TAG, "Stage passed before.")
-                    }
-
-                }else{
-                    val lastInd = levelKey.length
-                    val id =
-                        if (levelKey == "Stage Ufo"){
-                            1000
-                        }else{
-                           levelKey.substring(6, lastInd).toInt()
-                        }
-
-                    var stageEnt = AppRoomEntity(id, levelKey, 10004, true)
-                    db.stageDao().insert(stageEnt)
-                    stageRef.child("point").setValue(10000)
-                    stageRef.child("control").setValue(true)
-                    Log.d(TAG, "First run on $levelKey, adaptation DONE!")
-                    startcheck()
-                }
-            }.start()
-        }
 
         mediaPlayer = MediaPlayer.create(this, R.raw.win)
         mediaPlayer.isLooping = false
@@ -254,7 +210,10 @@ class RandomActivity : AppCompatActivity() {
                                         var points = p0s.child("points").value as Long
                                         points += point
                                         userRef.child("points").setValue(points)
-
+                                        Thread{ //RoomDB Total Points update
+                                            val totalPoints = AppRoomEntity(300000, "Total Points", points.toInt(), true)
+                                            db.stageDao().update(totalPoints)
+                                        }.start()
                                         mValueEventListener?.let { kopek ->//kopek : ValueEventListener
                                             stageRef.removeEventListener(kopek)
                                             Log.d(TAG, "stageRef EventListener Removed!")
@@ -335,6 +294,106 @@ class RandomActivity : AppCompatActivity() {
 
         if(levelKey == "Stage Ufo"){ //That's because onCreate may be early to calc. views' positions etc.
             ufoHumanityQuestion()
+        }
+    }
+
+    fun startcheck() {
+        Thread{
+            var dbStage = db.stageDao().getOne(levelKey)
+
+            if (dbStage != null){
+                var point = dbStage.db_stage_points
+                var control = dbStage.db_stage_control
+                stageStartFireDBCheck(point, control)
+                if (control) {
+                    point -= 10
+                    stagePointControlUpdate(point, control)
+                    updatePointTask = object : Runnable{
+                        override fun run() {
+                            isRunning = true
+                            point -= 2
+                            stagePointControlUpdate(point, control)
+                            Log.d(TAG, "$levelKey point updated to $point")
+                            mainHandler.postDelayed(this, 10000)
+                        }
+                    }
+                    mainHandler.post(updatePointTask)
+                }else{
+
+                    Log.d(TAG, "Stage passed before.")
+                }
+
+            }else{
+                stagePointControlUpdate(10012, true)
+                stageRef.child("point").setValue(10000)
+                stageRef.child("control").setValue(true).addOnSuccessListener {void ->
+                    if(dbStage != null) {
+                        startcheck()
+                    }
+                }
+                Log.d(TAG, "First run on $levelKey, adaptation DONE!")
+            }
+        }.start()
+    }
+
+    private fun firstTimeCorrectAnswerDatabaseUpdates(point:Long, tPoint:Long, userRef:DatabaseReference){
+        Log.d(TAG, "$levelKey: Answer ($uAnswer) is equal to $answer; Accepted!")
+        Thread{//update roomDB the answer is accepted
+            val lastInd = levelKey.length
+            val id = levelKey.substring(6, lastInd).toInt()
+            val stageEnt = AppRoomEntity(id, levelKey, point.toInt(), false)
+            db.stageDao().update(stageEnt)
+            Log.d(TAG, "roomDB UPDATED: answer is accepted")
+        }.start()
+        stageRef.child("control").setValue(false)
+        var points = tPoint
+        points += point
+        userRef.child("points").setValue(points)
+        Thread{ //RoomDB Total Points update
+            val totalPoints = AppRoomEntity(300000, "Total Points", points.toInt(), true)
+            db.stageDao().update(totalPoints)
+        }.start()
+        Log.d(TAG, "DBs Total Points are updated from $tPoint as $points")
+        val toast = makeText(baseContext, getString(R.string.bravo), LENGTH_SHORT)
+        toast.setGravity(Gravity.TOP, 0, 100)
+        toast.show()
+    }
+
+    private fun wrongAnswerDatabaseUpdates(thePoint:Long){
+        Thread{//Wrong answer => -100 points to roomDB
+            val lastInd = levelKey.length
+            val id = levelKey.substring(6, lastInd).toInt()
+            var point = thePoint
+            point -= 100
+            val stageEnt = AppRoomEntity(id, levelKey, point.toInt(), false)
+            db.stageDao().update(stageEnt)
+            stageRef.child("point").setValue(point)
+            Log.d(TAG, "roomDB UPDATED: answer is wrong; -100 points")
+        }.start()
+        Log.d(TAG, "Something's Wrong; $uAnswer != $answer!")
+        val toast = makeText(baseContext, getString(R.string.wrong_answer), LENGTH_SHORT)
+        toast.setGravity(Gravity.CENTER, 0, 100)
+        toast.show()
+    }
+
+    private fun ifLevelControlisFalse(uAnswer:Int, answer:Int){
+        if(uAnswer == answer){
+            starAnimation()
+
+            Log.d(TAG, "$levelKey: Answer ($uAnswer) is equal to $answer; " +
+                    "But no points added to the database")
+            val toast = makeText(baseContext, getString(R.string.bravo), LENGTH_SHORT)
+            toast.setGravity(Gravity.TOP, 0, 100)
+            toast.show()
+        }else{
+            Log.d(TAG, "Something's Wrong; $uAnswer != $answer!")
+            val toast = makeText(baseContext, getString(R.string.come_on), LENGTH_SHORT)
+            toast.setGravity(Gravity.CENTER, 0, 100)
+            toast.show()
+        }
+        mValueEventListener?.let {
+            stageRef.removeEventListener(it)
+            Log.d(TAG, "stageRef EventListener Removed!")
         }
     }
 
@@ -740,11 +799,13 @@ class RandomActivity : AppCompatActivity() {
         buttAnswer.visibility = View.INVISIBLE
         etAnswer.isFocusable = false
         mediaPlayer.start()
-        mediaPlayer.setOnCompletionListener(object: MediaPlayer.OnCompletionListener{
-            override fun onCompletion(p0: MediaPlayer?) {
-                mainMenu(null)
-            }
-        })
+        if (levelKey == "StageUfo"){
+            mediaPlayer.setOnCompletionListener(object: MediaPlayer.OnCompletionListener{
+                override fun onCompletion(p0: MediaPlayer?) {
+                    mainMenu(null)
+                }
+            })
+        }
     }
 
     private fun levelAdapt(level:String){
@@ -798,7 +859,11 @@ class RandomActivity : AppCompatActivity() {
             }
         val stageEnt = AppRoomEntity(id, levelKey, point, control)
         Thread{
-            db.stageDao().update(stageEnt)
+            if (point == 10012){
+                db.stageDao().insert(stageEnt)
+            }else{
+                db.stageDao().update(stageEnt)
+            }
         }.start()
     }
 
