@@ -412,7 +412,7 @@ class MainActivity : AppCompatActivity() {
                     window.showAtLocation(layoutbg,1,0,0)
                     show.startAnimation(fadein)
                     firstRunControl = false
-                }else{Log.d(TAG, "Not first run!")}
+                }else{Log.d(TAG, "animationTop: Not first run!")}
                 tvName.visibility = View.VISIBLE
                 tvName.startAnimation(rtl)
 
@@ -621,35 +621,35 @@ class MainActivity : AppCompatActivity() {
                                         if (roomName == fireName){
                                             if (fireControl && roomControl && firePoint>roomPoint){
                                                 stagesReference.child("/$fireName/point").setValue(roomPoint)
-                                                Log.d(TAG, "$fireName: Points updated in fireDB")
+                                                Log.d(TAG, "synchronRoomDb: $fireName: Points updated in fireDB")
                                             }
                                             else if (fireControl && roomControl && firePoint<roomPoint){
                                                 db.stageDao().update(stageEnt)
-                                                Log.d(TAG, "$fireName: Points updated in RoomDB")
+                                                Log.d(TAG, "synchronRoomDb: $fireName: Points updated in RoomDB")
                                             }
                                             else if (fireControl && !roomControl){
                                                 stagesReference.child("/$fireName/point").setValue(roomPoint)
                                                 stagesReference.child("/$fireName/control").setValue(roomControl)
-                                                Log.d(TAG, "$fireName: Points + Control updated in fireDB")
+                                                Log.d(TAG, "synchronRoomDb: $fireName: Points + Control updated in fireDB")
                                             }
                                             else if (!fireControl && roomControl){
                                                 db.stageDao().update(stageEnt)
-                                                Log.d(TAG, "$fireName: Points + Control updated in RoomDB")
+                                                Log.d(TAG, "synchronRoomDb: $fireName: Points + Control updated in RoomDB")
                                             }
                                             else if (!fireControl && !roomControl){
                                                 db.stageDao().update(stageEnt)
-                                                Log.d(TAG, "$fireName: Points + Control updated in RoomDB")
+                                                Log.d(TAG, "synchronRoomDb: $fireName: Points + Control updated in RoomDB")
                                             }
                                             else{
-                                                Log.d(TAG, "No need to update $fireName! $fireControl")
+                                                Log.d(TAG, "synchronRoomDb: No need to update $fireName! $fireControl")
                                             }
                                         }
                                         else{
-                                            Log.d(TAG, "$fireName couldn't found in RoomDB = $roomName")
+                                            Log.d(TAG, "synchronRoomDb: $fireName couldn't found in RoomDB = $roomName")
                                         }
                                     }else{
                                         db.stageDao().insert(stageEnt)
-                                        Log.d(TAG, "$fireName: $fireControl")
+                                        Log.d(TAG, "synchronRoomDb: $fireName: $fireControl")
                                     }
                                 }.start()
                             }
@@ -663,6 +663,7 @@ class MainActivity : AppCompatActivity() {
                             val roomControl = it.db_stage_control
                             stagesReference.child("/$roomName/point").setValue(roomPoint)
                             stagesReference.child("/$roomName/control").setValue(roomControl)
+                            Log.d(TAG, "synchronRoomDb: p0 doesn't have children: roomDB added to fireDB")
                         }
                     }.start()
                 }

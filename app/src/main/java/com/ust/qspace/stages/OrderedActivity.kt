@@ -65,6 +65,7 @@ class OrderedActivity : AppCompatActivity() {
     var isRunning = false
     lateinit var mainHandler:Handler
     lateinit var updatePointTask: Runnable
+    var updatePointTaskPoint = 1
     lateinit var window:PopupWindow
 
     private lateinit var mInterstitialAd: InterstitialAd
@@ -128,26 +129,28 @@ class OrderedActivity : AppCompatActivity() {
 
         window = PopupWindow(this)
 
-        startcheck()
+        startCheck()
     }
 
-    fun startcheck() {
+    fun startCheck() {
         Thread{
             var dbStage = db.stageDao().getOne(levelKey)
 
             if (dbStage != null){
-                var point = dbStage.db_stage_points
+                updatePointTaskPoint = dbStage.db_stage_points
+                Log.d(TAG, "startCheck: roomPoint = $updatePointTaskPoint")
                 var control = dbStage.db_stage_control
-                stageStartFireDBCheck(point, control)
+                stageStartFireDBCheck(updatePointTaskPoint, control)
                 if (control) {
-                    point -= 10
-                    stagePointControlUpdate(point, control)
+                    updatePointTaskPoint -= 10
+                    Log.d(TAG, "startCheck: roomPoint = $updatePointTaskPoint")
+                    stagePointControlUpdate(updatePointTaskPoint, control)
                     updatePointTask = object : Runnable{
                         override fun run() {
                             isRunning = true
-                            point -= 2
-                            stagePointControlUpdate(point, control)
-                            Log.d(TAG, "$levelKey point updated to $point")
+                            updatePointTaskPoint -= 2
+                            stagePointControlUpdate(updatePointTaskPoint, control)
+                            Log.d(TAG, "$levelKey point updated to $updatePointTaskPoint")
                             mainHandler.postDelayed(this, 10000)
                         }
                     }
@@ -162,10 +165,10 @@ class OrderedActivity : AppCompatActivity() {
                 stageRef.child("point").setValue(10000)
                 stageRef.child("control").setValue(true).addOnSuccessListener {void ->
                     if(dbStage != null) {
-                        startcheck()
+                        startCheck()
                     }else{
                         buttAnswer1.postDelayed({
-                            startcheck()
+                            startCheck()
                         }, 100)
                     }
                 }
@@ -256,8 +259,6 @@ class OrderedActivity : AppCompatActivity() {
             runBlocking(Dispatchers.Default) {
                 synchronDBs()
             }
-
-
         }else {
             Log.d(TAG, "slayButton: tv_answer1 is empty!")
             val toast = makeText(baseContext, getString(R.string.enter_answer), LENGTH_SHORT)
@@ -372,6 +373,8 @@ class OrderedActivity : AppCompatActivity() {
             val id = levelKey.substring(6, lastInd).toInt()
             var point = thePoint
             point -= 100
+            updatePointTaskPoint = point.toInt()
+            Log.d(TAG, "wrongAnswerDatabaseUpdates: point is updated from $thePoint to $point")
             val stageEnt = AppRoomEntity(id, levelKey, point.toInt(), true)
             db.stageDao().update(stageEnt)
             stageRef.child("point").setValue(point).addOnSuccessListener {void ->
@@ -1489,7 +1492,6 @@ class OrderedActivity : AppCompatActivity() {
                         val roomPoint = dbStage.db_stage_points.toLong()
                         val roomControl = dbStage.db_stage_control
                         val sPoint = p0.child("point").value
-                        Log.d(TAG, "synchronDBs: sPoint: $sPoint")
                         var firePoint = sPoint.toString()
                         Log.d(TAG, "synchronDBs: firePoint: $firePoint")
                         val fireControl = p0.child("control").value as Boolean
@@ -1510,7 +1512,7 @@ class OrderedActivity : AppCompatActivity() {
     private fun removeStageRefValueEventListener(){
         mValueEventListener?.let {
             stageRef.removeEventListener(it)
-            Log.d(TAG, "slayButtonAnswerTasks: stageRef EventListener Removed!")
+            Log.d(TAG, "removeStageRefValueEventListener: stageRef EventListener Removed!")
         }
     }
 
