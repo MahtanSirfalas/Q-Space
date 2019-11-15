@@ -14,5 +14,6 @@
     <color name="warningdarkred">#660000</color>
     <color name="yellow">#EFC211</color>
     <color name="yellowDark">#F29B14</color>
+    <color name="nullColor">#0000</color>
 
 </resources>

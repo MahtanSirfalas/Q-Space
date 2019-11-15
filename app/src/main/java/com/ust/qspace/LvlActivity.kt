@@ -118,7 +118,7 @@ class LvlActivity : AppCompatActivity() {
                 override fun onAnimationRepeat(p0: Animation?) {}
                 override fun onAnimationStart(p0: Animation?) {}
                 override fun onAnimationEnd(p0: Animation?) {
-                    if(points >= 20000){
+                    if(points >= 24000){
                         val ltr1 = AnimationUtils.loadAnimation(baseContext, R.anim.ltr1)
                         buttL6.visibility = View.VISIBLE
                         buttL7.visibility = View.VISIBLE
@@ -134,7 +134,7 @@ class LvlActivity : AppCompatActivity() {
                             override fun onAnimationRepeat(p0: Animation?) {}
                             override fun onAnimationStart(p0: Animation?) {}
                             override fun onAnimationEnd(p0: Animation?) {
-                                if(points >= 40000){
+                                if(points >= 45000){
                                     val ltr2 = AnimationUtils.loadAnimation(baseContext, R.anim.ltr2)
                                     buttL11.visibility = View.VISIBLE
                                     buttL12.visibility = View.VISIBLE
@@ -150,7 +150,7 @@ class LvlActivity : AppCompatActivity() {
                                         override fun onAnimationRepeat(p0: Animation?) {}
                                         override fun onAnimationStart(p0: Animation?) {}
                                         override fun onAnimationEnd(p0: Animation?) {
-                                            if (points >= 60000){
+                                            if (points >= 70000){
                                                 val ltr3 = AnimationUtils.loadAnimation(baseContext, R.anim.ltr3)
                                                 buttL16.visibility = View.VISIBLE
                                                 buttL17.visibility = View.VISIBLE
@@ -166,7 +166,7 @@ class LvlActivity : AppCompatActivity() {
                                                     override fun onAnimationRepeat(p0: Animation?) {}
                                                     override fun onAnimationStart(p0: Animation?) {}
                                                     override fun onAnimationEnd(p0: Animation?) {
-                                                        if (points >= 85000){
+                                                        if (points >= 95000){
                                                             val ltr4 = AnimationUtils.loadAnimation(baseContext, R.anim.ltr4)
                                                             buttL21.visibility = View.VISIBLE
                                                             buttL22.visibility = View.VISIBLE

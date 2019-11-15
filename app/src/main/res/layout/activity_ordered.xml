@@ -289,8 +289,9 @@
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintBottom_toTopOf="@+id/buttAnswer1"
                         android:layout_marginBottom="8dp" android:layout_marginTop="8dp"/>
+
                 <androidx.appcompat.widget.AppCompatButton
-                        android:text="Send"
+                        android:text="@string/send"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:id="@+id/buttAnswer1"
@@ -302,6 +303,18 @@
                         android:onClick="slayButton"
                         android:fontFamily="@font/coda" android:textSize="18sp"
                         android:layout_marginBottom="8dp" app:layout_constraintBottom_toTopOf="@+id/ibComment"/>
+
+                <ProgressBar
+                        android:id="@+id/progressBarOrdered"
+                        style="?android:attr/progressBarStyle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:visibility="gone"
+                        app:layout_constraintBottom_toTopOf="@id/buttAnswer1"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/tv_answer1" />
+
                 <ImageView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content" app:srcCompat="@drawable/ic_starkayar"
@@ -335,7 +348,7 @@
 
                 <ImageButton
                         android:layout_width="wrap_content"
-                        android:background="#0000"
+                        android:background="@drawable/bg_ic_comment"
                         android:layout_height="wrap_content" app:srcCompat="@drawable/ic_comments"
                         android:id="@+id/ibComment" android:tint="@color/colorSpaceWhite"
                         android:layout_marginBottom="16dp"

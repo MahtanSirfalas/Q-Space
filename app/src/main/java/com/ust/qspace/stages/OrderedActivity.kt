@@ -19,12 +19,8 @@ import android.view.View
 import android.view.animation.AnimationUtils
 import android.view.animation.OvershootInterpolator
 import android.view.inputmethod.InputMethodManager
-import android.widget.Button
-import android.widget.ImageView
-import android.widget.PopupWindow
-import android.widget.RadioButton
-import android.widget.Toast.LENGTH_SHORT
-import android.widget.Toast.makeText
+import android.widget.*
+import android.widget.Toast.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.constraintlayout.widget.ConstraintSet
@@ -66,6 +62,7 @@ class OrderedActivity : AppCompatActivity() {
     lateinit var mainHandler:Handler
     lateinit var updatePointTask: Runnable
     var updatePointTaskPoint = 1
+    var totalPointOfUser:Long = points
     lateinit var window:PopupWindow
 
     private lateinit var mInterstitialAd: InterstitialAd
@@ -156,7 +153,7 @@ class OrderedActivity : AppCompatActivity() {
                     }
                     mainHandler.post(updatePointTask)
                 }else{
-
+                    commentBubbleGlow()
                     Log.d(TAG, "Stage passed before.")
                 }
 
@@ -188,7 +185,6 @@ class OrderedActivity : AppCompatActivity() {
                 db.stageDao().update(stageEnt)
             }
         }.start()
-
     }
 
     private fun animationOrder(){
@@ -207,7 +203,6 @@ class OrderedActivity : AppCompatActivity() {
     private fun starAnimation(){
         val show = layoutInflater.inflate(R.layout.layout_popup, null)
 //        window.isOutsideTouchable = true
-
         //                Pop up window
         val imageShow = show.findViewById<ImageView>(R.id.iv_spaceMedal)
         window.contentView = show
@@ -219,19 +214,44 @@ class OrderedActivity : AppCompatActivity() {
             interpolator = OvershootInterpolator()
             duration = 600
         }.start()
-//                show.startAnimation(atf1)
         imageShow.setOnClickListener{
             window.dismiss()
         }
         mediaPlayer.start()
+        val tvTextTop = show.findViewById<TextView>(R.id.tv_text_top)
+        starAnimationInfoWhenUserOpenedTheNextStages(tvTextTop)
         tv_answer1.isFocusable = false
         buttAnswer1.visibility = View.INVISIBLE
+    }
+
+    private fun starAnimationInfoWhenUserOpenedTheNextStages(topText:TextView){
+        Log.d(TAG, "starAnimationInfoWhenUserOpenedTheNextStages: points = $points  totalPointOfUser = $totalPointOfUser")
+        if ((points<24000 && totalPointOfUser>=24000) ||
+            (points<45000 && totalPointOfUser>=45000) ||
+            (points<70000 && totalPointOfUser>=70000) ||
+            (points<95000 && totalPointOfUser>=95000) ||
+            (points<120000 && totalPointOfUser>=120000))
+        {
+            topText.visibility = View.VISIBLE
+            val animationDrawable = topText.background as AnimationDrawable
+            animationDrawable.setEnterFadeDuration(200)
+            animationDrawable.setExitFadeDuration(200)
+            animationDrawable.start()
+        }
+        else{ topText.visibility = View.GONE }
     }
 
     private fun commentAnimation(){
         val commAnim = AnimationUtils.loadAnimation(this, R.anim.commentbub)
         ibComment.visibility = View.VISIBLE
         ibComment.startAnimation(commAnim)
+    }
+
+    private fun commentBubbleGlow(){
+        val animationDrawable = ibComment.background as AnimationDrawable
+        animationDrawable.setEnterFadeDuration(200)
+        animationDrawable.setExitFadeDuration(200)
+        animationDrawable.start()
     }
 
     fun stageStartFireDBCheck(point: Int, control: Boolean){
@@ -250,6 +270,7 @@ class OrderedActivity : AppCompatActivity() {
 
     fun slayButton(view: View?) {
         Log.d(TAG, "slayButton: pressed")
+        progressBarOrdered.visibility = View.VISIBLE
         val kontrol = tv_answer1.text.toString()
         val inputMethodManager = getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
         if(view != null){
@@ -257,7 +278,7 @@ class OrderedActivity : AppCompatActivity() {
         }
         if (kontrol.trim().isNotEmpty()) {
             runBlocking(Dispatchers.Default) {
-                synchronDBs()
+                synchronDBs(true)
             }
         }else {
             Log.d(TAG, "slayButton: tv_answer1 is empty!")
@@ -291,11 +312,12 @@ class OrderedActivity : AppCompatActivity() {
                     if (control){
                         if (uAnswer == answer) {
                             var levelP = p0s.child("level").value as String
-                            var points = p0s.child("points").value as Long
+                            var tPoints = p0s.child("points").value as Long
+                            points = tPoints
                             try {
                                 mainHandler.removeCallbacks(updatePointTask)
                             }catch (ex:Exception){ex.message}
-                            firstTimeCorrectAnswerDatabaseUpdates(point, points, userRef)
+                            firstTimeCorrectAnswerDatabaseUpdates(point, tPoints, userRef)
                             MainActivity().levelTagClarification()
                             level = p0s.child("level").value as String
                             if (levelP != level){
@@ -318,10 +340,7 @@ class OrderedActivity : AppCompatActivity() {
                                         Log.d(TAG, "Level didn't change!")
                                     }
                                 }
-                                mValueEventListener?.let {
-                                    stageRef.removeEventListener(it)
-                                    Log.d(TAG, "stageRef EventListener Removed!")
-                                }
+                                removeStageRefValueEventListener()
                             }
                             starAnimation()
 
@@ -330,12 +349,12 @@ class OrderedActivity : AppCompatActivity() {
                             removeStageRefValueEventListener()
                         }
                     }else{
-                        ifLevelControlisFalse(uAnswer, answer)
+                        ifLevelControlIsFalse(uAnswer, answer)
                     }
                 }else{
                     Log.d(TAG, "slayButtonAnswerTasks: p0 does not exist")
                     runBlocking(Dispatchers.Default) {
-                        synchronDBs()
+                        synchronDBs(true)
                     }
                     slayButton(null)
                 }
@@ -344,6 +363,7 @@ class OrderedActivity : AppCompatActivity() {
     }
 
     private fun firstTimeCorrectAnswerDatabaseUpdates(point:Long, tPoint:Long, userRef:DatabaseReference){
+        progressBarOrdered.visibility = View.GONE
         Log.d(TAG, "firstTimeCorrectAnswerDatabaseUpdates: $levelKey: Answer ($uAnswer) is equal to $answer; Accepted!")
         Thread{//update roomDB the answer is accepted
             val lastInd = levelKey.length
@@ -352,15 +372,15 @@ class OrderedActivity : AppCompatActivity() {
             db.stageDao().update(stageEnt)
             Log.d(TAG, "firstTimeCorrectAnswerDatabaseUpdates: roomDB UPDATED: answer is accepted")
         }.start()
-        stageRef.child("control").setValue(false)
-        var points = tPoint
-        points += point
-        userRef.child("points").setValue(points)
+        stageRef.child("control").setValue(false).addOnSuccessListener { commentBubbleGlow() }
+        totalPointOfUser = tPoint
+        totalPointOfUser += point
+        userRef.child("points").setValue(totalPointOfUser)
         Thread{ //RoomDB Total Points update
-            val totalPoints = AppRoomEntity(300000, "Total Points", points.toInt(), true)
+            val totalPoints = AppRoomEntity(300000, "Total Points", totalPointOfUser.toInt(), true)
             db.stageDao().update(totalPoints)
         }.start()
-        Log.d(TAG, "firstTimeCorrectAnswerDatabaseUpdates: DBs Total Points are updated from $tPoint as $points")
+        Log.d(TAG, "firstTimeCorrectAnswerDatabaseUpdates: DBs Total Points are updated from $tPoint as $totalPointOfUser")
         val toast = makeText(baseContext, getString(R.string.bravo), LENGTH_SHORT)
         toast.setGravity(Gravity.TOP, 0, 100)
         toast.show()
@@ -368,6 +388,7 @@ class OrderedActivity : AppCompatActivity() {
 
     private fun wrongAnswerDatabaseUpdates(thePoint:Long){
         buttAnswer1.isClickable = false
+        progressBarOrdered.visibility = View.GONE
         Thread{//Wrong answer => -100 points to roomDB
             val lastInd = levelKey.length
             val id = levelKey.substring(6, lastInd).toInt()
@@ -388,21 +409,21 @@ class OrderedActivity : AppCompatActivity() {
         toast.show()
     }
 
-    private fun ifLevelControlisFalse(uAnswer:Int, answer:Int){
+    private fun ifLevelControlIsFalse(uAnswer:Int, answer:Int){
         if(uAnswer == answer){
             starAnimation()
-
-            Log.d(TAG, "ifLevelControlisFalse: $levelKey: Answer ($uAnswer) is equal to $answer; " +
+            Log.d(TAG, "ifLevelControlIsFalse: $levelKey: Answer ($uAnswer) is equal to $answer; " +
                     "But no points added to the database")
             val toast = makeText(baseContext, getString(R.string.bravo), LENGTH_SHORT)
             toast.setGravity(Gravity.TOP, 0, 100)
             toast.show()
         }else{
-            Log.d(TAG, "ifLevelControlisFalse: Something's Wrong; $uAnswer != $answer!")
+            Log.d(TAG, "ifLevelControlIsFalse: Something's Wrong; $uAnswer != $answer!")
             val toast = makeText(baseContext, getString(R.string.come_on), LENGTH_SHORT)
             toast.setGravity(Gravity.CENTER, 0, 100)
             toast.show()
         }
+        progressBarOrdered.visibility = View.GONE
         removeStageRefValueEventListener()
     }
 
@@ -936,11 +957,17 @@ class OrderedActivity : AppCompatActivity() {
                 startActivity(intent)
             }
             "Stage 5" -> {
-                levelKey = "Stage 6"
-                val intent = Intent(this@OrderedActivity, OrderedActivity::class.java)
-                intent.putExtra("levelKey", levelKey)
-                intent.putExtra("tvName", nick)
-                startActivity(intent)
+                if(totalPointOfUser >= 24000){
+                    levelKey = "Stage 6"
+                    val intent = Intent(this@OrderedActivity, OrderedActivity::class.java)
+                    intent.putExtra("levelKey", levelKey)
+                    intent.putExtra("tvName", nick)
+                    startActivity(intent)
+                }else{
+                    val toast = makeText(baseContext, getString(R.string.user_not_allowed_to_next_stages, 24000), LENGTH_LONG)
+                    toast.setGravity(Gravity.CENTER, 0, 100)
+                    toast.show()
+                }
             }
             "Stage 6" -> {
                 levelKey = "Stage 7"
@@ -964,11 +991,17 @@ class OrderedActivity : AppCompatActivity() {
                 startActivity(intent)
             }
             "Stage 10" -> {
-                levelKey = "Stage 11"
-                val intent = Intent(this@OrderedActivity, OrderedActivity::class.java)
-                intent.putExtra("levelKey", levelKey)
-                intent.putExtra("tvName", nick)
-                startActivity(intent)
+                if(totalPointOfUser >= 45000){
+                    levelKey = "Stage 11"
+                    val intent = Intent(this@OrderedActivity, OrderedActivity::class.java)
+                    intent.putExtra("levelKey", levelKey)
+                    intent.putExtra("tvName", nick)
+                    startActivity(intent)
+                }else{
+                    val toast = makeText(baseContext, getString(R.string.user_not_allowed_to_next_stages, 45000), LENGTH_LONG)
+                    toast.setGravity(Gravity.CENTER, 0, 100)
+                    toast.show()
+                }
             }
             "Stage 11" -> {
                 levelKey = "Stage 12"
@@ -999,11 +1032,17 @@ class OrderedActivity : AppCompatActivity() {
                 startActivity(intent)
             }
             "Stage 15" -> {
-                levelKey = "Stage 16"
-                val intent = Intent(this@OrderedActivity, OrderedActivity::class.java)
-                intent.putExtra("levelKey", levelKey)
-                intent.putExtra("tvName", nick)
-                startActivity(intent)
+                if(totalPointOfUser >= 70000){
+                    levelKey = "Stage 16"
+                    val intent = Intent(this@OrderedActivity, OrderedActivity::class.java)
+                    intent.putExtra("levelKey", levelKey)
+                    intent.putExtra("tvName", nick)
+                    startActivity(intent)
+                }else{
+                    val toast = makeText(baseContext, getString(R.string.user_not_allowed_to_next_stages, 70000), LENGTH_LONG)
+                    toast.setGravity(Gravity.CENTER, 0, 100)
+                    toast.show()
+                }
             }
             "Stage 16" -> {
                 levelKey = "Stage 17"
@@ -1034,11 +1073,17 @@ class OrderedActivity : AppCompatActivity() {
                 startActivity(intent)
             }
             "Stage 20" -> {
-                levelKey = "Stage 21"
-                val intent = Intent(this@OrderedActivity, OrderedActivity::class.java)
-                intent.putExtra("levelKey", levelKey)
-                intent.putExtra("tvName", nick)
-                startActivity(intent)
+                if(totalPointOfUser >= 95000){
+                    levelKey = "Stage 21"
+                    val intent = Intent(this@OrderedActivity, OrderedActivity::class.java)
+                    intent.putExtra("levelKey", levelKey)
+                    intent.putExtra("tvName", nick)
+                    startActivity(intent)
+                }else{
+                    val toast = makeText(baseContext, getString(R.string.user_not_allowed_to_next_stages, 95000), LENGTH_LONG)
+                    toast.setGravity(Gravity.CENTER, 0, 100)
+                    toast.show()
+                }
             }
             "Stage 21" -> {
                 levelKey = "Stage 22"
@@ -1062,11 +1107,17 @@ class OrderedActivity : AppCompatActivity() {
                 startActivity(intent)
             }
             "Stage 25" -> {
-                levelKey = "Stage 26"
-                val intent = Intent(this@OrderedActivity, OrderedActivity::class.java)
-                intent.putExtra("levelKey", levelKey)
-                intent.putExtra("tvName", nick)
-                startActivity(intent)
+                if(totalPointOfUser >= 120000){
+                    levelKey = "Stage 26"
+                    val intent = Intent(this@OrderedActivity, OrderedActivity::class.java)
+                    intent.putExtra("levelKey", levelKey)
+                    intent.putExtra("tvName", nick)
+                    startActivity(intent)
+                }else{
+                    val toast = makeText(baseContext, getString(R.string.user_not_allowed_to_next_stages, 120000), LENGTH_LONG)
+                    toast.setGravity(Gravity.CENTER, 0, 100)
+                    toast.show()
+                }
             }
             "Stage 26" -> {
                 levelKey = "Stage 27"
@@ -1341,6 +1392,7 @@ class OrderedActivity : AppCompatActivity() {
     }
 
     fun showComments(view: View?) {
+        progressBarOrdered.visibility = View.VISIBLE
         if (isRunning){
             mainHandler.removeCallbacks(updatePointTask)
         }else{
@@ -1356,7 +1408,7 @@ class OrderedActivity : AppCompatActivity() {
         val atf1 = AnimationUtils.loadAnimation(baseContext, R.anim.atf1)
 
         runBlocking(Dispatchers.Default) {
-            synchronDBs()
+            synchronDBs(false)
         }
 
         Thread.sleep(50)
@@ -1364,10 +1416,10 @@ class OrderedActivity : AppCompatActivity() {
         stageRef.addListenerForSingleValueEvent(object : ValueEventListener {
             override fun onCancelled(p0: DatabaseError) {}
             override fun onDataChange(p0: DataSnapshot) {
-
                 val control = p0.child("control").value as Boolean
                 Log.d(TAG, "control == $control")
                 if (control){
+                    progressBarOrdered.visibility = View.GONE
                     window.contentView = show
                     window.showAtLocation(buttAnswer1,1,0,100)
                     show.startAnimation(atf1)
@@ -1383,9 +1435,7 @@ class OrderedActivity : AppCompatActivity() {
                             db.stageDao().update(stageEnt)
                             Log.d(TAG, "roomDB UPDATED: answer is wrong; -10 points")
                         }.start()
-                        mValueEventListener?.let{
-                            stageRef.removeEventListener(it)
-                        }
+                        removeStageRefValueEventListener()
                         if (isRunning){
                             mainHandler.removeCallbacks(updatePointTask)
                         }else{
@@ -1397,69 +1447,76 @@ class OrderedActivity : AppCompatActivity() {
                     }
                     buttNo.setOnClickListener {
                         window.dismiss()
-                        mValueEventListener?.let {
-                            stageRef.removeEventListener(it)
-                            Log.d(TAG, "stageRef EventListener Removed!")
-                        }
+                        removeStageRefValueEventListener()
                     }
                 }else{
                     Log.d(TAG, "Comments button pressed")
-
+                    progressBarOrdered.visibility = View.GONE
                     startActivity(intent)
                 }
             }
         })
     }
 
-    fun synchDBsBlock(roomControl:Boolean, fireControl:Boolean, roomPoint:Long, firePoint:String){
+    fun synchDBsBlock(roomControl:Boolean, fireControl:Boolean, roomPoint:Long, firePoint:String, ifItisAnsweringAct:Boolean){
         runBlocking (Dispatchers.Default){
+            val lastInd = levelKey.length
+            val id = levelKey.substring(6, lastInd).toInt()
             if (roomControl && fireControl) {
                 stageRef.child("point").setValue(roomPoint).addOnSuccessListener {void ->
-                    slayButtonAnswerTasks()
+                    if (ifItisAnsweringAct){
+                        slayButtonAnswerTasks()
+                    }
                 }
                 Log.d(TAG, "synchDBsBlock: roomDB control = $roomControl => fireDB point updated")
             } else if (!roomControl && fireControl) {
                 stageRef.child("point").setValue(roomPoint)
                 stageRef.child("control").setValue(roomControl).addOnSuccessListener {void ->
-                    slayButtonAnswerTasks()
+                    if (ifItisAnsweringAct){
+                        slayButtonAnswerTasks()
+                    }
                 }
                 Log.d(
                     TAG,
                     "synchDBsBlock: roomDB control = $roomControl => fireDB point+control updated"
                 )
             } else if (roomControl && !fireControl) {
-                val lastInd = levelKey.length
-                val id = levelKey.substring(6, lastInd).toInt()
                 val stageEnt =
                     AppRoomEntity(id, levelKey, firePoint.toInt(), fireControl)
                 db.stageDao().update(stageEnt)
-                slayButtonAnswerTasks()
+                if (ifItisAnsweringAct){
+                    slayButtonAnswerTasks()
+                }
                 Log.d(TAG, "synchDBsBlock: fireDB control = $fireControl => roomDB updated")
             } else if (!roomControl && !fireControl) {
-                val lastInd = levelKey.length
-                val id = levelKey.substring(6, lastInd).toInt()
                 val stageEnt =
                     AppRoomEntity(id, levelKey, firePoint.toInt(), fireControl)
                 db.stageDao().update(stageEnt)
-                slayButtonAnswerTasks()
+                if (ifItisAnsweringAct){
+                    slayButtonAnswerTasks()
+                }
                 Log.d(TAG, "synchDBsBlock: !roomControl && !fireControl => roomDB updated")
             } else if (roomControl != null && fireControl == null) {
                 stageRef.child("point").setValue(roomPoint)
                 stageRef.child("control").setValue(roomControl).addOnSuccessListener {void ->
-                    slayButtonAnswerTasks()
+                    if (ifItisAnsweringAct){
+                        slayButtonAnswerTasks()
+                    }
                 }
                 Log.d(
                     TAG,
                     "synchDBsBlock: roomDB control = $roomControl => fireDB point+control updated"
                 )
             } else {
+                if (ifItisAnsweringAct){
+                    slayButtonAnswerTasks()
+                }
                 Log.d(TAG, "synchDBsBlock: roomControl == null or Something's Wrong!")
-                slayButtonAnswerTasks()
             }
         }
     }
 
-    suspend fun synchronDBs(){
+    suspend fun synchronDBs(ifItisAnsweringAct:Boolean){
         Log.d(TAG, "synchronDBs: synchrondbs start")
 
         val mValueEventListener = object :ValueEventListener{
@@ -1483,7 +1540,7 @@ class OrderedActivity : AppCompatActivity() {
                                 var firePoint = sPoint.toString()
                                 Log.d(TAG, "synchronDBs: firePoint = $firePoint")
                                 val fireControl = p0.child("control").value as Boolean
-                                synchDBsBlock(roomControl,fireControl,roomPoint,firePoint)
+                                synchDBsBlock(roomControl,fireControl,roomPoint,firePoint, ifItisAnsweringAct)
                             }
                     }
                     else{
@@ -1495,7 +1552,7 @@ class OrderedActivity : AppCompatActivity() {
                         var firePoint = sPoint.toString()
                         Log.d(TAG, "synchronDBs: firePoint: $firePoint")
                         val fireControl = p0.child("control").value as Boolean
-                        synchDBsBlock(roomControl,fireControl,roomPoint,firePoint)
+                        synchDBsBlock(roomControl,fireControl,roomPoint,firePoint, ifItisAnsweringAct)
 
                     }
                 }.start()
@@ -1581,7 +1638,7 @@ class OrderedActivity : AppCompatActivity() {
         startActivity(intent)
     }
 
-    private fun showSettings(view:View?){
+    private fun showSettings(){
         if (isRunning){
             mainHandler.removeCallbacks(updatePointTask)
         }else{
@@ -1592,7 +1649,7 @@ class OrderedActivity : AppCompatActivity() {
         startActivity(intent)
     }
 
-    fun showProfile(view: View?) {
+    private fun showProfile(view: View?) {
         if (isRunning){
             mainHandler.removeCallbacks(updatePointTask)
         }else{
@@ -1616,7 +1673,7 @@ class OrderedActivity : AppCompatActivity() {
         startActivity(intent)
     }
 
-    fun signOut(view: View?) {
+    private fun signOut(view: View?) {
         if (isRunning){
             mainHandler.removeCallbacks(updatePointTask)
         }else{
@@ -1655,7 +1712,7 @@ class OrderedActivity : AppCompatActivity() {
             item.itemId == R.id.action_out -> signOut(null)
             item.itemId == R.id.action_profile -> showProfile(null)
             item.itemId == R.id.action_home -> mainMenu(null)
-            item.itemId == R.id.action_settings -> showSettings(null)
+            item.itemId == R.id.action_settings -> showSettings()
             item.itemId == R.id.pivacy_policy -> privacyPolicy()
             item.itemId == R.id.terms_condition -> termsConditions()
             else -> {

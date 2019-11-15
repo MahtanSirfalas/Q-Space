@@ -14,11 +14,15 @@ class MusicService: Service() {
         return null
     }
 
-    override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
-
+    override fun onCreate() {
+        super.onCreate()
         player = MediaPlayer.create(this, R.raw.qspacemain)
         player.isLooping = true
         player.setVolume(80f, 80f)
+
+    }
+
+    override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
         player.start()
 
         return super.onStartCommand(intent, flags, startId)

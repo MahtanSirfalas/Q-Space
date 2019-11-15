@@ -18,6 +18,7 @@
             android:textColor="@color/colorSpace"
             android:textStyle="bold"
             android:visibility="gone"
+            android:background="@drawable/glow_pink"
             app:layout_constraintBottom_toTopOf="@+id/iv_spaceMedal"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

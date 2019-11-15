@@ -99,6 +99,7 @@
     <string name="come_on">Come on mate you passed this stage before!</string>
     <string name="missing_number">Missing number?</string>
     <string name="enter_answer">Enter Your Answer!</string>
+    <string name="user_not_allowed_to_next_stages">You need at least %1$d points to access next Stages!</string>
 
     <string name="pw">get the obvious stuff out of the way</string>
     <string name="congratulations">Congratulations!!!</string>
@@ -113,7 +114,7 @@
         and status simultaneously.
     </string>
     <string name="next_stage">Next Stage</string>
-    <string name="congratz_you_achieved_enough_points">Congratz! You achieved enough points to activate new stages!</string>
+    <string name="congratz_you_achieved_enough_points">Bravo! You earned enough points to play new stages!</string>
     <string name="main_menu">Main Menu</string>
     <string name="choose_not_included">Choose the one not included!</string>
     <string name="keep_in_mind">Keep in mind!</string>

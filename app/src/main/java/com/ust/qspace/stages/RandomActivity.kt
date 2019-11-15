@@ -39,7 +39,6 @@ import kotlinx.android.synthetic.main.activity_random.toolbar
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.runBlocking
-import kotlin.concurrent.thread
 
 private lateinit var firebaseAnalytics: FirebaseAnalytics
 private lateinit var auth: FirebaseAuth
@@ -59,6 +58,8 @@ class RandomActivity : AppCompatActivity() {
     lateinit var random9packTask: Runnable
     lateinit var mainHandler: Handler
     lateinit var updatePointTask: Runnable
+    var updatePointTaskPoint = 1
+    var totalPointOfUser:Long = points
     var isRunning = false
     var num1 = 0
     var num2 = 0
@@ -147,136 +148,10 @@ class RandomActivity : AppCompatActivity() {
             }
         }
 
-
-
         mediaPlayer = MediaPlayer.create(this, R.raw.win)
         mediaPlayer.isLooping = false
         mediaPlayer.setVolume(50f, 50f)
 
-        buttAnswer.setOnClickListener {
-            Log.d(TAG, "Slay button pressed")
-            val inputMethodManager = getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
-            if(it != null){
-                inputMethodManager.hideSoftInputFromWindow(it.windowToken, 0)
-            }
-
-            val kontrol = etAnswer.text.toString()
-            if (kontrol.trim().isNotEmpty()){
-                try {
-                    uAnswer = etAnswer.text.toString().toInt()
-                    Log.d(TAG, "uAnswer is assigned as $uAnswer")
-                }catch (ex:Exception){
-                    Log.d(TAG, "Something's Wrong; uAnswer couldn't assign!")
-                    val toast = makeText(baseContext, "Please Enter a Valid Value", LENGTH_SHORT)
-                    toast.setGravity(Gravity.CENTER, 0, 0)
-                    toast.show()
-                }
-
-                runBlocking(Dispatchers.Default) {
-                    synchronDBs()
-                }
-
-                Thread.sleep(50)
-
-                stageRef.addListenerForSingleValueEvent(object : ValueEventListener{
-                    override fun onCancelled(p0: DatabaseError) {
-                        Log.d(TAG, "stageRef Data couldn't read; No Internet Connection/No Response from database/Wrong datapath")
-                        val toast = makeText(baseContext, getString(R.string.listener_cancelled), LENGTH_LONG)
-                        toast.setGravity(Gravity.CENTER, 0, 0)
-                        toast.show()
-                    }
-                    override fun onDataChange(p0: DataSnapshot) {
-                        var point = p0.child("point").value as Long
-                        val control = p0.child("control").value as Boolean
-                        val userRef = databaseReference.child(uid)
-                        if (control){
-                            if (answer == uAnswer){
-                                mainHandler.removeCallbacks(updatePointTask)
-
-                                Thread{//update roomDB the answer is accepted
-                                    val lastInd = levelKey.length
-                                    val id = levelKey.substring(6, lastInd).toInt()
-                                    val stageEnt = AppRoomEntity(id, levelKey, point.toInt(), false)
-                                    db.stageDao().update(stageEnt)
-                                    Log.d(TAG, "roomDB UPDATED: answer is accepted")
-                                }.start()
-
-                                stageRef.child("control").setValue(false)
-                                userRef.addListenerForSingleValueEvent(object : ValueEventListener {
-                                    override fun onCancelled(p0s: DatabaseError) {
-                                        Log.d(TAG, "userRef Data couldn't read; No Internet Connection/No Response from database/Wrong datapath")
-                                    }
-                                    override fun onDataChange(p0s: DataSnapshot) {
-                                        var points = p0s.child("points").value as Long
-                                        points += point
-                                        userRef.child("points").setValue(points)
-                                        Thread{ //RoomDB Total Points update
-                                            val totalPoints = AppRoomEntity(300000, "Total Points", points.toInt(), true)
-                                            db.stageDao().update(totalPoints)
-                                        }.start()
-                                        mValueEventListener?.let { kopek ->//kopek : ValueEventListener
-                                            stageRef.removeEventListener(kopek)
-                                            Log.d(TAG, "stageRef EventListener Removed!")
-                                        }
-                                    }
-                                })
-
-                                Log.d(TAG, "$levelKey: Answer ($uAnswer) is equal to $answer; Accepted!")
-                                val toast = makeText(baseContext, getString(R.string.bravo), LENGTH_SHORT)
-                                toast.setGravity(Gravity.CENTER, 0, -200)
-                                toast.show()
-                                starAnimation()
-                            }else{
-                                Thread{//Wrong answer => -10 points to roomDB
-                                    val lastInd = levelKey.length
-                                    val id = levelKey.substring(6, lastInd).toInt()
-                                    point -= 100
-                                    val stageEnt = AppRoomEntity(id, levelKey, point.toInt(), false)
-                                    db.stageDao().update(stageEnt)
-                                    stageRef.child("point").setValue(point)
-                                    Log.d(TAG, "roomDB UPDATED: answer is wrong; -10 points")
-                                }.start()
-                                Log.d(TAG, "Something's Wrong; $uAnswer != $answer! point is updated:$point")
-                                val toast = makeText(baseContext, getString(R.string.wrong_answer), LENGTH_SHORT)
-                                toast.setGravity(Gravity.CENTER, 0, 0)
-                                toast.show()
-                                mValueEventListener?.let { kopek ->
-                                    stageRef.removeEventListener(kopek)
-                                    Log.d(TAG, "stageRef EventListener Removed!")
-                                }
-                            }
-                        }else{
-                            if (answer == uAnswer){
-                                Log.d(TAG, "$levelKey: Answer ($uAnswer) is equal to $answer; " +
-                                        "But no points added to the database")
-                                val toast = makeText(baseContext, getString(R.string.bravo), LENGTH_SHORT)
-                                toast.setGravity(Gravity.CENTER, 0, -200)
-                                toast.show()
-                                mValueEventListener?.let { kopek ->
-                                    stageRef.removeEventListener(kopek)
-                                    Log.d(TAG, "stageRef EventListener Removed!")
-                                }
-                                starAnimation()
-                            }else{
-                                Log.d(TAG, "Something's Wrong; $uAnswer != $answer!")
-                                val toast = makeText(baseContext, getString(R.string.come_on), LENGTH_SHORT)
-                                toast.setGravity(Gravity.CENTER, 0, 0)
-                                toast.show()
-                                mValueEventListener?.let { kopek ->
-                                    stageRef.removeEventListener(kopek)
-                                    Log.d(TAG, "stageRef EventListener Removed!")
-                                }
-                            }
-                        }
-                    }
-                })
-            }else{
-                Log.d(TAG, "tv_answer1 is empty!")
-                val toast = makeText(baseContext, getString(R.string.enter_answer), LENGTH_SHORT)
-                toast.setGravity(Gravity.CENTER, 0, 0)
-                toast.show()
-            }
-        }
         if (levelKey == "Stage 23"){
             ninePackQuestion()
         }
@@ -286,8 +161,7 @@ class RandomActivity : AppCompatActivity() {
         else{
             startQuestion()
         }
-
-        startcheck()
+        startCheck()
     }
 
     override fun onWindowFocusChanged(hasFocus: Boolean) {
@@ -297,29 +171,29 @@ class RandomActivity : AppCompatActivity() {
         }
     }
 
-    fun startcheck() {
+    fun startCheck() {
         Thread{
             var dbStage = db.stageDao().getOne(levelKey)
 
             if (dbStage != null){
-                var point = dbStage.db_stage_points
+                updatePointTaskPoint = dbStage.db_stage_points
                 var control = dbStage.db_stage_control
-                stageStartFireDBCheck(point, control)
+                stageStartFireDBCheck(updatePointTaskPoint, control)
                 if (control) {
-                    point -= 10
-                    stagePointControlUpdate(point, control)
+                    updatePointTaskPoint -= 10
+                    stagePointControlUpdate(updatePointTaskPoint, control)
                     updatePointTask = object : Runnable{
                         override fun run() {
                             isRunning = true
-                            point -= 2
-                            stagePointControlUpdate(point, control)
-                            Log.d(TAG, "$levelKey point updated to $point")
+                            updatePointTaskPoint -= 2
+                            stagePointControlUpdate(updatePointTaskPoint, control)
+                            Log.d(TAG, "$levelKey point updated to $updatePointTaskPoint")
                             mainHandler.postDelayed(this, 10000)
                         }
                     }
                     mainHandler.post(updatePointTask)
                 }else{
-
+                    commentBubbleGlow()
                     Log.d(TAG, "Stage passed before.")
                 }
 
@@ -328,7 +202,11 @@ class RandomActivity : AppCompatActivity() {
                 stageRef.child("point").setValue(10000)
                 stageRef.child("control").setValue(true).addOnSuccessListener {void ->
                     if(dbStage != null) {
-                        startcheck()
+                        startCheck()
+                    }else{
+                        buttAnswer.postDelayed({
+                            startCheck()
+                        }, 100)
                     }
                 }
                 Log.d(TAG, "First run on $levelKey, adaptation DONE!")
@@ -336,64 +214,173 @@ class RandomActivity : AppCompatActivity() {
         }.start()
     }
 
+    fun slayButton(view: View?) {
+        Log.d(TAG, "slayButton: pressed")
+        progressBarRandom.visibility = View.VISIBLE
+        val kontrol = etAnswer.text.toString()
+        val inputMethodManager = getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
+        if(view != null){
+            inputMethodManager.hideSoftInputFromWindow(view.windowToken, 0)
+        }
+        if (kontrol.trim().isNotEmpty()) {
+            runBlocking(Dispatchers.Default) {
+                synchronDBs(true)
+            }
+        }else {
+            Log.d(TAG, "slayButton: tv_answer1 is empty!")
+            val toast = makeText(baseContext, getString(R.string.enter_answer), LENGTH_SHORT)
+            toast.setGravity(Gravity.CENTER, 0, 100)
+            toast.show()
+        }
+    }
+
+    private fun slayButtonAnswerTasks(){
+        removeStageRefValueEventListener()
+        try {
+            uAnswer = etAnswer.text.toString().toInt()
+            Log.d(TAG, "slayButtonAnswerTasks: uAnswer is assigned as $uAnswer")
+        } catch (ex: Exception) {
+            Log.d(TAG, "slayButtonAnswerTasks: Something's Wrong; uAnswer couldn't assign!")
+            val toast = makeText(baseContext, "Please Enter a Valid Value", LENGTH_SHORT)
+            toast.setGravity(Gravity.CENTER, 0, 0)
+            toast.show()
+        }
+
+        val userRef = databaseReference.child(uid)
+        userRef.addListenerForSingleValueEvent(object:ValueEventListener{
+            override fun onCancelled(p0s: DatabaseError) {
+                Log.d(TAG, "slayButtonAnswerTasks: userRef Data couldn't read; No Internet Connection/No Response from database/Wrong datapath")
+            }
+            override fun onDataChange(p0s: DataSnapshot) {
+                if (p0s.exists()){
+                    var point = p0s.child("stages/$levelKey/point").value as Long
+                    val control = p0s.child("stages/$levelKey/control").value as Boolean
+                    if (control){
+                        if (uAnswer == answer) {
+                            var levelP = p0s.child("level").value as String
+                            var tPoints = p0s.child("points").value as Long
+                            points = tPoints
+                            try {
+                                mainHandler.removeCallbacks(updatePointTask)
+                            }catch (ex:Exception){ex.message}
+                            firstTimeCorrectAnswerDatabaseUpdates(point, tPoints, userRef)
+                            MainActivity().levelTagClarification()
+                            level = p0s.child("level").value as String
+                            if (levelP != level){
+                                when(level){
+                                    "Epimetheus" -> {}
+                                    "Atlas" -> {}
+                                    "Hyperion" -> {}
+                                    "Charon" -> {}
+                                    "Mimas" -> {}
+                                    "Triton" -> {}
+                                    "Callisto" -> {}
+                                    "Ganymede" -> {}
+                                    "Europa" -> {}
+                                    "Titan" -> {}
+                                    "Moon" -> {}
+                                    "Enceladus" -> {}
+                                    "Pluto" -> {}
+                                    "Mars" -> {}
+                                    else -> {
+                                        Log.d(TAG, "Level didn't change!")
+                                    }
+                                }
+                                removeStageRefValueEventListener()
+                            }
+                            starAnimation()
+
+                        } else {
+                            wrongAnswerDatabaseUpdates(point)
+                            removeStageRefValueEventListener()
+                        }
+                    }else{
+                        ifLevelControlIsFalse(uAnswer, answer)
+                    }
+                }else{
+                    Log.d(TAG, "slayButtonAnswerTasks: p0 does not exist")
+                    runBlocking(Dispatchers.Default) {
+                        synchronDBs(true)
+                    }
+                    slayButton(null)
+                }
+            }
+        })
+    }
+
     private fun firstTimeCorrectAnswerDatabaseUpdates(point:Long, tPoint:Long, userRef:DatabaseReference){
-        Log.d(TAG, "$levelKey: Answer ($uAnswer) is equal to $answer; Accepted!")
+        progressBarRandom.visibility = View.GONE
+        Log.d(TAG, "firstTimeCorrectAnswerDatabaseUpdates: $levelKey: Answer ($uAnswer) is " +
+                "equal to $answer; Accepted!")
         Thread{//update roomDB the answer is accepted
             val lastInd = levelKey.length
             val id = levelKey.substring(6, lastInd).toInt()
             val stageEnt = AppRoomEntity(id, levelKey, point.toInt(), false)
             db.stageDao().update(stageEnt)
-            Log.d(TAG, "roomDB UPDATED: answer is accepted")
+            Log.d(TAG, "firstTimeCorrectAnswerDatabaseUpdates: roomDB UPDATED: answer is accepted")
         }.start()
         stageRef.child("control").setValue(false)
-        var points = tPoint
-        points += point
-        userRef.child("points").setValue(points)
+        totalPointOfUser = tPoint
+        totalPointOfUser += point
+        userRef.child("points").setValue(totalPointOfUser)
+            .addOnSuccessListener { commentBubbleGlow() }
         Thread{ //RoomDB Total Points update
-            val totalPoints = AppRoomEntity(300000, "Total Points", points.toInt(), true)
+            val totalPoints = AppRoomEntity(300000, "Total Points",
+                totalPointOfUser.toInt(), true)
             db.stageDao().update(totalPoints)
         }.start()
-        Log.d(TAG, "DBs Total Points are updated from $tPoint as $points")
+        Log.d(TAG, "firstTimeCorrectAnswerDatabaseUpdates: DBs Total Points are updated " +
+                "from $tPoint as $totalPointOfUser")
         val toast = makeText(baseContext, getString(R.string.bravo), LENGTH_SHORT)
         toast.setGravity(Gravity.TOP, 0, 100)
         toast.show()
     }
 
     private fun wrongAnswerDatabaseUpdates(thePoint:Long){
+        buttAnswer.isClickable = false
+        progressBarRandom.visibility = View.GONE
         Thread{//Wrong answer => -100 points to roomDB
             val lastInd = levelKey.length
             val id = levelKey.substring(6, lastInd).toInt()
             var point = thePoint
             point -= 100
-            val stageEnt = AppRoomEntity(id, levelKey, point.toInt(), false)
+            updatePointTaskPoint = point.toInt()
+            Log.d(TAG, "wrongAnswerDatabaseUpdates: point is updated from $thePoint to $point")
+            val stageEnt = AppRoomEntity(id, levelKey, point.toInt(), true)
             db.stageDao().update(stageEnt)
-            stageRef.child("point").setValue(point)
-            Log.d(TAG, "roomDB UPDATED: answer is wrong; -100 points")
+            stageRef.child("point").setValue(point).addOnSuccessListener {void ->
+                buttAnswer.isClickable = true
+            }
+            Log.d(TAG, "wrongAnswerDatabaseUpdates: roomDB UPDATED: answer is wrong; -100 points")
         }.start()
-        Log.d(TAG, "Something's Wrong; $uAnswer != $answer!")
+        Log.d(TAG, "wrongAnswerDatabaseUpdates: Something's Wrong; $uAnswer != $answer!")
         val toast = makeText(baseContext, getString(R.string.wrong_answer), LENGTH_SHORT)
         toast.setGravity(Gravity.CENTER, 0, 100)
         toast.show()
     }
 
-    private fun ifLevelControlisFalse(uAnswer:Int, answer:Int){
+    private fun ifLevelControlIsFalse(uAnswer:Int, answer:Int){
         if(uAnswer == answer){
             starAnimation()
-
-            Log.d(TAG, "$levelKey: Answer ($uAnswer) is equal to $answer; " +
+            Log.d(TAG, "ifLevelControlIsFalse: $levelKey: Answer ($uAnswer) is equal to $answer; " +
                     "But no points added to the database")
             val toast = makeText(baseContext, getString(R.string.bravo), LENGTH_SHORT)
             toast.setGravity(Gravity.TOP, 0, 100)
             toast.show()
         }else{
-            Log.d(TAG, "Something's Wrong; $uAnswer != $answer!")
+            Log.d(TAG, "ifLevelControlIsFalse: Something's Wrong; $uAnswer != $answer!")
             val toast = makeText(baseContext, getString(R.string.come_on), LENGTH_SHORT)
             toast.setGravity(Gravity.CENTER, 0, 100)
             toast.show()
         }
+        progressBarRandom.visibility = View.GONE
+        removeStageRefValueEventListener()
+    }
+
+    private fun removeStageRefValueEventListener(){
         mValueEventListener?.let {
             stageRef.removeEventListener(it)
-            Log.d(TAG, "stageRef EventListener Removed!")
+            Log.d(TAG, "removeStageRefValueEventListener: stageRef EventListener Removed!")
         }
     }
 
@@ -773,6 +760,13 @@ class RandomActivity : AppCompatActivity() {
         ibComment.startAnimation(commAnim)
     }
 
+    private fun commentBubbleGlow(){
+        val animationDrawable = ibComment.background as AnimationDrawable
+        animationDrawable.setEnterFadeDuration(200)
+        animationDrawable.setExitFadeDuration(200)
+        animationDrawable.start()
+    }
+
     private fun starAnimation(){
         if(levelKey == "Stage Ufo"){
         }else{
@@ -794,6 +788,8 @@ class RandomActivity : AppCompatActivity() {
             imageShow.setOnClickListener{
                 window.dismiss()
             }
+            val tvTextTop = show.findViewById<TextView>(R.id.tv_text_top)
+            starAnimationInfoWhenUserOpenedTheNextStages(tvTextTop)
         }
 
         buttAnswer.visibility = View.INVISIBLE
@@ -806,6 +802,23 @@ class RandomActivity : AppCompatActivity() {
                 }
             })
         }
+    }
+
+    private fun starAnimationInfoWhenUserOpenedTheNextStages(topText:TextView){
+        Log.d(TAG, "starAnimationInfoWhenUserOpenedTheNextStages: points = $points  totalPointOfUser = $totalPointOfUser")
+        if ((points<24000 && totalPointOfUser>=24000) ||
+            (points<45000 && totalPointOfUser>=45000) ||
+            (points<70000 && totalPointOfUser>=70000) ||
+            (points<95000 && totalPointOfUser>=95000) ||
+            (points<120000 && totalPointOfUser>=120000))
+        {
+            topText.visibility = View.VISIBLE
+            val animationDrawable = topText.background as AnimationDrawable
+            animationDrawable.setEnterFadeDuration(200)
+            animationDrawable.setExitFadeDuration(200)
+            animationDrawable.start()
+        }
+        else{ topText.visibility = View.GONE }
     }
 
     private fun levelAdapt(level:String){
@@ -881,7 +894,7 @@ class RandomActivity : AppCompatActivity() {
         })
     }
 
-    fun synchDBsBlock(roomControl:Boolean, fireControl:Boolean, roomPoint:Long, firePoint:String){
+    fun synchDBsBlock(roomControl:Boolean, fireControl:Boolean, roomPoint:Long, firePoint:String, ifItisAnsweringAct:Boolean){
         runBlocking (Dispatchers.Default){
             val lastInd = levelKey.length
             val id =
@@ -891,77 +904,96 @@ class RandomActivity : AppCompatActivity() {
                     levelKey.substring(6, lastInd).toInt()
                 }
             if (roomControl && fireControl) {
-                stageRef.child("point").setValue(roomPoint)
-                Log.d(TAG, "roomDB control = $roomControl => fireDB point updated")
+                stageRef.child("point").setValue(roomPoint).addOnSuccessListener {void ->
+                    if (ifItisAnsweringAct){
+                        slayButtonAnswerTasks()
+                    }
+                }
+                Log.d(TAG, "synchDBsBlock: roomDB control = $roomControl => fireDB point updated")
             } else if (!roomControl && fireControl) {
                 stageRef.child("point").setValue(roomPoint)
-                stageRef.child("control").setValue(roomControl)
+                stageRef.child("control").setValue(roomControl).addOnSuccessListener {void ->
+                    if (ifItisAnsweringAct){
+                        slayButtonAnswerTasks()
+                    }
+                }
                 Log.d(
                     TAG,
-                    "roomDB control = $roomControl => fireDB point+control updated"
+                    "synchDBsBlock: roomDB control = $roomControl => fireDB point+control updated"
                 )
             } else if (roomControl && !fireControl) {
-
                 val stageEnt =
                     AppRoomEntity(id, levelKey, firePoint.toInt(), fireControl)
                 db.stageDao().update(stageEnt)
-                Log.d(TAG, "fireDB control = $fireControl => roomDB updated")
+                if (ifItisAnsweringAct){
+                    slayButtonAnswerTasks()
+                }
+                Log.d(TAG, "synchDBsBlock: fireDB control = $fireControl => roomDB updated")
             } else if (!roomControl && !fireControl) {
                 val stageEnt =
                     AppRoomEntity(id, levelKey, firePoint.toInt(), fireControl)
                 db.stageDao().update(stageEnt)
-                Log.d(TAG, "!roomControl && !fireControl => roomDB updated")
+                if (ifItisAnsweringAct){
+                    slayButtonAnswerTasks()
+                }
+                Log.d(TAG, "synchDBsBlock: !roomControl && !fireControl => roomDB updated")
             } else if (roomControl != null && fireControl == null) {
                 stageRef.child("point").setValue(roomPoint)
-                stageRef.child("control").setValue(roomControl)
+                stageRef.child("control").setValue(roomControl).addOnSuccessListener {void ->
+                    if (ifItisAnsweringAct){
+                        slayButtonAnswerTasks()
+                    }
+                }
                 Log.d(
                     TAG,
-                    "roomDB control = $roomControl => fireDB point+control updated"
+                    "synchDBsBlock: roomDB control = $roomControl => fireDB point+control updated"
                 )
             } else {
-                Log.d(TAG, "roomControl == null or Something's Wrong!")
+                if (ifItisAnsweringAct){
+                    slayButtonAnswerTasks()
+                }
+                Log.d(TAG, "synchDBsBlock: roomControl == null or Something's Wrong!")
             }
         }
     }
 
-    suspend fun synchronDBs(){
-        Log.d(TAG, "synchrondbs start")
+    suspend fun synchronDBs(ifItisAnsweringAct:Boolean){
+        Log.d(TAG, "synchronDBs: synchrondbs start")
 
         val mValueEventListener = object :ValueEventListener{
             override fun onCancelled(p0: DatabaseError) {
-                Log.d(TAG, "Listener:onCancelled")
+                Log.d(TAG, "synchronDBs: Listener:onCancelled")
             }
             override fun onDataChange(p0: DataSnapshot) {
                 Thread {
                     if (!p0.exists()){
-                        Log.d(TAG, "p0 does not exist")
+                        Log.d(TAG, "synchronDBs: p0 does not exist")
                         var dbStage = db.stageDao().getOne(levelKey)
                         val roomPoint = dbStage.db_stage_points.toLong()
                         val roomControl = dbStage.db_stage_control
                         stageRef.child("point").setValue(roomPoint)
-                        Log.d(TAG, "fireDB point set: $roomPoint")
+                        Log.d(TAG, "synchronDBs: fireDB point set: $roomPoint")
                         stageRef.child("control").setValue(roomControl)
                             .addOnSuccessListener {
-                                Log.d(TAG, "fireDB control set: $roomControl")
+                                Log.d(TAG, "synchronDBs: fireDB control set: $roomControl")
                                 val sPoint = p0.child("point").value
-                                Log.d(TAG, "sPoint = $sPoint")
+                                Log.d(TAG, "synchronDBs: sPoint = $sPoint")
                                 var firePoint = sPoint.toString()
-                                Log.d(TAG, "firePoint = $firePoint")
+                                Log.d(TAG, "synchronDBs: firePoint = $firePoint")
                                 val fireControl = p0.child("control").value as Boolean
-                                synchDBsBlock(roomControl,fireControl,roomPoint,firePoint)
+                                synchDBsBlock(roomControl,fireControl,roomPoint,firePoint, ifItisAnsweringAct)
                             }
                     }
                     else{
-                        Log.d(TAG, "p0 exists")
+                        Log.d(TAG, "synchronDBs: p0 exists")
                         var dbStage = db.stageDao().getOne(levelKey)
                         val roomPoint = dbStage.db_stage_points.toLong()
                         val roomControl = dbStage.db_stage_control
                         val sPoint = p0.child("point").value
-                        Log.d(TAG, "sPoint: $sPoint")
                         var firePoint = sPoint.toString()
-                        Log.d(TAG, "firePoint: $firePoint")
+                        Log.d(TAG, "synchronDBs: firePoint: $firePoint")
                         val fireControl = p0.child("control").value as Boolean
-                        synchDBsBlock(roomControl,fireControl,roomPoint,firePoint)
+                        synchDBsBlock(roomControl,fireControl,roomPoint,firePoint, ifItisAnsweringAct)
 
                     }
                 }.start()
@@ -977,6 +1009,7 @@ class RandomActivity : AppCompatActivity() {
     }
 
     fun showComments(view: View?) {
+        progressBarRandom.visibility = View.VISIBLE
         if (isRunning){
             mainHandler.removeCallbacks(updatePointTask)
         }else{
@@ -993,7 +1026,7 @@ class RandomActivity : AppCompatActivity() {
         val atf1 = AnimationUtils.loadAnimation(baseContext, R.anim.atf1)
 
         runBlocking(Dispatchers.Default) {
-            synchronDBs()
+            synchronDBs(false)
         }
 
         Thread.sleep(50)
@@ -1003,6 +1036,7 @@ class RandomActivity : AppCompatActivity() {
             override fun onDataChange(p0: DataSnapshot) {
                 val control = p0.child("control").value as Boolean
                 if (control){
+                    progressBarRandom.visibility = View.GONE
                     window.contentView = show
                     window.showAtLocation(buttAnswer,1,0,100)
                     show.startAnimation(atf1)
@@ -1028,23 +1062,17 @@ class RandomActivity : AppCompatActivity() {
                         }else{
                             Log.d(TAG, "isRunning false")
                         }
-                        mValueEventListener?.let { kopek ->
-                            stageRef.removeEventListener(kopek)
-                            Log.d(TAG, "stageRef EventListener Removed!")
-                        }
+                        removeStageRefValueEventListener()
                         window.dismiss()
                         startActivity(intent)
                     }
                     buttNo.setOnClickListener {
                         window.dismiss()
-                        mValueEventListener?.let { kopek ->
-                            stageRef.removeEventListener(kopek)
-                            Log.d(TAG, "stageRef EventListener Removed!")
-                        }
+                        removeStageRefValueEventListener()
                     }
                 }else{
                     Log.d(TAG, "Comments button pressed")
-
+                    progressBarRandom.visibility = View.GONE
                     startActivity(intent)
                 }
             }

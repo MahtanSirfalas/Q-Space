@@ -100,6 +100,7 @@ class MainActivity : AppCompatActivity() {
         databaseReference = database.reference.child("Users")
 
         val user = auth.currentUser
+
         uid = user!!.uid
         email = user.email.toString()
         user.reload()
@@ -179,6 +180,21 @@ class MainActivity : AppCompatActivity() {
         }
 
         super.onStart()
+    }
+
+    override fun onPause() {
+        super.onPause()
+        stopService(Intent(this, MusicService::class.java))
+    }
+
+    override fun onResume() {
+        super.onResume()
+        val settings = SettingsPrefs(this)
+        val bgMusic = settings.getSetting(playMusic)
+        if (bgMusic){
+            startService(Intent(this, MusicService::class.java))
+            bgMusicIsRunning = true
+        }
     }
 
     fun onStartAnimation(){
