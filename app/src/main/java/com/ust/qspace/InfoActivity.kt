@@ -35,7 +35,12 @@ class InfoActivity : AppCompatActivity() {
 
         auth = FirebaseAuth.getInstance()
 
-        tv_info_intro.text = getString(R.string.info_intro, uName)
+        try {
+            tv_info_intro.text = getString(R.string.info_intro, uName)
+        }catch (ex:Exception){
+            Log.w(TAG, "${ex.message}")
+            tv_info_intro.text = getString(R.string.i_dont_know_you_no_internet_player)
+        }
         tv_info_misvis.text = getString(R.string.info_mission) + "\n" + getString(R.string.info_vision)+
                 "\n\n" + getString(R.string.info_how)
     }

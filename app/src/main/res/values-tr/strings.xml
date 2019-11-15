@@ -124,6 +124,9 @@
     <string name="info_intro">Hoşgeldin %1$s. \n
         Q Space IQ testlerinden esinlenen matematik temelli bir oyundur.\n
     </string>
+    <string name="i_dont_know_you_no_internet_player">Merhaba, Oyuncu!, İnternetin olmadığı için seni tanımlayamıyorum!\n
+        Q Space IQ testlerinden esinlenen matematik temelli bir oyundur.\n
+    </string>
     <string name="info_mission">
         Misyon: Q Space, matematik temelli IQ testi çözerken eğlendirmeyi amaçlar.\n
     </string>

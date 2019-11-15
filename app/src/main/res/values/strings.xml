@@ -128,6 +128,9 @@
     <string name="info_intro">Hello %1$s. \n
         Q Space is a math based game which inspired from IQ tests.\n
     </string>
+    <string name="i_dont_know_you_no_internet_player">Hello, Player!, I don\'t know you because you don\'t have internet connection!\n
+        Q Space is a math based game which inspired from IQ tests.\n
+    </string>
     <string name="info_mission">
         Mission: Q Space aims to entertain people while solving some math based IQ tests.\n
     </string>
@@ -272,4 +275,5 @@ I may update our Terms and Conditions from time to time. Thus, you are advised t
 
 If you have any questions or suggestions about my Terms and Conditions, do not hesitate to contact me at qspace.touch@gmail.com.\n\n
     </string>
+
 </resources>

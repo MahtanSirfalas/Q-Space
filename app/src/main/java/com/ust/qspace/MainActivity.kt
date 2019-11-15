@@ -129,7 +129,6 @@ class MainActivity : AppCompatActivity() {
                 Log.d(TAG, "onCreate: avatar and uName assigned")
                 animationTop()
                 levelTagClarification()
-
             }
             override fun onCancelled(p0: DatabaseError) {
                 Log.d(TAG, "Something's Wrong: User information get FAILED")
@@ -178,23 +177,7 @@ class MainActivity : AppCompatActivity() {
                 bgMusicIsRunning = true
             }
         }
-
         super.onStart()
-    }
-
-    override fun onPause() {
-        super.onPause()
-        stopService(Intent(this, MusicService::class.java))
-    }
-
-    override fun onResume() {
-        super.onResume()
-        val settings = SettingsPrefs(this)
-        val bgMusic = settings.getSetting(playMusic)
-        if (bgMusic){
-            startService(Intent(this, MusicService::class.java))
-            bgMusicIsRunning = true
-        }
     }
 
     fun onStartAnimation(){
@@ -431,7 +414,6 @@ class MainActivity : AppCompatActivity() {
                 }else{Log.d(TAG, "animationTop: Not first run!")}
                 tvName.visibility = View.VISIBLE
                 tvName.startAnimation(rtl)
-
                 onStartAnimation()
                 synchronRoomDb()
             }
@@ -603,72 +585,22 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun synchronRoomDb(){
+        Log.d(TAG, "synchronRoomDb: Starts")
         val stagesReference= databaseReference.child("$uid/stages")
-
         stagesReference.addListenerForSingleValueEvent(object :ValueEventListener{
-            override fun onCancelled(p0: DatabaseError) {}
+            override fun onCancelled(p0: DatabaseError) {
+                Log.d(TAG, "synchronRoomDb: stageRef couldn't read...")
+            }
             override fun onDataChange(p0: DataSnapshot) {
                 if (p0.hasChildren()){
                     p0.children.forEach {
+                        Log.d(TAG, "synchronRoomDb: child = $it")
                         if (!it.child("/control").exists() && it.child("/point").exists()){
                             it.ref.child("/control").setValue(true).addOnSuccessListener { kopek ->
-                                Thread{
-                                    val dbStage = db.stageDao().getOne(it.key.toString())
-                                    val lastInd = it.key.toString().length
-                                    val id =
-                                        if (it.key.toString() == "Stage Ufo"){
-                                            1000
-                                        }else{
-                                            it.key.toString().substring(6, lastInd).toInt()
-                                        }
-                                    val fireName = it.key.toString()
-                                    val sPoint = it.child("/point").value
-                                    val firePoint = sPoint.toString().toInt()
-                                    var fireControl = it.child("/control").value as Boolean
-                                    val stageEnt = AppRoomEntity(id, fireName, firePoint, fireControl)
-
-                                    @Suppress("SENSELESS_COMPARISON")
-                                    if (dbStage != null){
-
-                                        val roomName = dbStage.db_stage_name
-                                        val roomPoint = dbStage.db_stage_points
-                                        val roomControl = dbStage.db_stage_control
-
-                                        if (roomName == fireName){
-                                            if (fireControl && roomControl && firePoint>roomPoint){
-                                                stagesReference.child("/$fireName/point").setValue(roomPoint)
-                                                Log.d(TAG, "synchronRoomDb: $fireName: Points updated in fireDB")
-                                            }
-                                            else if (fireControl && roomControl && firePoint<roomPoint){
-                                                db.stageDao().update(stageEnt)
-                                                Log.d(TAG, "synchronRoomDb: $fireName: Points updated in RoomDB")
-                                            }
-                                            else if (fireControl && !roomControl){
-                                                stagesReference.child("/$fireName/point").setValue(roomPoint)
-                                                stagesReference.child("/$fireName/control").setValue(roomControl)
-                                                Log.d(TAG, "synchronRoomDb: $fireName: Points + Control updated in fireDB")
-                                            }
-                                            else if (!fireControl && roomControl){
-                                                db.stageDao().update(stageEnt)
-                                                Log.d(TAG, "synchronRoomDb: $fireName: Points + Control updated in RoomDB")
-                                            }
-                                            else if (!fireControl && !roomControl){
-                                                db.stageDao().update(stageEnt)
-                                                Log.d(TAG, "synchronRoomDb: $fireName: Points + Control updated in RoomDB")
-                                            }
-                                            else{
-                                                Log.d(TAG, "synchronRoomDb: No need to update $fireName! $fireControl")
-                                            }
-                                        }
-                                        else{
-                                            Log.d(TAG, "synchronRoomDb: $fireName couldn't found in RoomDB = $roomName")
-                                        }
-                                    }else{
-                                        db.stageDao().insert(stageEnt)
-                                        Log.d(TAG, "synchronRoomDb: $fireName: $fireControl")
-                                    }
-                                }.start()
+                                synchronDBsIfElse(stagesReference, it)
                             }
+                        }else{
+                            synchronDBsIfElse(stagesReference, it)
                         }
                     }
                 }else{
@@ -685,6 +617,62 @@ class MainActivity : AppCompatActivity() {
                 }
             }
         })
+    }
+
+    private fun synchronDBsIfElse(stagesReference: DatabaseReference, it:DataSnapshot){
+        Thread{
+            val dbStage = db.stageDao().getOne(it.key.toString())
+            val lastInd = it.key.toString().length
+            val id =
+                if (it.key.toString() == "Stage Ufo"){
+                    1000
+                }else{
+                    it.key.toString().substring(6, lastInd).toInt()
+                }
+            val fireName = it.key.toString()
+            val sPoint = it.child("/point").value
+            val firePoint = sPoint.toString().toInt()
+            var fireControl = it.child("/control").value as Boolean
+            val stageEnt = AppRoomEntity(id, fireName, firePoint, fireControl)
+            @Suppress("SENSELESS_COMPARISON")
+            if (dbStage != null){
+                val roomName = dbStage.db_stage_name
+                val roomPoint = dbStage.db_stage_points
+                val roomControl = dbStage.db_stage_control
+                if (roomName == fireName){
+                    if (fireControl && roomControl && firePoint>roomPoint){
+                        stagesReference.child("/$fireName/point").setValue(roomPoint)
+                        Log.d(TAG, "synchronDBsIfElse: $fireName: Points updated in fireDB")
+                    }
+                    else if (fireControl && roomControl && firePoint<roomPoint){
+                        db.stageDao().update(stageEnt)
+                        Log.d(TAG, "synchronDBsIfElse: $fireName: Points updated in RoomDB")
+                    }
+                    else if (fireControl && !roomControl){
+                        stagesReference.child("/$fireName/point").setValue(roomPoint)
+                        stagesReference.child("/$fireName/control").setValue(roomControl)
+                        Log.d(TAG, "synchronDBsIfElse: $fireName: Points + Control updated in fireDB")
+                    }
+                    else if (!fireControl && roomControl){
+                        db.stageDao().update(stageEnt)
+                        Log.d(TAG, "synchronDBsIfElse: $fireName: Points + Control updated in RoomDB")
+                    }
+                    else if (!fireControl && !roomControl && roomPoint != firePoint){
+                        db.stageDao().update(stageEnt)
+                        Log.d(TAG, "synchronDBsIfElse: !!$fireName: Points + Control updated in RoomDB")
+                    }
+                    else{
+                        Log.d(TAG, "synchronDBsIfElse: No need to update $fireName! $fireControl")
+                    }
+                }
+                else{
+                    Log.d(TAG, "synchronDBsIfElse: $fireName couldn't found in RoomDB = $roomName")
+                }
+            }else{
+                db.stageDao().insert(stageEnt)
+                Log.d(TAG, "synchronDBsIfElse: $fireName: $fireControl inserted to RoomDB")
+            }
+        }.start()
     }
 
     override fun onBackPressed() {

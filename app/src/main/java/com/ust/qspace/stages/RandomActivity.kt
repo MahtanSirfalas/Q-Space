@@ -314,7 +314,10 @@ class RandomActivity : AppCompatActivity() {
                 "equal to $answer; Accepted!")
         Thread{//update roomDB the answer is accepted
             val lastInd = levelKey.length
-            val id = levelKey.substring(6, lastInd).toInt()
+            val id =
+                if (levelKey == "Stage Ufo"){
+                    1000
+                }else{ levelKey.substring(6, lastInd).toInt() }
             val stageEnt = AppRoomEntity(id, levelKey, point.toInt(), false)
             db.stageDao().update(stageEnt)
             Log.d(TAG, "firstTimeCorrectAnswerDatabaseUpdates: roomDB UPDATED: answer is accepted")
@@ -341,7 +344,10 @@ class RandomActivity : AppCompatActivity() {
         progressBarRandom.visibility = View.GONE
         Thread{//Wrong answer => -100 points to roomDB
             val lastInd = levelKey.length
-            val id = levelKey.substring(6, lastInd).toInt()
+            val id =
+                if (levelKey == "Stage Ufo"){
+                    1000
+                }else{ levelKey.substring(6, lastInd).toInt() }
             var point = thePoint
             point -= 100
             updatePointTaskPoint = point.toInt()
