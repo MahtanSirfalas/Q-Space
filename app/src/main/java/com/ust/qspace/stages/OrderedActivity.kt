@@ -721,14 +721,12 @@ class OrderedActivity : AppCompatActivity() {
                 ib_back.startAnimation(fadein)
                 ib_next.startAnimation(fadein)
                 group_under.visibility = View.VISIBLE
-                tv_under.text = """14                       7                        7
+                tv_under.text = """
+                    |14                       7                        7
                     |
+                    |5                        8                       21
                     |
-                    |5                        8                        21
-                    |
-                    |
-                    |19                         ?                        12
-                    |
+                    |19                        ?                      12
                 """.trimMargin()
                 tv_under1.text = getString(R.string.missing_number)
                 val param = tv_under1.layoutParams as ConstraintLayout.LayoutParams

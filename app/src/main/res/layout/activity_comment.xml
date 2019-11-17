@@ -6,13 +6,25 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:context=".CommentActivity" android:background="@color/colorPrimaryDark">
+
+    <ImageView
+            android:id="@+id/qSummary"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toTopOf="@id/recycleComment"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:adjustViewBounds="true"
+            android:scaleType="centerCrop"
+            app:srcCompat="@drawable/bg_info" />
     <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recycleComment"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             android:layout_width="0dp"
             android:layout_height="0dp" android:background="@color/colorPrimaryDark"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/qSummary"
             app:layout_constraintBottom_toTopOf="@+id/sendCom" app:layout_constraintEnd_toEndOf="parent">
     </androidx.recyclerview.widget.RecyclerView>
 

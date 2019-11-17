@@ -2,10 +2,14 @@ package com.ust.qspace
 
 import android.annotation.SuppressLint
 import android.annotation.TargetApi
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.graphics.Color
+import android.net.Uri
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.provider.MediaStore
 import android.util.Log
 import android.view.Gravity
 import android.view.View
@@ -14,6 +18,7 @@ import android.widget.Button
 import android.widget.PopupWindow
 import android.widget.TextView
 import android.widget.Toast.*
+import androidx.core.graphics.BitmapCompat
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
@@ -56,6 +61,7 @@ class CommentActivity : AppCompatActivity() {
         levelKey = intent.getStringExtra("levelKey")
         tvNick = intent.getStringExtra("tvName")
 
+        levelAdapt(levelKey)
         fetchComments()
 
         val window = PopupWindow(this)
@@ -268,7 +274,6 @@ class CommentActivity : AppCompatActivity() {
                 }
                 recycleComment.adapter = adapter
             }
-
             override fun onCancelled(p0: DatabaseError) {
                 Log.d(TAG, "WARNING: Comment Fetching FAILED!")
                 val toast = makeText(baseContext, getString(R.string.listener_cancelled), LENGTH_LONG)
@@ -276,6 +281,153 @@ class CommentActivity : AppCompatActivity() {
                 toast.show()
             }
         })
+    }
+
+    private fun levelAdapt(level: String) {
+        val fadein = AnimationUtils.loadAnimation(this, R.anim.abc_fade_in)
+        when (level) {
+            "Stage 1" -> {
+                Picasso.get().load("https://firebasestorage.googleapis.com/v0/b/mathslayer-2771e.appspot.com/o/stages%2Fstage1.png?alt=media&token=af22cfdc-27c3-46d0-9583-ee0ccabba881").into(qSummary)
+                qSummary.startAnimation(fadein)
+                Log.d(TAG, "$level adaptation is done successfully!")
+            }
+            "Stage 2" -> {
+                Picasso.get().load("https://firebasestorage.googleapis.com/v0/b/mathslayer-2771e.appspot.com/o/stages%2Fstage2.png?alt=media&token=8ca7402b-48a5-4bdc-b0e6-ddd6112d1caa").into(qSummary)
+                qSummary.startAnimation(fadein)
+                Log.d(TAG, "$level adaptation is done successfully!")
+            }
+            "Stage 4" -> {
+                Picasso.get().load("https://firebasestorage.googleapis.com/v0/b/mathslayer-2771e.appspot.com/o/stages%2Fstage4.png?alt=media&token=9da5036a-1f2a-4ad8-9e0b-4a31748e9cdd").into(qSummary)
+                qSummary.startAnimation(fadein)
+                Log.d(TAG, "$level adaptation is done successfully!")
+            }
+            "Stage 5" -> {
+                Picasso.get().load("https://firebasestorage.googleapis.com/v0/b/mathslayer-2771e.appspot.com/o/stages%2Fstage5.png?alt=media&token=fe278d9d-b1b1-4d9c-8b73-3ff7e5e6a465").into(qSummary)
+                qSummary.startAnimation(fadein)
+                Log.d(TAG, "$level adaptation is done successfully!")
+            }
+            "Stage 6" -> {
+                Picasso.get().load("https://firebasestorage.googleapis.com/v0/b/mathslayer-2771e.appspot.com/o/stages%2Fstage6.png?alt=media&token=085ae9c3-e1b9-4038-b214-32ec224f8b32").into(qSummary)
+                qSummary.startAnimation(fadein)
+                Log.d(TAG, "$level adaptation is done successfully!")
+            }
+            "Stage 7" -> {
+                Picasso.get().load("https://firebasestorage.googleapis.com/v0/b/mathslayer-2771e.appspot.com/o/stages%2Fstage7.png?alt=media&token=4eba51d5-ffb8-4e67-9c87-3e9af2ee9c61").into(qSummary)
+                qSummary.startAnimation(fadein)
+                Log.d(TAG, "$level adaptation is done successfully!")
+            }
+            "Stage 9" -> {
+                Picasso.get().load("https://firebasestorage.googleapis.com/v0/b/mathslayer-2771e.appspot.com/o/stages%2Fstage9.png?alt=media&token=8facb0bb-9b2a-44a0-8684-3fa6629b3afd").into(qSummary)
+                qSummary.startAnimation(fadein)
+                Log.d(TAG, "$level adaptation is done successfully!")
+            }
+            "Stage 10"-> {
+                Picasso.get().load("https://firebasestorage.googleapis.com/v0/b/mathslayer-2771e.appspot.com/o/stages%2Fstage10.png?alt=media&token=04c3733e-faa5-48a5-bfcc-9906d1a92f1b").into(qSummary)
+                qSummary.startAnimation(fadein)
+                Log.d(TAG, "$level adaptation is done successfully!")
+            }
+            "Stage 11"-> {
+                Picasso.get().load("https://firebasestorage.googleapis.com/v0/b/mathslayer-2771e.appspot.com/o/stages%2Fstage11.png?alt=media&token=a165710c-76cc-4bc9-86e8-d49a06cbe193").into(qSummary)
+                qSummary.startAnimation(fadein)
+                Log.d(TAG, "$level adaptation is done successfully!")
+            }
+            "Stage 12"-> {
+                Picasso.get().load("https://firebasestorage.googleapis.com/v0/b/mathslayer-2771e.appspot.com/o/stages%2Fstage12.png?alt=media&token=19dc2561-6d78-4568-a093-75f5a736ad00").into(qSummary)
+                qSummary.startAnimation(fadein)
+                Log.d(TAG, "$level adaptation is done successfully!")
+            }
+            "Stage 13"-> {
+                Picasso.get().load("https://firebasestorage.googleapis.com/v0/b/mathslayer-2771e.appspot.com/o/stages%2Fstage13.png?alt=media&token=7108ec0d-c027-4f3f-adbf-6b4199590ad5").into(qSummary)
+                qSummary.startAnimation(fadein)
+                Log.d(TAG, "$level adaptation is done successfully!")
+            }
+            "Stage 14"-> {
+                Picasso.get().load("https://firebasestorage.googleapis.com/v0/b/mathslayer-2771e.appspot.com/o/stages%2Fstage14.png?alt=media&token=4da2ef06-3fe3-45cb-8635-8bcf5a3a3bd6").into(qSummary)
+                qSummary.startAnimation(fadein)
+                Log.d(TAG, "$level adaptation is done successfully!")
+            }
+            "Stage 15"-> {
+                Picasso.get().load("https://firebasestorage.googleapis.com/v0/b/mathslayer-2771e.appspot.com/o/stages%2Fstage15.png?alt=media&token=8adea02c-8bd1-462b-a966-e7f926f084d1").into(qSummary)
+                qSummary.startAnimation(fadein)
+                Log.d(TAG, "$level adaptation is done successfully!")
+            }
+            "Stage 16"-> {
+                Picasso.get().load("https://firebasestorage.googleapis.com/v0/b/mathslayer-2771e.appspot.com/o/stages%2Fstage16.png?alt=media&token=9b02b3eb-fd73-4a0c-a5a7-0d06e5d35573").into(qSummary)
+                qSummary.startAnimation(fadein)
+                Log.d(TAG, "$level adaptation is done successfully!")
+            }
+            "Stage 17"-> {
+                Picasso.get().load("https://firebasestorage.googleapis.com/v0/b/mathslayer-2771e.appspot.com/o/stages%2Fstage17.png?alt=media&token=0e1120d0-830b-425a-a330-4374001fcbe9").into(qSummary)
+                qSummary.startAnimation(fadein)
+                Log.d(TAG, "$level adaptation is done successfully!")
+            }
+            "Stage 18"-> {
+                Picasso.get().load("https://firebasestorage.googleapis.com/v0/b/mathslayer-2771e.appspot.com/o/stages%2Fstage18.png?alt=media&token=11c022ad-1e9b-4b10-8a64-c2a26241ab05").into(qSummary)
+                qSummary.startAnimation(fadein)
+                Log.d(TAG, "$level adaptation is done successfully!")
+            }
+            "Stage 19"-> {
+                /*var imageUri = Uri.parse(
+                    MediaStore.Images.Media.insertImage(this.contentResolver, BitmapFactory.decodeResource(resources, R.drawable.ic_table), null, null)
+                )
+                Picasso.get().load(imageUri).into(qSummary)
+                qSummary.startAnimation(fadein)*/
+                qSummary.visibility = View.GONE
+                Log.d(TAG, "$level adaptation is done successfully!")
+            }
+            "Stage 20"-> {
+                qSummary.visibility = View.GONE
+                Log.d(TAG, "$level adaptation is done successfully!")
+            }
+            "Stage 21"-> {
+                Picasso.get().load("https://firebasestorage.googleapis.com/v0/b/mathslayer-2771e.appspot.com/o/stages%2Fstage21.png?alt=media&token=84edde33-c653-4edb-808e-98024b46d9c8").into(qSummary)
+                qSummary.startAnimation(fadein)
+                Log.d(TAG, "$level adaptation is done successfully!")
+            }
+            "Stage 22"-> {
+                qSummary.visibility = View.GONE
+                Log.d(TAG, "$level adaptation is done successfully!")
+            }
+            "Stage 24"-> {
+                Picasso.get().load("https://firebasestorage.googleapis.com/v0/b/mathslayer-2771e.appspot.com/o/stages%2Fstage24.png?alt=media&token=cc2061a4-fb35-416f-bad5-bdf68822d2a0").into(qSummary)
+                qSummary.startAnimation(fadein)
+                Log.d(TAG, "$level adaptation is done successfully!")
+            }
+            "Stage 25"-> {
+                Picasso.get().load("https://firebasestorage.googleapis.com/v0/b/mathslayer-2771e.appspot.com/o/stages%2Fstage25.png?alt=media&token=04239edf-80f1-4dae-8dfb-9a3808ba1251").into(qSummary)
+                qSummary.startAnimation(fadein)
+                Log.d(TAG, "$level adaptation is done successfully!")
+            }
+            "Stage 26"-> {
+                Picasso.get().load("https://firebasestorage.googleapis.com/v0/b/mathslayer-2771e.appspot.com/o/stages%2Fstage26.png?alt=media&token=75a28271-effb-459a-9b60-c671a0f93db6").into(qSummary)
+                qSummary.startAnimation(fadein)
+                Log.d(TAG, "$level adaptation is done successfully!")
+            }
+            "Stage 27"-> {
+                Picasso.get().load("https://firebasestorage.googleapis.com/v0/b/mathslayer-2771e.appspot.com/o/stages%2Fstage27.png?alt=media&token=d7e9792f-8f85-4f99-a599-0888e84da2e3").into(qSummary)
+                qSummary.startAnimation(fadein)
+                Log.d(TAG, "$level adaptation is done successfully!")
+            }
+            "Stage 28"-> {
+                Picasso.get().load("https://firebasestorage.googleapis.com/v0/b/mathslayer-2771e.appspot.com/o/stages%2Fstage28.png?alt=media&token=956ec2f1-2dd1-4763-93b1-3285f557ea5c").into(qSummary)
+                qSummary.startAnimation(fadein)
+                Log.d(TAG, "$level adaptation is done successfully!")
+            }
+            "Stage 29"-> {
+                Picasso.get().load("https://firebasestorage.googleapis.com/v0/b/mathslayer-2771e.appspot.com/o/stages%2Fstage29.png?alt=media&token=7ee11bc7-ca2e-4d0f-9fa4-a828bb5ba109").into(qSummary)
+                qSummary.startAnimation(fadein)
+                Log.d(TAG, "$level adaptation is done successfully!")
+            }
+            "Stage 30"-> {
+                Picasso.get().load("https://firebasestorage.googleapis.com/v0/b/mathslayer-2771e.appspot.com/o/stages%2Fstage30.png?alt=media&token=ea102fcb-e600-4c7e-b9c9-8718383cd024").into(qSummary)
+                qSummary.startAnimation(fadein)
+                Log.d(TAG, "$level adaptation is done successfully!")
+            }
+            else -> {
+                qSummary.visibility = View.GONE
+                Log.d(TAG, "Something's Wrong; levelAdapt is failed!")
+            }
+        }
     }
 
     override fun onBackPressed(){

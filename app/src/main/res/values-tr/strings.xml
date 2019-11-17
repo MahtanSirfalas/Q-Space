@@ -100,6 +100,7 @@
     <string name="pw">get the obvious stuff out of the way</string>
     <string name="congratulations">Tebrikler!!!</string>
     <string name="show_comments">Yorumlar</string>
+    <string name="what_is_your_solution">Yorum Yap</string>
     <string name="give_up_read_comments">Yorumları şu an okumak isterseniz, bu sorudan kazanacağınız puanları feda
         edeceksiniz, emin misiniz?
     </string>
@@ -147,7 +148,7 @@
         İyi Eğlenceler!
     </string>
     <string name="info_faq_see_comments">\"Yorumları nasıl görebilir ve yorum yapabilirim?\"</string>
-    <string name="info_faq_see_comments_answer">Her soru sayfasının sağ altında hareketli buton ile fakat bu butonu kullanabilmek için ya soruyu doğru cevaplamış ya da bu aşamadan kazanacağınız puanlardan feragat etmiş olmanız gerekmektedir.</string>
+    <string name="info_faq_see_comments_answer">Her soru sayfasının sağ altında hareketli buton ile, fakat bu butonu kullanabilmek için soruyu doğru cevaplamış ya da bu aşamadan kazanacağınız puanlardan feragat etmiş olmanız gerekmektedir.</string>
     <string name="info_faq_upvote">\"Bir yoruma destek oyu vermek istiyorum nasıl yaparım?\"</string>
     <string name="info_faq_upvote_answer">İlgili yoruma uzun basarak(dokunarak). Aklınızda bulunsun kendi yorumunuza destek oyu veremezsiniz.</string>
     <string name="info_faq_undo_upvote">\"Destek oyumu nasıl geri çekerim?\"</string>
@@ -162,7 +163,7 @@
     <string name="info_faq_should_comment_answer">Paylaşmanın mutluluğu dışında mı? Yorumunuz ne kadar destek oyu toplarsa o kadar puan kazanırsınız.</string>
     <string name="info_faq_for_kids">\"Oyun çocuklar için uygun mudur?\"</string>
     <string name="info_faq_for_kids_answer">Tabii ki uygundur hatta bu sebeple kullancılar arası özel mesaj ve alt yorum etkileşimi hiç bir zaman eklenmeyecektir?</string>
-    <string name="info_faq_ufo">\"Ana menüdeki ufoda neyin nesi?\"</string>
+    <string name="info_faq_ufo">\"Ana menüdeki ufo da neyin nesi?\"</string>
     <string name="info_faq_ufo_answer">Kendiniz sorun!</string>
     <string name="info_faq_suggest_review">\"Soru önerimin incelendiğini nasıl anlarım?\"</string>
     <string name="info_faq_suggest_review_answer">Soru öner sayfasını açtığınızda önerdiğiniz soru taslağı yerine boş yazım alanı görürsünüz.</string>
