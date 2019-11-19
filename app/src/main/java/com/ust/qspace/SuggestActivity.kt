@@ -31,8 +31,10 @@ import com.xwray.groupie.ViewHolder
 
 import kotlinx.android.synthetic.main.activity_suggest.*
 import kotlinx.android.synthetic.main.layout_list_q_adapt.view.*
-import java.time.LocalDateTime
-import java.time.format.DateTimeFormatter
+import java.text.SimpleDateFormat
+//import java.time.LocalDateTime
+//import java.time.format.DateTimeFormatter
+import java.util.*
 
 private lateinit var auth: FirebaseAuth
 private lateinit var database: FirebaseDatabase
@@ -41,9 +43,12 @@ private lateinit var suggestRef: DatabaseReference
 @TargetApi(Build.VERSION_CODES.O)
 class SuggestActivity : AppCompatActivity() {
     val TAG = "SuggestActivity"
-    val now = LocalDateTime.now()
+    lateinit var now:Date
+    lateinit var date:String
+    lateinit var time:String
+    /*val now = LocalDateTime.now()
     var date = DateTimeFormatter.ofPattern("yyyy:MM:dd")
-    var time = DateTimeFormatter.ofPattern("HH:mm:ss")
+    var time = DateTimeFormatter.ofPattern("HH:mm:ss")*/
     lateinit var mAdView : AdView
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -86,8 +91,11 @@ class SuggestActivity : AppCompatActivity() {
                     etSuggest.text.clear()
 
                 }else{
+                    now = getCurrentDateTime()
+                    date = now.turnToString("yyyy/MM/dd")
+                    time = now.turnToString("HH:mm:ss")
                     suggestRef.child("question").setValue(etSuggest.text.toString())
-                    suggestRef.child("time").setValue(date.format(now)+" | "+time.format(now))
+                    suggestRef.child("time").setValue("$date | $time")
                     suggestRef.child("nickName").setValue(uName)
                     showSuggest(null)
                     Log.d(TAG, "SEND pressed; question saved")
@@ -108,6 +116,15 @@ class SuggestActivity : AppCompatActivity() {
             showSuggest(null)
             suggests_tab.visibility = View.GONE
         }
+    }
+
+    fun Date.turnToString(format: String, locale: Locale = Locale.getDefault()): String {
+        val formatter = SimpleDateFormat(format, locale)
+        return formatter.format(this)
+    }
+
+    fun getCurrentDateTime(): Date {
+        return Calendar.getInstance().time
     }
 
     private fun showSuggest(view: View?){

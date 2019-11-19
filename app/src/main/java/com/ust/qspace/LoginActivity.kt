@@ -1,8 +1,10 @@
 package com.ust.qspace
 
 import android.app.Activity
+import android.content.Context
 import android.content.Intent
 import android.graphics.drawable.AnimationDrawable
+import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.Editable
@@ -17,6 +19,7 @@ import android.widget.ScrollView
 import android.widget.Toast
 import android.widget.Toast.*
 import androidx.annotation.ContentView
+import androidx.core.content.ContextCompat
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
@@ -52,6 +55,7 @@ class LoginActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
+
 
         val scrollView = findViewById<ScrollView>(R.id.layoutbg)
         val animationDrawable = scrollView.background as AnimationDrawable
@@ -148,9 +152,6 @@ class LoginActivity : AppCompatActivity() {
             .build()
         //End of config_signin
         googleSignInClient = GoogleSignIn.getClient(this, gso)
-        buttGoogle.setOnClickListener {
-            signIn()
-        }
 
     }
     public override fun onStart() {
@@ -346,7 +347,7 @@ class LoginActivity : AppCompatActivity() {
     }
 
     //GOOGLE
-    private fun signIn() {
+    fun signInWithGoogle(view: View) {
         progressBarLogin.visibility = View.VISIBLE
         val signInIntent = googleSignInClient.signInIntent
         startActivityForResult(signInIntent, RC_SIGN_IN)

@@ -24,6 +24,7 @@
     <string name="verify_email_sent">Doğrulama e-postası gönderildi</string>
     <string name="reset_email_sent">Şifre resetleme postası %1$s adresine gönderildi!</string>
     <string name="reset_email_failed">Resetleme postası gönderilemedi; üyelik posta adresinizi kontrol edin!</string>
+    <string name="reset_password">Şifre Sıfırla!</string>
     <!-- Main Activity -->
     <string name="tv_warn">E-mail adresini doğrula..!</string>
     <string name="play">Oyna</string>

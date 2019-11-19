@@ -1,15 +1,11 @@
 package com.ust.qspace
 
-import android.animation.AnimatorSet
-import android.animation.ObjectAnimator
-import android.animation.PropertyValuesHolder
-import android.animation.ValueAnimator
+import android.animation.*
 import android.annotation.TargetApi
 import android.content.Intent
 import android.graphics.drawable.AnimationDrawable
 import android.media.MediaPlayer
-import android.os.Build
-import android.os.Bundle
+import android.os.*
 import android.util.Log
 import android.view.*
 import android.view.animation.*
@@ -20,7 +16,10 @@ import android.widget.Toast.LENGTH_LONG
 import android.widget.Toast.makeText
 import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.core.animation.addPauseListener
 import androidx.core.animation.doOnEnd
+import androidx.core.animation.doOnPause
+import androidx.core.animation.doOnRepeat
 import androidx.room.Room
 import com.google.android.gms.ads.AdListener
 import com.google.android.gms.ads.AdRequest
@@ -32,6 +31,7 @@ import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.tasks.Task
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.database.*
 import com.squareup.picasso.Picasso
 import com.ust.qspace.models.SettingsPrefs
@@ -45,6 +45,7 @@ import com.ust.qspace.trees.PrivacyActivity
 import com.ust.qspace.trees.SettingsActivity
 import com.ust.qspace.trees.TermsActivity
 import kotlinx.android.synthetic.main.activity_main.*
+import java.lang.Exception
 
 private lateinit var firebaseAnalytics: FirebaseAnalytics
 private lateinit var auth: FirebaseAuth
@@ -70,14 +71,20 @@ lateinit var ufoPauseAnimSet: AnimatorSet
 class MainActivity : AppCompatActivity() {
 
     val TAG = "MainActivity"
+    var uidAssignedCheck = false
     private lateinit var googleSignInClient: GoogleSignInClient
     private lateinit var mediaPlayer: MediaPlayer
     private lateinit var mInterstitialAd: InterstitialAd
+    private lateinit var firstRunWindow: PopupWindow
+    lateinit var userUidEmailAssignTask: Runnable
+    lateinit var mainHandler: Handler
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         setSupportActionBar(toolbar)
+
+        mainHandler = Handler(Looper.getMainLooper())
 
         MobileAds.initialize(this) {}//adMob initialize
         //InterstitialAd part
@@ -101,67 +108,16 @@ class MainActivity : AppCompatActivity() {
 
         val user = auth.currentUser
 
-        uid = user!!.uid
-        email = user.email.toString()
-        user.reload()
-
-        Thread{
-            db=
-                Room.databaseBuilder(
-                    applicationContext,
-                    AppRoomDatabase::class.java,
-                    "RoomDB:$uid"
-                ).build()
-        }.start()
-
-        val userReference = databaseReference.child(uid)
-
-        /*userName.text  = userReference.orderByChild("nickName").toString()*/
-
-
-        userReference.addListenerForSingleValueEvent(object : ValueEventListener {
-            override fun onDataChange(p0: DataSnapshot) {
-                uName = p0.child("nickName").value as String
-                avatar = p0.child("avatar").value as String
-                points = p0.child("points").value as Long
-                Picasso.get().load(avatar).into(iv_avatar_circle)
-                tvName.text = uName
-                Log.d(TAG, "onCreate: avatar and uName assigned")
-                animationTop()
-                levelTagClarification()
-            }
-            override fun onCancelled(p0: DatabaseError) {
-                Log.d(TAG, "Something's Wrong: User information get FAILED")
-                val toast = makeText(baseContext, getString(R.string.listener_cancelled), LENGTH_LONG)
-                toast.setGravity(Gravity.CENTER, 0, 0)
-                toast.show()
-            }
-        })
+        userUidEmailAssignTaskHandling(user)
         //sayaç burada yatmaktadır yiğen
 //        view_timer.base = SystemClock.elapsedRealtime()
 //        view_timer.start()
 //
 //        buttDeneme.setOnClickListener {
 //            view_timer.stop()
-//            var zaman = view_timer.text.toString()
+//            var zaman = view_timer.text.turnToString()
 //            textDeneme.text = zaman
 //        }
-        val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-            .requestIdToken(getString(R.string.default_web_client_id))
-            .requestEmail()
-            .build()
-        googleSignInClient = GoogleSignIn.getClient(this, gso)
-        commsReference = database.reference.child("Posts")
-        //Verified or Not Warning!
-        verifiedCheck = user.isEmailVerified
-        if (verifiedCheck){
-            Log.d(TAG, "verifiedCheck = ${user.isEmailVerified}")
-            groupWarn.visibility = View.GONE
-        }else{
-            Log.d(TAG, "verifiedCheck = ${user.isEmailVerified}")
-            groupWarn.visibility = View.VISIBLE
-        }
-
         mediaPlayer = MediaPlayer.create(this, R.raw.ufo)
         mediaPlayer.isLooping = false
         mediaPlayer.setVolume(60f, 60f)
@@ -180,8 +136,114 @@ class MainActivity : AppCompatActivity() {
         super.onStart()
     }
 
+    private fun userUidEmailAssignTaskHandling(user: FirebaseUser?){
+        userUidEmailAssignTask = object : Runnable{
+            override fun run() {
+                var tryCounts = 1
+                userUidEmailAssignReload(user)
+                if (user == null && tryCounts<3){
+                    tryCounts++
+                    Log.d(TAG, "userUidEmailAssignTaskHandling: postDelayed || tryCounts = $tryCounts")
+                    mainHandler.postDelayed(this, 3000)
+                }else{
+                    if (!uidAssignedCheck){
+                        mainHandler.removeCallbacks(userUidEmailAssignTask)
+                        signOut()
+                        Log.d(TAG, "userUidEmailAssignTaskHandling: removedCallback after 3 tries called signOut")
+                    }
+                }
+            }
+        }
+        mainHandler.post(userUidEmailAssignTask)
+    }
+
+    private fun userUidEmailAssignReload(user: FirebaseUser?){
+        try{//uid kotlin.nullPointException
+            uid = user!!.uid
+            email = user.email.toString()
+            user.reload()
+            if (uid != null){
+                uidAssignedCheck = true
+                Log.d(TAG, "userUidEmailAssignReload: uidAssignedCheck = true ")
+            }
+        }catch (ex:Exception){
+            Log.d(TAG, "userUidEmailAssignReload: Assign ex: $ex")
+        }
+        if (uidAssignedCheck){
+            buildRoomDBIfUserIdAssigned()
+            parseUserProfileInformationsFromFirebase()
+            checkIfUserVerifiedOrNot(user)  //Verified or Not Warning!
+            googleSignInOptionsClient()
+            try {
+                mainHandler.removeCallbacks(userUidEmailAssignTask)
+            }catch (ex:Exception){
+                Log.d(TAG, "userUidEmailAssignReload: removeCallBacks ex: $ex")
+            }
+
+        }
+    }
+
+    private fun buildRoomDBIfUserIdAssigned(){
+        Thread{
+            db=
+                Room.databaseBuilder(
+                    applicationContext,
+                    AppRoomDatabase::class.java,
+                    "RoomDB:$uid"
+                ).build()
+        }.start()
+
+    }
+
+    private fun parseUserProfileInformationsFromFirebase(){
+        val userReference = databaseReference.child(uid)
+        /*userName.text  = userReference.orderByChild("nickName").turnToString()*/
+        userReference.addListenerForSingleValueEvent(object : ValueEventListener {
+            override fun onDataChange(p0: DataSnapshot) {
+                uName = p0.child("nickName").value as String
+                avatar = p0.child("avatar").value as String
+                points = p0.child("points").value as Long
+                Picasso.get().load(avatar).into(iv_avatar_circle)
+                tvName.text = uName
+                Log.d(TAG, "onCreate: avatar and uName assigned")
+                animationTop()
+                levelTagClarification()
+            }
+            override fun onCancelled(p0: DatabaseError) {
+                Log.d(TAG, "Something's Wrong: User information get FAILED")
+                val toast = makeText(baseContext, getString(R.string.listener_cancelled), LENGTH_LONG)
+                toast.setGravity(Gravity.CENTER, 0, 0)
+                toast.show()
+            }
+        })
+    }
+
+    private fun checkIfUserVerifiedOrNot(user: FirebaseUser?){
+        if (user != null) {////uid kotlin.nullPointException addings
+            verifiedCheck = user.isEmailVerified
+        }
+        if (verifiedCheck){
+            Log.d(TAG, "verifiedCheck = ${user?.isEmailVerified}")
+            groupWarn.visibility = View.GONE
+        }else{
+            Log.d(TAG, "verifiedCheck = ${user?.isEmailVerified}")
+            groupWarn.visibility = View.VISIBLE
+        }
+    }
+
+    private fun googleSignInOptionsClient(){
+        val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+            .requestIdToken(getString(R.string.default_web_client_id))
+            .requestEmail()
+            .build()
+        googleSignInClient = GoogleSignIn.getClient(this, gso)
+        commsReference = database.reference.child("Posts")
+    }
+
     fun onStartAnimation(){
         val ufo = findViewById<ConstraintLayout>(R.id.ufo_layout)
+        var transX = -300f
+        var transX1 = -500f
         ufo.visibility = View.VISIBLE
         //ObjectAnimator
         val scaleX = PropertyValuesHolder.ofFloat(View.SCALE_X,0f,1f)
@@ -191,12 +253,12 @@ class MainActivity : AppCompatActivity() {
             repeatCount = ValueAnimator.INFINITE
             repeatMode = ValueAnimator.REVERSE
         }
-        val translationX = ObjectAnimator.ofFloat(ufo,View.TRANSLATION_X, -300f).apply {
+        val translationX = ObjectAnimator.ofFloat(ufo,View.TRANSLATION_X, transX).apply {
             duration = 10000
             repeatCount = ValueAnimator.INFINITE
             repeatMode = ValueAnimator.REVERSE
         }
-        val translationX1 = ObjectAnimator.ofFloat(ufo, View.TRANSLATION_X, -500f).apply {
+        val translationX1 = ObjectAnimator.ofFloat(ufo, View.TRANSLATION_X, transX1).apply {
             duration = 10000
             repeatCount = ValueAnimator.INFINITE
             repeatMode = ValueAnimator.REVERSE
@@ -213,6 +275,34 @@ class MainActivity : AppCompatActivity() {
         }
         animSet.start()
 
+        fun doTranslationVariationOnRepeat(){
+            translationY.doOnRepeat {
+                if (transX <= -100f) {
+                    transX += 50f
+                    translationX.setFloatValues(transX)
+                } else {
+                    transX -= 200f
+                    translationX.setFloatValues(transX)
+                }
+                if (transX1 >= -700f) {
+                    transX1 -= 50f
+                    translationX.setFloatValues(transX1)
+                } else {
+                    transX1 += 200f
+                    translationX.setFloatValues(transX1)
+                }
+            }
+        }
+        doTranslationVariationOnRepeat()
+        translationY.addListener(object : Animator.AnimatorListener{
+            override fun onAnimationEnd(p0: Animator?) {}
+            override fun onAnimationCancel(p0: Animator?) {}
+            override fun onAnimationStart(p0: Animator?) {}
+            override fun onAnimationRepeat(p0: Animator?) {
+                doTranslationVariationOnRepeat()
+                Log.d(TAG, "onStartAnimation: Values assigned again; transx = $transX, transX1 = $transX1")
+            }
+        })
     }
 
     fun ufoPauseAnimation(){
@@ -393,9 +483,9 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun animationTop(){
-        val window = PopupWindow(this)
+        firstRunWindow = PopupWindow(this)
         val show = layoutInflater.inflate(R.layout.layout_popup_internet, null)
-        window.isOutsideTouchable = true
+        firstRunWindow.isOutsideTouchable = true
         val fadein = AnimationUtils.loadAnimation(this, R.anim.abc_fade_in)
         val atf = AnimationUtils.loadAnimation(this, R.anim.atf)
         val rtl = AnimationUtils.loadAnimation(this, R.anim.rtl)
@@ -407,8 +497,8 @@ class MainActivity : AppCompatActivity() {
             override fun onAnimationRepeat(p0: Animation?) {}
             override fun onAnimationEnd(p0: Animation?) {
                 if (firstRunControl){
-                    window.contentView = show
-                    window.showAtLocation(layoutbg,1,0,0)
+                    firstRunWindow.contentView = show
+                    firstRunWindow.showAtLocation(layoutbg,1,0,0)
                     show.startAnimation(fadein)
                     firstRunControl = false
                 }else{Log.d(TAG, "animationTop: Not first run!")}
@@ -439,149 +529,6 @@ class MainActivity : AppCompatActivity() {
         buttProfil.startAnimation(atf)
         buttSoru.startAnimation(atf)
         buttInfo.startAnimation(atf)
-    }
-
-    fun showLvl(view: View?) {
-        val intent = Intent(this@MainActivity, LvlActivity::class.java)
-        val gfo = AnimationUtils.loadAnimation(this, R.anim.gfo)
-        val fo = AnimationUtils.loadAnimation(this, R.anim.abc_fade_out)
-        ivPlay.startAnimation(gfo)
-        buttOyna.startAnimation(fo)
-        fo.setAnimationListener(object : Animation.AnimationListener{
-            override fun onAnimationRepeat(p0: Animation?) {}
-            override fun onAnimationStart(p0: Animation?) {}
-            override fun onAnimationEnd(p0: Animation?) {buttOyna.visibility = View.INVISIBLE}
-        })
-        gfo.setAnimationListener(object : Animation.AnimationListener {
-            override fun onAnimationStart(arg0: Animation) {
-                intent.putExtra("tvName", tvName.text.toString())
-            }
-            override fun onAnimationRepeat(arg0: Animation) {}
-            override fun onAnimationEnd(arg0: Animation) {
-                ivPlay.visibility = View.INVISIBLE
-                if (mInterstitialAd.isLoaded) {
-                    Log.d(TAG, "Ad Must be showed!!!")
-                    mInterstitialAd.show()
-                    mInterstitialAd.adListener = object : AdListener() {
-                        override fun onAdClosed() {
-                            mInterstitialAd.loadAd(AdRequest.Builder().build())
-                            startActivity(intent)
-                        }
-                    }
-                } else {
-                    Log.d(TAG, "The interstitial wasn't loaded yet.")
-                    startActivity(intent)
-                }
-            }
-        })
-    }
-
-    fun showProfile(view: View?){
-        Log.d(TAG, "Profile pressed")
-        val intent = Intent(this@MainActivity, ProfileActivity::class.java)
-        val gfo2 = AnimationUtils.loadAnimation(this, R.anim.gfo2)
-        val fo = AnimationUtils.loadAnimation(this, R.anim.abc_fade_out)
-//        val profil = AnimationUtils.loadAnimation(this, R.anim.profil)
-        ivProfile.startAnimation(gfo2)
-        buttProfil.startAnimation(fo)
-        fo.setAnimationListener(object : Animation.AnimationListener{
-            override fun onAnimationRepeat(p0: Animation?) {}
-            override fun onAnimationStart(p0: Animation?) {}
-            override fun onAnimationEnd(p0: Animation?) {buttProfil.visibility = View.INVISIBLE}
-        })
-        gfo2.setAnimationListener(object : Animation.AnimationListener {
-            override fun onAnimationStart(arg0: Animation) {
-                intent.putExtra("tvName", tvName.text.toString())
-            }
-            override fun onAnimationRepeat(arg0: Animation) {}
-            override fun onAnimationEnd(arg0: Animation) {
-                startActivity(intent)
-                ivProfile.visibility = View.INVISIBLE
-                animation()
-            }
-        })
-    }
-
-    fun showSuggestQ(view: View?){
-        Log.d(TAG, "Suggest-Q pressed")
-        val intent = Intent(this@MainActivity,SuggestActivity::class.java)
-        val gfo = AnimationUtils.loadAnimation(this, R.anim.gfo)
-        val fo = AnimationUtils.loadAnimation(this, R.anim.abc_fade_out)
-        ivSuggestQ.startAnimation(gfo)
-        buttSoru.startAnimation(fo)
-        fo.setAnimationListener(object : Animation.AnimationListener{
-            override fun onAnimationRepeat(p0: Animation?) {}
-            override fun onAnimationStart(p0: Animation?) {}
-            override fun onAnimationEnd(p0: Animation?) {buttSoru.visibility = View.INVISIBLE}
-        })
-        gfo.setAnimationListener(object : Animation.AnimationListener {
-            override fun onAnimationStart(arg0: Animation) {}
-            override fun onAnimationRepeat(arg0: Animation) {}
-            override fun onAnimationEnd(arg0: Animation) {
-                startActivity(intent)
-                ivSuggestQ.visibility = View.INVISIBLE
-                animation()
-            }
-        })
-    }
-
-    fun showInfo(view:View?){
-        Log.d(TAG, "Info pressed")
-        val intent = Intent(this@MainActivity,InfoActivity::class.java)
-        val gfo = AnimationUtils.loadAnimation(this, R.anim.gfo2)
-        val fo = AnimationUtils.loadAnimation(this, R.anim.abc_fade_out)
-        ivInfo.startAnimation(gfo)
-        buttInfo.startAnimation(fo)
-        fo.setAnimationListener(object : Animation.AnimationListener{
-            override fun onAnimationRepeat(p0: Animation?) {}
-            override fun onAnimationStart(p0: Animation?) {}
-            override fun onAnimationEnd(p0: Animation?) {buttInfo.visibility = View.INVISIBLE}
-        })
-        gfo.setAnimationListener(object : Animation.AnimationListener {
-            override fun onAnimationStart(arg0: Animation) {}
-            override fun onAnimationRepeat(arg0: Animation) {}
-            override fun onAnimationEnd(arg0: Animation) {
-                startActivity(intent)
-                ivInfo.visibility = View.INVISIBLE
-                animation()
-            }
-        })
-    }
-
-    private fun showSettings(view:View?){
-        Log.d(TAG, "action_settings pressed!")
-        val intent = Intent(this@MainActivity, SettingsActivity::class.java)
-        startActivity(intent)
-    }
-
-    private fun mainMenu(view: View?){
-        Log.d(TAG, "mainMenu pressed..")
-        val intent = Intent(this@MainActivity, MainActivity::class.java)
-        startActivity(intent)
-    }
-
-    private fun privacyPolicy(){
-        Log.d(TAG, "privacyPolicy pressed..")
-        val intent = Intent(this, PrivacyActivity::class.java)
-        startActivity(intent)
-    }
-
-    private fun termsConditions(){
-        Log.d(TAG, "privacyPolicy pressed..")
-        val intent = Intent(this, TermsActivity::class.java)
-        startActivity(intent)
-    }
-
-    fun signOut(view:View?){
-        auth.signOut()
-        startActivity(Intent(this@MainActivity, LoginActivity::class.java))
-        this@MainActivity.finish()
-//        view_timer.stop()
-        googleSignInClient.revokeAccess().addOnCompleteListener(this) {
-            if (googleSignInClient.revokeAccess().isSuccessful){
-                LoginActivity().updateUI(auth.currentUser)
-            }else{}
-        }
     }
 
     private fun synchronRoomDb(){
@@ -674,6 +621,166 @@ class MainActivity : AppCompatActivity() {
             }
         }.start()
     }
+    //Activity Transitions Start
+    fun showLvl(view: View?) {
+        try { firstRunWindow.dismiss()
+        }catch (ex:Exception){Log.d(TAG, "showLvl: firstRunWindow.dismiss() ex: $ex")}
+        val intent = Intent(this@MainActivity, LvlActivity::class.java)
+        val gfo = AnimationUtils.loadAnimation(this, R.anim.gfo)
+        val fo = AnimationUtils.loadAnimation(this, R.anim.abc_fade_out)
+        ivPlay.startAnimation(gfo)
+        buttOyna.startAnimation(fo)
+        fo.setAnimationListener(object : Animation.AnimationListener{
+            override fun onAnimationRepeat(p0: Animation?) {}
+            override fun onAnimationStart(p0: Animation?) {}
+            override fun onAnimationEnd(p0: Animation?) {buttOyna.visibility = View.INVISIBLE}
+        })
+        gfo.setAnimationListener(object : Animation.AnimationListener {
+            override fun onAnimationStart(arg0: Animation) {
+                intent.putExtra("tvName", tvName.text.toString())
+            }
+            override fun onAnimationRepeat(arg0: Animation) {}
+            override fun onAnimationEnd(arg0: Animation) {
+                ivPlay.visibility = View.INVISIBLE
+                if (mInterstitialAd.isLoaded) {
+                    Log.d(TAG, "Ad Must be showed!!!")
+                    mInterstitialAd.show()
+                    mInterstitialAd.adListener = object : AdListener() {
+                        override fun onAdClosed() {
+                            mInterstitialAd.loadAd(AdRequest.Builder().build())
+                            startActivity(intent)
+                        }
+                    }
+                } else {
+                    Log.d(TAG, "The interstitial wasn't loaded yet.")
+                    startActivity(intent)
+                }
+            }
+        })
+    }
+
+    fun showProfile(view: View?){
+        Log.d(TAG, "Profile pressed")
+        try { firstRunWindow.dismiss()
+        }catch (ex:Exception){Log.d(TAG, "showProfile: firstRunWindow.dismiss() ex: $ex")}
+        val intent = Intent(this@MainActivity, ProfileActivity::class.java)
+        val gfo2 = AnimationUtils.loadAnimation(this, R.anim.gfo2)
+        val fo = AnimationUtils.loadAnimation(this, R.anim.abc_fade_out)
+//        val profil = AnimationUtils.loadAnimation(this, R.anim.profil)
+        ivProfile.startAnimation(gfo2)
+        buttProfil.startAnimation(fo)
+        fo.setAnimationListener(object : Animation.AnimationListener{
+            override fun onAnimationRepeat(p0: Animation?) {}
+            override fun onAnimationStart(p0: Animation?) {}
+            override fun onAnimationEnd(p0: Animation?) {buttProfil.visibility = View.INVISIBLE}
+        })
+        gfo2.setAnimationListener(object : Animation.AnimationListener {
+            override fun onAnimationStart(arg0: Animation) {
+                intent.putExtra("tvName", tvName.text.toString())
+            }
+            override fun onAnimationRepeat(arg0: Animation) {}
+            override fun onAnimationEnd(arg0: Animation) {
+                startActivity(intent)
+                ivProfile.visibility = View.INVISIBLE
+                animation()
+            }
+        })
+    }
+
+    fun showSuggestQ(view: View?){
+        Log.d(TAG, "Suggest-Q pressed")
+        try { firstRunWindow.dismiss()
+        }catch (ex:Exception){Log.d(TAG, "showSuggestQ: firstRunWindow.dismiss() ex: $ex")}
+
+        val intent = Intent(this@MainActivity,SuggestActivity::class.java)
+        val gfo = AnimationUtils.loadAnimation(this, R.anim.gfo)
+        val fo = AnimationUtils.loadAnimation(this, R.anim.abc_fade_out)
+        ivSuggestQ.startAnimation(gfo)
+        buttSoru.startAnimation(fo)
+        fo.setAnimationListener(object : Animation.AnimationListener{
+            override fun onAnimationRepeat(p0: Animation?) {}
+            override fun onAnimationStart(p0: Animation?) {}
+            override fun onAnimationEnd(p0: Animation?) {buttSoru.visibility = View.INVISIBLE}
+        })
+        gfo.setAnimationListener(object : Animation.AnimationListener {
+            override fun onAnimationStart(arg0: Animation) {}
+            override fun onAnimationRepeat(arg0: Animation) {}
+            override fun onAnimationEnd(arg0: Animation) {
+                startActivity(intent)
+                ivSuggestQ.visibility = View.INVISIBLE
+                animation()
+            }
+        })
+    }
+
+    fun showInfo(view:View?){
+        Log.d(TAG, "Info pressed")
+        try { firstRunWindow.dismiss()
+        }catch (ex:Exception){Log.d(TAG, "showSettings: firstRunWindow.dismiss() ex: $ex")}
+        val intent = Intent(this@MainActivity,InfoActivity::class.java)
+        val gfo = AnimationUtils.loadAnimation(this, R.anim.gfo2)
+        val fo = AnimationUtils.loadAnimation(this, R.anim.abc_fade_out)
+        ivInfo.startAnimation(gfo)
+        buttInfo.startAnimation(fo)
+        fo.setAnimationListener(object : Animation.AnimationListener{
+            override fun onAnimationRepeat(p0: Animation?) {}
+            override fun onAnimationStart(p0: Animation?) {}
+            override fun onAnimationEnd(p0: Animation?) {buttInfo.visibility = View.INVISIBLE}
+        })
+        gfo.setAnimationListener(object : Animation.AnimationListener {
+            override fun onAnimationStart(arg0: Animation) {}
+            override fun onAnimationRepeat(arg0: Animation) {}
+            override fun onAnimationEnd(arg0: Animation) {
+                startActivity(intent)
+                ivInfo.visibility = View.INVISIBLE
+                animation()
+            }
+        })
+    }
+
+    private fun showSettings(view:View?){
+        Log.d(TAG, "action_settings pressed!")
+        try { firstRunWindow.dismiss()
+        }catch (ex:Exception){Log.d(TAG, "showSettings: firstRunWindow.dismiss() ex: $ex")}
+        val intent = Intent(this@MainActivity, SettingsActivity::class.java)
+        startActivity(intent)
+    }
+
+    private fun mainMenu(view: View?){
+        Log.d(TAG, "mainMenu pressed..")
+        val intent = Intent(this@MainActivity, MainActivity::class.java)
+        startActivity(intent)
+    }
+
+    private fun privacyPolicy(){
+        Log.d(TAG, "privacyPolicy pressed..")
+        try { firstRunWindow.dismiss()
+        }catch (ex:Exception){Log.d(TAG, "privacyPolicy: firstRunWindow.dismiss() ex: $ex")}
+        val intent = Intent(this, PrivacyActivity::class.java)
+        startActivity(intent)
+    }
+
+    private fun termsConditions(){
+        Log.d(TAG, "privacyPolicy pressed..")
+        try { firstRunWindow.dismiss()
+        }catch (ex:Exception){Log.d(TAG, "termsConditions: firstRunWindow.dismiss() ex: $ex")}
+        val intent = Intent(this, TermsActivity::class.java)
+        startActivity(intent)
+    }
+    //Activity Transitions End
+    private fun signOut(){
+        try { firstRunWindow.dismiss()
+        }catch (ex:Exception){Log.d(TAG, "signOut: firstRunWindow.dismiss() ex: $ex")}
+        auth.signOut()
+        startActivity(Intent(this@MainActivity, LoginActivity::class.java))
+        this@MainActivity.finish()
+//        view_timer.stop()
+        googleSignInClient.revokeAccess().addOnCompleteListener(this) {
+            if (googleSignInClient.revokeAccess().isSuccessful){
+                LoginActivity().updateUI(auth.currentUser)
+            }else{}
+        }
+    }
 
     override fun onBackPressed() {
         mainMenu(null)
@@ -696,7 +803,7 @@ class MainActivity : AppCompatActivity() {
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         when {
-            item.itemId == R.id.action_out -> signOut(null)
+            item.itemId == R.id.action_out -> signOut()
             item.itemId == R.id.action_home -> mainMenu(null)
             item.itemId == R.id.action_settings -> showSettings(null)
             item.itemId == R.id.pivacy_policy -> privacyPolicy()

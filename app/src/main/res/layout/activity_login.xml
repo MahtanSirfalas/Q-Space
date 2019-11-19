@@ -103,7 +103,7 @@
                 android:textColorHighlight="@color/colorAccent" android:textColorHint="@color/colorSpaceWhite"
                 android:fontFamily="@font/coda" android:textSize="18sp"/>
         <Button
-                android:text="Reset Password"
+                android:text="@string/reset_password"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" android:id="@+id/buttResetPass"
                 android:fontFamily="@font/coda"
@@ -112,30 +112,32 @@
                 app:layout_constraintEnd_toEndOf="parent" android:layout_marginStart="8dp"
                 app:layout_constraintStart_toStartOf="parent"
                 android:layout_marginTop="8dp" android:onClick="resetPassword"/>
+
         <Button
-                android:text="@string/sign_in_google"
-                android:drawableStart="@drawable/ic_googleicon"
+                android:id="@+id/buttGoogle"
                 android:layout_width="0dp"
-                android:layout_height="wrap_content" android:id="@+id/buttGoogle"
-                app:layout_constraintTop_toBottomOf="@+id/buttResetPass"
-                android:background="@drawable/custom_butt_google" app:layout_constraintEnd_toEndOf="parent"
-                android:layout_marginEnd="8dp" app:layout_constraintStart_toStartOf="parent"
+                android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
-                android:layout_marginBottom="8dp" app:layout_constraintBottom_toTopOf="@+id/tvNickError"
-                android:textAlignment="center" android:textColor="@color/colorPrimaryDark" android:textAllCaps="false"
-                android:fontFamily="@font/coda" android:textSize="16sp"
-                android:paddingEnd="48dp" android:paddingStart="4dp" android:paddingBottom="4dp"
-                android:paddingTop="4dp"/>
-        <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="0dp"
-                android:translationZ="90dp"
-                app:srcCompat="@drawable/ic_google" android:id="@+id/ivGoogle"
-                app:layout_constraintBottom_toBottomOf="@+id/buttGoogle"
-                app:layout_constraintTop_toTopOf="@+id/buttGoogle"
-                app:layout_constraintVertical_bias="0.0"
-                app:layout_constraintEnd_toEndOf="@+id/buttGoogle" android:layout_marginEnd="8dp"
-        />
+                android:layout_marginEnd="8dp"
+                android:layout_marginBottom="8dp"
+                android:background="@drawable/custom_butt_google"
+                android:drawableStart="@drawable/ic_google"
+                android:fontFamily="@font/coda"
+                android:onClick="signInWithGoogle"
+                android:paddingStart="4dp"
+                android:paddingTop="4dp"
+                android:paddingEnd="36dp"
+                android:paddingBottom="4dp"
+                android:text="@string/sign_in_google"
+                android:textAlignment="center"
+                android:textAllCaps="false"
+                android:textColor="@color/colorPrimaryDark"
+                android:textSize="16sp"
+                app:layout_constraintBottom_toTopOf="@+id/tvNickError"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/buttResetPass" />
+
         <TextView
                 android:text="TextView"
                 android:layout_width="wrap_content"
@@ -163,6 +165,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/buttGoogle"
                 tools:visibility="gone" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 

@@ -2,6 +2,7 @@ package com.ust.qspace
 
 import android.annotation.SuppressLint
 import android.annotation.TargetApi
+import android.app.Activity
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.graphics.Color
@@ -14,6 +15,7 @@ import android.util.Log
 import android.view.Gravity
 import android.view.View
 import android.view.animation.AnimationUtils
+import android.view.inputmethod.InputMethodManager
 import android.widget.Button
 import android.widget.PopupWindow
 import android.widget.TextView
@@ -30,8 +32,10 @@ import com.xwray.groupie.Item
 import com.xwray.groupie.ViewHolder
 import kotlinx.android.synthetic.main.activity_comment.*
 import kotlinx.android.synthetic.main.comment_recycle_adapt.view.*
+import java.text.SimpleDateFormat
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
+import java.util.*
 
 private lateinit var firebaseAnalytics: FirebaseAnalytics
 private lateinit var auth: FirebaseAuth
@@ -45,13 +49,15 @@ private lateinit var avatareach: String
 @TargetApi(Build.VERSION_CODES.O)
 class CommentActivity : AppCompatActivity() {
     val TAG = "CommentActivity"
-    val now = LocalDateTime.now()
-    var date = DateTimeFormatter.ofPattern("yyyy-MM-dd")
-    var time = DateTimeFormatter.ofPattern("HH:mm:ss")
+    lateinit var now:Date
+    lateinit var date:String
+    lateinit var time:String
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_comment)
+
+        now = getCurrentDateTime()
 
         firebaseAnalytics = FirebaseAnalytics.getInstance(this)
         auth = FirebaseAuth.getInstance()
@@ -232,12 +238,16 @@ class CommentActivity : AppCompatActivity() {
 
     fun buttComms(view: View?){
         if (textCom.text.length > 4){
+            val inputMethodManager = getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
+            if(view != null){
+                inputMethodManager.hideSoftInputFromWindow(view.windowToken, 0)
+            }
             var user = auth.currentUser
             val post = textCom.text.toString()
             var nickName = tvNick
             var lvlReference = commsReference.child(levelKey)
-            var date = date.format(now)
-            var time = time.format(now)
+            date = now.turnToString("yyyy-MM-dd")
+            time = now.turnToString("HH:mm:ss")
             var giverReference = lvlReference.child(user!!.uid+"D:"+date+"T:"+time)
             giverReference.child("post").setValue(post)
             giverReference.child("nickName").setValue(nickName)
@@ -430,6 +440,15 @@ class CommentActivity : AppCompatActivity() {
         }
     }
 
+    fun Date.turnToString(format: String, locale: Locale = Locale.getDefault()): String {
+        val formatter = SimpleDateFormat(format, locale)
+        return formatter.format(this)
+    }
+
+    fun getCurrentDateTime(): Date {
+        return Calendar.getInstance().time
+    }
+
     override fun onBackPressed(){
         this@CommentActivity.finish()
     }
@@ -447,7 +466,7 @@ class PostItem(val post: Post): Item<ViewHolder>(){
         val userReference = databaseReference.child(userId)
         Log.d(TAG, "class PostItem; userId = $userId assigned")
 
-        /*userName.text  = userReference.orderByChild("nickName").toString()*/
+        /*userName.text  = userReference.orderByChild("nickName").turnToString()*/
         userReference.addListenerForSingleValueEvent(object : ValueEventListener {
                 override fun onDataChange(p0: DataSnapshot) {
                     Log.d(TAG, "onDataChange")
