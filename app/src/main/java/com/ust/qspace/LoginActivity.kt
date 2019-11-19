@@ -20,6 +20,9 @@ import android.widget.Toast
 import android.widget.Toast.*
 import androidx.annotation.ContentView
 import androidx.core.content.ContextCompat
+import com.google.android.gms.ads.AdRequest
+import com.google.android.gms.ads.AdView
+import com.google.android.gms.ads.MobileAds
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
@@ -47,6 +50,8 @@ class LoginActivity : AppCompatActivity() {
 
     private lateinit var googleSignInClient: GoogleSignInClient
 
+    lateinit var mAdView : AdView
+
 //    private lateinit var context:Context
 //    private lateinit var file: File
 //    private lateinit var path: File
@@ -55,6 +60,11 @@ class LoginActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
+
+        MobileAds.initialize(this) {}//adMob initialize
+        mAdView = findViewById(R.id.adViewLogin)
+        val adRequest = AdRequest.Builder().build()
+        mAdView.loadAd(adRequest)
 
 
         val scrollView = findViewById<ScrollView>(R.id.layoutbg)

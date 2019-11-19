@@ -22,6 +22,7 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.animation.doOnEnd
 import com.google.android.gms.ads.AdListener
 import com.google.android.gms.ads.AdRequest
+import com.google.android.gms.ads.AdView
 import com.google.android.gms.ads.InterstitialAd
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.auth.FirebaseAuth
@@ -73,6 +74,7 @@ class RandomActivity : AppCompatActivity() {
     private lateinit var duoUpAnimSet: AnimatorSet
     private lateinit var petAnimSet: AnimatorSet
     private lateinit var mInterstitialAd: InterstitialAd
+    lateinit var mAdView : AdView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -80,6 +82,10 @@ class RandomActivity : AppCompatActivity() {
         setSupportActionBar(toolbar)
 
         mainHandler = Handler(Looper.getMainLooper())
+
+        mAdView = findViewById(R.id.adViewRandom)
+        val adRequest = AdRequest.Builder().build()
+        mAdView.loadAd(adRequest)
 
         val constraintLayout = findViewById<ConstraintLayout>(R.id.layoutbg)
         val animationDrawable = constraintLayout.background as AnimationDrawable
@@ -90,7 +96,7 @@ class RandomActivity : AppCompatActivity() {
         //InterstitialAd part
         mInterstitialAd = InterstitialAd(this)
         mInterstitialAd.adUnitId = "ca-app-pub-7262139641436003/7403813696"
-        mInterstitialAd.loadAd(AdRequest.Builder().build())
+        mInterstitialAd.loadAd(adRequest)
         //
 
         firebaseAnalytics = FirebaseAnalytics.getInstance(this)

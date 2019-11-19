@@ -5,10 +5,16 @@ import android.annotation.TargetApi
 import android.content.Intent
 import android.graphics.drawable.AnimationDrawable
 import android.media.MediaPlayer
-import android.os.*
+import android.os.Build
+import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.util.Log
 import android.view.*
-import android.view.animation.*
+import android.view.animation.AccelerateDecelerateInterpolator
+import android.view.animation.Animation
+import android.view.animation.AnimationUtils
+import android.view.animation.DecelerateInterpolator
 import android.widget.Button
 import android.widget.PopupWindow
 import android.widget.TextView
@@ -16,19 +22,15 @@ import android.widget.Toast.LENGTH_LONG
 import android.widget.Toast.makeText
 import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
-import androidx.core.animation.addPauseListener
 import androidx.core.animation.doOnEnd
-import androidx.core.animation.doOnPause
 import androidx.core.animation.doOnRepeat
 import androidx.room.Room
-import com.google.android.gms.ads.AdListener
 import com.google.android.gms.ads.AdRequest
-import com.google.android.gms.ads.InterstitialAd
-import com.google.android.gms.ads.MobileAds
+import com.google.android.gms.ads.AdView
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
-import com.google.android.gms.tasks.Task
+import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
@@ -45,7 +47,6 @@ import com.ust.qspace.trees.PrivacyActivity
 import com.ust.qspace.trees.SettingsActivity
 import com.ust.qspace.trees.TermsActivity
 import kotlinx.android.synthetic.main.activity_main.*
-import java.lang.Exception
 
 private lateinit var firebaseAnalytics: FirebaseAnalytics
 private lateinit var auth: FirebaseAuth
@@ -74,10 +75,11 @@ class MainActivity : AppCompatActivity() {
     var uidAssignedCheck = false
     private lateinit var googleSignInClient: GoogleSignInClient
     private lateinit var mediaPlayer: MediaPlayer
-    private lateinit var mInterstitialAd: InterstitialAd
+//    private lateinit var mInterstitialAd: InterstitialAd
     private lateinit var firstRunWindow: PopupWindow
     lateinit var userUidEmailAssignTask: Runnable
     lateinit var mainHandler: Handler
+    lateinit var mAdView : AdView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -86,11 +88,13 @@ class MainActivity : AppCompatActivity() {
 
         mainHandler = Handler(Looper.getMainLooper())
 
-        MobileAds.initialize(this) {}//adMob initialize
+        mAdView = findViewById(R.id.adViewMain)
+        val adRequest = AdRequest.Builder().build()
+        mAdView.loadAd(adRequest)
         //InterstitialAd part
-        mInterstitialAd = InterstitialAd(this)
+        /*mInterstitialAd = InterstitialAd(this)
         mInterstitialAd.adUnitId = "ca-app-pub-7262139641436003/2457796701"
-        mInterstitialAd.loadAd(AdRequest.Builder().build())
+        mInterstitialAd.loadAd(AdRequest.Builder().build())*/
         //
 
         val constraintLayout = findViewById<ConstraintLayout>(R.id.layoutbg)
@@ -141,7 +145,7 @@ class MainActivity : AppCompatActivity() {
             override fun run() {
                 var tryCounts = 1
                 userUidEmailAssignReload(user)
-                if (user == null && tryCounts<3){
+                if (user == null && tryCounts<5){
                     tryCounts++
                     Log.d(TAG, "userUidEmailAssignTaskHandling: postDelayed || tryCounts = $tryCounts")
                     mainHandler.postDelayed(this, 3000)
@@ -625,117 +629,135 @@ class MainActivity : AppCompatActivity() {
     fun showLvl(view: View?) {
         try { firstRunWindow.dismiss()
         }catch (ex:Exception){Log.d(TAG, "showLvl: firstRunWindow.dismiss() ex: $ex")}
-        val intent = Intent(this@MainActivity, LvlActivity::class.java)
-        val gfo = AnimationUtils.loadAnimation(this, R.anim.gfo)
-        val fo = AnimationUtils.loadAnimation(this, R.anim.abc_fade_out)
-        ivPlay.startAnimation(gfo)
-        buttOyna.startAnimation(fo)
-        fo.setAnimationListener(object : Animation.AnimationListener{
-            override fun onAnimationRepeat(p0: Animation?) {}
-            override fun onAnimationStart(p0: Animation?) {}
-            override fun onAnimationEnd(p0: Animation?) {buttOyna.visibility = View.INVISIBLE}
-        })
-        gfo.setAnimationListener(object : Animation.AnimationListener {
-            override fun onAnimationStart(arg0: Animation) {
-                intent.putExtra("tvName", tvName.text.toString())
-            }
-            override fun onAnimationRepeat(arg0: Animation) {}
-            override fun onAnimationEnd(arg0: Animation) {
-                ivPlay.visibility = View.INVISIBLE
-                if (mInterstitialAd.isLoaded) {
-                    Log.d(TAG, "Ad Must be showed!!!")
-                    mInterstitialAd.show()
-                    mInterstitialAd.adListener = object : AdListener() {
-                        override fun onAdClosed() {
-                            mInterstitialAd.loadAd(AdRequest.Builder().build())
-                            startActivity(intent)
-                        }
-                    }
-                } else {
-                    Log.d(TAG, "The interstitial wasn't loaded yet.")
-                    startActivity(intent)
+        if(uidAssignedCheck){
+            val intent = Intent(this@MainActivity, LvlActivity::class.java)
+            val gfo = AnimationUtils.loadAnimation(this, R.anim.gfo)
+            val fo = AnimationUtils.loadAnimation(this, R.anim.abc_fade_out)
+            ivPlay.startAnimation(gfo)
+            buttOyna.startAnimation(fo)
+            fo.setAnimationListener(object : Animation.AnimationListener{
+                override fun onAnimationRepeat(p0: Animation?) {}
+                override fun onAnimationStart(p0: Animation?) {}
+                override fun onAnimationEnd(p0: Animation?) {buttOyna.visibility = View.INVISIBLE}
+            })
+            gfo.setAnimationListener(object : Animation.AnimationListener {
+                override fun onAnimationStart(arg0: Animation) {
+                    intent.putExtra("tvName", tvName.text.toString())
                 }
-            }
-        })
+                override fun onAnimationRepeat(arg0: Animation) {}
+                override fun onAnimationEnd(arg0: Animation) {
+                    ivPlay.visibility = View.INVISIBLE
+                    startActivity(intent)
+                    /*if (mInterstitialAd.isLoaded) {
+                        Log.d(TAG, "Ad Must be showed!!!")
+                        mInterstitialAd.show()
+                        mInterstitialAd.adListener = object : AdListener() {
+                            override fun onAdClosed() {
+                                mInterstitialAd.loadAd(AdRequest.Builder().build())
+                                startActivity(intent)
+                            }
+                        }
+                    } else {
+                        Log.d(TAG, "The interstitial wasn't loaded yet.")
+                        startActivity(intent)
+                    }*/
+                }
+            })
+        }else{
+            Snackbar.make(layoutbg, "Slow down, still getting the info! Try again after 3 seconds...", Snackbar.LENGTH_LONG).show()
+        }
     }
 
     fun showProfile(view: View?){
         Log.d(TAG, "Profile pressed")
         try { firstRunWindow.dismiss()
         }catch (ex:Exception){Log.d(TAG, "showProfile: firstRunWindow.dismiss() ex: $ex")}
-        val intent = Intent(this@MainActivity, ProfileActivity::class.java)
-        val gfo2 = AnimationUtils.loadAnimation(this, R.anim.gfo2)
-        val fo = AnimationUtils.loadAnimation(this, R.anim.abc_fade_out)
+        if(uidAssignedCheck){
+            val intent = Intent(this@MainActivity, ProfileActivity::class.java)
+            val gfo2 = AnimationUtils.loadAnimation(this, R.anim.gfo2)
+            val fo = AnimationUtils.loadAnimation(this, R.anim.abc_fade_out)
 //        val profil = AnimationUtils.loadAnimation(this, R.anim.profil)
-        ivProfile.startAnimation(gfo2)
-        buttProfil.startAnimation(fo)
-        fo.setAnimationListener(object : Animation.AnimationListener{
-            override fun onAnimationRepeat(p0: Animation?) {}
-            override fun onAnimationStart(p0: Animation?) {}
-            override fun onAnimationEnd(p0: Animation?) {buttProfil.visibility = View.INVISIBLE}
-        })
-        gfo2.setAnimationListener(object : Animation.AnimationListener {
-            override fun onAnimationStart(arg0: Animation) {
-                intent.putExtra("tvName", tvName.text.toString())
-            }
-            override fun onAnimationRepeat(arg0: Animation) {}
-            override fun onAnimationEnd(arg0: Animation) {
-                startActivity(intent)
-                ivProfile.visibility = View.INVISIBLE
-                animation()
-            }
-        })
+            ivProfile.startAnimation(gfo2)
+            buttProfil.startAnimation(fo)
+            fo.setAnimationListener(object : Animation.AnimationListener{
+                override fun onAnimationRepeat(p0: Animation?) {}
+                override fun onAnimationStart(p0: Animation?) {}
+                override fun onAnimationEnd(p0: Animation?) {buttProfil.visibility = View.INVISIBLE}
+            })
+            gfo2.setAnimationListener(object : Animation.AnimationListener {
+                override fun onAnimationStart(arg0: Animation) {
+                    intent.putExtra("tvName", tvName.text.toString())
+                }
+                override fun onAnimationRepeat(arg0: Animation) {}
+                override fun onAnimationEnd(arg0: Animation) {
+                    startActivity(intent)
+                    ivProfile.visibility = View.INVISIBLE
+                    animation()
+                }
+            })
+        }else{
+            Snackbar.make(layoutbg, "Slow down, still getting the info! Try again after 3 seconds...", Snackbar.LENGTH_LONG).show()
+        }
     }
 
     fun showSuggestQ(view: View?){
         Log.d(TAG, "Suggest-Q pressed")
         try { firstRunWindow.dismiss()
         }catch (ex:Exception){Log.d(TAG, "showSuggestQ: firstRunWindow.dismiss() ex: $ex")}
+        if(uidAssignedCheck){
+            val intent = Intent(this@MainActivity,SuggestActivity::class.java)
+            val gfo = AnimationUtils.loadAnimation(this, R.anim.gfo)
+            val fo = AnimationUtils.loadAnimation(this, R.anim.abc_fade_out)
+            ivSuggestQ.startAnimation(gfo)
+            buttSoru.startAnimation(fo)
+            fo.setAnimationListener(object : Animation.AnimationListener{
+                override fun onAnimationRepeat(p0: Animation?) {}
+                override fun onAnimationStart(p0: Animation?) {}
+                override fun onAnimationEnd(p0: Animation?) {buttSoru.visibility = View.INVISIBLE}
+            })
+            gfo.setAnimationListener(object : Animation.AnimationListener {
+                override fun onAnimationStart(arg0: Animation) {}
+                override fun onAnimationRepeat(arg0: Animation) {}
+                override fun onAnimationEnd(arg0: Animation) {
+                    startActivity(intent)
+                    ivSuggestQ.visibility = View.INVISIBLE
+                    animation()
+                }
+            })
+        }else{
+            Snackbar.make(layoutbg, "Slow down, still getting the info! Try again after 3 seconds...", Snackbar.LENGTH_LONG).show()
+        }
 
-        val intent = Intent(this@MainActivity,SuggestActivity::class.java)
-        val gfo = AnimationUtils.loadAnimation(this, R.anim.gfo)
-        val fo = AnimationUtils.loadAnimation(this, R.anim.abc_fade_out)
-        ivSuggestQ.startAnimation(gfo)
-        buttSoru.startAnimation(fo)
-        fo.setAnimationListener(object : Animation.AnimationListener{
-            override fun onAnimationRepeat(p0: Animation?) {}
-            override fun onAnimationStart(p0: Animation?) {}
-            override fun onAnimationEnd(p0: Animation?) {buttSoru.visibility = View.INVISIBLE}
-        })
-        gfo.setAnimationListener(object : Animation.AnimationListener {
-            override fun onAnimationStart(arg0: Animation) {}
-            override fun onAnimationRepeat(arg0: Animation) {}
-            override fun onAnimationEnd(arg0: Animation) {
-                startActivity(intent)
-                ivSuggestQ.visibility = View.INVISIBLE
-                animation()
-            }
-        })
     }
 
     fun showInfo(view:View?){
         Log.d(TAG, "Info pressed")
         try { firstRunWindow.dismiss()
         }catch (ex:Exception){Log.d(TAG, "showSettings: firstRunWindow.dismiss() ex: $ex")}
-        val intent = Intent(this@MainActivity,InfoActivity::class.java)
-        val gfo = AnimationUtils.loadAnimation(this, R.anim.gfo2)
-        val fo = AnimationUtils.loadAnimation(this, R.anim.abc_fade_out)
-        ivInfo.startAnimation(gfo)
-        buttInfo.startAnimation(fo)
-        fo.setAnimationListener(object : Animation.AnimationListener{
-            override fun onAnimationRepeat(p0: Animation?) {}
-            override fun onAnimationStart(p0: Animation?) {}
-            override fun onAnimationEnd(p0: Animation?) {buttInfo.visibility = View.INVISIBLE}
-        })
-        gfo.setAnimationListener(object : Animation.AnimationListener {
-            override fun onAnimationStart(arg0: Animation) {}
-            override fun onAnimationRepeat(arg0: Animation) {}
-            override fun onAnimationEnd(arg0: Animation) {
-                startActivity(intent)
-                ivInfo.visibility = View.INVISIBLE
-                animation()
-            }
-        })
+        if(uidAssignedCheck){
+            val intent = Intent(this@MainActivity,InfoActivity::class.java)
+            val gfo = AnimationUtils.loadAnimation(this, R.anim.gfo2)
+            val fo = AnimationUtils.loadAnimation(this, R.anim.abc_fade_out)
+            ivInfo.startAnimation(gfo)
+            buttInfo.startAnimation(fo)
+            fo.setAnimationListener(object : Animation.AnimationListener{
+                override fun onAnimationRepeat(p0: Animation?) {}
+                override fun onAnimationStart(p0: Animation?) {}
+                override fun onAnimationEnd(p0: Animation?) {buttInfo.visibility = View.INVISIBLE}
+            })
+            gfo.setAnimationListener(object : Animation.AnimationListener {
+                override fun onAnimationStart(arg0: Animation) {}
+                override fun onAnimationRepeat(arg0: Animation) {}
+                override fun onAnimationEnd(arg0: Animation) {
+                    startActivity(intent)
+                    ivInfo.visibility = View.INVISIBLE
+                    animation()
+                }
+            })
+        }else{
+            Snackbar.make(layoutbg, "Slow down, still getting the info! Try again after 3 seconds...", Snackbar.LENGTH_LONG).show()
+        }
+
     }
 
     private fun showSettings(view:View?){

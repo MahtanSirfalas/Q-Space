@@ -157,7 +157,7 @@
                         android:textColorHint="@color/colorSpaceWhite"
                         android:textSize="18sp"
                         android:visibility="invisible"
-                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintBottom_toTopOf="@id/adViewLvL"
                         app:layout_constraintEnd_toStartOf="@+id/buttL10"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/buttL4" />
@@ -272,7 +272,7 @@
                         android:textColorHint="@color/colorSpaceWhite"
                         android:textSize="18sp"
                         android:visibility="invisible"
-                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintBottom_toTopOf="@id/adViewLvL"
                         app:layout_constraintEnd_toStartOf="@+id/buttL15"
                         app:layout_constraintStart_toEndOf="@+id/buttL5"
                         app:layout_constraintTop_toBottomOf="@+id/buttL9" />
@@ -387,7 +387,7 @@
                         android:textColorHint="@color/colorSpaceWhite"
                         android:textSize="18sp"
                         android:visibility="invisible"
-                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintBottom_toTopOf="@id/adViewLvL"
                         app:layout_constraintEnd_toStartOf="@id/buttL20"
                         app:layout_constraintStart_toEndOf="@id/buttL10"
                         app:layout_constraintTop_toBottomOf="@id/buttL14" />
@@ -502,7 +502,7 @@
                         android:textColorHint="@color/colorSpaceWhite"
                         android:textSize="18sp"
                         android:visibility="invisible"
-                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintBottom_toTopOf="@id/adViewLvL"
                         app:layout_constraintEnd_toStartOf="@id/buttL25"
                         app:layout_constraintStart_toEndOf="@id/buttL15"
                         app:layout_constraintTop_toBottomOf="@id/buttL19" />
@@ -617,7 +617,7 @@
                         android:textColorHint="@color/colorSpaceWhite"
                         android:textSize="18sp"
                         android:visibility="invisible"
-                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintBottom_toTopOf="@id/adViewLvL"
                         app:layout_constraintEnd_toStartOf="@id/buttL30"
                         app:layout_constraintStart_toEndOf="@id/buttL20"
                         app:layout_constraintTop_toBottomOf="@id/buttL24" />
@@ -641,9 +641,10 @@
                         android:textSize="18sp"
                         android:visibility="invisible"
                         app:layout_constraintBottom_toTopOf="@id/buttL27"
-                        app:layout_constraintEnd_toStartOf="@id/buttL31"
+                        app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toEndOf="@id/buttL21"
                         app:layout_constraintTop_toTopOf="parent" />
+<!--                app:layout_constraintEnd_toStartOf="@id/buttL31"-->
 
                 <Button
                         android:id="@+id/buttL27"
@@ -664,9 +665,10 @@
                         android:textSize="18sp"
                         android:visibility="invisible"
                         app:layout_constraintBottom_toTopOf="@id/buttL28"
-                        app:layout_constraintEnd_toStartOf="@id/buttL32"
+                        app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toEndOf="@id/buttL22"
                         app:layout_constraintTop_toBottomOf="@id/buttL26" />
+<!--                app:layout_constraintEnd_toStartOf="@id/buttL32" -->
 
                 <Button
                         android:id="@+id/buttL28"
@@ -687,9 +689,10 @@
                         android:textSize="18sp"
                         android:visibility="invisible"
                         app:layout_constraintBottom_toTopOf="@id/buttL29"
-                        app:layout_constraintEnd_toStartOf="@id/buttL33"
+                        app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toEndOf="@id/buttL23"
                         app:layout_constraintTop_toBottomOf="@id/buttL27" />
+<!--                app:layout_constraintEnd_toStartOf="@id/buttL33"-->
 
                 <Button
                         android:id="@+id/buttL29"
@@ -710,9 +713,10 @@
                         android:textSize="18sp"
                         android:visibility="invisible"
                         app:layout_constraintBottom_toTopOf="@id/buttL30"
-                        app:layout_constraintEnd_toStartOf="@id/buttL34"
+                        app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toEndOf="@id/buttL24"
                         app:layout_constraintTop_toBottomOf="@id/buttL28" />
+<!--                app:layout_constraintEnd_toStartOf="@id/buttL34"-->
 
                 <Button
                         android:id="@+id/buttL30"
@@ -732,12 +736,13 @@
                         android:textColorHint="@color/colorSpaceWhite"
                         android:textSize="18sp"
                         android:visibility="invisible"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toStartOf="@id/buttL35"
+                        app:layout_constraintBottom_toTopOf="@id/adViewLvL"
+                        app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toEndOf="@id/buttL25"
                         app:layout_constraintTop_toBottomOf="@id/buttL29" />
+<!--                app:layout_constraintEnd_toStartOf="@id/buttL35"-->
 
-                <Button
+                <!--<Button
                         android:id="@+id/buttL31"
                         android:layout_width="60dp"
                         android:layout_height="60dp"
@@ -1155,7 +1160,21 @@
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toEndOf="@id/buttL45"
-                        app:layout_constraintTop_toBottomOf="@id/buttL49" />
+                        app:layout_constraintTop_toBottomOf="@id/buttL49" />-->
+
+                <com.google.android.gms.ads.AdView
+                        xmlns:ads="http://schemas.android.com/apk/res-auto"
+                        android:id="@+id/adViewLvL"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerHorizontal="true"
+                        android:layout_alignParentBottom="true"
+                        android:layout_marginBottom="4dp"
+                        ads:layout_constraintBottom_toBottomOf="parent"
+                        ads:layout_constraintStart_toStartOf="@id/buttL5"
+                        ads:adSize="BANNER"
+                        ads:adUnitId="ca-app-pub-7262139641436003/5718318625">
+                </com.google.android.gms.ads.AdView>
 
             </androidx.constraintlayout.widget.ConstraintLayout>
         </HorizontalScrollView>

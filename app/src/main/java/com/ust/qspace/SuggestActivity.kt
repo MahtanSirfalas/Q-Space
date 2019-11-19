@@ -18,7 +18,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout
 import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.AdView
-import com.google.android.gms.ads.MobileAds
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
 import com.ust.qspace.models.Suggests
@@ -62,8 +61,7 @@ class SuggestActivity : AppCompatActivity() {
         animationDrawable.setExitFadeDuration(4000)
         animationDrawable.start()
 
-        MobileAds.initialize(this) {}
-        mAdView = findViewById(R.id.adView)
+        mAdView = findViewById(R.id.adViewSuggest)
         val adRequest = AdRequest.Builder().build()
         mAdView.loadAd(adRequest)
 

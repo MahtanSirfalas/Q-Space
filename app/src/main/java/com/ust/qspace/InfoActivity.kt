@@ -29,7 +29,7 @@ class InfoActivity : AppCompatActivity() {
         setSupportActionBar(toolbar)
 
         MobileAds.initialize(this) {}
-        mAdView = findViewById(R.id.adView)
+        mAdView = findViewById(R.id.adViewInfo)
         val adRequest = AdRequest.Builder().build()
         mAdView.loadAd(adRequest)
 

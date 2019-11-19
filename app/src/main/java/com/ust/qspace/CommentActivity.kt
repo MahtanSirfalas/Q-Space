@@ -21,6 +21,8 @@ import android.widget.PopupWindow
 import android.widget.TextView
 import android.widget.Toast.*
 import androidx.core.graphics.BitmapCompat
+import com.google.android.gms.ads.AdRequest
+import com.google.android.gms.ads.AdView
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
@@ -52,10 +54,15 @@ class CommentActivity : AppCompatActivity() {
     lateinit var now:Date
     lateinit var date:String
     lateinit var time:String
+    lateinit var mAdView : AdView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_comment)
+
+        mAdView = findViewById(R.id.adViewComment)
+        val adRequest = AdRequest.Builder().build()
+        mAdView.loadAd(adRequest)
 
         now = getCurrentDateTime()
 

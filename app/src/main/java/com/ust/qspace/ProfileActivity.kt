@@ -23,7 +23,6 @@ import android.widget.Toast.LENGTH_LONG
 import androidx.constraintlayout.widget.ConstraintLayout
 import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.AdView
-import com.google.android.gms.ads.MobileAds
 import com.google.firebase.database.*
 import com.google.firebase.storage.FirebaseStorage
 import com.squareup.picasso.Picasso
@@ -54,8 +53,7 @@ class ProfileActivity : AppCompatActivity() {
         animationDrawable.setExitFadeDuration(4000)
         animationDrawable.start()
 
-        MobileAds.initialize(this) {}
-        mAdView = findViewById(R.id.adView)
+        mAdView = findViewById(R.id.adViewProfile)
         val adRequest = AdRequest.Builder().build()
         mAdView.loadAd(adRequest)
 

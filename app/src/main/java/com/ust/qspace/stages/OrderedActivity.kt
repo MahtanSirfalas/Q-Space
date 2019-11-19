@@ -26,6 +26,7 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.constraintlayout.widget.ConstraintSet
 import com.google.android.gms.ads.AdListener
 import com.google.android.gms.ads.AdRequest
+import com.google.android.gms.ads.AdView
 import com.google.android.gms.ads.InterstitialAd
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.auth.FirebaseAuth
@@ -66,6 +67,7 @@ class OrderedActivity : AppCompatActivity() {
     lateinit var window:PopupWindow
 
     private lateinit var mInterstitialAd: InterstitialAd
+    lateinit var mAdView : AdView
     private lateinit var mediaPlayer: MediaPlayer
     private var mValueEventListener: ValueEventListener? = null
 
@@ -76,6 +78,10 @@ class OrderedActivity : AppCompatActivity() {
 
         mainHandler = Handler(Looper.getMainLooper())
 
+        mAdView = findViewById(R.id.adViewOrder)
+        val adRequest = AdRequest.Builder().build()
+        mAdView.loadAd(adRequest)
+
         val constraintLayout = findViewById<ConstraintLayout>(R.id.layoutbg)
         val animationDrawable = constraintLayout.background as AnimationDrawable
         animationDrawable.setEnterFadeDuration(2000)
@@ -85,7 +91,7 @@ class OrderedActivity : AppCompatActivity() {
         //InterstitialAd part
         mInterstitialAd = InterstitialAd(this)
         mInterstitialAd.adUnitId = "ca-app-pub-7262139641436003/7225179289"
-        mInterstitialAd.loadAd(AdRequest.Builder().build())
+        mInterstitialAd.loadAd(adRequest)
         //
 
         qAnswer = mapOf("Stage 1" to 95, "Stage 2" to 12, "Stage 4" to 116, "Stage 5" to 119, "Stage 6" to 8,

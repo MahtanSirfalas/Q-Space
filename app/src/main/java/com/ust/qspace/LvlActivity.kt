@@ -1,6 +1,5 @@
 package com.ust.qspace
 
-import android.animation.*
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
@@ -11,16 +10,18 @@ import android.view.animation.Animation
 import android.view.animation.AnimationUtils
 import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
+import com.google.android.gms.ads.AdRequest
+import com.google.android.gms.ads.AdView
+import com.google.android.gms.ads.MobileAds
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.database.*
+import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.FirebaseDatabase
 import com.ust.qspace.stages.OrderedActivity
 import com.ust.qspace.stages.RandomActivity
 import com.ust.qspace.trees.PrivacyActivity
 import com.ust.qspace.trees.SettingsActivity
 import com.ust.qspace.trees.TermsActivity
-
 import kotlinx.android.synthetic.main.activity_lvl.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.runBlocking
@@ -37,11 +38,17 @@ private var cevap: Int = 1
 
 class LvlActivity : AppCompatActivity() {
     val TAG = "LvLActivity"
+    lateinit var mAdView : AdView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_lvl)
         setSupportActionBar(toolbar)
+
+        MobileAds.initialize(this) {}//adMob initialize
+        mAdView = findViewById(R.id.adViewLvL)
+        val adRequest = AdRequest.Builder().build()
+        mAdView.loadAd(adRequest)
 
         qAnswer = mapOf("Stage 1" to 95, "Stage 2" to 116)
         stageList = mapOf("Stage 1" to buttL1, "Stage 2" to buttL2, "Stage 3" to buttL3, "Stage 4" to buttL4,
