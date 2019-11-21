@@ -164,7 +164,7 @@ class ProfileActivity : AppCompatActivity() {
         buttShare.setOnClickListener {
             share()
         }
-        val fadein = AnimationUtils.loadAnimation(this, R.anim.abc_fade_in)
+        val fadein = AnimationUtils.loadAnimation(this, R.anim.fade_in)
         buttStats.setOnClickListener {
             showStats()
             stats_card.startAnimation(fadein)
@@ -264,7 +264,7 @@ class ProfileActivity : AppCompatActivity() {
 
     private fun animations(){
         progressBarProfile.visibility = View.GONE
-        val fadein = AnimationUtils.loadAnimation(this, R.anim.abc_fade_in)
+        val fadein = AnimationUtils.loadAnimation(this, R.anim.fade_in)
         profile_card.visibility = View.VISIBLE
         profile_card.startAnimation(fadein)
     }

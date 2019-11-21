@@ -17,13 +17,18 @@ android {
     buildToolsVersion "29.0.2"
     defaultConfig {
         applicationId "com.ust.qspace"
-        minSdkVersion 18
+        minSdkVersion 19
         targetSdkVersion 29
         versionCode 7
         versionName "1.23"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables.useSupportLibrary = true
         multiDexEnabled true
+        javaCompileOptions {
+            annotationProcessorOptions {
+                arguments = ["room.incremental":"true"]
+            }
+        }
     }
     buildTypes {
         release {
@@ -55,7 +60,7 @@ dependencies {
     implementation 'de.hdodenhof:circleimageview:3.0.0'
     implementation 'com.squareup.picasso:picasso:2.71828'
 
-    def room_version = "2.2.0-alpha02"
+    def room_version = "2.2.1"
 
     implementation "androidx.room:room-runtime:$room_version"
     kapt "androidx.room:room-compiler:$room_version"

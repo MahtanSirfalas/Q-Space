@@ -277,5 +277,8 @@ I may update our Terms and Conditions from time to time. Thus, you are advised t
 If you have any questions or suggestions about my Terms and Conditions, do not hesitate to contact me at qspace.touch@gmail.com.\n\n
     </string>
     <string name="reset_password">Reset Password</string>
+    <string name="admob_banner_test_id" translatable="false">ca-app-pub-3940256099942544/6300978111</string>
+    <string name="admob_banner_main_id" translatable="false">ca-app-pub-7262139641436003/8727625347</string>
+    <string name="admob_banner_play_id" translatable="false">ca-app-pub-7262139641436003/5718318625</string>
 
 </resources>

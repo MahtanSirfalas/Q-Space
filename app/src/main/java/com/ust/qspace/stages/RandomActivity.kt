@@ -497,14 +497,14 @@ class RandomActivity : AppCompatActivity() {
             petAnimSet.cancel()
             petMove.doOnEnd {
                 Thread.sleep(400)
-                val fadeOut = AnimationUtils.loadAnimation(baseContext, R.anim.abc_fade_out)
+                val fadeOut = AnimationUtils.loadAnimation(baseContext, R.anim.fade_out)
                 ufo_q_human.startAnimation(fadeOut)
                 fadeOut.setAnimationListener(object : Animation.AnimationListener{
                     override fun onAnimationStart(p0: Animation?) {}
                     override fun onAnimationRepeat(p0: Animation?) {}
                     override fun onAnimationEnd(p0: Animation?) {
                         ufo_q_human.visibility = View.GONE
-                        val fadein = AnimationUtils.loadAnimation(baseContext, R.anim.abc_fade_in)
+                        val fadein = AnimationUtils.loadAnimation(baseContext, R.anim.fade_in)
                         val slidein = AnimationUtils.loadAnimation(baseContext,R.anim.abc_slide_in_bottom)
                         tv_obj_1.text = getString(R.string.school)
                         tv_obj_2.text = getString(R.string.camp)
@@ -581,7 +581,7 @@ class RandomActivity : AppCompatActivity() {
                                             else->{}
                                         }
                                         Log.d(TAG, "THE ANSWER = ${objList[9]}")
-                                        val fadein = AnimationUtils.loadAnimation(baseContext, R.anim.abc_fade_in)
+                                        val fadein = AnimationUtils.loadAnimation(baseContext, R.anim.fade_in)
                                         val slidein = AnimationUtils.loadAnimation(baseContext,R.anim.abc_slide_in_bottom)
                                         ninePackOptionLayout.visibility = View.VISIBLE
                                         etAnswer.visibility = View.VISIBLE
@@ -739,7 +739,7 @@ class RandomActivity : AppCompatActivity() {
                                                                     levelAdapt(levelKey)
 
                                                                     val fadein = AnimationUtils.loadAnimation(baseContext,
-                                                                        R.anim.abc_fade_in
+                                                                        R.anim.fade_in
                                                                     )
                                                                     val slidein = AnimationUtils.loadAnimation(baseContext,
                                                                         R.anim.abc_slide_in_bottom
@@ -834,7 +834,7 @@ class RandomActivity : AppCompatActivity() {
     }
 
     private fun levelAdapt(level:String){
-        val fadein = AnimationUtils.loadAnimation(this, R.anim.abc_fade_in)
+        val fadein = AnimationUtils.loadAnimation(this, R.anim.fade_in)
         ib_back.visibility = View.VISIBLE
         ib_next.visibility = View.VISIBLE
         ib_back.startAnimation(fadein)

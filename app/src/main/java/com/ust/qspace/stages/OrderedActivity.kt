@@ -55,7 +55,6 @@ private var uAnswer: Int = 1
 private var answer: Int = 1
 private lateinit var stageRef : DatabaseReference
 
-@Suppress("RECEIVER_NULLABILITY_MISMATCH_BASED_ON_JAVA_ANNOTATIONS")
 class OrderedActivity : AppCompatActivity() {
 
     val TAG = "OrderedActivity"
@@ -434,7 +433,7 @@ class OrderedActivity : AppCompatActivity() {
     }
 
     private fun animationUcgen(){
-        val fadein = AnimationUtils.loadAnimation(this, R.anim.abc_fade_in)
+        val fadein = AnimationUtils.loadAnimation(this, R.anim.fade_in)
         val animtv = AnimationUtils.loadAnimation(this, R.anim.abc_slide_in_bottom)
         groupUcgen.visibility = View.VISIBLE
         uc1_say1.startAnimation(fadein)
@@ -492,9 +491,8 @@ class OrderedActivity : AppCompatActivity() {
 
     }
 
-    @SuppressLint("SetTextI18n")
     private fun levelAdapt(level: String) {
-        val fadein = AnimationUtils.loadAnimation(this, R.anim.abc_fade_in)
+        val fadein = AnimationUtils.loadAnimation(this, R.anim.fade_in)
         val settings = SettingsPrefs(this)
         val whiteFonts = settings.getSetting(whiteFont)
         when (level) {
@@ -1578,7 +1576,7 @@ class OrderedActivity : AppCompatActivity() {
     }
 
     private fun groupShapeVisibility(){
-        val fadein = AnimationUtils.loadAnimation(this, R.anim.abc_fade_in)
+        val fadein = AnimationUtils.loadAnimation(this, R.anim.fade_in)
         val animtv = AnimationUtils.loadAnimation(this, R.anim.abc_slide_in_bottom)
         g1_iv1.visibility = View.VISIBLE
         g1_tv1.visibility = View.VISIBLE

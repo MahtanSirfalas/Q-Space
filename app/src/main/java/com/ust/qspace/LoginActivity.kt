@@ -164,6 +164,7 @@ class LoginActivity : AppCompatActivity() {
         googleSignInClient = GoogleSignIn.getClient(this, gso)
 
     }
+
     public override fun onStart() {
         super.onStart()
         //Check user sign(non null); update UI accordingly

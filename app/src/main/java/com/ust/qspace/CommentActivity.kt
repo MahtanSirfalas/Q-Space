@@ -3,14 +3,10 @@ package com.ust.qspace
 import android.annotation.SuppressLint
 import android.annotation.TargetApi
 import android.app.Activity
-import android.graphics.Bitmap
-import android.graphics.BitmapFactory
 import android.graphics.Color
-import android.net.Uri
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.provider.MediaStore
 import android.util.Log
 import android.view.Gravity
 import android.view.View
@@ -20,7 +16,6 @@ import android.widget.Button
 import android.widget.PopupWindow
 import android.widget.TextView
 import android.widget.Toast.*
-import androidx.core.graphics.BitmapCompat
 import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.AdView
 import com.google.firebase.analytics.FirebaseAnalytics
@@ -35,8 +30,6 @@ import com.xwray.groupie.ViewHolder
 import kotlinx.android.synthetic.main.activity_comment.*
 import kotlinx.android.synthetic.main.comment_recycle_adapt.view.*
 import java.text.SimpleDateFormat
-import java.time.LocalDateTime
-import java.time.format.DateTimeFormatter
 import java.util.*
 
 private lateinit var firebaseAnalytics: FirebaseAnalytics
@@ -48,7 +41,6 @@ private lateinit var levelKey: String
 private lateinit var tvNick: String
 private lateinit var avatareach: String
 
-@TargetApi(Build.VERSION_CODES.O)
 class CommentActivity : AppCompatActivity() {
     val TAG = "CommentActivity"
     lateinit var now:Date
@@ -80,7 +72,7 @@ class CommentActivity : AppCompatActivity() {
         val window = PopupWindow(this)
         val show = layoutInflater.inflate(R.layout.layout_popup_delete, null)
         window.isOutsideTouchable = true
-        val fadein = AnimationUtils.loadAnimation(this, R.anim.abc_fade_in)
+        val fadein = AnimationUtils.loadAnimation(this, R.anim.fade_in)
         recycleComment.addOnItemTouchListener(RecyclerItemClickListenr(this, recycleComment, object : RecyclerItemClickListenr.OnItemClickListener {
             override fun onItemClick(view: View, position: Int) {
                 val toast = makeText(baseContext, getString(R.string.touch_longer), LENGTH_SHORT)
@@ -301,7 +293,7 @@ class CommentActivity : AppCompatActivity() {
     }
 
     private fun levelAdapt(level: String) {
-        val fadein = AnimationUtils.loadAnimation(this, R.anim.abc_fade_in)
+        val fadein = AnimationUtils.loadAnimation(this, R.anim.fade_in)
         when (level) {
             "Stage 1" -> {
                 Picasso.get().load("https://firebasestorage.googleapis.com/v0/b/mathslayer-2771e.appspot.com/o/stages%2Fstage1.png?alt=media&token=af22cfdc-27c3-46d0-9583-ee0ccabba881").into(qSummary)

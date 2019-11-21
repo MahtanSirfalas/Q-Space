@@ -1,11 +1,9 @@
 package com.ust.qspace
 
 import android.animation.*
-import android.annotation.TargetApi
 import android.content.Intent
 import android.graphics.drawable.AnimationDrawable
 import android.media.MediaPlayer
-import android.os.Build
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
@@ -48,14 +46,6 @@ import com.ust.qspace.trees.SettingsActivity
 import com.ust.qspace.trees.TermsActivity
 import kotlinx.android.synthetic.main.activity_main.*
 
-private lateinit var firebaseAnalytics: FirebaseAnalytics
-private lateinit var auth: FirebaseAuth
-private lateinit var database: FirebaseDatabase
-private lateinit var databaseReference: DatabaseReference
-private lateinit var commsReference: DatabaseReference
-var firstRunControl = true
-var bgMusicIsRunning = false
-
 lateinit var email: String
 lateinit var uid: String
 lateinit var avatar: String
@@ -66,10 +56,16 @@ var points: Long = 0
 var verifiedCheck = false
 lateinit var animSet: AnimatorSet
 lateinit var ufoPauseAnimSet: AnimatorSet
+var bgMusicIsRunning = false
+var firstRunControl = true
 
-@Suppress("UNUSED_PARAMETER")
-@TargetApi(Build.VERSION_CODES.O)
 class MainActivity : AppCompatActivity() {
+
+    private lateinit var firebaseAnalytics: FirebaseAnalytics
+    private lateinit var auth: FirebaseAuth
+    private lateinit var database: FirebaseDatabase
+    private lateinit var databaseReference: DatabaseReference
+    private lateinit var commsReference: DatabaseReference
 
     val TAG = "MainActivity"
     var uidAssignedCheck = false
@@ -125,7 +121,6 @@ class MainActivity : AppCompatActivity() {
         mediaPlayer = MediaPlayer.create(this, R.raw.ufo)
         mediaPlayer.isLooping = false
         mediaPlayer.setVolume(60f, 60f)
-
     }
 
     override fun onStart() {
@@ -183,7 +178,6 @@ class MainActivity : AppCompatActivity() {
             }catch (ex:Exception){
                 Log.d(TAG, "userUidEmailAssignReload: removeCallBacks ex: $ex")
             }
-
         }
     }
 
@@ -196,7 +190,6 @@ class MainActivity : AppCompatActivity() {
                     "RoomDB:$uid"
                 ).build()
         }.start()
-
     }
 
     private fun parseUserProfileInformationsFromFirebase(){
@@ -369,12 +362,13 @@ class MainActivity : AppCompatActivity() {
                 val metUfoBefore = settings.getSetting(metUfo)
                 val window = PopupWindow(view, ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT)
                 val show = layoutInflater.inflate(R.layout.ufo_popup_hello, null, false)
-                val fadein = AnimationUtils.loadAnimation(this, R.anim.abc_fade_in)
+                val fadein = AnimationUtils.loadAnimation(this, R.anim.fade_in)
                 val buttPositive = show.findViewById<Button>(R.id.butt_ufo_positive)
                 val buttNegative= show.findViewById<Button>(R.id.butt_ufo_negative)
                 val tvUfo = show.findViewById<TextView>(R.id.tv_ufo_screen)
                 if (metUfoBefore){ //check if the player gave its nick to ufo
                     tv_ufo.text = getString(R.string.ufo_met_before, uName)
+                    adViewMain.visibility = View.INVISIBLE
                     window.contentView = show
                     window.showAtLocation(layoutbg, Gravity.BOTTOM, 0, 0)
                     show.startAnimation(fadein)
@@ -390,6 +384,7 @@ class MainActivity : AppCompatActivity() {
                             tv_ufo.postDelayed({
                                 tv_ufo.visibility = View.INVISIBLE
                                 window.dismiss()
+                                adViewMain.visibility = View.VISIBLE
                                 ufoDisappearAnimation()
                             }, 6000)
                         }, 4500)
@@ -404,6 +399,7 @@ class MainActivity : AppCompatActivity() {
                             buttPositive.setOnClickListener {
                                 Log.d(TAG, "stage ufo positive")
                                 window.dismiss()
+                                adViewMain.visibility = View.VISIBLE
                                 val levelKey = "Stage Ufo"
                                 val intent = Intent(this, RandomActivity::class.java)
                                 intent.putExtra("levelKey", levelKey)
@@ -422,6 +418,7 @@ class MainActivity : AppCompatActivity() {
                                     tv_ufo.visibility = View.INVISIBLE
                                     ufoDisappearAnimation()
                                     window.dismiss()
+                                    adViewMain.visibility = View.VISIBLE
                                 }, 3000)
                             }
                         },4500)
@@ -429,6 +426,7 @@ class MainActivity : AppCompatActivity() {
 
                 }else{
                     tv_ufo.text = getString(R.string.ufo_hello)
+                    adViewMain.visibility = View.INVISIBLE
                     window.contentView = show
                     window.showAtLocation(layoutbg, Gravity.BOTTOM, 0, 0)
                     show.startAnimation(fadein)
@@ -444,6 +442,7 @@ class MainActivity : AppCompatActivity() {
                             tv_ufo.visibility = View.INVISIBLE
                             ufoDisappearAnimation()
                             window.dismiss()
+                            adViewMain.visibility = View.VISIBLE
                         }, 3000)
                     }
                     buttPositive.setOnClickListener {
@@ -457,6 +456,7 @@ class MainActivity : AppCompatActivity() {
                             ufoPauseAnimSet.end()
 //                            animSet.resume()
                             window.dismiss()
+                            adViewMain.visibility = View.VISIBLE
                             ufoDisappearAnimation()
                         }, 4500)
                     }
@@ -490,7 +490,7 @@ class MainActivity : AppCompatActivity() {
         firstRunWindow = PopupWindow(this)
         val show = layoutInflater.inflate(R.layout.layout_popup_internet, null)
         firstRunWindow.isOutsideTouchable = true
-        val fadein = AnimationUtils.loadAnimation(this, R.anim.abc_fade_in)
+        val fadein = AnimationUtils.loadAnimation(this, R.anim.fade_in)
         val atf = AnimationUtils.loadAnimation(this, R.anim.atf)
         val rtl = AnimationUtils.loadAnimation(this, R.anim.rtl)
         iv_avatar_circle.visibility = View.VISIBLE
@@ -583,9 +583,8 @@ class MainActivity : AppCompatActivity() {
             val fireName = it.key.toString()
             val sPoint = it.child("/point").value
             val firePoint = sPoint.toString().toInt()
-            var fireControl = it.child("/control").value as Boolean
+            val fireControl = it.child("/control").value as Boolean
             val stageEnt = AppRoomEntity(id, fireName, firePoint, fireControl)
-            @Suppress("SENSELESS_COMPARISON")
             if (dbStage != null){
                 val roomName = dbStage.db_stage_name
                 val roomPoint = dbStage.db_stage_points
@@ -632,7 +631,7 @@ class MainActivity : AppCompatActivity() {
         if(uidAssignedCheck){
             val intent = Intent(this@MainActivity, LvlActivity::class.java)
             val gfo = AnimationUtils.loadAnimation(this, R.anim.gfo)
-            val fo = AnimationUtils.loadAnimation(this, R.anim.abc_fade_out)
+            val fo = AnimationUtils.loadAnimation(this, R.anim.fade_out)
             ivPlay.startAnimation(gfo)
             buttOyna.startAnimation(fo)
             fo.setAnimationListener(object : Animation.AnimationListener{
@@ -675,7 +674,7 @@ class MainActivity : AppCompatActivity() {
         if(uidAssignedCheck){
             val intent = Intent(this@MainActivity, ProfileActivity::class.java)
             val gfo2 = AnimationUtils.loadAnimation(this, R.anim.gfo2)
-            val fo = AnimationUtils.loadAnimation(this, R.anim.abc_fade_out)
+            val fo = AnimationUtils.loadAnimation(this, R.anim.fade_out)
 //        val profil = AnimationUtils.loadAnimation(this, R.anim.profil)
             ivProfile.startAnimation(gfo2)
             buttProfil.startAnimation(fo)
@@ -707,7 +706,7 @@ class MainActivity : AppCompatActivity() {
         if(uidAssignedCheck){
             val intent = Intent(this@MainActivity,SuggestActivity::class.java)
             val gfo = AnimationUtils.loadAnimation(this, R.anim.gfo)
-            val fo = AnimationUtils.loadAnimation(this, R.anim.abc_fade_out)
+            val fo = AnimationUtils.loadAnimation(this, R.anim.fade_out)
             ivSuggestQ.startAnimation(gfo)
             buttSoru.startAnimation(fo)
             fo.setAnimationListener(object : Animation.AnimationListener{
@@ -737,7 +736,7 @@ class MainActivity : AppCompatActivity() {
         if(uidAssignedCheck){
             val intent = Intent(this@MainActivity,InfoActivity::class.java)
             val gfo = AnimationUtils.loadAnimation(this, R.anim.gfo2)
-            val fo = AnimationUtils.loadAnimation(this, R.anim.abc_fade_out)
+            val fo = AnimationUtils.loadAnimation(this, R.anim.fade_out)
             ivInfo.startAnimation(gfo)
             buttInfo.startAnimation(fo)
             fo.setAnimationListener(object : Animation.AnimationListener{
@@ -800,7 +799,7 @@ class MainActivity : AppCompatActivity() {
         googleSignInClient.revokeAccess().addOnCompleteListener(this) {
             if (googleSignInClient.revokeAccess().isSuccessful){
                 LoginActivity().updateUI(auth.currentUser)
-            }else{}
+            }
         }
     }
 
@@ -841,4 +840,3 @@ class MainActivity : AppCompatActivity() {
         }
     }
 }
-

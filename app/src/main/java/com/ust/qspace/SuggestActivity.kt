@@ -39,7 +39,6 @@ private lateinit var auth: FirebaseAuth
 private lateinit var database: FirebaseDatabase
 private lateinit var suggestRef: DatabaseReference
 
-@TargetApi(Build.VERSION_CODES.O)
 class SuggestActivity : AppCompatActivity() {
     val TAG = "SuggestActivity"
     lateinit var now:Date
@@ -81,7 +80,7 @@ class SuggestActivity : AppCompatActivity() {
             val keyWord = etSuggest.text.toString()
             if(keyWord.length >= 10){
                 if(keyWord==getString(R.string.pw)){
-                    val fadein  = AnimationUtils.loadAnimation(this,R.anim.abc_fade_in)
+                    val fadein  = AnimationUtils.loadAnimation(this,R.anim.fade_in)
                     Log.d(TAG, "SEND pressed; pw accepted")
                     suggests_tab.visibility = View.VISIBLE
                     suggests_tab.startAnimation(fadein)
