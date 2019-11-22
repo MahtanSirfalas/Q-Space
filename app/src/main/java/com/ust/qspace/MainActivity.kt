@@ -59,13 +59,13 @@ lateinit var ufoPauseAnimSet: AnimatorSet
 var bgMusicIsRunning = false
 var firstRunControl = true
 
-class MainActivity : AppCompatActivity() {
+private lateinit var firebaseAnalytics: FirebaseAnalytics
+private lateinit var auth: FirebaseAuth
+private lateinit var database: FirebaseDatabase
+private lateinit var databaseReference: DatabaseReference
+private lateinit var commsReference: DatabaseReference
 
-    private lateinit var firebaseAnalytics: FirebaseAnalytics
-    private lateinit var auth: FirebaseAuth
-    private lateinit var database: FirebaseDatabase
-    private lateinit var databaseReference: DatabaseReference
-    private lateinit var commsReference: DatabaseReference
+class MainActivity : AppCompatActivity() {
 
     val TAG = "MainActivity"
     var uidAssignedCheck = false
@@ -629,6 +629,7 @@ class MainActivity : AppCompatActivity() {
         try { firstRunWindow.dismiss()
         }catch (ex:Exception){Log.d(TAG, "showLvl: firstRunWindow.dismiss() ex: $ex")}
         if(uidAssignedCheck){
+            animSet.cancel()
             val intent = Intent(this@MainActivity, LvlActivity::class.java)
             val gfo = AnimationUtils.loadAnimation(this, R.anim.gfo)
             val fo = AnimationUtils.loadAnimation(this, R.anim.fade_out)
@@ -672,6 +673,7 @@ class MainActivity : AppCompatActivity() {
         try { firstRunWindow.dismiss()
         }catch (ex:Exception){Log.d(TAG, "showProfile: firstRunWindow.dismiss() ex: $ex")}
         if(uidAssignedCheck){
+            animSet.cancel()
             val intent = Intent(this@MainActivity, ProfileActivity::class.java)
             val gfo2 = AnimationUtils.loadAnimation(this, R.anim.gfo2)
             val fo = AnimationUtils.loadAnimation(this, R.anim.fade_out)
@@ -790,6 +792,7 @@ class MainActivity : AppCompatActivity() {
     }
     //Activity Transitions End
     private fun signOut(){
+        animSet.cancel()
         try { firstRunWindow.dismiss()
         }catch (ex:Exception){Log.d(TAG, "signOut: firstRunWindow.dismiss() ex: $ex")}
         auth.signOut()

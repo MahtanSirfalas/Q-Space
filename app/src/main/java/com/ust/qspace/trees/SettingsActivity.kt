@@ -64,6 +64,11 @@ class SettingsActivity : AppCompatActivity() {
         })
     }
 
+    override fun onSupportNavigateUp(): Boolean {
+        onBackPressed()
+        return true
+    }
+
     private fun mainMenu(view: View?){
         Log.d(TAG, "mainMenu pressed..")
         val intent = Intent(this@SettingsActivity, MainActivity::class.java)
@@ -93,11 +98,6 @@ class SettingsActivity : AppCompatActivity() {
         auth.signOut()
         startActivity(Intent(this@SettingsActivity, LoginActivity::class.java))
         this@SettingsActivity.finish()
-    }
-
-    override fun onBackPressed() {
-        mainMenu(null)
-        this.finish()
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {

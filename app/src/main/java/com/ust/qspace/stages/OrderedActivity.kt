@@ -44,18 +44,18 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.runBlocking
 
-private lateinit var firebaseAnalytics: FirebaseAnalytics
-private lateinit var auth: FirebaseAuth
-private lateinit var database: FirebaseDatabase
-private lateinit var databaseReference: DatabaseReference
-private lateinit var nick: String
-private lateinit var levelKey: String
-private lateinit var qAnswer: Map<String, Int>
-private var uAnswer: Int = 1
-private var answer: Int = 1
-private lateinit var stageRef : DatabaseReference
-
 class OrderedActivity : AppCompatActivity() {
+
+    private lateinit var firebaseAnalytics: FirebaseAnalytics
+    private lateinit var auth: FirebaseAuth
+    private lateinit var database: FirebaseDatabase
+    private lateinit var databaseReference: DatabaseReference
+    private lateinit var nick: String
+    private lateinit var levelKey: String
+    private lateinit var qAnswer: Map<String, Int>
+    private var uAnswer: Int = 1
+    private var answer: Int = 1
+    private lateinit var stageRef : DatabaseReference
 
     val TAG = "OrderedActivity"
     var isRunning = false

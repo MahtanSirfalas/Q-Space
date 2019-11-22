@@ -41,17 +41,20 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.runBlocking
 
-private lateinit var firebaseAnalytics: FirebaseAnalytics
-private lateinit var auth: FirebaseAuth
-private lateinit var database: FirebaseDatabase
-private lateinit var databaseReference: DatabaseReference
-private lateinit var nick: String
-private lateinit var levelKey: String
-private var uAnswer: Int = 1
-private var answer: Int = 1
-private lateinit var stageRef : DatabaseReference
+
 
 class RandomActivity : AppCompatActivity() {
+
+    private lateinit var firebaseAnalytics: FirebaseAnalytics
+    private lateinit var auth: FirebaseAuth
+    private lateinit var database: FirebaseDatabase
+    private lateinit var databaseReference: DatabaseReference
+    private lateinit var nick: String
+    private lateinit var levelKey: String
+    private var uAnswer: Int = 1
+    private var answer: Int = 1
+    private lateinit var stageRef : DatabaseReference
+
     val TAG = "RandomActivity"
     lateinit var randomNumberTask: Runnable
     lateinit var randomNumberTask1: Runnable

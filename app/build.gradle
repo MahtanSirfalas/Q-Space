@@ -19,8 +19,8 @@ android {
         applicationId "com.ust.qspace"
         minSdkVersion 19
         targetSdkVersion 29
-        versionCode 7
-        versionName "1.23"
+        versionCode 9
+        versionName "1.26"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables.useSupportLibrary = true
         multiDexEnabled true
