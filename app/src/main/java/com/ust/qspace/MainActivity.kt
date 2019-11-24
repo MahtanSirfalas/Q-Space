@@ -142,13 +142,13 @@ class MainActivity : AppCompatActivity() {
                 userUidEmailAssignReload(user)
                 if (user == null && tryCounts<5){
                     tryCounts++
-                    Log.d(TAG, "userUidEmailAssignTaskHandling: postDelayed || tryCounts = $tryCounts")
+//                    Log.d(TAG, "userUidEmailAssignTaskHandling: postDelayed || tryCounts = $tryCounts")
                     mainHandler.postDelayed(this, 3000)
                 }else{
                     if (!uidAssignedCheck){
                         mainHandler.removeCallbacks(userUidEmailAssignTask)
                         signOut()
-                        Log.d(TAG, "userUidEmailAssignTaskHandling: removedCallback after 3 tries called signOut")
+//                        Log.d(TAG, "userUidEmailAssignTaskHandling: removedCallback after 3 tries called signOut")
                     }
                 }
             }
@@ -163,10 +163,10 @@ class MainActivity : AppCompatActivity() {
             user.reload()
             if (uid != null){
                 uidAssignedCheck = true
-                Log.d(TAG, "userUidEmailAssignReload: uidAssignedCheck = true ")
+//                Log.d(TAG, "userUidEmailAssignReload: uidAssignedCheck = true ")
             }
         }catch (ex:Exception){
-            Log.d(TAG, "userUidEmailAssignReload: Assign ex: $ex")
+//            Log.d(TAG, "userUidEmailAssignReload: Assign ex: $ex")
         }
         if (uidAssignedCheck){
             buildRoomDBIfUserIdAssigned()
@@ -176,7 +176,7 @@ class MainActivity : AppCompatActivity() {
             try {
                 mainHandler.removeCallbacks(userUidEmailAssignTask)
             }catch (ex:Exception){
-                Log.d(TAG, "userUidEmailAssignReload: removeCallBacks ex: $ex")
+//                Log.d(TAG, "userUidEmailAssignReload: removeCallBacks ex: $ex")
             }
         }
     }
@@ -202,12 +202,12 @@ class MainActivity : AppCompatActivity() {
                 points = p0.child("points").value as Long
                 Picasso.get().load(avatar).into(iv_avatar_circle)
                 tvName.text = uName
-                Log.d(TAG, "onCreate: avatar and uName assigned")
+//                Log.d(TAG, "onCreate: avatar and uName assigned")
                 animationTop()
                 levelTagClarification()
             }
             override fun onCancelled(p0: DatabaseError) {
-                Log.d(TAG, "Something's Wrong: User information get FAILED")
+//                Log.d(TAG, "Something's Wrong: User information get FAILED")
                 val toast = makeText(baseContext, getString(R.string.listener_cancelled), LENGTH_LONG)
                 toast.setGravity(Gravity.CENTER, 0, 0)
                 toast.show()
@@ -220,10 +220,10 @@ class MainActivity : AppCompatActivity() {
             verifiedCheck = user.isEmailVerified
         }
         if (verifiedCheck){
-            Log.d(TAG, "verifiedCheck = ${user?.isEmailVerified}")
+//            Log.d(TAG, "verifiedCheck = ${user?.isEmailVerified}")
             groupWarn.visibility = View.GONE
         }else{
-            Log.d(TAG, "verifiedCheck = ${user?.isEmailVerified}")
+//            Log.d(TAG, "verifiedCheck = ${user?.isEmailVerified}")
             groupWarn.visibility = View.VISIBLE
         }
     }
@@ -297,7 +297,7 @@ class MainActivity : AppCompatActivity() {
             override fun onAnimationStart(p0: Animator?) {}
             override fun onAnimationRepeat(p0: Animator?) {
                 doTranslationVariationOnRepeat()
-                Log.d(TAG, "onStartAnimation: Values assigned again; transx = $transX, transX1 = $transX1")
+//                Log.d(TAG, "onStartAnimation: Values assigned again; transx = $transX, transX1 = $transX1")
             }
         })
     }
@@ -344,7 +344,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun ufoClickAction(view:View?){
-        Log.d(TAG, "UFO CLICKED!!!")
+//        Log.d(TAG, "UFO CLICKED!!!")
         animSet.pause()
         ufoPauseAnimation()
         mediaPlayer.start()
@@ -397,7 +397,7 @@ class MainActivity : AppCompatActivity() {
                             buttPositive.text = getString(R.string.ufo_high_point_positive)
                             buttNegative.text = getString(R.string.ufo_high_point_negative)
                             buttPositive.setOnClickListener {
-                                Log.d(TAG, "stage ufo positive")
+//                                Log.d(TAG, "stage ufo positive")
                                 window.dismiss()
                                 adViewMain.visibility = View.VISIBLE
                                 val levelKey = "Stage Ufo"
@@ -407,7 +407,7 @@ class MainActivity : AppCompatActivity() {
                                 startActivity(intent)
                             }
                             buttNegative.setOnClickListener {
-                                Log.d(TAG, "stage ufo negative")
+//                                Log.d(TAG, "stage ufo negative")
                                 tv_ufo.text = getString(R.string.ufo_hello_negative_answer)
                                 tvUfo.text = getString(R.string.ufo_hello_negative_answer)
                                 buttPositive.visibility = View.GONE
@@ -505,7 +505,9 @@ class MainActivity : AppCompatActivity() {
                     firstRunWindow.showAtLocation(layoutbg,1,0,0)
                     show.startAnimation(fadein)
                     firstRunControl = false
-                }else{Log.d(TAG, "animationTop: Not first run!")}
+                }else{
+//                    Log.d(TAG, "animationTop: Not first run!")
+                }
                 tvName.visibility = View.VISIBLE
                 tvName.startAnimation(rtl)
                 onStartAnimation()
@@ -536,16 +538,16 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun synchronRoomDb(){
-        Log.d(TAG, "synchronRoomDb: Starts")
+//        Log.d(TAG, "synchronRoomDb: Starts")
         val stagesReference= databaseReference.child("$uid/stages")
         stagesReference.addListenerForSingleValueEvent(object :ValueEventListener{
             override fun onCancelled(p0: DatabaseError) {
-                Log.d(TAG, "synchronRoomDb: stageRef couldn't read...")
+//                Log.d(TAG, "synchronRoomDb: stageRef couldn't read...")
             }
             override fun onDataChange(p0: DataSnapshot) {
                 if (p0.hasChildren()){
                     p0.children.forEach {
-                        Log.d(TAG, "synchronRoomDb: child = $it")
+//                        Log.d(TAG, "synchronRoomDb: child = $it")
                         if (!it.child("/control").exists() && it.child("/point").exists()){
                             it.ref.child("/control").setValue(true).addOnSuccessListener { kopek ->
                                 synchronDBsIfElse(stagesReference, it)
@@ -562,7 +564,7 @@ class MainActivity : AppCompatActivity() {
                             val roomControl = it.db_stage_control
                             stagesReference.child("/$roomName/point").setValue(roomPoint)
                             stagesReference.child("/$roomName/control").setValue(roomControl)
-                            Log.d(TAG, "synchronRoomDb: p0 doesn't have children: roomDB added to fireDB")
+//                            Log.d(TAG, "synchronRoomDb: p0 doesn't have children: roomDB added to fireDB")
                         }
                     }.start()
                 }
@@ -592,44 +594,46 @@ class MainActivity : AppCompatActivity() {
                 if (roomName == fireName){
                     if (fireControl && roomControl && firePoint>roomPoint){
                         stagesReference.child("/$fireName/point").setValue(roomPoint)
-                        Log.d(TAG, "synchronDBsIfElse: $fireName: Points updated in fireDB")
+//                        Log.d(TAG, "synchronDBsIfElse: $fireName: Points updated in fireDB")
                     }
                     else if (fireControl && roomControl && firePoint<roomPoint){
                         db.stageDao().update(stageEnt)
-                        Log.d(TAG, "synchronDBsIfElse: $fireName: Points updated in RoomDB")
+//                        Log.d(TAG, "synchronDBsIfElse: $fireName: Points updated in RoomDB")
                     }
                     else if (fireControl && !roomControl){
                         stagesReference.child("/$fireName/point").setValue(roomPoint)
                         stagesReference.child("/$fireName/control").setValue(roomControl)
-                        Log.d(TAG, "synchronDBsIfElse: $fireName: Points + Control updated in fireDB")
+//                        Log.d(TAG, "synchronDBsIfElse: $fireName: Points + Control updated in fireDB")
                     }
                     else if (!fireControl && roomControl){
                         db.stageDao().update(stageEnt)
-                        Log.d(TAG, "synchronDBsIfElse: $fireName: Points + Control updated in RoomDB")
+//                        Log.d(TAG, "synchronDBsIfElse: $fireName: Points + Control updated in RoomDB")
                     }
                     else if (!fireControl && !roomControl && roomPoint != firePoint){
                         db.stageDao().update(stageEnt)
-                        Log.d(TAG, "synchronDBsIfElse: !!$fireName: Points + Control updated in RoomDB")
+//                        Log.d(TAG, "synchronDBsIfElse: !!$fireName: Points + Control updated in RoomDB")
                     }
                     else{
-                        Log.d(TAG, "synchronDBsIfElse: No need to update $fireName! $fireControl")
+//                        Log.d(TAG, "synchronDBsIfElse: No need to update $fireName! $fireControl")
                     }
                 }
                 else{
-                    Log.d(TAG, "synchronDBsIfElse: $fireName couldn't found in RoomDB = $roomName")
+//                    Log.d(TAG, "synchronDBsIfElse: $fireName couldn't found in RoomDB = $roomName")
                 }
             }else{
                 db.stageDao().insert(stageEnt)
-                Log.d(TAG, "synchronDBsIfElse: $fireName: $fireControl inserted to RoomDB")
+//                Log.d(TAG, "synchronDBsIfElse: $fireName: $fireControl inserted to RoomDB")
             }
         }.start()
     }
     //Activity Transitions Start
     fun showLvl(view: View?) {
         try { firstRunWindow.dismiss()
-        }catch (ex:Exception){Log.d(TAG, "showLvl: firstRunWindow.dismiss() ex: $ex")}
+        }catch (ex:Exception){
+//            Log.d(TAG, "showLvl: firstRunWindow.dismiss() ex: $ex")
+        }
         if(uidAssignedCheck){
-            animSet.cancel()
+            if (animSet.isStarted){ animSet.pause() }
             val intent = Intent(this@MainActivity, LvlActivity::class.java)
             val gfo = AnimationUtils.loadAnimation(this, R.anim.gfo)
             val fo = AnimationUtils.loadAnimation(this, R.anim.fade_out)
@@ -649,7 +653,7 @@ class MainActivity : AppCompatActivity() {
                     ivPlay.visibility = View.INVISIBLE
                     startActivity(intent)
                     /*if (mInterstitialAd.isLoaded) {
-                        Log.d(TAG, "Ad Must be showed!!!")
+//                        Log.d(TAG, "Ad Must be showed!!!")
                         mInterstitialAd.show()
                         mInterstitialAd.adListener = object : AdListener() {
                             override fun onAdClosed() {
@@ -658,7 +662,7 @@ class MainActivity : AppCompatActivity() {
                             }
                         }
                     } else {
-                        Log.d(TAG, "The interstitial wasn't loaded yet.")
+//                        Log.d(TAG, "The interstitial wasn't loaded yet.")
                         startActivity(intent)
                     }*/
                 }
@@ -669,11 +673,13 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun showProfile(view: View?){
-        Log.d(TAG, "Profile pressed")
+//        Log.d(TAG, "Profile pressed")
         try { firstRunWindow.dismiss()
-        }catch (ex:Exception){Log.d(TAG, "showProfile: firstRunWindow.dismiss() ex: $ex")}
+        }catch (ex:Exception){
+//            Log.d(TAG, "showProfile: firstRunWindow.dismiss() ex: $ex")
+        }
         if(uidAssignedCheck){
-            animSet.cancel()
+            if (animSet.isStarted){ animSet.pause() }
             val intent = Intent(this@MainActivity, ProfileActivity::class.java)
             val gfo2 = AnimationUtils.loadAnimation(this, R.anim.gfo2)
             val fo = AnimationUtils.loadAnimation(this, R.anim.fade_out)
@@ -702,9 +708,11 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun showSuggestQ(view: View?){
-        Log.d(TAG, "Suggest-Q pressed")
+//        Log.d(TAG, "Suggest-Q pressed")
         try { firstRunWindow.dismiss()
-        }catch (ex:Exception){Log.d(TAG, "showSuggestQ: firstRunWindow.dismiss() ex: $ex")}
+        }catch (ex:Exception){
+//            Log.d(TAG, "showSuggestQ: firstRunWindow.dismiss() ex: $ex")
+        }
         if(uidAssignedCheck){
             val intent = Intent(this@MainActivity,SuggestActivity::class.java)
             val gfo = AnimationUtils.loadAnimation(this, R.anim.gfo)
@@ -732,9 +740,11 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun showInfo(view:View?){
-        Log.d(TAG, "Info pressed")
+//        Log.d(TAG, "Info pressed")
         try { firstRunWindow.dismiss()
-        }catch (ex:Exception){Log.d(TAG, "showSettings: firstRunWindow.dismiss() ex: $ex")}
+        }catch (ex:Exception){
+//            Log.d(TAG, "showSettings: firstRunWindow.dismiss() ex: $ex")
+        }
         if(uidAssignedCheck){
             val intent = Intent(this@MainActivity,InfoActivity::class.java)
             val gfo = AnimationUtils.loadAnimation(this, R.anim.gfo2)
@@ -762,39 +772,47 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun showSettings(view:View?){
-        Log.d(TAG, "action_settings pressed!")
+//        Log.d(TAG, "action_settings pressed!")
         try { firstRunWindow.dismiss()
-        }catch (ex:Exception){Log.d(TAG, "showSettings: firstRunWindow.dismiss() ex: $ex")}
+        }catch (ex:Exception){
+//            Log.d(TAG, "showSettings: firstRunWindow.dismiss() ex: $ex")
+        }
         val intent = Intent(this@MainActivity, SettingsActivity::class.java)
         startActivity(intent)
     }
 
     private fun mainMenu(view: View?){
-        Log.d(TAG, "mainMenu pressed..")
+//        Log.d(TAG, "mainMenu pressed..")
         val intent = Intent(this@MainActivity, MainActivity::class.java)
         startActivity(intent)
     }
 
     private fun privacyPolicy(){
-        Log.d(TAG, "privacyPolicy pressed..")
+//        Log.d(TAG, "privacyPolicy pressed..")
         try { firstRunWindow.dismiss()
-        }catch (ex:Exception){Log.d(TAG, "privacyPolicy: firstRunWindow.dismiss() ex: $ex")}
+        }catch (ex:Exception){
+//            Log.d(TAG, "privacyPolicy: firstRunWindow.dismiss() ex: $ex")
+        }
         val intent = Intent(this, PrivacyActivity::class.java)
         startActivity(intent)
     }
 
     private fun termsConditions(){
-        Log.d(TAG, "privacyPolicy pressed..")
+//        Log.d(TAG, "privacyPolicy pressed..")
         try { firstRunWindow.dismiss()
-        }catch (ex:Exception){Log.d(TAG, "termsConditions: firstRunWindow.dismiss() ex: $ex")}
+        }catch (ex:Exception){
+//            Log.d(TAG, "termsConditions: firstRunWindow.dismiss() ex: $ex")
+        }
         val intent = Intent(this, TermsActivity::class.java)
         startActivity(intent)
     }
     //Activity Transitions End
     private fun signOut(){
-        animSet.cancel()
+        if (animSet.isStarted){ animSet.pause() }
         try { firstRunWindow.dismiss()
-        }catch (ex:Exception){Log.d(TAG, "signOut: firstRunWindow.dismiss() ex: $ex")}
+        }catch (ex:Exception){
+//            Log.d(TAG, "signOut: firstRunWindow.dismiss() ex: $ex")
+        }
         auth.signOut()
         startActivity(Intent(this@MainActivity, LoginActivity::class.java))
         this@MainActivity.finish()

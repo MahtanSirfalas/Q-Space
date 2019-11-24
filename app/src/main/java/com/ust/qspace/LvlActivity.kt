@@ -74,21 +74,21 @@ class LvlActivity : AppCompatActivity() {
                         val roomPoint = dbStage.db_stage_points
                         val roomControl = dbStage.db_stage_control
                         if (roomControl){
-                            Log.d(TAG, "$item: Pass")
+//                            Log.d(TAG, "$item: Pass")
                         }else{
                             if (roomPoint == 0){
                                 buton?.setBackgroundResource(R.drawable.custom_butt_lvl)
-                                Log.d(TAG, "$item: Given Up")
+//                                Log.d(TAG, "$item: Given Up")
                             }else{
                                 buton?.setBackgroundResource(R.drawable.custom_butt_stagewon)
-                                Log.d(TAG, "$item: Finished")
+//                                Log.d(TAG, "$item: Finished")
                             }
                         }
-                        Log.d(TAG, "stageList: $item applied")
+//                        Log.d(TAG, "stageList: $item applied")
                     }
                 }
             }else{
-                Log.d(TAG, "stages doesn't exist yet!")
+//                Log.d(TAG, "stages doesn't exist yet!")
             }
         }.start()
     }
@@ -196,7 +196,7 @@ class LvlActivity : AppCompatActivity() {
     fun showStage(view: View?){
         val buttonStage = (view as Button).text.toString()
         levelKey = "Stage $buttonStage"
-        Log.d(TAG, "buttL$buttonStage pressed")
+//        Log.d(TAG, "buttL$buttonStage pressed")
         if(buttonStage == "3" || buttonStage == "8" || buttonStage == "23"){
             val intent = Intent(this@LvlActivity, RandomActivity::class.java)
             intent.putExtra("tvName", nick)
@@ -211,38 +211,38 @@ class LvlActivity : AppCompatActivity() {
     }
 
     private fun mainMenu(view: View?){
-        Log.d(TAG, "mainMenu pressed..")
+//        Log.d(TAG, "mainMenu pressed..")
         val intent = Intent(this@LvlActivity, MainActivity::class.java)
         startActivity(intent)
     }
 
     private fun showSettings(view:View?){
-        Log.d(TAG, "action_settings pressed!")
+//        Log.d(TAG, "action_settings pressed!")
         val intent = Intent(this@LvlActivity, SettingsActivity::class.java)
         startActivity(intent)
     }
 
     fun showProfile(view: View?){
-        Log.d(TAG, "Profile pressed..")
+//        Log.d(TAG, "Profile pressed..")
         val intent = Intent(this@LvlActivity, ProfileActivity::class.java)
         intent.putExtra("tvName", nick)
         startActivity(intent)
     }
 
     private fun privacyPolicy(){
-        Log.d(TAG, "privacyPolicy pressed..")
+//        Log.d(TAG, "privacyPolicy pressed..")
         val intent = Intent(this, PrivacyActivity::class.java)
         startActivity(intent)
     }
 
     private fun termsConditions(){
-        Log.d(TAG, "privacyPolicy pressed..")
+//        Log.d(TAG, "privacyPolicy pressed..")
         val intent = Intent(this, TermsActivity::class.java)
         startActivity(intent)
     }
 
     fun signOut(view: View?){
-        Log.d(TAG, "signOut pressed..")
+//        Log.d(TAG, "signOut pressed..")
         auth.signOut()
         startActivity(Intent(this@LvlActivity, LoginActivity::class.java))
         this@LvlActivity.finish()

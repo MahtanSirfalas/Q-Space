@@ -112,7 +112,7 @@ class OrderedActivity : AppCompatActivity() {
 
         levelAdapt(levelKey)
 
-        Log.d(TAG, "levelKey=$levelKey, answer=$answer")
+//        Log.d(TAG, "levelKey=$levelKey, answer=$answer")
 
         commentAnimation()
 //        chrono.base = SystemClock.elapsedRealtime()
@@ -120,7 +120,7 @@ class OrderedActivity : AppCompatActivity() {
         //force keyboard show
         /*textQ.isClickable = true
         textQ.setOnClickListener {
-            Log.d(TAG, "textQclicked")
+//            Log.d(TAG, "textQclicked")
             val inputMethodManager = getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
             inputMethodManager.toggleSoftInput(InputMethodManager.SHOW_FORCED, InputMethodManager.HIDE_IMPLICIT_ONLY)
         }*/
@@ -140,26 +140,26 @@ class OrderedActivity : AppCompatActivity() {
 
             if (dbStage != null){
                 updatePointTaskPoint = dbStage.db_stage_points
-                Log.d(TAG, "startCheck: roomPoint = $updatePointTaskPoint")
+//                Log.d(TAG, "startCheck: roomPoint = $updatePointTaskPoint")
                 var control = dbStage.db_stage_control
                 stageStartFireDBCheck(updatePointTaskPoint, control)
                 if (control) {
                     updatePointTaskPoint -= 10
-                    Log.d(TAG, "startCheck: roomPoint = $updatePointTaskPoint")
+//                    Log.d(TAG, "startCheck: roomPoint = $updatePointTaskPoint")
                     stagePointControlUpdate(updatePointTaskPoint, control)
                     updatePointTask = object : Runnable{
                         override fun run() {
                             isRunning = true
                             updatePointTaskPoint -= 2
                             stagePointControlUpdate(updatePointTaskPoint, control)
-                            Log.d(TAG, "$levelKey point updated to $updatePointTaskPoint")
+//                            Log.d(TAG, "$levelKey point updated to $updatePointTaskPoint")
                             mainHandler.postDelayed(this, 10000)
                         }
                     }
                     mainHandler.post(updatePointTask)
                 }else{
                     commentBubbleGlow()
-                    Log.d(TAG, "Stage passed before.")
+//                    Log.d(TAG, "Stage passed before.")
                 }
 
             }else{
@@ -174,7 +174,7 @@ class OrderedActivity : AppCompatActivity() {
                         }, 100)
                     }
                 }
-                Log.d(TAG, "First run on $levelKey, adaptation DONE!")
+//                Log.d(TAG, "First run on $levelKey, adaptation DONE!")
             }
         }.start()
     }
@@ -230,7 +230,7 @@ class OrderedActivity : AppCompatActivity() {
     }
 
     private fun starAnimationInfoWhenUserOpenedTheNextStages(topText:TextView){
-        Log.d(TAG, "starAnimationInfoWhenUserOpenedTheNextStages: points = $points  totalPointOfUser = $totalPointOfUser")
+//        Log.d(TAG, "starAnimationInfoWhenUserOpenedTheNextStages: points = $points  totalPointOfUser = $totalPointOfUser")
         if ((points<24000 && totalPointOfUser>=24000) ||
             (points<45000 && totalPointOfUser>=45000) ||
             (points<70000 && totalPointOfUser>=70000) ||
@@ -267,14 +267,14 @@ class OrderedActivity : AppCompatActivity() {
                 if (!p0.exists()){
                     stageRef.child("point").setValue(point.toLong())
                     stageRef.child("control").setValue(control)
-                    Log.d(TAG, "stageStartFireDBCheck: fireDB updated")
+//                    Log.d(TAG, "stageStartFireDBCheck: fireDB updated")
                 }
             }
         })
     }
 
     fun slayButton(view: View?) {
-        Log.d(TAG, "slayButton: pressed")
+//        Log.d(TAG, "slayButton: pressed")
         progressBarOrdered.visibility = View.VISIBLE
         val kontrol = tv_answer1.text.toString()
         val inputMethodManager = getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
@@ -286,7 +286,7 @@ class OrderedActivity : AppCompatActivity() {
                 synchronDBs(true)
             }
         }else {
-            Log.d(TAG, "slayButton: tv_answer1 is empty!")
+//            Log.d(TAG, "slayButton: tv_answer1 is empty!")
             val toast = makeText(baseContext, getString(R.string.enter_answer), LENGTH_SHORT)
             toast.setGravity(Gravity.CENTER, 0, 100)
             toast.show()
@@ -297,9 +297,9 @@ class OrderedActivity : AppCompatActivity() {
         removeStageRefValueEventListener()
         try {
             uAnswer = tv_answer1.text.toString().toInt()
-            Log.d(TAG, "slayButtonAnswerTasks: uAnswer is assigned as $uAnswer")
+//            Log.d(TAG, "slayButtonAnswerTasks: uAnswer is assigned as $uAnswer")
         } catch (ex: Exception) {
-            Log.d(TAG, "slayButtonAnswerTasks: Something's Wrong; uAnswer couldn't assign!")
+//            Log.d(TAG, "slayButtonAnswerTasks: Something's Wrong; uAnswer couldn't assign!")
             val toast = makeText(baseContext, "Please Enter a Valid Value", LENGTH_SHORT)
             toast.setGravity(Gravity.CENTER, 0, 0)
             toast.show()
@@ -308,14 +308,14 @@ class OrderedActivity : AppCompatActivity() {
         val userRef = databaseReference.child(uid)
         userRef.addListenerForSingleValueEvent(object:ValueEventListener{
             override fun onCancelled(p0s: DatabaseError) {
-                Log.d(TAG, "slayButtonAnswerTasks: userRef Data couldn't read; No Internet Connection/No Response from database/Wrong datapath")
+//                Log.d(TAG, "slayButtonAnswerTasks: userRef Data couldn't read; No Internet Connection/No Response from database/Wrong datapath")
             }
             override fun onDataChange(p0s: DataSnapshot) {
                 if (p0s.exists()){
                     var point = p0s.child("stages/$levelKey/point").value as Long
                     val control = p0s.child("stages/$levelKey/control").value as Boolean
                     if (control){
-                        if (uAnswer == answer) {
+                        if ((uAnswer == answer) || (levelKey == "Stage 25" && uAnswer == -15)) {
                             var levelP = p0s.child("level").value as String
                             var tPoints = p0s.child("points").value as Long
                             points = tPoints
@@ -342,7 +342,7 @@ class OrderedActivity : AppCompatActivity() {
                                     "Pluto" -> {}
                                     "Mars" -> {}
                                     else -> {
-                                        Log.d(TAG, "Level didn't change!")
+//                                        Log.d(TAG, "Level didn't change!")
                                     }
                                 }
                                 removeStageRefValueEventListener()
@@ -357,7 +357,7 @@ class OrderedActivity : AppCompatActivity() {
                         ifLevelControlIsFalse(uAnswer, answer)
                     }
                 }else{
-                    Log.d(TAG, "slayButtonAnswerTasks: p0 does not exist")
+//                    Log.d(TAG, "slayButtonAnswerTasks: p0 does not exist")
                     runBlocking(Dispatchers.Default) {
                         synchronDBs(true)
                     }
@@ -369,13 +369,13 @@ class OrderedActivity : AppCompatActivity() {
 
     private fun firstTimeCorrectAnswerDatabaseUpdates(point:Long, tPoint:Long, userRef:DatabaseReference){
         progressBarOrdered.visibility = View.GONE
-        Log.d(TAG, "firstTimeCorrectAnswerDatabaseUpdates: $levelKey: Answer ($uAnswer) is equal to $answer; Accepted!")
+//        Log.d(TAG, "firstTimeCorrectAnswerDatabaseUpdates: $levelKey: Answer ($uAnswer) is equal to $answer; Accepted!")
         Thread{//update roomDB the answer is accepted
             val lastInd = levelKey.length
             val id = levelKey.substring(6, lastInd).toInt()
             val stageEnt = AppRoomEntity(id, levelKey, point.toInt(), false)
             db.stageDao().update(stageEnt)
-            Log.d(TAG, "firstTimeCorrectAnswerDatabaseUpdates: roomDB UPDATED: answer is accepted")
+//            Log.d(TAG, "firstTimeCorrectAnswerDatabaseUpdates: roomDB UPDATED: answer is accepted")
         }.start()
         stageRef.child("control").setValue(false).addOnSuccessListener { commentBubbleGlow() }
         totalPointOfUser = tPoint
@@ -385,7 +385,7 @@ class OrderedActivity : AppCompatActivity() {
             val totalPoints = AppRoomEntity(300000, "Total Points", totalPointOfUser.toInt(), true)
             db.stageDao().update(totalPoints)
         }.start()
-        Log.d(TAG, "firstTimeCorrectAnswerDatabaseUpdates: DBs Total Points are updated from $tPoint as $totalPointOfUser")
+//        Log.d(TAG, "firstTimeCorrectAnswerDatabaseUpdates: DBs Total Points are updated from $tPoint as $totalPointOfUser")
         val toast = makeText(baseContext, getString(R.string.bravo), LENGTH_SHORT)
         toast.setGravity(Gravity.TOP, 0, 100)
         toast.show()
@@ -400,30 +400,29 @@ class OrderedActivity : AppCompatActivity() {
             var point = thePoint
             point -= 100
             updatePointTaskPoint = point.toInt()
-            Log.d(TAG, "wrongAnswerDatabaseUpdates: point is updated from $thePoint to $point")
+//            Log.d(TAG, "wrongAnswerDatabaseUpdates: point is updated from $thePoint to $point")
             val stageEnt = AppRoomEntity(id, levelKey, point.toInt(), true)
             db.stageDao().update(stageEnt)
             stageRef.child("point").setValue(point).addOnSuccessListener {void ->
                 buttAnswer1.isClickable = true
             }
-            Log.d(TAG, "wrongAnswerDatabaseUpdates: roomDB UPDATED: answer is wrong; -100 points")
+//            Log.d(TAG, "wrongAnswerDatabaseUpdates: roomDB UPDATED: answer is wrong; -100 points")
         }.start()
-        Log.d(TAG, "wrongAnswerDatabaseUpdates: Something's Wrong; $uAnswer != $answer!")
+//        Log.d(TAG, "wrongAnswerDatabaseUpdates: Something's Wrong; $uAnswer != $answer!")
         val toast = makeText(baseContext, getString(R.string.wrong_answer), LENGTH_SHORT)
         toast.setGravity(Gravity.CENTER, 0, 100)
         toast.show()
     }
 
     private fun ifLevelControlIsFalse(uAnswer:Int, answer:Int){
-        if(uAnswer == answer){
+        if((uAnswer == answer) || (levelKey == "Stage 25" && uAnswer == -15)){
             starAnimation()
-            Log.d(TAG, "ifLevelControlIsFalse: $levelKey: Answer ($uAnswer) is equal to $answer; " +
-                    "But no points added to the database")
+//            Log.d(TAG, "ifLevelControlIsFalse: $levelKey: Answer ($uAnswer) is equal to $answer; But no points added to the database")
             val toast = makeText(baseContext, getString(R.string.bravo), LENGTH_SHORT)
             toast.setGravity(Gravity.TOP, 0, 100)
             toast.show()
         }else{
-            Log.d(TAG, "ifLevelControlIsFalse: Something's Wrong; $uAnswer != $answer!")
+//            Log.d(TAG, "ifLevelControlIsFalse: Something's Wrong; $uAnswer != $answer!")
             val toast = makeText(baseContext, getString(R.string.come_on), LENGTH_SHORT)
             toast.setGravity(Gravity.CENTER, 0, 100)
             toast.show()
@@ -506,7 +505,7 @@ class OrderedActivity : AppCompatActivity() {
                 ib_next.visibility = View.VISIBLE
                 ib_next.startAnimation(fadein)
                 showWhiteFonts()
-                Log.d(TAG, "$level adaptation is done successfully!")
+//                Log.d(TAG, "$level adaptation is done successfully!")
             }
             "Stage 2" -> {
                 ib_back.visibility = View.VISIBLE
@@ -519,7 +518,7 @@ class OrderedActivity : AppCompatActivity() {
                 if (whiteFonts){
                     uc4_say2.setTextColor(Color.MAGENTA)
                 }
-                Log.d(TAG, "$level adaptation is done successfully!")
+//                Log.d(TAG, "$level adaptation is done successfully!")
             }
             "Stage 4" -> {
                 groupOrder.visibility = View.VISIBLE
@@ -533,7 +532,7 @@ class OrderedActivity : AppCompatActivity() {
                 ib_back.startAnimation(fadein)
                 ib_next.startAnimation(fadein)
                 showWhiteFonts()
-                Log.d(TAG, "$level adaptation is done successfully!")
+//                Log.d(TAG, "$level adaptation is done successfully!")
             }
             "Stage 5" -> {
                 groupOrder.visibility = View.VISIBLE
@@ -547,7 +546,7 @@ class OrderedActivity : AppCompatActivity() {
                 ib_back.startAnimation(fadein)
                 ib_next.startAnimation(fadein)
                 showWhiteFonts()
-                Log.d(TAG, "$level adaptation is done successfully!")
+//                Log.d(TAG, "$level adaptation is done successfully!")
             }
             "Stage 6" -> {
                 groupShapeVisibility()
@@ -556,7 +555,7 @@ class OrderedActivity : AppCompatActivity() {
                 ib_next.visibility = View.VISIBLE
                 ib_back.startAnimation(fadein)
                 ib_next.startAnimation(fadein)
-                Log.d(TAG, "$level adaptation is done successfully!")
+//                Log.d(TAG, "$level adaptation is done successfully!")
             }
             "Stage 7" -> {
                 groupOrder.visibility = View.VISIBLE
@@ -575,7 +574,7 @@ class OrderedActivity : AppCompatActivity() {
                 if(whiteFonts){
                     say4.setTextColor(Color.MAGENTA)
                 }
-                Log.d(TAG, "$level adaptation is done successfully!")
+//                Log.d(TAG, "$level adaptation is done successfully!")
             }
             "Stage 9"->{
                 ib_back.visibility = View.VISIBLE
@@ -600,7 +599,7 @@ class OrderedActivity : AppCompatActivity() {
                 if (whiteFonts){
                     uc3_say2.setTextColor(Color.MAGENTA)
                 }
-                Log.d(TAG, "$level adaptation is done successfully!")
+//                Log.d(TAG, "$level adaptation is done successfully!")
             }
             "Stage 10"->{
                 ib_back.visibility = View.VISIBLE
@@ -611,7 +610,7 @@ class OrderedActivity : AppCompatActivity() {
                 tv_table_r42.setTextColor(resources.getColor(R.color.colorSpaceWhite))
                 tv_table_r42.background = resources.getDrawable(R.drawable.butt_profile_tabs)
                 group_table.startAnimation(fadein)
-                Log.d(TAG, "$level adaptation is done successfully!")
+//                Log.d(TAG, "$level adaptation is done successfully!")
             }
             "Stage 11"->{
                 ib_back.visibility = View.VISIBLE
@@ -627,7 +626,7 @@ class OrderedActivity : AppCompatActivity() {
                 tv_under1.text = "7+3+8 = ?"
                 showWhiteFonts()
                 group_under.startAnimation(fadein)
-                Log.d(TAG, "$level adaptation is done successfully!")
+//                Log.d(TAG, "$level adaptation is done successfully!")
             }
             "Stage 12"->{
                 ib_back.visibility = View.VISIBLE
@@ -642,7 +641,7 @@ class OrderedActivity : AppCompatActivity() {
                 group_under.startAnimation(fadein)
                 tv_under.gravity = Gravity.CENTER
                 tv_under1.gravity = Gravity.CENTER
-                Log.d(TAG, "$level adaptation is done successfully!")
+//                Log.d(TAG, "$level adaptation is done successfully!")
             }
             "Stage 13"->{
                 ib_back.visibility = View.VISIBLE
@@ -658,7 +657,7 @@ class OrderedActivity : AppCompatActivity() {
                 tv_under1.gravity = Gravity.CENTER_HORIZONTAL
                 showWhiteFonts()
                 group_under.startAnimation(fadein)
-                Log.d(TAG, "$level adaptation is done successfully!")
+//                Log.d(TAG, "$level adaptation is done successfully!")
             }
             "Stage 14"->{
                 ib_back.visibility = View.VISIBLE
@@ -676,7 +675,7 @@ class OrderedActivity : AppCompatActivity() {
                 tv_under1.gravity = Gravity.START
                 showWhiteFonts()
                 group_under.startAnimation(fadein)
-                Log.d(TAG, "$level adaptation is done successfully!")
+//                Log.d(TAG, "$level adaptation is done successfully!")
             }
             "Stage 15"->{
                 ib_back.visibility = View.VISIBLE
@@ -685,7 +684,7 @@ class OrderedActivity : AppCompatActivity() {
                 ib_next.startAnimation(fadein)
                 group_table_full.visibility = View.VISIBLE
                 group_table_full.startAnimation(fadein)
-                Log.d(TAG, "$level adaptation is done successfully!")
+//                Log.d(TAG, "$level adaptation is done successfully!")
             }
             "Stage 16"->{
                 ib_back.visibility = View.VISIBLE
@@ -701,7 +700,7 @@ class OrderedActivity : AppCompatActivity() {
                 tv_under1.text = "3919 = ?"
                 showWhiteFonts()
                 group_under.startAnimation(fadein)
-                Log.d(TAG, "$level adaptation is done successfully!")
+//                Log.d(TAG, "$level adaptation is done successfully!")
             }
             "Stage 17"->{
                 ib_back.visibility = View.VISIBLE
@@ -717,7 +716,7 @@ class OrderedActivity : AppCompatActivity() {
                 tv_under1.gravity = Gravity.CENTER_HORIZONTAL
                 showWhiteFonts()
                 group_under.startAnimation(fadein)
-                Log.d(TAG, "$level adaptation is done successfully!")
+//                Log.d(TAG, "$level adaptation is done successfully!")
             }
             "Stage 18"->{
                 ib_back.visibility = View.VISIBLE
@@ -738,7 +737,7 @@ class OrderedActivity : AppCompatActivity() {
                 tv_under1.gravity = Gravity.CENTER
                 showWhiteFonts()
                 group_under.startAnimation(fadein)
-                Log.d(TAG, "$level adaptation is done successfully!")
+//                Log.d(TAG, "$level adaptation is done successfully!")
             }
             "Stage 19"->{
                 ib_back.visibility = View.VISIBLE
@@ -747,7 +746,7 @@ class OrderedActivity : AppCompatActivity() {
                 ib_next.startAnimation(fadein)
                 group_tableQ.visibility = View.VISIBLE
                 group_tableQ.startAnimation(fadein)
-                Log.d(TAG, "$level adaptation is done successfully!")
+//                Log.d(TAG, "$level adaptation is done successfully!")
             }
             "Stage 20"->{
                 ib_back.visibility = View.VISIBLE
@@ -757,7 +756,7 @@ class OrderedActivity : AppCompatActivity() {
                 group_gaga.visibility = View.VISIBLE
                 group_gaga.startAnimation(fadein)
                 tv_answer1.isFocusable = false
-                Log.d(TAG, "$level adaptation is done successfully!")
+//                Log.d(TAG, "$level adaptation is done successfully!")
             }
             "Stage 21"->{
                 ib_back.visibility = View.VISIBLE
@@ -785,7 +784,7 @@ class OrderedActivity : AppCompatActivity() {
                 tv_full_r3s3.setTextColor(resources.getColor(R.color.colorPrimaryDark))
                 tv_full_r4s2.background = resources.getDrawable(R.drawable.custom_butt_profile_tabs)
                 tv_full_r4s2.setTextColor(resources.getColor(R.color.colorSpaceWhite))
-                Log.d(TAG, "$level adaptation is done successfully!")
+//                Log.d(TAG, "$level adaptation is done successfully!")
             }
             "Stage 22"->{
                 ib_back.visibility = View.VISIBLE
@@ -803,7 +802,7 @@ class OrderedActivity : AppCompatActivity() {
                 tv_qmark.textSize = 18f
                 tv_qmark.text = "Which figure results\nby combining all four objects at top-right?"
                 group_gaga.startAnimation(fadein)
-                Log.d(TAG, "$level adaptation is done successfully!")
+//                Log.d(TAG, "$level adaptation is done successfully!")
                 tv_answer1.isFocusable = false
             }
             "Stage 24"->{
@@ -831,7 +830,7 @@ class OrderedActivity : AppCompatActivity() {
                 if (whiteFonts){
                     uc4_say2.setTextColor(Color.MAGENTA)
                 }
-                Log.d(TAG, "$level adaptation is done successfully!")
+//                Log.d(TAG, "$level adaptation is done successfully!")
             }
             "Stage 25"->{
                 ib_back.visibility = View.VISIBLE
@@ -848,7 +847,7 @@ class OrderedActivity : AppCompatActivity() {
                 tv_under1.layoutParams = param
                 showWhiteFonts()
                 group_under.startAnimation(fadein)
-                Log.d(TAG, "$level adaptation is done successfully!")
+//                Log.d(TAG, "$level adaptation is done successfully!")
             }
             "Stage 26"->{
                 ib_back.visibility = View.VISIBLE
@@ -864,7 +863,7 @@ class OrderedActivity : AppCompatActivity() {
                 tv_under1.gravity = Gravity.CENTER_HORIZONTAL
                 showWhiteFonts()
                 group_under.startAnimation(fadein)
-                Log.d(TAG, "$level adaptation is done successfully!")
+//                Log.d(TAG, "$level adaptation is done successfully!")
             }
             "Stage 27"->{
                 ib_back.visibility = View.VISIBLE
@@ -880,7 +879,7 @@ class OrderedActivity : AppCompatActivity() {
                 tv_under1.layoutParams = param
                 showWhiteFonts()
                 group_under.startAnimation(fadein)
-                Log.d(TAG, "$level adaptation is done successfully!")
+//                Log.d(TAG, "$level adaptation is done successfully!")
             }
             "Stage 28"->{
                 ib_back.visibility = View.VISIBLE
@@ -896,7 +895,7 @@ class OrderedActivity : AppCompatActivity() {
                 tv_under1.gravity = Gravity.CENTER_HORIZONTAL
                 showWhiteFonts()
                 group_under.startAnimation(fadein)
-                Log.d(TAG, "$level adaptation is done successfully!")
+//                Log.d(TAG, "$level adaptation is done successfully!")
             }
             "Stage 29"->{
                 ib_back.visibility = View.VISIBLE
@@ -912,7 +911,7 @@ class OrderedActivity : AppCompatActivity() {
                 tv_under1.layoutParams = param
                 showWhiteFonts()
                 group_under.startAnimation(fadein)
-                Log.d(TAG, "$level adaptation is done successfully!")
+//                Log.d(TAG, "$level adaptation is done successfully!")
             }
             "Stage 30"->{
                 ib_back.visibility = View.VISIBLE
@@ -927,10 +926,10 @@ class OrderedActivity : AppCompatActivity() {
                 tv_under1.layoutParams = param
                 showWhiteFonts()
                 group_under.startAnimation(fadein)
-                Log.d(TAG, "$level adaptation is done successfully!")
+//                Log.d(TAG, "$level adaptation is done successfully!")
             }
             else -> {
-                Log.d(TAG, "Something's Wrong; levelAdapt is failed!")
+//                Log.d(TAG, "Something's Wrong; levelAdapt is failed!")
             }
         }
     }
@@ -1157,11 +1156,11 @@ class OrderedActivity : AppCompatActivity() {
         if (isRunning){
             mainHandler.removeCallbacks(updatePointTask)
         }else{
-            Log.d(TAG, "isRunning false")
+//            Log.d(TAG, "isRunning false")
         }
         ib_next.setColorFilter(resources.getColor(R.color.colorPurple))
         if (mInterstitialAd.isLoaded) {
-            Log.d(TAG, "Ad Must be showed!!!")
+//            Log.d(TAG, "Ad Must be showed!!!")
             mInterstitialAd.show()
             mInterstitialAd.adListener = object : AdListener() {
                 override fun onAdClosed() {
@@ -1170,7 +1169,7 @@ class OrderedActivity : AppCompatActivity() {
                 }
             }
         } else {
-            Log.d(TAG, "The interstitial wasn't loaded yet.")
+//            Log.d(TAG, "The interstitial wasn't loaded yet.")
             showNextStageGrid()
         }
     }
@@ -1367,11 +1366,11 @@ class OrderedActivity : AppCompatActivity() {
         if (isRunning){
             mainHandler.removeCallbacks(updatePointTask)
         }else{
-            Log.d(TAG, "isRunning false")
+//            Log.d(TAG, "isRunning false")
         }
         ib_back.setColorFilter(resources.getColor(R.color.colorPurple))
         if (mInterstitialAd.isLoaded) {
-            Log.d(TAG, "Ad Must be showed!!!")
+//            Log.d(TAG, "Ad Must be showed!!!")
             mInterstitialAd.show()
             mInterstitialAd.adListener = object : AdListener() {
                 override fun onAdClosed() {
@@ -1380,7 +1379,7 @@ class OrderedActivity : AppCompatActivity() {
                 }
             }
         } else {
-            Log.d(TAG, "The interstitial wasn't loaded yet.")
+//            Log.d(TAG, "The interstitial wasn't loaded yet.")
             showBackStageGrid()
         }
     }
@@ -1398,7 +1397,7 @@ class OrderedActivity : AppCompatActivity() {
         if (isRunning){
             mainHandler.removeCallbacks(updatePointTask)
         }else{
-            Log.d(TAG, "isRunning false")
+//            Log.d(TAG, "isRunning false")
         }
         val intent = Intent(this@OrderedActivity, CommentActivity::class.java)
         intent.putExtra("tvName", nick)
@@ -1419,7 +1418,7 @@ class OrderedActivity : AppCompatActivity() {
             override fun onCancelled(p0: DatabaseError) {}
             override fun onDataChange(p0: DataSnapshot) {
                 val control = p0.child("control").value as Boolean
-                Log.d(TAG, "control == $control")
+//                Log.d(TAG, "control == $control")
                 if (control){
                     progressBarOrdered.visibility = View.GONE
                     window.contentView = show
@@ -1435,13 +1434,13 @@ class OrderedActivity : AppCompatActivity() {
                             val id = levelKey.substring(6, lastInd).toInt()
                             val stageEnt = AppRoomEntity(id, levelKey, 0, false)
                             db.stageDao().update(stageEnt)
-                            Log.d(TAG, "roomDB UPDATED: answer is wrong; -10 points")
+//                            Log.d(TAG, "roomDB UPDATED: answer is wrong; -10 points")
                         }.start()
                         removeStageRefValueEventListener()
                         if (isRunning){
                             mainHandler.removeCallbacks(updatePointTask)
                         }else{
-                            Log.d(TAG, "isRunning false")
+//                            Log.d(TAG, "isRunning false")
                         }
                         window.dismiss()
                         startActivity(intent)
@@ -1452,7 +1451,7 @@ class OrderedActivity : AppCompatActivity() {
                         removeStageRefValueEventListener()
                     }
                 }else{
-                    Log.d(TAG, "Comments button pressed")
+//                    Log.d(TAG, "Comments button pressed")
                     progressBarOrdered.visibility = View.GONE
                     startActivity(intent)
                 }
@@ -1470,7 +1469,7 @@ class OrderedActivity : AppCompatActivity() {
                         slayButtonAnswerTasks()
                     }
                 }
-                Log.d(TAG, "synchDBsBlock: roomDB control = $roomControl => fireDB point updated")
+//                Log.d(TAG, "synchDBsBlock: roomDB control = $roomControl => fireDB point updated")
             } else if (!roomControl && fireControl) {
                 stageRef.child("point").setValue(roomPoint)
                 stageRef.child("control").setValue(roomControl).addOnSuccessListener {void ->
@@ -1478,26 +1477,23 @@ class OrderedActivity : AppCompatActivity() {
                         slayButtonAnswerTasks()
                     }
                 }
-                Log.d(
-                    TAG,
-                    "synchDBsBlock: roomDB control = $roomControl => fireDB point+control updated"
-                )
+//                Log.d( TAG, "synchDBsBlock: roomDB control = $roomControl => fireDB point+control updated" )
             } else if (roomControl && !fireControl) {
                 val stageEnt =
                     AppRoomEntity(id, levelKey, firePoint.toInt(), fireControl)
                 db.stageDao().update(stageEnt)
                 if (ifItisAnsweringAct){
                     slayButtonAnswerTasks()
-                }
-                Log.d(TAG, "synchDBsBlock: fireDB control = $fireControl => roomDB updated")
+                }else{}
+//                Log.d(TAG, "synchDBsBlock: fireDB control = $fireControl => roomDB updated")
             } else if (!roomControl && !fireControl) {
                 val stageEnt =
                     AppRoomEntity(id, levelKey, firePoint.toInt(), fireControl)
                 db.stageDao().update(stageEnt)
                 if (ifItisAnsweringAct){
                     slayButtonAnswerTasks()
-                }
-                Log.d(TAG, "synchDBsBlock: !roomControl && !fireControl => roomDB updated")
+                }else{}
+//                Log.d(TAG, "synchDBsBlock: !roomControl && !fireControl => roomDB updated")
             } else if (roomControl != null && fireControl == null) {
                 stageRef.child("point").setValue(roomPoint)
                 stageRef.child("control").setValue(roomControl).addOnSuccessListener {void ->
@@ -1505,54 +1501,51 @@ class OrderedActivity : AppCompatActivity() {
                         slayButtonAnswerTasks()
                     }
                 }
-                Log.d(
-                    TAG,
-                    "synchDBsBlock: roomDB control = $roomControl => fireDB point+control updated"
-                )
+//                Log.d( TAG, "synchDBsBlock: roomDB control = $roomControl => fireDB point+control updated")
             } else {
                 if (ifItisAnsweringAct){
                     slayButtonAnswerTasks()
-                }
-                Log.d(TAG, "synchDBsBlock: roomControl == null or Something's Wrong!")
+                }else{}
+//                Log.d(TAG, "synchDBsBlock: roomControl == null or Something's Wrong!")
             }
         }
     }
 
     suspend fun synchronDBs(ifItisAnsweringAct:Boolean){
-        Log.d(TAG, "synchronDBs: synchrondbs start")
+//        Log.d(TAG, "synchronDBs: synchrondbs start")
 
         val mValueEventListener = object :ValueEventListener{
             override fun onCancelled(p0: DatabaseError) {
-                Log.d(TAG, "synchronDBs: Listener:onCancelled")
+//                Log.d(TAG, "synchronDBs: Listener:onCancelled")
             }
             override fun onDataChange(p0: DataSnapshot) {
                 Thread {
                     if (!p0.exists()){
-                        Log.d(TAG, "synchronDBs: p0 does not exist")
+//                        Log.d(TAG, "synchronDBs: p0 does not exist")
                         var dbStage = db.stageDao().getOne(levelKey)
                         val roomPoint = dbStage.db_stage_points.toLong()
                         val roomControl = dbStage.db_stage_control
                         stageRef.child("point").setValue(roomPoint)
-                        Log.d(TAG, "synchronDBs: fireDB point set: $roomPoint")
+//                        Log.d(TAG, "synchronDBs: fireDB point set: $roomPoint")
                         stageRef.child("control").setValue(roomControl)
                             .addOnSuccessListener {
-                                Log.d(TAG, "synchronDBs: fireDB control set: $roomControl")
+//                                Log.d(TAG, "synchronDBs: fireDB control set: $roomControl")
                                 val sPoint = p0.child("point").value
-                                Log.d(TAG, "synchronDBs: sPoint = $sPoint")
+//                                Log.d(TAG, "synchronDBs: sPoint = $sPoint")
                                 var firePoint = sPoint.toString()
-                                Log.d(TAG, "synchronDBs: firePoint = $firePoint")
+//                                Log.d(TAG, "synchronDBs: firePoint = $firePoint")
                                 val fireControl = p0.child("control").value as Boolean
                                 synchDBsBlock(roomControl,fireControl,roomPoint,firePoint, ifItisAnsweringAct)
                             }
                     }
                     else{
-                        Log.d(TAG, "synchronDBs: p0 exists")
+//                        Log.d(TAG, "synchronDBs: p0 exists")
                         var dbStage = db.stageDao().getOne(levelKey)
                         val roomPoint = dbStage.db_stage_points.toLong()
                         val roomControl = dbStage.db_stage_control
                         val sPoint = p0.child("point").value
                         var firePoint = sPoint.toString()
-                        Log.d(TAG, "synchronDBs: firePoint: $firePoint")
+//                        Log.d(TAG, "synchronDBs: firePoint: $firePoint")
                         val fireControl = p0.child("control").value as Boolean
                         synchDBsBlock(roomControl,fireControl,roomPoint,firePoint, ifItisAnsweringAct)
 
@@ -1571,7 +1564,7 @@ class OrderedActivity : AppCompatActivity() {
     private fun removeStageRefValueEventListener(){
         mValueEventListener?.let {
             stageRef.removeEventListener(it)
-            Log.d(TAG, "removeStageRefValueEventListener: stageRef EventListener Removed!")
+//            Log.d(TAG, "removeStageRefValueEventListener: stageRef EventListener Removed!")
         }
     }
 
@@ -1632,9 +1625,9 @@ class OrderedActivity : AppCompatActivity() {
         if (isRunning){
             mainHandler.removeCallbacks(updatePointTask)
         }else{
-            Log.d(TAG, "isRunning false")
+//            Log.d(TAG, "isRunning false")
         }
-        Log.d(TAG, "mainMenu pressed..")
+//        Log.d(TAG, "mainMenu pressed..")
         val intent = Intent(this@OrderedActivity, MainActivity::class.java)
 //        intent.putExtra("email", email)
         startActivity(intent)
@@ -1644,9 +1637,9 @@ class OrderedActivity : AppCompatActivity() {
         if (isRunning){
             mainHandler.removeCallbacks(updatePointTask)
         }else{
-            Log.d(TAG, "isRunning false")
+//            Log.d(TAG, "isRunning false")
         }
-        Log.d(TAG, "action_settings pressed!")
+//        Log.d(TAG, "action_settings pressed!")
         val intent = Intent(this@OrderedActivity, SettingsActivity::class.java)
         startActivity(intent)
     }
@@ -1655,22 +1648,22 @@ class OrderedActivity : AppCompatActivity() {
         if (isRunning){
             mainHandler.removeCallbacks(updatePointTask)
         }else{
-            Log.d(TAG, "isRunning false")
+//            Log.d(TAG, "isRunning false")
         }
-        Log.d(TAG, "Profile pressed..")
+//        Log.d(TAG, "Profile pressed..")
         val intent = Intent(this@OrderedActivity, ProfileActivity::class.java)
         intent.putExtra("tvName", nick)
         startActivity(intent)
     }
 
     private fun privacyPolicy(){
-        Log.d(TAG, "privacyPolicy pressed..")
+//        Log.d(TAG, "privacyPolicy pressed..")
         val intent = Intent(this, PrivacyActivity::class.java)
         startActivity(intent)
     }
 
     private fun termsConditions(){
-        Log.d(TAG, "privacyPolicy pressed..")
+//        Log.d(TAG, "privacyPolicy pressed..")
         val intent = Intent(this, TermsActivity::class.java)
         startActivity(intent)
     }
@@ -1679,9 +1672,9 @@ class OrderedActivity : AppCompatActivity() {
         if (isRunning){
             mainHandler.removeCallbacks(updatePointTask)
         }else{
-            Log.d(TAG, "isRunning false")
+//            Log.d(TAG, "isRunning false")
         }
-        Log.d(TAG, "signOut pressed..")
+//        Log.d(TAG, "signOut pressed..")
         auth.signOut()
         startActivity(Intent(this@OrderedActivity, LoginActivity::class.java))
         this@OrderedActivity.finish()
@@ -1692,7 +1685,7 @@ class OrderedActivity : AppCompatActivity() {
         if (isRunning){
             mainHandler.removeCallbacks(updatePointTask)
         }else{
-            Log.d(TAG, "isRunning false")
+//            Log.d(TAG, "isRunning false")
         }
         val intent = Intent(this@OrderedActivity, LvlActivity::class.java)
         intent.putExtra("tvName", nick)
