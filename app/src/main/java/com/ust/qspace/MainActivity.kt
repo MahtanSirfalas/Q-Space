@@ -512,6 +512,7 @@ class MainActivity : AppCompatActivity() {
                 tvName.startAnimation(rtl)
                 onStartAnimation()
                 synchronRoomDb()
+                mainButtonsStatusUpdate(true)
             }
         })
     }
@@ -535,6 +536,28 @@ class MainActivity : AppCompatActivity() {
         buttProfil.startAnimation(atf)
         buttSoru.startAnimation(atf)
         buttInfo.startAnimation(atf)
+    }
+
+    private fun mainButtonsStatusUpdate(canClick:Boolean){
+        if(canClick){
+            buttOyna.isEnabled = true
+            buttOyna.isClickable = true
+            buttProfil.isEnabled = true
+            buttProfil.isClickable = true
+            buttSoru.isEnabled = true
+            buttSoru.isClickable = true
+            buttInfo.isEnabled = true
+            buttInfo.isClickable = true
+        }else{
+            buttOyna.isEnabled = false
+            buttOyna.isClickable = false
+            buttProfil.isEnabled = false
+            buttProfil.isClickable = false
+            buttSoru.isEnabled = false
+            buttSoru.isClickable = false
+            buttInfo.isEnabled = false
+            buttInfo.isClickable = false
+        }
     }
 
     private fun synchronRoomDb(){
