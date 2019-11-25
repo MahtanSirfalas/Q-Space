@@ -74,21 +74,21 @@ class LvlActivity : AppCompatActivity() {
                         val roomPoint = dbStage.db_stage_points
                         val roomControl = dbStage.db_stage_control
                         if (roomControl){
-//                            Log.d(TAG, "$item: Pass")
+                            Log.d(TAG, "$item: Pass")
                         }else{
                             if (roomPoint == 0){
                                 buton?.setBackgroundResource(R.drawable.custom_butt_lvl)
-//                                Log.d(TAG, "$item: Given Up")
+                                Log.d(TAG, "$item: Given Up")
                             }else{
                                 buton?.setBackgroundResource(R.drawable.custom_butt_stagewon)
-//                                Log.d(TAG, "$item: Finished")
+                                Log.d(TAG, "$item: Finished")
                             }
                         }
-//                        Log.d(TAG, "stageList: $item applied")
+                        Log.d(TAG, "stageList: $item applied")
                     }
                 }
             }else{
-//                Log.d(TAG, "stages doesn't exist yet!")
+                Log.d(TAG, "stages doesn't exist yet!")
             }
         }.start()
     }
@@ -96,8 +96,56 @@ class LvlActivity : AppCompatActivity() {
     override fun onStart() {
         if (Build.VERSION.SDK_INT >= 25){
             animations()
+        }else{
+            nevermindAndShowTheStages()
         }
         super.onStart()
+    }
+
+    private fun nevermindAndShowTheStages(){
+        stage_column1.visibility = View.VISIBLE
+        stage_column2.visibility = View.VISIBLE
+        stage_column3.visibility = View.VISIBLE
+        stage_column4.visibility = View.VISIBLE
+        stage_column5.visibility = View.VISIBLE
+        stage_column6.visibility = View.VISIBLE
+        if(points >= 24000){
+            buttL6.isEnabled = true
+            buttL7.isEnabled = true
+            buttL8.isEnabled = true
+            buttL9.isEnabled = true
+            buttL10.isEnabled = true
+            if(points >= 45000){
+                buttL11.isEnabled = true
+                buttL12.isEnabled = true
+                buttL13.isEnabled = true
+                buttL14.isEnabled = true
+                buttL15.isEnabled = true
+                if (points >= 70000){
+                    buttL16.isEnabled = true
+                    buttL17.isEnabled = true
+                    buttL18.isEnabled = true
+                    buttL19.isEnabled = true
+                    buttL20.isEnabled = true
+                    if (points >= 95000){
+                        buttL21.isEnabled = true
+                        buttL22.isEnabled = true
+                        buttL23.isEnabled = true
+                        buttL24.isEnabled = true
+                        buttL25.isEnabled = true
+                        if (points >= 120000){
+                            buttL26.isEnabled = true
+                            buttL27.isEnabled = true
+                            buttL28.isEnabled = true
+                            buttL29.isEnabled = true
+                            buttL30.isEnabled = true
+                        }
+                    }
+                }
+            }
+
+        }
+
     }
 
     private fun animations(){
@@ -196,7 +244,7 @@ class LvlActivity : AppCompatActivity() {
     fun showStage(view: View?){
         val buttonStage = (view as Button).text.toString()
         levelKey = "Stage $buttonStage"
-//        Log.d(TAG, "buttL$buttonStage pressed")
+        Log.d(TAG, "buttL$buttonStage pressed")
         if(buttonStage == "3" || buttonStage == "8" || buttonStage == "23"){
             val intent = Intent(this@LvlActivity, RandomActivity::class.java)
             intent.putExtra("tvName", nick)
@@ -211,38 +259,38 @@ class LvlActivity : AppCompatActivity() {
     }
 
     private fun mainMenu(view: View?){
-//        Log.d(TAG, "mainMenu pressed..")
+        Log.d(TAG, "mainMenu pressed..")
         val intent = Intent(this@LvlActivity, MainActivity::class.java)
         startActivity(intent)
     }
 
     private fun showSettings(view:View?){
-//        Log.d(TAG, "action_settings pressed!")
+        Log.d(TAG, "action_settings pressed!")
         val intent = Intent(this@LvlActivity, SettingsActivity::class.java)
         startActivity(intent)
     }
 
     fun showProfile(view: View?){
-//        Log.d(TAG, "Profile pressed..")
+        Log.d(TAG, "Profile pressed..")
         val intent = Intent(this@LvlActivity, ProfileActivity::class.java)
         intent.putExtra("tvName", nick)
         startActivity(intent)
     }
 
     private fun privacyPolicy(){
-//        Log.d(TAG, "privacyPolicy pressed..")
+        Log.d(TAG, "privacyPolicy pressed..")
         val intent = Intent(this, PrivacyActivity::class.java)
         startActivity(intent)
     }
 
     private fun termsConditions(){
-//        Log.d(TAG, "privacyPolicy pressed..")
+        Log.d(TAG, "privacyPolicy pressed..")
         val intent = Intent(this, TermsActivity::class.java)
         startActivity(intent)
     }
 
     fun signOut(view: View?){
-//        Log.d(TAG, "signOut pressed..")
+        Log.d(TAG, "signOut pressed..")
         auth.signOut()
         startActivity(Intent(this@LvlActivity, LoginActivity::class.java))
         this@LvlActivity.finish()
