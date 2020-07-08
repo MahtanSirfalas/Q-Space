@@ -6,6 +6,8 @@ import android.view.MotionEvent
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView
 
+//This is taken as a javascript class from a stackoverflow answer and converted to kotlin, i don't remember the owner, lost he note sorry...
+
 class RecyclerItemClickListenr(context: Context, recyclerView: RecyclerView, private val mListener: OnItemClickListener?) : RecyclerView.OnItemTouchListener {
 
     private val mGestureDetector: GestureDetector
