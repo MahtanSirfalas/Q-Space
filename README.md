@@ -2,7 +2,7 @@
 Android native app.
 
 ### Features
-Includes abstract thinking puzzles based on math.
-User profile and login system.
-Comments system inside Qs.
-Q suggestion system.
+Includes abstract thinking puzzles based on math.<br/>
+User profile and login system.<br/>
+Comments system inside Qs.<br/>
+Q suggestion system.<br/>
